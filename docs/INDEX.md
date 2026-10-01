@@ -9,7 +9,7 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 
 ## Bonfire Burritos (Olde Town Arvada) (near)
 
-- **Address:** Olde Town Arvada, CO 80002
+- **Address:** 5800 Olde Wadsworth Blvd, Arvada, CO 80002
 - **Drive:** ~8 min drive from Arvada 80004 (~0.1 mi straight-line)
 - **Why:** Days.in.denver July favorite: huge outdoor space with turf, toys, and room for kids to play while parents enjoy coffee and breakfast burritos — perfect for early risers near home.
 - **Source:** Days.in.denver (@days.in.denver)
