@@ -26,7 +26,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
-<link href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css" rel="stylesheet"/>
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet"/>
 <style>
   :root {
     --accent: #2A9D8F;
@@ -174,15 +174,15 @@ TEMPLATE = r'''<!DOCTYPE html>
     bottom: 0;
     z-index: 1;
   }
-  .mapboxgl-ctrl-bottom-left,
-  .mapboxgl-ctrl-bottom-right {
+  .maplibregl-ctrl-bottom-left,
+  .maplibregl-ctrl-bottom-right {
     margin-bottom: calc(var(--tab-h) + 8px) !important;
   }
-  .mapboxgl-ctrl-attrib {
+  .maplibregl-ctrl-attrib {
     font-size: 10px !important;
     background: rgba(255,255,255,0.75) !important;
   }
-  .mapboxgl-popup { display: none !important; }
+  .maplibregl-popup { display: none !important; }
 
   /* Marker dots */
   .pin {
@@ -724,7 +724,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       </div>
       <div class="about-card">
         <h2>Basemap</h2>
-        <p>Mapbox Light — soft streets basemap.</p>
+        <p>MapLibre GL · OpenFreeMap Positron (soft light). No Mapbox token required.</p>
       </div>
     </div>
   </section>
@@ -755,8 +755,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   </aside>
 </div>
 
-<script src="config.js"></script>
-<script src="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.js"></script>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
 const PLACES_DOC = __PLACES_JSON__;
 </script>
@@ -781,41 +780,16 @@ const PLACES_DOC = __PLACES_JSON__;
   let activeId = null;
   const markers = {};
 
-  // Mapbox soft light streets
-  function resolveMapboxToken(){
-    const fromConfig = (window.__MAPBOX_TOKEN__ || '').trim();
-    if (fromConfig) return fromConfig;
-    try {
-      const saved = (localStorage.getItem('mapbox_token') || '').trim();
-      if (saved) return saved;
-    } catch (e) {}
-    return '';
-  }
-  mapboxgl.accessToken = resolveMapboxToken();
-  if (!mapboxgl.accessToken) {
-    // One-time setup sheet so the public token never needs to live in git
-    const setup = document.createElement('div');
-    setup.className = 'sheet open';
-    setup.innerHTML = '<div class="sheet-handle"></div><div class="sheet-scroll"><p class="kicker">Map setup</p><h2 class="sheet-title">Add Mapbox token</h2><p class="why">Paste your public Mapbox token (starts with pk.) once — it stays on this device only.</p><input id="mb-token-input" type="password" autocomplete="off" placeholder="pk.…" style="width:100%;padding:14px 16px;border-radius:14px;border:1px solid var(--line);font:inherit;margin:12px 0"/><button type="button" id="mb-token-save" class="chip on" style="width:100%;justify-content:center;padding:14px">Save & load map</button></div>';
-    setup.style.position='fixed'; setup.style.left=0; setup.style.right=0; setup.style.bottom=0; setup.style.zIndex=80;
-    document.body.appendChild(setup);
-    document.getElementById('mb-token-save').onclick = () => {
-      const v = (document.getElementById('mb-token-input').value || '').trim();
-      if (!v.startsWith('pk.')) { alert('Token should start with pk.'); return; }
-      try { localStorage.setItem('mapbox_token', v); } catch (e) {}
-      location.reload();
-    };
-    return;
-  }
-  const map = new mapboxgl.Map({
+  // Soft light basemap: OpenFreeMap Positron (MapLibre, no token)
+  const map = new maplibregl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v11',
+    style: 'https://tiles.openfreemap.org/styles/positron',
     center: base ? [base.lng, base.lat] : [-105.0, 39.74],
     zoom: 10.2,
     attributionControl: true
   });
-  map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right');
-  map.addControl(new mapboxgl.GeolocateControl({
+  map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+  map.addControl(new maplibregl.GeolocateControl({
     positionOptions: { enableHighAccuracy: true },
     trackUserLocation: false
   }), 'top-right');
@@ -899,7 +873,7 @@ const PLACES_DOC = __PLACES_JSON__;
 
   // Markers after style loads
   map.on('load', () => {
-    const bounds = new mapboxgl.LngLatBounds();
+    const bounds = new maplibregl.LngLatBounds();
 
     places.forEach(p => {
       const el = document.createElement('div');
@@ -912,7 +886,7 @@ const PLACES_DOC = __PLACES_JSON__;
         openSheet(p);
         flyTo(p);
       });
-      const marker = new mapboxgl.Marker({ element: el, anchor: 'center' })
+      const marker = new maplibregl.Marker({ element: el, anchor: 'center' })
         .setLngLat([p.lng, p.lat])
         .addTo(map);
       markers[p.id] = { marker, el, place: p };
@@ -923,7 +897,7 @@ const PLACES_DOC = __PLACES_JSON__;
       const homeEl = document.createElement('div');
       homeEl.className = 'home-pin';
       homeEl.textContent = 'HOME';
-      new mapboxgl.Marker({ element: homeEl, anchor: 'center' })
+      new maplibregl.Marker({ element: homeEl, anchor: 'center' })
         .setLngLat([base.lng, base.lat])
         .addTo(map);
       bounds.extend([base.lng, base.lat]);
@@ -1070,31 +1044,8 @@ const PLACES_DOC = __PLACES_JSON__;
 </html>
 '''
 
-def load_mapbox_token() -> str:
-    import os
-    token = os.environ.get("MAPBOX_ACCESS_TOKEN") or os.environ.get("MAPBOX_TOKEN") or ""
-    env_path = ROOT / ".env"
-    if not token and env_path.exists():
-        for line in env_path.read_text().splitlines():
-            line = line.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            k, v = line.split("=", 1)
-            if k.strip() in ("MAPBOX_ACCESS_TOKEN", "MAPBOX_TOKEN"):
-                token = v.strip().strip('"').strip("'")
-                break
-    return token
-
-def write_config_js(token: str, dest_dirs):
-    # Never commit a real token; callers decide which dirs get config.js
-    js = "window.__MAPBOX_TOKEN__ = %s;\n" % json.dumps(token)
-    for d in dest_dirs:
-        d.mkdir(parents=True, exist_ok=True)
-        (d / "config.js").write_text(js)
-
 def build():
     doc = json.loads(DATA.read_text())
-    token = load_mapbox_token()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     OUT_JSON.write_text(json.dumps(doc, indent=2) + "\n")
     places_json = json.dumps(doc, ensure_ascii=False)
@@ -1104,8 +1055,6 @@ def build():
         .replace("__COUNT__", str(len(doc.get("places", []))))
     )
     OUT_HTML.write_text(html_out)
-    # Real token only in local output/ (gitignored config). Docs stub is empty until CI injects.
-    write_config_js(token, [OUT_DIR])
 
     lines = [
         f"# {doc['meta'].get('title', 'Toddler outing map')}",
@@ -1145,7 +1094,6 @@ def build():
             shutil.copy2(src, DOCS_DIR / name)
     if sources_backup is not None:
         sources.write_text(sources_backup)
-    write_config_js("", [DOCS_DIR])  # committed stub; CI overwrites on Pages deploy
 
     print(f"Wrote {OUT_HTML}")
     print(f"Wrote {OUT_JSON}")
