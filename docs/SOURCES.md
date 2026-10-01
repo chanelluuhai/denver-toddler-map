@@ -7,6 +7,7 @@
 | Days.in.denver | https://www.instagram.com/days.in.denver/ | Days.in.denver | https://days-in-denver.beehiiv.com/ |
 | Colorado Kids Explore | https://www.instagram.com/colorado.kids.explore/ | Colorado Kids Explore - Adventure Guide | |
 | Colorado Kids Are Rad | https://www.instagram.com/coloradokidsarerad/ | Colorado Kids Are Rad | |
+| Colorado Mama Life (Angelica) | https://www.instagram.com/coloradomamalife/ | https://www.facebook.com/profile.php?id=61577651781310 | https://www.tiktok.com/@coloradomamalife |
 
 ## Scrub window (2026-10-01 deep pass)
 
@@ -26,6 +27,12 @@ Major venue themes pulled: Apex Center, CSU Spur, Children's Museum (Bloom), DMN
 
 Cheyenne-Arapaho, Bates-Logan, Washington Park, City View, La Raza, Paco Sanchez, Joseph P. Martinez, Sloan’s Lake, Central Park, Wright Park.
 
+**Colorado Mama Life (@coloradomamalife / Facebook Colorado Mama Life)**
+
+- Added 2026-10-01 from Chanel→Toddie Facebook reel share: https://www.facebook.com/share/r/1DHAJTGes1/
+- Reel promo tip: follow Angelica for free days & family-friendly Denver-area adventures (caption truncated by FB login wall; no specific venue named in visible text).
+- Creator: Angelica Quintanilla — kid-friendly adventures, date nights, mom time, celiac food finds.
+
 ## Auth / scrape blockers
 
 - Instagram public pages only expose follower counts in OG tags (login wall for captions/reels).
@@ -34,7 +41,7 @@ Cheyenne-Arapaho, Bates-Logan, Washington Park, City View, La Raza, Paco Sanchez
 
 ## Weekly update notes
 
-1. Skim latest Days.in.denver beehiiv + IG stories/reels when logged in.
+1. Scrub **all** accounts listed in this SOURCES.md Accounts table (IG/FB/TikTok/newsletter as linked) — currently Days.in.denver, Colorado Kids Explore, Colorado Kids Are Rad, Colorado Mama Life — plus Days.in.denver beehiiv.
 2. Add/edit rows in `data/places.json` (keep `source` + `links`).
 3. `python3 scripts/build_map.py` (writes `output/` and syncs `docs/` for Pages).
 4. Commit & push `main` — GitHub Pages serves from `/docs`.
