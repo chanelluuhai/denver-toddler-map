@@ -724,7 +724,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       </div>
       <div class="about-card">
         <h2>Basemap</h2>
-        <p>Mapbox Light streets — soft, readable basemap.</p>
+        <p>Mapbox Light — soft streets basemap.</p>
       </div>
     </div>
   </section>
@@ -805,6 +805,7 @@ const PLACES_DOC = __PLACES_JSON__;
       try { localStorage.setItem('mapbox_token', v); } catch (e) {}
       location.reload();
     };
+    return;
   }
   const map = new mapboxgl.Map({
     container: 'map',
