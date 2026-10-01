@@ -17,7 +17,9 @@
       {
         "name": "Colorado Kids Explore",
         "instagram": "https://www.instagram.com/colorado.kids.explore/",
-        "facebook": "Colorado Kids Explore - Adventure Guide"
+        "facebook": "https://www.facebook.com/profile.php?id=61575843462964",
+        "tiktok": "https://www.tiktok.com/@colorado.kids.explore",
+        "note": "FB page: Colorado Kids Explore - Adventure Guide; IG @colorado.kids.explore; TikTok @colorado.kids.explore. McFall/Peter Pan Park reel scrubbed 2026-10-01."
       },
       {
         "name": "Colorado Kids Are Rad",
@@ -2244,6 +2246,58 @@
       "farther_than_30min": false,
       "approx_drive_minutes": 8,
       "straight_line_miles": 0.1
+    },
+    {
+      "id": "mcfall-park",
+      "name": "McFall Park (\u201cPeter Pan Park\u201d)",
+      "lat": 39.863608,
+      "lng": -105.04755,
+      "address": "4801 W 92nd Ave, Westminster, CO 80031",
+      "why": "Colorado Kids Explore reel tip: whimsical \u201cPeter Pan Park\u201d playground (pirate ship / fort / water play) plus free breakfast & lunch for kids under 18 Mon\u2013Fri 11am\u20131pm when the summer meal program is running (adults small fee; confirm season/other sites). City splash pad Memorial Day\u2013Labor Day ~9am\u20138pm.",
+      "source": "Colorado Kids Explore (@colorado.kids.explore) Facebook reel 2026-10-01 share",
+      "source_accounts": [
+        "@colorado.kids.explore",
+        "Facebook: Colorado Kids Explore - Adventure Guide",
+        "TikTok: @colorado.kids.explore"
+      ],
+      "links": [
+        {
+          "label": "Facebook reel (CKE)",
+          "url": "https://www.facebook.com/reel/1702181394414028/"
+        },
+        {
+          "label": "Facebook Colorado Kids Explore",
+          "url": "https://www.facebook.com/profile.php?id=61575843462964"
+        },
+        {
+          "label": "Instagram @colorado.kids.explore",
+          "url": "https://www.instagram.com/colorado.kids.explore/"
+        },
+        {
+          "label": "TikTok @colorado.kids.explore",
+          "url": "https://www.tiktok.com/@colorado.kids.explore"
+        },
+        {
+          "label": "City of Westminster \u2014 McFall Park",
+          "url": "https://www.westminsterco.gov/facilities/facility/details/mcfallpark-33"
+        }
+      ],
+      "hours": "Park ~6am\u201311pm. Splash pad: Memorial Day\u2013Labor Day, typically 9am\u20138pm (may shut for weather/maintenance). Free kids meals (when offered): Mon\u2013Fri 11am\u20131pm per CKE reel \u2014 verify season.",
+      "cost": "Park/splash free. Kids meals free under 18 when program runs; adults small fee.",
+      "toddler_notes": "~20mo: splash pad + open turf good; some playground pieces better for older preschool+. City notes poured-in-place playground surface replacement Nov 3\u201321 (2026) \u2014 playground closed then; splash/fields may still be usable. Confirm before you go.",
+      "tags": [
+        "park",
+        "splash-pad",
+        "waterplay",
+        "free",
+        "westminster",
+        "meals",
+        "toddler"
+      ],
+      "drive_note": "~16 min drive from Arvada 80004 (~4.7 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 16,
+      "straight_line_miles": 4.7
     }
   ]
 }

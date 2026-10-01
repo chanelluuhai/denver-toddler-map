@@ -3,7 +3,7 @@
 Updated: 2026-10-01  
 Base: Arvada, CO 80004  
 Audience: Toddler ~20 months; prefer ~30 min drive  
-Places: 56
+Places: 57
 
 Each pin has a why-note from a named social/newsletter source. Drive times are rough estimates.
 
@@ -105,6 +105,21 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - **Toddler tip:** Simple splash outing for littles; seasonal.
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 - [Days in Denver July newsletter](https://days-in-denver.beehiiv.com/p/july-newsletter)
+
+## McFall Park (“Peter Pan Park”) (near)
+
+- **Address:** 4801 W 92nd Ave, Westminster, CO 80031
+- **Drive:** ~16 min drive from Arvada 80004 (~4.7 mi straight-line)
+- **Why:** Colorado Kids Explore reel tip: whimsical “Peter Pan Park” playground (pirate ship / fort / water play) plus free breakfast & lunch for kids under 18 Mon–Fri 11am–1pm when the summer meal program is running (adults small fee; confirm season/other sites). City splash pad Memorial Day–Labor Day ~9am–8pm.
+- **Source:** Colorado Kids Explore (@colorado.kids.explore) Facebook reel 2026-10-01 share
+- **Hours:** Park ~6am–11pm. Splash pad: Memorial Day–Labor Day, typically 9am–8pm (may shut for weather/maintenance). Free kids meals (when offered): Mon–Fri 11am–1pm per CKE reel — verify season.
+- **Cost:** Park/splash free. Kids meals free under 18 when program runs; adults small fee.
+- **Toddler tip:** ~20mo: splash pad + open turf good; some playground pieces better for older preschool+. City notes poured-in-place playground surface replacement Nov 3–21 (2026) — playground closed then; splash/fields may still be usable. Confirm before you go.
+- [Facebook reel (CKE)](https://www.facebook.com/reel/1702181394414028/)
+- [Facebook Colorado Kids Explore](https://www.facebook.com/profile.php?id=61575843462964)
+- [Instagram @colorado.kids.explore](https://www.instagram.com/colorado.kids.explore/)
+- [TikTok @colorado.kids.explore](https://www.tiktok.com/@colorado.kids.explore)
+- [City of Westminster — McFall Park](https://www.westminsterco.gov/facilities/facility/details/mcfallpark-33)
 
 ## La Raza Park (near)
 

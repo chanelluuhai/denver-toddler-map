@@ -17,7 +17,9 @@
       {
         "name": "Colorado Kids Explore",
         "instagram": "https://www.instagram.com/colorado.kids.explore/",
-        "facebook": "Colorado Kids Explore - Adventure Guide"
+        "facebook": "https://www.facebook.com/profile.php?id=61575843462964",
+        "tiktok": "https://www.tiktok.com/@colorado.kids.explore",
+        "note": "FB page: Colorado Kids Explore - Adventure Guide; IG @colorado.kids.explore; TikTok @colorado.kids.explore. McFall/Peter Pan Park reel scrubbed 2026-10-01."
       },
       {
         "name": "Colorado Kids Are Rad",
@@ -29,12 +31,12 @@
         "instagram": "https://www.instagram.com/coloradomamalife/",
         "facebook": "https://www.facebook.com/profile.php?id=61577651781310",
         "tiktok": "https://www.tiktok.com/@coloradomamalife",
-        "note": "Angelica Quintanilla — family adventures + raw motherhood; added from FB reel share 2026-10-01"
+        "note": "Angelica Quintanilla \u2014 family adventures + raw motherhood; added from FB reel share 2026-10-01"
       }
     ],
     "updated": "2026-10-01",
-    "scrub_window": "~90 days of Days.in.denver beehiiv (Mar–Oct 2026) + Fall guide; CKAR 10-park list; CKE Belleview; IG/FB captions largely login-walled",
-    "notes": "Why-notes paraphrased/quoted from source captions and newsletters. Drive times are rough estimates from Arvada 80004; verify in Google Maps. Do not invent venues — every pin cites a named source. Seasonal spots kept if still relevant for fall 2026 or evergreen otherwise."
+    "scrub_window": "~90 days of Days.in.denver beehiiv (Mar\u2013Oct 2026) + Fall guide; CKAR 10-park list; CKE Belleview; IG/FB captions largely login-walled",
+    "notes": "Why-notes paraphrased/quoted from source captions and newsletters. Drive times are rough estimates from Arvada 80004; verify in Google Maps. Do not invent venues \u2014 every pin cites a named source. Seasonal spots kept if still relevant for fall 2026 or evergreen otherwise."
   },
   "places": [
     {
@@ -43,7 +45,7 @@
       "lat": 39.7870722,
       "lng": -104.9693851,
       "address": "4777 National Western Dr, Denver, CO 80216",
-      "why": "Completely free and open to the public — mock vet clinic, play kitchen, water table, and hands-on spots across three buildings; feels like a children's museum without the price. 2nd Saturdays add extra activities (Days.in.denver monthly favorite).",
+      "why": "Completely free and open to the public \u2014 mock vet clinic, play kitchen, water table, and hands-on spots across three buildings; feels like a children's museum without the price. 2nd Saturdays add extra activities (Days.in.denver monthly favorite).",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -67,7 +69,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter"
         }
       ],
-      "hours": "Mon–Fri 9am–5pm; 2nd Saturdays 10am–2pm; closed other Sat & Sun",
+      "hours": "Mon\u2013Fri 9am\u20135pm; 2nd Saturdays 10am\u20132pm; closed other Sat & Sun",
       "cost": "Free",
       "toddler_notes": "Great for ~20 months: indoor play kitchen, water table, mock vet. Free year-round (except Stock Show grounds fee).",
       "tags": [
@@ -88,7 +90,7 @@
       "lat": 39.8256417,
       "lng": -105.1455838,
       "address": "13150 W 72nd Ave, Arvada, CO 80005",
-      "why": "Days.in.denver: 'basically an entire day under one roof' — indoor water park, ice rinks, climbing wall, and a FREE indoor playground for little kids (Colorado-themed with tots area ~1–3).",
+      "why": "Days.in.denver: 'basically an entire day under one roof' \u2014 indoor water park, ice rinks, climbing wall, and a FREE indoor playground for little kids (Colorado-themed with tots area ~1\u20133).",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -110,7 +112,7 @@
       ],
       "hours": "Open daily; check Apex schedule for playground/pool hours",
       "cost": "Daily admission typically ~$10.50 kids / $12.50 adults (playground included; verify)",
-      "toddler_notes": "Tots section — ideal for ~20 months. Right in Arvada.",
+      "toddler_notes": "Tots section \u2014 ideal for ~20 months. Right in Arvada.",
       "tags": [
         "indoor",
         "arvada",
@@ -159,7 +161,7 @@
           "url": "https://www.englewoodco.gov/parks-recreation-library-golf/play-englewood-recreation/parks/englewood-parks/englewood-farm-train-at-belleview-park"
         }
       ],
-      "hours": "Park: dawn–dusk. Farm & Train: typically Memorial Day–Labor Day (~9am–3:30pm; check city)",
+      "hours": "Park: dawn\u2013dusk. Farm & Train: typically Memorial Day\u2013Labor Day (~9am\u20133:30pm; check city)",
       "cost": "Park free; farm/train ~$3 each (under 2 free)",
       "toddler_notes": "Under-2 free for farm/train. Creek play + playground year-round.",
       "tags": [
@@ -169,7 +171,7 @@
         "englewood",
         "seasonal"
       ],
-      "drive_note": "~41 min drive from Arvada 80004 (~12.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~41 min drive from Arvada 80004 (~12.7 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 41,
       "straight_line_miles": 12.7
@@ -180,7 +182,7 @@
       "lat": 39.6870548,
       "lng": -104.8799131,
       "address": "9200 E Iowa Ave, Denver, CO 80247",
-      "why": "On Colorado Kids Are Rad’s 10-park list. Natural-themed playground (bison climber, leaf playhouse, sand play, baby swings) geared toward younger kids (~2–8) plus dog park.",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Natural-themed playground (bison climber, leaf playhouse, sand play, baby swings) geared toward younger kids (~2\u20138) plus dog park.",
       "toddler_notes": "Baby swings and sand play; supervise closely.",
       "tags": [
         "park",
@@ -188,7 +190,7 @@
         "ckar-10",
         "free"
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "links": [
         {
@@ -200,12 +202,12 @@
           "url": "https://www.arapahoeco.gov/your_county/county_departments/open_spaces/our_work/current_projects/cheyenne_arapaho_park.php"
         }
       ],
-      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
       "source_accounts": [
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad"
       ],
-      "drive_note": "~43 min drive from Arvada 80004 (~13.3 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~43 min drive from Arvada 80004 (~13.3 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 43,
       "straight_line_miles": 13.3
@@ -216,7 +218,7 @@
       "lat": 39.6633652,
       "lng": -104.9828059,
       "address": "2938 S Logan St, Englewood, CO 80113",
-      "why": "On Colorado Kids Are Rad’s 10-park list; Days.in.denver calls it one of the most fun parks with three pump tracks, scooters/bike paths, and two playgrounds (including one for littles under 4).",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list; Days.in.denver calls it one of the most fun parks with three pump tracks, scooters/bike paths, and two playgrounds (including one for littles under 4).",
       "toddler_notes": "Younger kids area + inclusive features; bring a strider if ready.",
       "tags": [
         "park",
@@ -225,7 +227,7 @@
         "ckar-10",
         "englewood"
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "links": [
         {
@@ -245,14 +247,14 @@
           "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"
         }
       ],
-      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list; also Days.in.denver (@days.in.denver)",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list; also Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad",
         "@days.in.denver",
         "Facebook: Days.in.denver"
       ],
-      "drive_note": "~35 min drive from Arvada 80004 (~10.8 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~35 min drive from Arvada 80004 (~10.8 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 35,
       "straight_line_miles": 10.8
@@ -263,7 +265,7 @@
       "lat": 39.7020811,
       "lng": -104.9710337,
       "address": "S Downing St & E Louisiana Ave area, Denver, CO 80210",
-      "why": "On Colorado Kids Are Rad’s 10-park list. Classic Denver park with playgrounds, lakes, paths — easy picnic + play. Days.in.denver also flags the shady creek behind the north playground for early water play.",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Classic Denver park with playgrounds, lakes, paths \u2014 easy picnic + play. Days.in.denver also flags the shady creek behind the north playground for early water play.",
       "toddler_notes": "Multiple playground areas; spacious for stroller walks.",
       "tags": [
         "park",
@@ -272,7 +274,7 @@
         "denver",
         "creek"
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "links": [
         {
@@ -288,7 +290,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"
         }
       ],
-      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list; also Days.in.denver (@days.in.denver)",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list; also Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad",
@@ -306,14 +308,14 @@
       "lat": 39.8450333,
       "lng": -104.9642197,
       "address": "Welby / North Metro (City View Park), Adams County, CO",
-      "why": "On Colorado Kids Are Rad’s 10-park list. Neighborhood park with multi-level play and a quieter setting.",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Neighborhood park with multi-level play and a quieter setting.",
       "toddler_notes": "Quieter option north of Denver.",
       "tags": [
         "park",
         "playground",
         "ckar-10"
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "links": [
         {
@@ -321,7 +323,7 @@
           "url": "https://www.instagram.com/coloradokidsarerad/"
         }
       ],
-      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
       "source_accounts": [
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad"
@@ -337,15 +339,15 @@
       "lat": 39.769369,
       "lng": -105.004298,
       "address": "1501 W 38th Ave, Denver, CO 80211",
-      "why": "On Colorado Kids Are Rad’s 10-park list. Highland-area park with playground upgrades — solid toddler stop near N Denver.",
-      "toddler_notes": "Good Highland/Sloan’s Lake corridor pairing.",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Highland-area park with playground upgrades \u2014 solid toddler stop near N Denver.",
+      "toddler_notes": "Good Highland/Sloan\u2019s Lake corridor pairing.",
       "tags": [
         "park",
         "playground",
         "ckar-10",
         "highland"
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "links": [
         {
@@ -353,7 +355,7 @@
           "url": "https://www.instagram.com/coloradokidsarerad/"
         }
       ],
-      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
       "source_accounts": [
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad"
@@ -369,15 +371,15 @@
       "lat": 39.7364138,
       "lng": -105.0320785,
       "address": "1290 Knox Ct, Denver, CO 80204",
-      "why": "On Colorado Kids Are Rad’s 10-park list. Huge radio/music-themed adventure playground (giant mic, nets, spiral slide, zipline) — often called one of Denver’s best.",
-      "toddler_notes": "Park is HUGE — stay in toddler-friendly zones; bring a second adult if possible.",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Huge radio/music-themed adventure playground (giant mic, nets, spiral slide, zipline) \u2014 often called one of Denver\u2019s best.",
+      "toddler_notes": "Park is HUGE \u2014 stay in toddler-friendly zones; bring a second adult if possible.",
       "tags": [
         "park",
         "playground",
         "ckar-10",
         "destination"
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "links": [
         {
@@ -385,7 +387,7 @@
           "url": "https://www.instagram.com/coloradokidsarerad/"
         }
       ],
-      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
       "source_accounts": [
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad"
@@ -401,15 +403,15 @@
       "lat": 39.731122,
       "lng": -105.041541,
       "address": "900 N Raleigh St, Denver, CO 80204",
-      "why": "On Colorado Kids Are Rad’s 10-park list. West Denver park with cultural playground / Phase 1 improvements.",
-      "toddler_notes": "Pair with Sloan’s Lake / Paco Sanchez corridor.",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. West Denver park with cultural playground / Phase 1 improvements.",
+      "toddler_notes": "Pair with Sloan\u2019s Lake / Paco Sanchez corridor.",
       "tags": [
         "park",
         "playground",
         "ckar-10",
         "west-denver"
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "links": [
         {
@@ -417,7 +419,7 @@
           "url": "https://www.instagram.com/coloradokidsarerad/"
         }
       ],
-      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
       "source_accounts": [
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad"
@@ -433,7 +435,7 @@
       "lat": 39.7473715,
       "lng": -105.0447172,
       "address": "1700 N Sheridan Blvd, Denver, CO 80214",
-      "why": "On Colorado Kids Are Rad’s 10-park list; Days.in.denver park pick — lake + skyline, playground, pump track, paved loop for strollers/bikes.",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list; Days.in.denver park pick \u2014 lake + skyline, playground, pump track, paved loop for strollers/bikes.",
       "toddler_notes": "Watch water edges; playgrounds + open lawn good for ~20 months.",
       "tags": [
         "park",
@@ -441,7 +443,7 @@
         "ckar-10",
         "lake"
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "links": [
         {
@@ -457,7 +459,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"
         }
       ],
-      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list; also Days.in.denver (@days.in.denver)",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list; also Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad",
@@ -475,7 +477,7 @@
       "lat": 39.7615,
       "lng": -104.8915,
       "address": "Central Park neighborhood / near E Smith Rd, Denver, CO 80238",
-      "why": "On Colorado Kids Are Rad’s 10-park list; Days.in.denver: one of Denver’s best playground destinations with huge modern play, climbing, open fields. Tip: start at Panda Coffee, bring scooters.",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list; Days.in.denver: one of Denver\u2019s best playground destinations with huge modern play, climbing, open fields. Tip: start at Panda Coffee, bring scooters.",
       "toddler_notes": "Dedicated younger play; summer splash features when open.",
       "tags": [
         "park",
@@ -483,7 +485,7 @@
         "ckar-10",
         "splash"
       ],
-      "hours": "Dawn–dusk; splash seasonal",
+      "hours": "Dawn\u2013dusk; splash seasonal",
       "cost": "Free",
       "links": [
         {
@@ -499,14 +501,14 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"
         }
       ],
-      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list; also Days.in.denver (@days.in.denver)",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list; also Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad",
         "@days.in.denver",
         "Facebook: Days.in.denver"
       ],
-      "drive_note": "~34 min drive from Arvada 80004 (~10.4 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~34 min drive from Arvada 80004 (~10.4 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 34,
       "straight_line_miles": 10.4
@@ -517,7 +519,7 @@
       "lat": 39.7216528,
       "lng": -105.138471,
       "address": "500 Wright St, Lakewood, CO 80228",
-      "why": "On Colorado Kids Are Rad’s 10-park list. Recently renovated: nature-based play, loop trail, shade, open lawn, dog park.",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Recently renovated: nature-based play, loop trail, shade, open lawn, dog park.",
       "toddler_notes": "Nature play + open lawn; freshly renovated.",
       "tags": [
         "park",
@@ -525,7 +527,7 @@
         "ckar-10",
         "lakewood"
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "links": [
         {
@@ -533,11 +535,11 @@
           "url": "https://www.instagram.com/coloradokidsarerad/"
         },
         {
-          "label": "City of Lakewood — Wright Park",
+          "label": "City of Lakewood \u2014 Wright Park",
           "url": "https://www.lakewoodco.gov/Local-Government/Departments/Community-Resources/Parks-Forestry-and-Open-Space/A-to-Z-Park-List/Wright-Park"
         }
       ],
-      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
       "source_accounts": [
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad"
@@ -553,7 +555,7 @@
       "lat": 39.7658,
       "lng": -105.0026,
       "address": "2121 Children's Museum Drive, Denver, CO 80211",
-      "why": "Recurring Days.in.denver favorite — Bloom exhibit designed for newborn–36 months; Joy Park outdoor Colorado nature play. Featured for Mess Fest, Creative Calm, Party for the Planet, Harvest Hoot.",
+      "why": "Recurring Days.in.denver favorite \u2014 Bloom exhibit designed for newborn\u201336 months; Joy Park outdoor Colorado nature play. Featured for Mess Fest, Creative Calm, Party for the Planet, Harvest Hoot.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -585,7 +587,7 @@
           "url": "https://www.mychildsmuseum.org/"
         }
       ],
-      "hours": "Typically 9am–4pm daily (verify)",
+      "hours": "Typically 9am\u20134pm daily (verify)",
       "cost": "Paid admission (under 1 often free; check current rates / SCFD free days)",
       "toddler_notes": "Bloom is purpose-built for ~20 months. Great rainy-day or cold-day option.",
       "tags": [
@@ -605,7 +607,7 @@
       "lat": 39.7476,
       "lng": -104.9428,
       "address": "2001 Colorado Blvd, Denver, CO 80205",
-      "why": "Days.in.denver weekend idea: Museum of Nature & Science then Nature Play Park right behind it (climbable bighorn sheep, tunnels, water features). Curious Kids programs for ages 2–5 also featured.",
+      "why": "Days.in.denver weekend idea: Museum of Nature & Science then Nature Play Park right behind it (climbable bighorn sheep, tunnels, water features). Curious Kids programs for ages 2\u20135 also featured.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -629,7 +631,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-steal-this-weekend-idea-0001"
         }
       ],
-      "hours": "Nature Play outdoor: typically dawn–dusk free; museum hours vary",
+      "hours": "Nature Play outdoor: typically dawn\u2013dusk free; museum hours vary",
       "cost": "Nature Play free; museum paid (SCFD free days / library passes)",
       "toddler_notes": "Outdoor Nature Play works well for toddlers without buying museum tickets.",
       "tags": [
@@ -645,11 +647,11 @@
     },
     {
       "id": "denver-botanic-mordecai",
-      "name": "Denver Botanic Gardens — Mordecai Children's Garden",
+      "name": "Denver Botanic Gardens \u2014 Mordecai Children's Garden",
       "lat": 39.732,
       "lng": -104.9605,
       "address": "1007 York St, Denver, CO 80206",
-      "why": "Days.in.denver June favorite: Children's Garden + Springmelt Stream — 'one of the best hidden gems in Denver' with water play, nature exploration, space to roam. Suited to ages ~12 months–8 years.",
+      "why": "Days.in.denver June favorite: Children's Garden + Springmelt Stream \u2014 'one of the best hidden gems in Denver' with water play, nature exploration, space to roam. Suited to ages ~12 months\u20138 years.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -673,9 +675,9 @@
           "url": "https://www.botanicgardens.org/york-street/mordecai-childrens-garden"
         }
       ],
-      "hours": "Typically 9am–5pm (seasonal hours vary)",
+      "hours": "Typically 9am\u20135pm (seasonal hours vary)",
       "cost": "Included with Botanic Gardens admission (SCFD free days)",
-      "toddler_notes": "Digging, stream splash, natural play — messy-friendly for toddlers.",
+      "toddler_notes": "Digging, stream splash, natural play \u2014 messy-friendly for toddlers.",
       "tags": [
         "garden",
         "outdoor",
@@ -717,15 +719,15 @@
           "url": "https://www.theurbanfarm.org/"
         }
       ],
-      "hours": "Often Wed–Sat mornings (verify; ~9am–1pm cited)",
+      "hours": "Often Wed\u2013Sat mornings (verify; ~9am\u20131pm cited)",
       "cost": "Check site; some programs ticketed",
-      "toddler_notes": "Slow-paced animal outing — great for ~20 months if stroller-friendly paths.",
+      "toddler_notes": "Slow-paced animal outing \u2014 great for ~20 months if stroller-friendly paths.",
       "tags": [
         "farm",
         "animals",
         "outdoor"
       ],
-      "drive_note": "~37 min drive from Arvada 80004 (~11.4 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~37 min drive from Arvada 80004 (~11.4 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 37,
       "straight_line_miles": 11.4
@@ -760,7 +762,7 @@
           "url": "https://www.ssprd.org/clement-park"
         }
       ],
-      "hours": "Park dawn–dusk; library hours vary; splash seasonal",
+      "hours": "Park dawn\u2013dusk; library hours vary; splash seasonal",
       "cost": "Free park/library; splash may have fees",
       "toddler_notes": "Huge playground; go early or cloudy days to avoid crowds.",
       "tags": [
@@ -769,7 +771,7 @@
         "splash",
         "littleton"
       ],
-      "drive_note": "~45 min drive from Arvada 80004 (~14.3 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~45 min drive from Arvada 80004 (~14.3 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 45,
       "straight_line_miles": 14.3
@@ -796,7 +798,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter"
         }
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "toddler_notes": "Toddler-friendly playground + trail access.",
       "tags": [
@@ -804,7 +806,7 @@
         "playground",
         "trail"
       ],
-      "drive_note": "~39 min drive from Arvada 80004 (~12.1 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~39 min drive from Arvada 80004 (~12.1 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 39,
       "straight_line_miles": 12.1
@@ -815,7 +817,7 @@
       "lat": 39.7615,
       "lng": -104.9055,
       "address": "Denver Rock Park / Central Park area boulder playground (approx)",
-      "why": "Days.in.denver March park pick: unique playground with giant climbable boulders — perfect for adventurous climbers. Closed-toe shoes a must.",
+      "why": "Days.in.denver March park pick: unique playground with giant climbable boulders \u2014 perfect for adventurous climbers. Closed-toe shoes a must.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -831,7 +833,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter"
         }
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "toddler_notes": "Supervise closely; rocks can be dusty/slippery. Better for confident climbers; younger toddlers may prefer nearby soft-surface parks.",
       "tags": [
@@ -839,7 +841,7 @@
         "playground",
         "climbing"
       ],
-      "drive_note": "~32 min drive from Arvada 80004 (~9.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~32 min drive from Arvada 80004 (~9.7 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 32,
       "straight_line_miles": 9.7
@@ -866,7 +868,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"
         }
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "toddler_notes": "Near-home Arvada gem for creek toddling + playground.",
       "tags": [
@@ -944,7 +946,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter"
         }
       ],
-      "hours": "Weekdays ~9am–5pm (verify)",
+      "hours": "Weekdays ~9am\u20135pm (verify)",
       "cost": "Paid admission",
       "toddler_notes": "Crawler zone suited to ~20 months.",
       "tags": [
@@ -952,7 +954,7 @@
         "play",
         "pretend"
       ],
-      "drive_note": "~41 min drive from Arvada 80004 (~12.6 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~41 min drive from Arvada 80004 (~12.6 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 41,
       "straight_line_miles": 12.6
@@ -963,7 +965,7 @@
       "lat": 39.6785,
       "lng": -104.9605,
       "address": "Sweet Play Denver metro (verify address)",
-      "why": "Days.in.denver April weekly favorite: Toddler Tuesday discounted admission ($12) for toddlers 3 and under — great indoor option when spring weather is unpredictable.",
+      "why": "Days.in.denver April weekly favorite: Toddler Tuesday discounted admission ($12) for toddlers 3 and under \u2014 great indoor option when spring weather is unpredictable.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -979,14 +981,14 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"
         }
       ],
-      "hours": "Cited Tuesdays 9am–8pm for Toddler Tuesday (verify)",
+      "hours": "Cited Tuesdays 9am\u20138pm for Toddler Tuesday (verify)",
       "cost": "~$12 Toddler Tuesday (3 & under)",
       "toddler_notes": "Discounted toddler indoor play.",
       "tags": [
         "indoor",
         "play"
       ],
-      "drive_note": "~35 min drive from Arvada 80004 (~10.6 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~35 min drive from Arvada 80004 (~10.6 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 35,
       "straight_line_miles": 10.6
@@ -997,7 +999,7 @@
       "lat": 39.6968,
       "lng": -104.9375,
       "address": "4315 E Mississippi Ave, Denver, CO 80246",
-      "why": "Days.in.denver recurring favorite: Animal Cracker Story Time Tuesdays & Saturdays 10:30am — stories, crafts, songs, dancing in a lively children's bookstore.",
+      "why": "Days.in.denver recurring favorite: Animal Cracker Story Time Tuesdays & Saturdays 10:30am \u2014 stories, crafts, songs, dancing in a lively children's bookstore.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1030,7 +1032,7 @@
         "storytime",
         "bookstore"
       ],
-      "drive_note": "~34 min drive from Arvada 80004 (~10.5 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~34 min drive from Arvada 80004 (~10.5 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 34,
       "straight_line_miles": 10.5
@@ -1041,7 +1043,7 @@
       "lat": 39.7628,
       "lng": -105.0168,
       "address": "Highlands neighborhood, Denver, CO (Tumble Haus)",
-      "why": "Days.in.denver March spotlight & Sept favorite: open tumble play for little kids (adults free); Happy Hour Sun/Wed/Fri 4–6pm so kids climb/tumble while parents grab coffee or wine.",
+      "why": "Days.in.denver March spotlight & Sept favorite: open tumble play for little kids (adults free); Happy Hour Sun/Wed/Fri 4\u20136pm so kids climb/tumble while parents grab coffee or wine.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1061,7 +1063,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter"
         }
       ],
-      "hours": "Check schedule; Happy Hour 4–6pm select days",
+      "hours": "Check schedule; Happy Hour 4\u20136pm select days",
       "cost": "Open tumble passes / drop-in (verify)",
       "toddler_notes": "Soft indoor play good for ~20 months; adults free per Days.in.denver.",
       "tags": [
@@ -1080,7 +1082,7 @@
       "lat": 39.8022417,
       "lng": -105.0810629,
       "address": "5800 Olde Wadsworth Blvd, Arvada, CO 80002",
-      "why": "Days.in.denver July favorite: huge outdoor space with turf, toys, and room for kids to play while parents enjoy coffee and breakfast burritos — perfect for early risers near home.",
+      "why": "Days.in.denver July favorite: huge outdoor space with turf, toys, and room for kids to play while parents enjoy coffee and breakfast burritos \u2014 perfect for early risers near home.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1096,7 +1098,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/july-newsletter"
         }
       ],
-      "hours": "Mon–Fri ~6am–2pm; Sat–Sun ~7am–3pm",
+      "hours": "Mon\u2013Fri ~6am\u20132pm; Sat\u2013Sun ~7am\u20133pm",
       "cost": "Food purchase",
       "toddler_notes": "Near-home Arvada hang with dedicated kid play space.",
       "tags": [
@@ -1116,7 +1118,7 @@
       "lat": 39.7715389,
       "lng": -105.1113455,
       "address": "4005 Kipling St, Wheat Ridge, CO 80033",
-      "why": "Days.in.denver Sept favorite: easy indoor activity — leisure pool with zero-depth entry, water features, kids' slide; 120-ft slide for 48\"+.",
+      "why": "Days.in.denver Sept favorite: easy indoor activity \u2014 leisure pool with zero-depth entry, water features, kids' slide; 120-ft slide for 48\"+.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1132,7 +1134,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter"
         }
       ],
-      "hours": "Cited ~12–6pm daily (verify current pool schedule)",
+      "hours": "Cited ~12\u20136pm daily (verify current pool schedule)",
       "cost": "Day pass / membership",
       "toddler_notes": "Zero-depth entry great for ~20 months with close supervision.",
       "tags": [
@@ -1171,7 +1173,7 @@
           "url": "https://www.jeffco.us/1447/Lookout-Mountain-Nature-Center"
         }
       ],
-      "hours": "Fri–Mon often 10am–4pm (verify)",
+      "hours": "Fri\u2013Mon often 10am\u20134pm (verify)",
       "cost": "Free / donation",
       "toddler_notes": "Short nature center visit + easy outdoor time; bring layers.",
       "tags": [
@@ -1180,7 +1182,7 @@
         "golden",
         "outdoor"
       ],
-      "drive_note": "~32 min drive from Arvada 80004 (~9.6 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~32 min drive from Arvada 80004 (~9.6 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 32,
       "straight_line_miles": 9.6
@@ -1191,7 +1193,7 @@
       "lat": 39.7502,
       "lng": -104.949,
       "address": "2300 Steele St, Denver, CO 80205",
-      "why": "Days.in.denver June feature (130th anniversary programming) and fall Boo at the Zoo — classic toddler outing with stroller paths and animal viewing.",
+      "why": "Days.in.denver June feature (130th anniversary programming) and fall Boo at the Zoo \u2014 classic toddler outing with stroller paths and animal viewing.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1215,7 +1217,7 @@
           "url": "https://denverzoo.org/"
         }
       ],
-      "hours": "Typically 9am–4pm (seasonal)",
+      "hours": "Typically 9am\u20134pm (seasonal)",
       "cost": "Paid (library free zoo day prizes / SCFD free days when offered)",
       "toddler_notes": "Stroller-friendly; go early; shade/snack breaks essential.",
       "tags": [
@@ -1234,7 +1236,7 @@
       "lat": 39.5966134,
       "lng": -104.8378392,
       "address": "13050 E Peakview Ave area, Centennial, CO 80112",
-      "why": "Days.in.denver June splash/park pick: renovated large splash pad, modern playground, space for all ages — easy full morning.",
+      "why": "Days.in.denver June splash/park pick: renovated large splash pad, modern playground, space for all ages \u2014 easy full morning.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1250,7 +1252,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-june-newsletter-6e6b3c54ee90a522"
         }
       ],
-      "hours": "Park dawn–dusk; splash pad seasonal (typically Memorial Day–Labor Day)",
+      "hours": "Park dawn\u2013dusk; splash pad seasonal (typically Memorial Day\u2013Labor Day)",
       "cost": "Free",
       "toddler_notes": "Playground usable year-round; splash is summer-only.",
       "tags": [
@@ -1259,7 +1261,7 @@
         "playground",
         "seasonal"
       ],
-      "drive_note": "~59 min drive from Arvada 80004 (~19.1 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~59 min drive from Arvada 80004 (~19.1 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 59,
       "straight_line_miles": 19.1
@@ -1286,7 +1288,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-june-newsletter-6e6b3c54ee90a522"
         }
       ],
-      "hours": "Park dawn–dusk; splash seasonal",
+      "hours": "Park dawn\u2013dusk; splash seasonal",
       "cost": "Free",
       "toddler_notes": "Summer splash outing; playground year-round.",
       "tags": [
@@ -1295,7 +1297,7 @@
         "highlands-ranch",
         "seasonal"
       ],
-      "drive_note": "~57 min drive from Arvada 80004 (~18.2 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~57 min drive from Arvada 80004 (~18.2 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 57,
       "straight_line_miles": 18.2
@@ -1306,7 +1308,7 @@
       "lat": 39.5813997,
       "lng": -104.7130357,
       "address": "Red-Tailed Hawk Park, Aurora, CO",
-      "why": "Days.in.denver July: one of the best metro splash pads paired with incredible inclusive playground — ziplines, musical play, accessible swings.",
+      "why": "Days.in.denver July: one of the best metro splash pads paired with incredible inclusive playground \u2014 ziplines, musical play, accessible swings.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1322,9 +1324,9 @@
           "url": "https://days-in-denver.beehiiv.com/p/july-newsletter"
         }
       ],
-      "hours": "Dawn–dusk; splash seasonal",
+      "hours": "Dawn\u2013dusk; splash seasonal",
       "cost": "Free",
-      "toddler_notes": "Little shade — bring water, sunscreen. Inclusive features help mixed ages.",
+      "toddler_notes": "Little shade \u2014 bring water, sunscreen. Inclusive features help mixed ages.",
       "tags": [
         "park",
         "splash",
@@ -1332,7 +1334,7 @@
         "aurora",
         "seasonal"
       ],
-      "drive_note": "~76 min drive from Arvada 80004 (~24.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~76 min drive from Arvada 80004 (~24.7 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 76,
       "straight_line_miles": 24.7
@@ -1343,7 +1345,7 @@
       "lat": 39.6251327,
       "lng": -105.0030989,
       "address": "Pirates Cove Water Park, Englewood, CO 80110",
-      "why": "Days.in.denver July & May: summer favorite with slides, lazy river, spray gardens, zero-depth entry for little swimmers — water-park vibes without the huge price tag.",
+      "why": "Days.in.denver July & May: summer favorite with slides, lazy river, spray gardens, zero-depth entry for little swimmers \u2014 water-park vibes without the huge price tag.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1372,7 +1374,7 @@
         "englewood",
         "pool"
       ],
-      "drive_note": "~41 min drive from Arvada 80004 (~12.8 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~41 min drive from Arvada 80004 (~12.8 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 41,
       "straight_line_miles": 12.8
@@ -1400,7 +1402,7 @@
         }
       ],
       "hours": "Summer season only",
-      "cost": "~$2–$4 (Days.in.denver)",
+      "cost": "~$2\u2013$4 (Days.in.denver)",
       "toddler_notes": "Simple splash outing for littles; seasonal.",
       "tags": [
         "splash",
@@ -1434,7 +1436,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"
         }
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free",
       "toddler_notes": "Bring carrier/stroller for the walk in; shallow creek toddling.",
       "tags": [
@@ -1443,7 +1445,7 @@
         "nature",
         "centennial"
       ],
-      "drive_note": "~67 min drive from Arvada 80004 (~21.6 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~67 min drive from Arvada 80004 (~21.6 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 67,
       "straight_line_miles": 21.6
@@ -1470,7 +1472,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"
         }
       ],
-      "hours": "Dawn–dusk",
+      "hours": "Dawn\u2013dusk",
       "cost": "Free / park fees if any (verify)",
       "toddler_notes": "Stay-awhile creek day; farther mountain drive.",
       "tags": [
@@ -1479,7 +1481,7 @@
         "mountains",
         "farther"
       ],
-      "drive_note": "~48 min drive from Arvada 80004 (~15.0 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~48 min drive from Arvada 80004 (~15.0 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 48,
       "straight_line_miles": 15.0
@@ -1490,7 +1492,7 @@
       "lat": 39.6965,
       "lng": -105.0818,
       "address": "Yetman Farms, Lakewood CO (approx)",
-      "why": "Days.in.denver Sept spotlight & Oct Little Farmers Storytime: urban farm ~15 min from downtown — goats, horses, chickens, barn cats; fall festival with pumpkins, cider, live music. Storytime ~$13–15.",
+      "why": "Days.in.denver Sept spotlight & Oct Little Farmers Storytime: urban farm ~15 min from downtown \u2014 goats, horses, chickens, barn cats; fall festival with pumpkins, cider, live music. Storytime ~$13\u201315.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1515,7 +1517,7 @@
         }
       ],
       "hours": "Event-based; check calendar",
-      "cost": "Varies by event (storytime ~$13–15; fall fest ~$8, under 2 free cited)",
+      "cost": "Varies by event (storytime ~$13\u201315; fall fest ~$8, under 2 free cited)",
       "toddler_notes": "Animal meet + farm storytime excellent for ~20 months.",
       "tags": [
         "farm",
@@ -1535,7 +1537,7 @@
       "lat": 39.6085,
       "lng": -105.0185,
       "address": "6115 S Santa Fe Dr, Littleton, CO 80120",
-      "why": "Days.in.denver Oct library adventure: browse Hudson Gardens covered in thousands of pumpkins in early morning (free daytime; evening Magic of the Jack O’Lanterns ticketed), then Bemis Public Library for reading/play.",
+      "why": "Days.in.denver Oct library adventure: browse Hudson Gardens covered in thousands of pumpkins in early morning (free daytime; evening Magic of the Jack O\u2019Lanterns ticketed), then Bemis Public Library for reading/play.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1568,7 +1570,7 @@
         "littleton",
         "free"
       ],
-      "drive_note": "~44 min drive from Arvada 80004 (~13.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~44 min drive from Arvada 80004 (~13.7 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 44,
       "straight_line_miles": 13.7
@@ -1607,7 +1609,7 @@
         "free",
         "thornton"
       ],
-      "drive_note": "~35 min drive from Arvada 80004 (~10.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~35 min drive from Arvada 80004 (~10.7 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 35,
       "straight_line_miles": 10.7
@@ -1618,7 +1620,7 @@
       "lat": 39.9145,
       "lng": -105.0555,
       "address": "Anythink Nature Library Thornton (approx)",
-      "why": "Days.in.denver August: grand opening of 15-acre nature library — trails, interactive outdoor spaces, connect with nature. Ongoing visit destination.",
+      "why": "Days.in.denver August: grand opening of 15-acre nature library \u2014 trails, interactive outdoor spaces, connect with nature. Ongoing visit destination.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1705,7 +1707,7 @@
       "lat": 39.7195,
       "lng": -104.8915,
       "address": "Lowry, Denver, CO (Girl Scout DreamLab)",
-      "why": "Days.in.denver August: 'one of Denver's coolest hidden gems' — bouldering wall, Camp DreamLab, podcast recording, rotating hands-on activities.",
+      "why": "Days.in.denver August: 'one of Denver's coolest hidden gems' \u2014 bouldering wall, Camp DreamLab, podcast recording, rotating hands-on activities.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1721,7 +1723,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-august-newsletter"
         }
       ],
-      "hours": "Tue–Fri ~11am–4pm (verify)",
+      "hours": "Tue\u2013Fri ~11am\u20134pm (verify)",
       "cost": "Check Girl Scouts of Colorado",
       "toddler_notes": "Some activities better for older preschool+; still a unique indoor/outdoor exploratory stop.",
       "tags": [
@@ -1729,7 +1731,7 @@
         "play",
         "lowry"
       ],
-      "drive_note": "~37 min drive from Arvada 80004 (~11.5 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~37 min drive from Arvada 80004 (~11.5 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 37,
       "straight_line_miles": 11.5
@@ -1780,7 +1782,7 @@
       "lat": 39.5625,
       "lng": -105.0705,
       "address": "8500 W Deer Creek Canyon Rd, Littleton, CO 80128",
-      "why": "Days.in.denver Fall guide & Sept: corn maze celebrating Colorado 150th; Pumpkin Festival; trails and farm feel. Kids 3–15 free some 2nd Saturdays in summer (per Gardens).",
+      "why": "Days.in.denver Fall guide & Sept: corn maze celebrating Colorado 150th; Pumpkin Festival; trails and farm feel. Kids 3\u201315 free some 2nd Saturdays in summer (per Gardens).",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1804,7 +1806,7 @@
           "url": "https://www.botanicgardens.org/chatfield-farms"
         }
       ],
-      "hours": "Seasonal; corn maze Fri–Sun fall",
+      "hours": "Seasonal; corn maze Fri\u2013Sun fall",
       "cost": "Admission / festival tickets (under 2 often free)",
       "toddler_notes": "Mini maze options for littles; stroller on paved paths.",
       "tags": [
@@ -1813,7 +1815,7 @@
         "nature",
         "littleton"
       ],
-      "drive_note": "~52 min drive from Arvada 80004 (~16.5 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~52 min drive from Arvada 80004 (~16.5 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 52,
       "straight_line_miles": 16.5
@@ -1824,7 +1826,7 @@
       "lat": 39.7205,
       "lng": -104.9285,
       "address": "715 S Forest St, Denver, CO 80246",
-      "why": "Days.in.denver April: egg hunt / farm-feel historic park with animals, tractor rides, grounds to explore — year-round historic park visits beyond seasonal events.",
+      "why": "Days.in.denver April: egg hunt / farm-feel historic park with animals, tractor rides, grounds to explore \u2014 year-round historic park visits beyond seasonal events.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1853,7 +1855,7 @@
         "animals",
         "park"
       ],
-      "drive_note": "~32 min drive from Arvada 80004 (~9.8 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~32 min drive from Arvada 80004 (~9.8 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 32,
       "straight_line_miles": 9.8
@@ -1864,7 +1866,7 @@
       "lat": 39.8365,
       "lng": -104.9655,
       "address": "North Denver / Spano's Greenhouse and Farm",
-      "why": "Days.in.denver Fall guide: charming neighborhood pumpkin patch with straw maze and farm stand — 'perfect for toddlers and preschoolers who don't need all-day activities.' Kids under 10 free (cited).",
+      "why": "Days.in.denver Fall guide: charming neighborhood pumpkin patch with straw maze and farm stand \u2014 'perfect for toddlers and preschoolers who don't need all-day activities.' Kids under 10 free (cited).",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1880,9 +1882,9 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b"
         }
       ],
-      "hours": "Fall season Mon–Sat ~9–5, Sun ~10–4",
+      "hours": "Fall season Mon\u2013Sat ~9\u20135, Sun ~10\u20134",
       "cost": "~$5/person; kids under 10 free (per Days.in.denver)",
-      "toddler_notes": "Low-key fall outing near north Denver — ideal scale for ~20 months.",
+      "toddler_notes": "Low-key fall outing near north Denver \u2014 ideal scale for ~20 months.",
       "tags": [
         "farm",
         "seasonal",
@@ -1900,7 +1902,7 @@
       "lat": 39.9505,
       "lng": -104.9805,
       "address": "Thornton, CO (Maize in the City)",
-      "why": "Days.in.denver Fall guide & Oct library pairing: giant corn maze, pumpkins, kid-friendly attractions — easy full fall day; pair with Anythink Wright Farms.",
+      "why": "Days.in.denver Fall guide & Oct library pairing: giant corn maze, pumpkins, kid-friendly attractions \u2014 easy full fall day; pair with Anythink Wright Farms.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1920,8 +1922,8 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"
         }
       ],
-      "hours": "Fall season (Sep–Oct); hours vary",
-      "cost": "Attractions ~$0–$20",
+      "hours": "Fall season (Sep\u2013Oct); hours vary",
+      "cost": "Attractions ~$0\u2013$20",
       "toddler_notes": "Pick simpler attractions for toddlers; stroller on main paths.",
       "tags": [
         "seasonal",
@@ -1929,7 +1931,7 @@
         "maze",
         "thornton"
       ],
-      "drive_note": "~38 min drive from Arvada 80004 (~11.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~38 min drive from Arvada 80004 (~11.7 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 38,
       "straight_line_miles": 11.7
@@ -1960,7 +1962,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"
         }
       ],
-      "hours": "Fall Mon–Sat ~8–6, Sun ~9–5",
+      "hours": "Fall Mon\u2013Sat ~8\u20136, Sun ~9\u20135",
       "cost": "Free admission; pay per activity / ~$20 wristband",
       "toddler_notes": "Go early for fewer crowds; free maze works for littles.",
       "tags": [
@@ -1969,7 +1971,7 @@
         "aurora",
         "free-entry"
       ],
-      "drive_note": "~59 min drive from Arvada 80004 (~18.8 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~59 min drive from Arvada 80004 (~18.8 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 59,
       "straight_line_miles": 18.8
@@ -1980,7 +1982,7 @@
       "lat": 39.6985,
       "lng": -105.1255,
       "address": "Lakewood, CO (Bad Dog Farm)",
-      "why": "Days.in.denver Fall guide: local apple picking without leaving the metro — heirloom varieties by reservation. Tip: book ahead.",
+      "why": "Days.in.denver Fall guide: local apple picking without leaving the metro \u2014 heirloom varieties by reservation. Tip: book ahead.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -1996,7 +1998,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b"
         }
       ],
-      "hours": "Aug–Sep by appointment",
+      "hours": "Aug\u2013Sep by appointment",
       "cost": "~$25 deposit applied to apple purchase",
       "toddler_notes": "Short orchard toddle; reservation required.",
       "tags": [
@@ -2016,7 +2018,7 @@
       "lat": 39.5805,
       "lng": -104.8775,
       "address": "7711 S Parker Rd, Centennial, CO 80016",
-      "why": "Days.in.denver Sept: Lil’ Buds Book Club (first Thursday) story time with plants/animals/crafts in the 'Park' on Aisle 3 (ages 3–5). Fall Family Weekend with music, animals, carriage rides.",
+      "why": "Days.in.denver Sept: Lil\u2019 Buds Book Club (first Thursday) story time with plants/animals/crafts in the 'Park' on Aisle 3 (ages 3\u20135). Fall Family Weekend with music, animals, carriage rides.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -2038,14 +2040,14 @@
       ],
       "hours": "Garden center daily; programs monthly/seasonal",
       "cost": "Free entry; some activities paid",
-      "toddler_notes": "Story club skews 3–5 but garden wander works for younger with caregiver.",
+      "toddler_notes": "Story club skews 3\u20135 but garden wander works for younger with caregiver.",
       "tags": [
         "garden",
         "storytime",
         "seasonal",
         "centennial"
       ],
-      "drive_note": "~58 min drive from Arvada 80004 (~18.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~58 min drive from Arvada 80004 (~18.7 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 58,
       "straight_line_miles": 18.7
@@ -2056,7 +2058,7 @@
       "lat": 39.6900035,
       "lng": -104.891316,
       "address": "1471 S Parker Rd, Denver, CO 80231",
-      "why": "Days.in.denver March: Toddler Story time Mondays 9:30 (ages 2–3) and Family Story time 10:30 (ages 0–5).",
+      "why": "Days.in.denver March: Toddler Story time Mondays 9:30 (ages 2\u20133) and Family Story time 10:30 (ages 0\u20135).",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -2078,13 +2080,13 @@
       ],
       "hours": "Library hours + Monday story times",
       "cost": "Free",
-      "toddler_notes": "Family story time includes 0–5 — good for ~20 months.",
+      "toddler_notes": "Family story time includes 0\u20135 \u2014 good for ~20 months.",
       "tags": [
         "library",
         "free",
         "storytime"
       ],
-      "drive_note": "~41 min drive from Arvada 80004 (~12.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~41 min drive from Arvada 80004 (~12.7 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 41,
       "straight_line_miles": 12.7
@@ -2095,7 +2097,7 @@
       "lat": 39.7530014,
       "lng": -104.8779448,
       "address": "2501 Dallas St, Aurora, CO 80010",
-      "why": "Days.in.denver May: Tattered Cover story time Wed 11am & Sun 12pm at Stanley Marketplace — grab Logan House coffee and let kids play out back.",
+      "why": "Days.in.denver May: Tattered Cover story time Wed 11am & Sun 12pm at Stanley Marketplace \u2014 grab Logan House coffee and let kids play out back.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -2120,7 +2122,7 @@
         "food",
         "aurora"
       ],
-      "drive_note": "~37 min drive from Arvada 80004 (~11.3 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~37 min drive from Arvada 80004 (~11.3 mi straight-line) \u2014 FARTHER (>30 min; flag)",
       "farther_than_30min": true,
       "approx_drive_minutes": 37,
       "straight_line_miles": 11.3
@@ -2131,7 +2133,7 @@
       "lat": 39.7515,
       "lng": -105.2225,
       "address": "1310 Maple St, Golden, CO 80401",
-      "why": "Days.in.denver Oct: Mines Museum Spooktacular — free teal-pumpkin-friendly trick-or-treat with STEM hands-on activities. Museum also visit-worthy year-round for geology/minerals curiosity.",
+      "why": "Days.in.denver Oct: Mines Museum Spooktacular \u2014 free teal-pumpkin-friendly trick-or-treat with STEM hands-on activities. Museum also visit-worthy year-round for geology/minerals curiosity.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -2171,7 +2173,7 @@
       "lat": 39.7485,
       "lng": -104.9505,
       "address": "17th Ave & York St area, Denver, CO 80205",
-      "why": "Days.in.denver: Saturday City Park Farmers Market (through Oct), Sunday City Park Jazz in summer — picnic lawn near Zoo/DMNS. Easy combine with Nature Play.",
+      "why": "Days.in.denver: Saturday City Park Farmers Market (through Oct), Sunday City Park Jazz in summer \u2014 picnic lawn near Zoo/DMNS. Easy combine with Nature Play.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -2195,7 +2197,7 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"
         }
       ],
-      "hours": "Park dawn–dusk; market Sat mornings seasonally",
+      "hours": "Park dawn\u2013dusk; market Sat mornings seasonally",
       "cost": "Free park; market purchases",
       "toddler_notes": "Wide lawns for toddling; stroller-friendly paths.",
       "tags": [
@@ -2215,7 +2217,7 @@
       "lat": 39.8015,
       "lng": -105.0818,
       "address": "Olde Town / Arvada Homegrown location, Arvada, CO",
-      "why": "Days.in.denver April: free arcade games for kids while you grab dinner — Arvada location among several metro spots.",
+      "why": "Days.in.denver April: free arcade games for kids while you grab dinner \u2014 Arvada location among several metro spots.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -2244,6 +2246,58 @@
       "farther_than_30min": false,
       "approx_drive_minutes": 8,
       "straight_line_miles": 0.1
+    },
+    {
+      "id": "mcfall-park",
+      "name": "McFall Park (\u201cPeter Pan Park\u201d)",
+      "lat": 39.863608,
+      "lng": -105.04755,
+      "address": "4801 W 92nd Ave, Westminster, CO 80031",
+      "why": "Colorado Kids Explore reel tip: whimsical \u201cPeter Pan Park\u201d playground (pirate ship / fort / water play) plus free breakfast & lunch for kids under 18 Mon\u2013Fri 11am\u20131pm when the summer meal program is running (adults small fee; confirm season/other sites). City splash pad Memorial Day\u2013Labor Day ~9am\u20138pm.",
+      "source": "Colorado Kids Explore (@colorado.kids.explore) Facebook reel 2026-10-01 share",
+      "source_accounts": [
+        "@colorado.kids.explore",
+        "Facebook: Colorado Kids Explore - Adventure Guide",
+        "TikTok: @colorado.kids.explore"
+      ],
+      "links": [
+        {
+          "label": "Facebook reel (CKE)",
+          "url": "https://www.facebook.com/reel/1702181394414028/"
+        },
+        {
+          "label": "Facebook Colorado Kids Explore",
+          "url": "https://www.facebook.com/profile.php?id=61575843462964"
+        },
+        {
+          "label": "Instagram @colorado.kids.explore",
+          "url": "https://www.instagram.com/colorado.kids.explore/"
+        },
+        {
+          "label": "TikTok @colorado.kids.explore",
+          "url": "https://www.tiktok.com/@colorado.kids.explore"
+        },
+        {
+          "label": "City of Westminster \u2014 McFall Park",
+          "url": "https://www.westminsterco.gov/facilities/facility/details/mcfallpark-33"
+        }
+      ],
+      "hours": "Park ~6am\u201311pm. Splash pad: Memorial Day\u2013Labor Day, typically 9am\u20138pm (may shut for weather/maintenance). Free kids meals (when offered): Mon\u2013Fri 11am\u20131pm per CKE reel \u2014 verify season.",
+      "cost": "Park/splash free. Kids meals free under 18 when program runs; adults small fee.",
+      "toddler_notes": "~20mo: splash pad + open turf good; some playground pieces better for older preschool+. City notes poured-in-place playground surface replacement Nov 3\u201321 (2026) \u2014 playground closed then; splash/fields may still be usable. Confirm before you go.",
+      "tags": [
+        "park",
+        "splash-pad",
+        "waterplay",
+        "free",
+        "westminster",
+        "meals",
+        "toddler"
+      ],
+      "drive_note": "~16 min drive from Arvada 80004 (~4.7 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 16,
+      "straight_line_miles": 4.7
     }
   ]
 }
