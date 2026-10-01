@@ -2,29 +2,39 @@
 
 ## Accounts
 
-| Account | Instagram | Facebook |
-|---------|-----------|----------|
-| Days.in.denver | https://www.instagram.com/days.in.denver/ | Days.in.denver |
-| Colorado Kids Explore | https://www.instagram.com/colorado.kids.explore/ | Colorado Kids Explore - Adventure Guide |
-| Colorado Kids Are Rad | https://www.instagram.com/coloradokidsarerad/ | Colorado Kids Are Rad |
+| Account | Instagram | Facebook | Other |
+|---------|-----------|----------|-------|
+| Days.in.denver | https://www.instagram.com/days.in.denver/ | Days.in.denver | https://days-in-denver.beehiiv.com/ |
+| Colorado Kids Explore | https://www.instagram.com/colorado.kids.explore/ | Colorado Kids Explore - Adventure Guide | |
+| Colorado Kids Are Rad | https://www.instagram.com/coloradokidsarerad/ | Colorado Kids Are Rad | |
 
-Also used: Days.in.denver Beehiiv newsletter (Oct 2026) https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter
+## Scrub window (2026-10-01 deep pass)
 
-## Included in v1 (2026-10-01)
+**Days.in.denver beehiiv (~90 days / Mar–Oct 2026 + Fall guide)**
 
-**Days.in.denver**
+- March, April, May, June, July, August, September, October newsletters
+- Fall guide (pumpkin patches, farms, festivals)
+- Steal-this-weekend idea (DMNS + Nature Play)
 
-- CSU Spur — free mock vet / play kitchen / water table; Mon–Fri 9–5, 2nd Sat 10–2 (Instagram reel + newsletter).
-- Apex Center — “entire day under one roof”; free indoor playground for little kids (October newsletter).
+Major venue themes pulled: Apex Center, CSU Spur, Children's Museum (Bloom), DMNS Nature Play, Botanic Gardens Mordecai, Urban Farm, Clement Park, Cook Park, Denver Rock Park, Ralston Valley Park, Paul Derda Rec, Bookies, Tumble Haus, Bonfire Burritos Arvada, Wheat Ridge Rec pool, Lookout Mountain Nature Center, Denver Zoo, Centennial Center Park, Civic Green, Red-tailed Hawk, Pirates Cove, Surfside, creek spots, Yetman Farms, Hudson Gardens, Anythink libraries, Central Library, DreamLab, Colorado Railroad Museum, Chatfield Farms, Four Mile, Spano's, Maize in the City, Nick's, Bad Dog Farm, Tagawa, Eloise May, Stanley Marketplace, Mines Museum, City Park, Homegrown Arvada, and more.
 
 **Colorado Kids Explore**
 
-- Belleview Park (Farm & Train) — free park; petting zoo + train ~$3 ages 2+ (under 2 free). Seasonal farm/train.
+- Belleview Park Farm & Train (also reinforced in Days.in.denver May/Aug)
 
 **Colorado Kids Are Rad — evergreen 10-park list**
 
 Cheyenne-Arapaho, Bates-Logan, Washington Park, City View, La Raza, Paco Sanchez, Joseph P. Martinez, Sloan’s Lake, Central Park, Wright Park.
 
-## Notes for next scrub
+## Auth / scrape blockers
 
-Instagram/Facebook login walls limit automated caption pulls. Re-check recent reels (~30–60 days) on each account and paste paraphrased “why” + link into `data/places.json`, then rebuild. Deduplicate by place name/address.
+- Instagram public pages only expose follower counts in OG tags (login wall for captions/reels).
+- Facebook pages return empty/login interstitial for automated fetch.
+- Primary deep content for this scrub: Days.in.denver beehiiv (fully readable) + prior CKAR 10-park list + CKE Belleview attribution.
+
+## Weekly update notes
+
+1. Skim latest Days.in.denver beehiiv + IG stories/reels when logged in.
+2. Add/edit rows in `data/places.json` (keep `source` + `links`).
+3. `python3 scripts/build_map.py` (writes `output/` and syncs `docs/` for Pages).
+4. Commit & push `main` — GitHub Pages serves from `/docs`.
