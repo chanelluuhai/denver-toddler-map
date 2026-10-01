@@ -1,6 +1,6 @@
 # Denver / Arvada toddler outing map
 
-Self-contained Leaflet map of toddler-friendly spots near **Arvada, CO 80004**, curated from:
+Self-contained MapLibre map of toddler-friendly spots near **Arvada, CO 80004**, curated from:
 
 - [Days.in.denver](https://www.instagram.com/days.in.denver/) (`@days.in.denver`) + [beehiiv newsletter](https://days-in-denver.beehiiv.com/)
 - [Colorado Kids Explore](https://www.instagram.com/colorado.kids.explore/) (`@colorado.kids.explore`)
@@ -10,11 +10,11 @@ Self-contained Leaflet map of toddler-friendly spots near **Arvada, CO 80004**, 
 
 **https://chanelluuhai.github.io/denver-toddler-map/**
 
-Mobile-first UI with sticky search + filters (near / farther / free / indoor). Green markers ≈ within 30 min of 80004; orange = farther.
+Mobile-app shell with bottom tabs (**Map · List · Filters · About**), bottom-sheet place details, search, and filters (near / farther / free / indoor). Soft light basemap via **MapLibre GL + OpenFreeMap Positron** (no Mapbox token). Teal pins ≈ within 30 min of 80004; terracotta = farther.
 
 ## Open locally
 
-1. Open **`output/index.html`** (or `docs/index.html`) in a browser — `file://` works (places are embedded).
+1. Open **`output/index.html`** (or `docs/index.html`) in a browser — `file://` works (places are embedded). Needs network for MapLibre + tiles + fonts.
 2. Or: `python3 -m http.server 8765 --directory docs` → http://127.0.0.1:8765/
 
 ## Update after a scrub (weekly)

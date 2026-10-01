@@ -3,317 +3,744 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<meta name="theme-color" content="#0d9488"/>
+<meta name="theme-color" content="#2A9D8F"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="description" content="Toddler outing map near Arvada/Denver — parks, museums, indoor play, farms from local parent guides."/>
-<title>Denver/Arvada Toddler Outing Map</title>
-<link rel="preconnect" href="https://unpkg.com" crossorigin/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<title>Toddler Spots · Denver / Arvada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet"/>
 <style>
   :root {
-    --ink: #0f172a;
-    --muted: #64748b;
-    --card: #ffffff;
-    --bg: #f0fdfa;
-    --bg2: #ecfeff;
-    --accent: #0d9488;
-    --accent-dark: #0f766e;
-    --far: #c2410c;
-    --near: #0d9488;
-    --free: #2563eb;
-    --indoor: #7c3aed;
-    --shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
-    --radius: 16px;
-    --tap: 44px;
+    --accent: #2A9D8F;
+    --accent-soft: #E6F5F3;
+    --accent-dark: #1F7A6E;
+    --ink: #1A1A1A;
+    --ink-2: #3D3D3D;
+    --muted: #6B7280;
+    --line: #E8E6E1;
+    --bg: #F7F5F2;
+    --card: #FFFFFF;
+    --far: #C45C26;
+    --far-soft: #FBEDE6;
+    --near: #2A9D8F;
+    --near-soft: #E6F5F3;
+    --free: #3B6EA5;
+    --free-soft: #E8F0F8;
+    --indoor: #7A5C9E;
+    --indoor-soft: #F0EAF5;
+    --shadow: 0 4px 24px rgba(26,26,26,0.08);
+    --shadow-lg: 0 12px 40px rgba(26,26,26,0.14);
+    --radius: 18px;
+    --radius-sm: 12px;
+    --tap: 48px;
+    --tab-h: calc(56px + env(safe-area-inset-bottom, 0px));
+    --top-h: 56px;
+    --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --font: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --display: "Fraunces", Georgia, "Times New Roman", serif;
   }
-  * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; margin: 0; overflow: hidden; }
   body {
-    font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    font-family: var(--font);
     color: var(--ink);
-    background: linear-gradient(160deg, var(--bg) 0%, #f8fafc 45%, var(--bg2) 100%);
+    background: var(--bg);
     -webkit-font-smoothing: antialiased;
   }
+  button, input { font-family: inherit; }
+
   #app {
-    display: grid;
-    grid-template-columns: minmax(320px, 400px) 1fr;
+    position: relative;
     height: 100%;
     height: 100dvh;
+    width: 100%;
+    overflow: hidden;
   }
-  aside {
+
+  /* —— Top chrome —— */
+  .topbar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 20;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: calc(8px + var(--safe-top)) 14px 8px;
+    pointer-events: none;
+  }
+  .topbar > * { pointer-events: auto; }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(12px);
-    border-right: 1px solid #d1fae5;
-    min-height: 0;
-    z-index: 2;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(232,230,225,0.9);
+    border-radius: 999px;
+    padding: 8px 14px 8px 10px;
+    box-shadow: var(--shadow);
+    flex-shrink: 0;
   }
-  .hero {
-    padding: 16px 16px 10px;
-    background: linear-gradient(135deg, #ccfbf1 0%, #ffffff 55%, #e0f2fe 100%);
-    border-bottom: 1px solid #d1fae5;
+  .brand-mark {
+    width: 28px; height: 28px;
+    border-radius: 9px;
+    background: var(--accent);
+    color: #fff;
+    display: grid; place-items: center;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.95rem;
   }
-  .hero-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-  h1 {
-    font-size: 1.2rem;
-    margin: 0;
+  .brand-text {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 0.95rem;
     letter-spacing: -0.02em;
-    line-height: 1.25;
-    font-weight: 750;
+    line-height: 1.1;
   }
-  .pill-count {
+  .brand-sub {
+    display: block;
+    font-family: var(--font);
+    font-weight: 500;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+  }
+  .search-pill {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    max-width: 420px;
+  }
+  .search-pill input {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid rgba(232,230,225,0.9);
+    border-radius: 999px;
+    padding: 10px 16px 10px 42px;
+    font-size: 0.95rem;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: var(--shadow);
+    outline: none;
+    color: var(--ink);
+  }
+  .search-pill input::placeholder { color: #9CA3AF; }
+  .search-pill input:focus {
+    border-color: var(--accent);
+    box-shadow: var(--shadow), 0 0 0 3px rgba(42,157,143,0.18);
+  }
+  .search-pill .ico {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); pointer-events: none; width: 18px; height: 18px;
+  }
+  .count-chip {
     flex-shrink: 0;
     background: var(--accent);
     color: #fff;
     font-size: 0.72rem;
     font-weight: 700;
-    padding: 6px 10px;
+    padding: 8px 12px;
     border-radius: 999px;
-    min-height: 28px;
+    box-shadow: var(--shadow);
+    white-space: nowrap;
   }
-  .sub {
+
+  /* —— Map (full-bleed) —— */
+  #map {
+    position: absolute;
+    inset: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+  .maplibregl-ctrl-bottom-left,
+  .maplibregl-ctrl-bottom-right {
+    margin-bottom: calc(var(--tab-h) + 8px) !important;
+  }
+  .maplibregl-ctrl-attrib {
+    font-size: 10px !important;
+    background: rgba(255,255,255,0.75) !important;
+  }
+  .maplibregl-popup { display: none !important; }
+
+  /* Marker dots */
+  .pin {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2.5px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: transform .15s;
+  }
+  .pin.near { background: var(--near); }
+  .pin.far { background: var(--far); }
+  .pin.active { transform: scale(1.35); box-shadow: 0 0 0 4px rgba(42,157,143,0.28), 0 2px 10px rgba(0,0,0,0.3); }
+  .home-pin {
+    background: var(--free);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+    white-space: nowrap;
+  }
+
+  /* —— Views (List / Filters / About overlay panels) —— */
+  .panel {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background: var(--bg);
+    display: none;
+    flex-direction: column;
+    padding-top: var(--safe-top);
+    padding-bottom: var(--tab-h);
+    overflow: hidden;
+  }
+  .panel.active { display: flex; }
+  .panel-header {
+    padding: 18px 20px 12px;
+    flex-shrink: 0;
+  }
+  .panel-header h1 {
+    font-family: var(--display);
+    font-size: 1.55rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+  .panel-header p {
+    margin: 6px 0 0;
     color: var(--muted);
-    font-size: 0.8rem;
-    margin: 8px 0 0;
+    font-size: 0.88rem;
     line-height: 1.4;
   }
-  .sticky-tools {
-    position: sticky;
-    top: 0;
-    z-index: 5;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(10px);
-    padding: 10px 14px 12px;
-    border-bottom: 1px solid #e2e8f0;
-    box-shadow: 0 4px 16px rgba(15,23,42,0.04);
-  }
-  .search-wrap { position: relative; margin-bottom: 10px; }
-  .search-wrap input {
-    width: 100%;
-    min-height: var(--tap);
-    border: 1.5px solid #cbd5e1;
-    border-radius: 12px;
-    padding: 10px 14px 10px 40px;
-    font-size: 1rem;
-    background: #fff;
-    outline: none;
-    transition: border-color .15s, box-shadow .15s;
-  }
-  .search-wrap input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(13,148,136,0.2);
-  }
-  .search-wrap .icon {
-    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-    color: var(--muted); font-size: 1rem; pointer-events: none;
-  }
-  .filters {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 8px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 2px;
-  }
-  .filters::-webkit-scrollbar { display: none; }
-  .filters button {
-    flex: 0 0 auto;
-    border: 1.5px solid #cbd5e1;
-    background: #fff;
-    border-radius: 999px;
-    min-height: 40px;
-    padding: 8px 14px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    color: var(--ink);
-    white-space: nowrap;
-    transition: background .15s, color .15s, border-color .15s, transform .1s;
-  }
-  .filters button:active { transform: scale(0.97); }
-  .filters button.active {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-  }
-  .filters button.active.far { background: var(--far); border-color: var(--far); }
-  .filters button.active.free { background: var(--free); border-color: var(--free); }
-  .filters button.active.indoor { background: var(--indoor); border-color: var(--indoor); }
-  #list {
+  .panel-body {
     flex: 1;
     overflow: auto;
-    padding: 12px 14px calc(20px + var(--safe-bottom));
     -webkit-overflow-scrolling: touch;
+    padding: 4px 16px 24px;
   }
-  .place {
-    border: 1px solid #e2e8f0;
-    border-radius: var(--radius);
-    padding: 14px;
-    margin-bottom: 10px;
-    cursor: pointer;
+
+  /* List cards */
+  .place-card {
     background: var(--card);
-    box-shadow: 0 2px 8px rgba(15,23,42,0.04);
-    transition: border-color .15s, box-shadow .15s, transform .12s;
-    min-height: 72px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 16px 14px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(26,26,26,0.04);
+    transition: transform .12s, box-shadow .15s, border-color .15s;
   }
-  .place:active { transform: scale(0.99); }
-  .place:hover, .place.active {
-    border-color: #5eead4;
+  .place-card:active { transform: scale(0.985); }
+  .place-card:hover, .place-card.active {
+    border-color: #B8DED9;
     box-shadow: var(--shadow);
   }
-  .place.active { outline: 2px solid var(--accent); outline-offset: 1px; }
-  .place h3 {
-    margin: 0 0 6px;
-    font-size: 1rem;
-    line-height: 1.3;
+  .place-card.active { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .card-top {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 6px;
+    margin-bottom: 8px;
   }
   .badge {
     display: inline-flex;
     align-items: center;
     font-size: 0.68rem;
     font-weight: 700;
-    padding: 3px 8px;
+    padding: 4px 9px;
     border-radius: 999px;
     letter-spacing: 0.01em;
   }
-  .badge.near { background: #ccfbf1; color: var(--near); }
-  .badge.far { background: #ffedd5; color: var(--far); }
-  .badge.free { background: #dbeafe; color: var(--free); }
-  .badge.indoor { background: #ede9fe; color: var(--indoor); }
-  .meta { font-size: 0.8rem; color: var(--muted); line-height: 1.35; }
-  .meta + .meta { margin-top: 2px; }
-  #map-wrap { position: relative; min-height: 0; }
-  #map { height: 100%; width: 100%; }
-  .map-legend {
-    position: absolute;
-    left: 12px;
-    bottom: calc(12px + var(--safe-bottom));
-    z-index: 500;
-    background: rgba(255,255,255,0.95);
-    border-radius: 12px;
-    padding: 8px 12px;
-    font-size: 0.72rem;
-    box-shadow: var(--shadow);
-    border: 1px solid #e2e8f0;
-    line-height: 1.4;
-  }
-  .map-legend span { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
-  .leaflet-popup-content-wrapper {
-    border-radius: 14px;
-    box-shadow: var(--shadow);
-    padding: 0;
-  }
-  .leaflet-popup-content {
-    margin: 14px 16px 16px;
-    min-width: min(280px, 78vw);
-    max-width: min(320px, 86vw);
-    font-size: 0.9rem;
-    line-height: 1.4;
-  }
-  .leaflet-container a.leaflet-popup-close-button {
-    width: 28px; height: 28px; font-size: 20px; padding: 4px;
-  }
-  .popup h3 { margin: 0 0 8px; font-size: 1.05rem; line-height: 1.3; }
-  .popup .badges { margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
-  .popup a {
-    color: #0369a1;
+  .badge.near { background: var(--near-soft); color: var(--near); }
+  .badge.far { background: var(--far-soft); color: var(--far); }
+  .badge.free { background: var(--free-soft); color: var(--free); }
+  .badge.indoor { background: var(--indoor-soft); color: var(--indoor); }
+  .place-card h3 {
+    margin: 0 0 8px;
+    font-family: var(--display);
+    font-size: 1.12rem;
     font-weight: 600;
-    word-break: break-word;
-    display: inline-block;
-    padding: 4px 0;
-    min-height: 32px;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
   }
-  .why { margin: 10px 0; }
-  .src { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
-  footer.note {
-    font-size: 0.72rem;
-    color: var(--muted);
-    margin-top: 8px;
+  .why-snip {
+    margin: 0 0 10px;
+    font-size: 0.88rem;
+    color: var(--ink-2);
     line-height: 1.45;
-    padding: 0 2px 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .card-meta span { display: inline-flex; align-items: center; gap: 4px; }
   .empty {
     text-align: center;
     color: var(--muted);
-    padding: 28px 12px;
-    font-size: 0.9rem;
+    padding: 48px 20px;
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
-  /* Mobile: map on top, list sheet below */
-  @media (max-width: 860px) {
-    #app {
-      grid-template-columns: 1fr;
-      grid-template-rows: minmax(42vh, 48vh) 1fr;
-    }
-    aside {
-      border-right: none;
-      border-top: 1px solid #d1fae5;
-      border-radius: 18px 18px 0 0;
-      box-shadow: 0 -8px 28px rgba(15,23,42,0.08);
-      margin-top: -12px;
-      z-index: 3;
-    }
-    .hero { padding-top: 10px; border-radius: 18px 18px 0 0; }
-    .hero::before {
-      content: "";
-      display: block;
-      width: 40px; height: 4px;
-      background: #cbd5e1;
-      border-radius: 999px;
-      margin: 0 auto 10px;
-    }
-    h1 { font-size: 1.08rem; }
-    .map-legend { bottom: 20px; font-size: 0.68rem; }
+  /* Filters panel */
+  .filter-grid {
+    display: grid;
+    gap: 10px;
   }
-  @media (max-width: 420px) {
-    .filters button { min-height: 38px; padding: 7px 12px; font-size: 0.78rem; }
-    .place { padding: 12px; }
+  .filter-chip {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    text-align: left;
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    min-height: var(--tap);
+    cursor: pointer;
+    transition: border-color .15s, background .15s, transform .1s;
+  }
+  .filter-chip:active { transform: scale(0.98); }
+  .filter-chip.active {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .filter-chip .dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--muted);
+  }
+  .filter-chip[data-filter="near"] .dot { background: var(--near); }
+  .filter-chip[data-filter="far"] .dot { background: var(--far); }
+  .filter-chip[data-filter="free"] .dot { background: var(--free); }
+  .filter-chip[data-filter="indoor"] .dot { background: var(--indoor); }
+  .filter-chip[data-filter="all"] .dot { background: var(--accent); }
+  .filter-chip .label {
+    flex: 1;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .filter-chip .hint {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .filter-chip .check {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--line);
+    flex-shrink: 0;
+    display: grid; place-items: center;
+  }
+  .filter-chip.active .check {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .filter-chip.active .check::after { content: "✓"; font-size: 12px; font-weight: 700; }
+  .active-filter-bar {
+    position: absolute;
+    left: 12px; right: 12px;
+    bottom: calc(var(--tab-h) + 12px);
+    z-index: 15;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 8px 8px 16px;
+    box-shadow: var(--shadow);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .active-filter-bar.show { display: flex; }
+  .active-filter-bar button {
+    margin-left: auto;
+    border: none;
+    background: var(--bg);
+    border-radius: 999px;
+    padding: 8px 14px;
+    min-height: 36px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: var(--ink);
+  }
+
+  /* About */
+  .about-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .about-card h2 {
+    font-family: var(--display);
+    font-size: 1.1rem;
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+  .about-card p, .about-card li {
+    font-size: 0.9rem;
+    color: var(--ink-2);
+    line-height: 1.55;
+    margin: 0 0 8px;
+  }
+  .about-card ul { padding-left: 1.1em; margin: 0 0 8px; }
+  .about-card a { color: var(--accent-dark); font-weight: 600; text-decoration: none; }
+  .about-card a:hover { text-decoration: underline; }
+  .legend-row {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.88rem; margin-bottom: 8px; color: var(--ink-2);
+  }
+  .legend-row i {
+    width: 12px; height: 12px; border-radius: 50%;
+    border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    display: inline-block;
+  }
+
+  /* —— Bottom tab bar —— */
+  .tabbar {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 30;
+    height: var(--tab-h);
+    padding-bottom: var(--safe-bottom);
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    box-shadow: 0 -4px 24px rgba(26,26,26,0.06);
+  }
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 56px;
+    padding: 6px 4px;
+    transition: color .15s;
+  }
+  .tab svg { width: 24px; height: 24px; stroke-width: 1.75; }
+  .tab.active { color: var(--accent); }
+  .tab:active { opacity: 0.7; }
+
+  /* —— Bottom sheet (place detail) —— */
+  .sheet-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    background: rgba(26,26,26,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s;
+  }
+  .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+  .sheet {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 50;
+    max-height: min(78dvh, 640px);
+    background: var(--card);
+    border-radius: 22px 22px 0 0;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(110%);
+    transition: transform .32s cubic-bezier(.32,.72,0,1);
+    display: flex;
+    flex-direction: column;
+    padding-bottom: var(--safe-bottom);
+  }
+  .sheet.open { transform: translateY(0); }
+  .sheet-handle {
+    width: 40px; height: 4px;
+    background: #D1D5DB;
+    border-radius: 999px;
+    margin: 10px auto 6px;
+    flex-shrink: 0;
+  }
+  .sheet-scroll {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 22px 28px;
+    flex: 1;
+  }
+  .sheet-scroll h2 {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    margin: 4px 0 10px;
+    line-height: 1.2;
+  }
+  .sheet-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .sheet-section {
+    margin-bottom: 14px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .sheet-section strong {
+    display: block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+  .sheet-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+    padding-top: 4px;
+  }
+  .sheet-actions a, .sheet-close-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+  }
+  .sheet-actions a.primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .sheet-actions a.ghost {
+    background: var(--bg);
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .sheet-close-btn {
+    background: transparent;
+    color: var(--muted);
+    margin-left: auto;
+  }
+
+  /* Desktop: side list + map */
+  @media (min-width: 900px) {
+    .topbar { padding-left: 24px; padding-right: 24px; }
+    .tabbar {
+      left: auto;
+      right: 24px;
+      bottom: 24px;
+      width: auto;
+      height: auto;
+      padding: 6px;
+      padding-bottom: 6px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      grid-template-columns: repeat(4, auto);
+      gap: 2px;
+      box-shadow: var(--shadow-lg);
+    }
+    .tab {
+      flex-direction: row;
+      gap: 8px;
+      padding: 10px 18px;
+      min-height: 44px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+    }
+    .tab.active { background: var(--accent-soft); }
+    .panel {
+      left: 0;
+      width: min(420px, 40vw);
+      right: auto;
+      padding-bottom: 0;
+      border-right: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    #map { left: 0; }
+    .map-shifted #map { left: min(420px, 40vw); }
+    .sheet {
+      left: 50%;
+      right: auto;
+      width: min(440px, 92vw);
+      transform: translate(-50%, 110%);
+      bottom: 96px;
+      border-radius: 22px;
+      max-height: min(70vh, 560px);
+      padding-bottom: 0;
+    }
+    .sheet.open { transform: translate(-50%, 0); }
+    .active-filter-bar {
+      left: auto;
+      right: 24px;
+      bottom: 96px;
+      width: auto;
+      max-width: 360px;
+    }
+    .map-shifted .active-filter-bar { /* stay over map */ }
   }
 </style>
 </head>
 <body>
 <div id="app">
-  <div id="map-wrap">
-    <div id="map" role="application" aria-label="Map of toddler outing spots"></div>
-    <div class="map-legend" aria-hidden="true">
-      <div><span style="background:#0d9488"></span> Within ~30 min</div>
-      <div><span style="background:#c2410c"></span> Farther</div>
-      <div><span style="background:#2563eb"></span> Home (80004)</div>
+  <div id="map" role="application" aria-label="Map of toddler outing spots"></div>
+
+  <header class="topbar">
+    <div class="brand" aria-hidden="true">
+      <span class="brand-mark">T</span>
+      <span class="brand-text">Toddler Spots<span class="brand-sub">Denver · Arvada</span></span>
     </div>
+    <div class="search-pill">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
+      <input type="search" id="search" placeholder="Search parks, museums…" autocomplete="off" enterkeyhint="search" aria-label="Search places"/>
+    </div>
+    <span class="count-chip" id="count-chip">56</span>
+  </header>
+
+  <div class="active-filter-bar" id="filter-bar" aria-live="polite">
+    <span id="filter-bar-label">Filtered</span>
+    <button type="button" id="clear-filter">Clear</button>
   </div>
-  <aside>
-    <div class="hero">
-      <div class="hero-top">
-        <h1>Toddler outings — Denver / Arvada</h1>
-        <span class="pill-count">56 spots</span>
-      </div>
-      <p class="sub">Base: Arvada 80004 · ~20 months · Days.in.denver · Colorado Kids Explore · Colorado Kids Are Rad · updated 2026-10-01</p>
+
+  <section class="panel" id="panel-list" aria-label="Place list">
+    <div class="panel-header">
+      <h1>All spots</h1>
+      <p id="list-sub">Sorted by drive time from Arvada 80004</p>
     </div>
-    <div class="sticky-tools">
-      <div class="search-wrap">
-        <span class="icon" aria-hidden="true">⌕</span>
-        <input type="search" id="search" placeholder="Search parks, museums, farms…" autocomplete="off" enterkeyhint="search"/>
-      </div>
-      <div class="filters" role="toolbar" aria-label="Filters">
-        <button type="button" data-filter="all" class="active">All</button>
-        <button type="button" data-filter="near">Near (~30 min)</button>
-        <button type="button" data-filter="far" class="far">Farther</button>
-        <button type="button" data-filter="free" class="free">Free</button>
-        <button type="button" data-filter="indoor" class="indoor">Indoor</button>
+    <div class="panel-body" id="list"></div>
+  </section>
+
+  <section class="panel" id="panel-filters" aria-label="Filters">
+    <div class="panel-header">
+      <h1>Filters</h1>
+      <p>Narrow by drive time, cost, or indoor-friendly</p>
+    </div>
+    <div class="panel-body">
+      <div class="filter-grid" role="listbox" aria-label="Filter options">
+        <button type="button" class="filter-chip active" data-filter="all" role="option" aria-selected="true">
+          <span class="dot"></span>
+          <span class="label">All spots<span class="hint"><br>Show everything</span></span>
+          <span class="check"></span>
+        </button>
+        <button type="button" class="filter-chip" data-filter="near" role="option" aria-selected="false">
+          <span class="dot"></span>
+          <span class="label">Near (~30 min)<span class="hint"><br>From Arvada 80004</span></span>
+          <span class="check"></span>
+        </button>
+        <button type="button" class="filter-chip" data-filter="far" role="option" aria-selected="false">
+          <span class="dot"></span>
+          <span class="label">Farther<span class="hint"><br>Worth the drive</span></span>
+          <span class="check"></span>
+        </button>
+        <button type="button" class="filter-chip" data-filter="free" role="option" aria-selected="false">
+          <span class="dot"></span>
+          <span class="label">Free<span class="hint"><br>Parks & free-entry spots</span></span>
+          <span class="check"></span>
+        </button>
+        <button type="button" class="filter-chip" data-filter="indoor" role="option" aria-selected="false">
+          <span class="dot"></span>
+          <span class="label">Indoor<span class="hint"><br>Museums, play, libraries</span></span>
+          <span class="check"></span>
+        </button>
       </div>
     </div>
-    <div id="list"></div>
+  </section>
+
+  <section class="panel" id="panel-about" aria-label="About">
+    <div class="panel-header">
+      <h1>About</h1>
+      <p>Curated toddler outings near home</p>
+    </div>
+    <div class="panel-body">
+      <div class="about-card">
+        <h2>Base & audience</h2>
+        <p>Home base: <strong>Arvada, CO 80004</strong>. Aimed at a toddler ~20 months; prefer spots within ~30 minutes.</p>
+        <p>Updated 2026-10-01 · 56 places</p>
+      </div>
+      <div class="about-card">
+        <h2>Map legend</h2>
+        <div class="legend-row"><i style="background:#2A9D8F"></i> Within ~30 min</div>
+        <div class="legend-row"><i style="background:#C45C26"></i> Farther</div>
+        <div class="legend-row"><i style="background:#3B6EA5"></i> Home (80004)</div>
+      </div>
+      <div class="about-card">
+        <h2>Sources</h2>
+        <ul>
+          <li><a href="https://www.instagram.com/days.in.denver/" target="_blank" rel="noopener">Days.in.denver</a> + <a href="https://days-in-denver.beehiiv.com/" target="_blank" rel="noopener">newsletter</a></li>
+          <li><a href="https://www.instagram.com/colorado.kids.explore/" target="_blank" rel="noopener">Colorado Kids Explore</a></li>
+          <li><a href="https://www.instagram.com/coloradokidsarerad/" target="_blank" rel="noopener">Colorado Kids Are Rad</a></li>
+        </ul>
+        <p>Why-notes paraphrased from those guides. Drive times are rough estimates — confirm in Maps.</p>
+      </div>
+      <div class="about-card">
+        <h2>Basemap</h2>
+        <p>MapLibre GL · OpenFreeMap Positron (soft light). No Mapbox token required.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="tabbar" role="tablist" aria-label="Main">
+    <button type="button" class="tab active" data-tab="map" role="tab" aria-selected="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 4l-5 2v14l5-2 6 2 5-2V4l-5 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
+      Map
+    </button>
+    <button type="button" class="tab" data-tab="list" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 6h12M8 12h12M8 18h12" stroke-linecap="round"/><circle cx="4" cy="6" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.2" fill="currentColor" stroke="none"/></svg>
+      List
+    </button>
+    <button type="button" class="tab" data-tab="filters" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg>
+      Filters
+    </button>
+    <button type="button" class="tab" data-tab="about" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7.5v.5" stroke-linecap="round"/></svg>
+      About
+    </button>
+  </nav>
+
+  <div class="sheet-backdrop" id="sheet-backdrop"></div>
+  <aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden>
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-scroll" id="sheet-body"></div>
   </aside>
 </div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
 const PLACES_DOC = {"meta": {"title": "Denver/Arvada Toddler Outing Spots", "base": {"label": "Arvada, CO 80004", "lat": 39.8005505, "lng": -105.0811573}, "audience": "Toddler ~20 months; prefer ~30 min drive", "sources_scrubbed": [{"name": "Days.in.denver", "instagram": "https://www.instagram.com/days.in.denver/", "facebook": "Days.in.denver", "newsletter": "https://days-in-denver.beehiiv.com/"}, {"name": "Colorado Kids Explore", "instagram": "https://www.instagram.com/colorado.kids.explore/", "facebook": "Colorado Kids Explore - Adventure Guide"}, {"name": "Colorado Kids Are Rad", "instagram": "https://www.instagram.com/coloradokidsarerad/", "facebook": "Colorado Kids Are Rad"}], "updated": "2026-10-01", "scrub_window": "~90 days of Days.in.denver beehiiv (Mar–Oct 2026) + Fall guide; CKAR 10-park list; CKE Belleview; IG/FB captions largely login-walled", "notes": "Why-notes paraphrased/quoted from source captions and newsletters. Drive times are rough estimates from Arvada 80004; verify in Google Maps. Do not invent venues — every pin cites a named source. Seasonal spots kept if still relevant for fall 2026 or evergreen otherwise."}, "places": [{"id": "csu-spur", "name": "CSU Spur", "lat": 39.7870722, "lng": -104.9693851, "address": "4777 National Western Dr, Denver, CO 80216", "why": "Completely free and open to the public — mock vet clinic, play kitchen, water table, and hands-on spots across three buildings; feels like a children's museum without the price. 2nd Saturdays add extra activities (Days.in.denver monthly favorite).", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "CSU Spur", "url": "https://csuspur.org/"}, {"label": "Days in Denver Oct newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}, {"label": "Days in Denver Sept newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter"}], "hours": "Mon–Fri 9am–5pm; 2nd Saturdays 10am–2pm; closed other Sat & Sun", "cost": "Free", "toddler_notes": "Great for ~20 months: indoor play kitchen, water table, mock vet. Free year-round (except Stock Show grounds fee).", "tags": ["free", "indoor", "animals", "play", "north-denver"], "drive_note": "~21 min drive from Arvada 80004 (~6.0 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 21, "straight_line_miles": 6.0}, {"id": "apex-center", "name": "Apex Center (Indoor Playground)", "lat": 39.8256417, "lng": -105.1455838, "address": "13150 W 72nd Ave, Arvada, CO 80005", "why": "Days.in.denver: 'basically an entire day under one roof' — indoor water park, ice rinks, climbing wall, and a FREE indoor playground for little kids (Colorado-themed with tots area ~1–3).", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Oct newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}, {"label": "Apex Center", "url": "https://apexprd.org/facility/apex-center/"}], "hours": "Open daily; check Apex schedule for playground/pool hours", "cost": "Daily admission typically ~$10.50 kids / $12.50 adults (playground included; verify)", "toddler_notes": "Tots section — ideal for ~20 months. Right in Arvada.", "tags": ["indoor", "arvada", "playground", "near-home", "free-playground"], "drive_note": "~15 min drive from Arvada 80004 (~3.8 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 15, "straight_line_miles": 3.8}, {"id": "belleview-park", "name": "Belleview Park (Farm & Train)", "lat": 39.6265801, "lng": -105.0045712, "address": "5001 S Inca Dr, Englewood, CO 80110", "why": "Highlighted by Colorado Kids Explore and Days.in.denver: free park with playgrounds and creek; seasonal petting farm and miniature train (~$3 ages 2+, under 2 free).", "source": "Colorado Kids Explore (@colorado.kids.explore); also Days.in.denver (@days.in.denver)", "source_accounts": ["@colorado.kids.explore", "Facebook: Colorado Kids Explore - Adventure Guide", "@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @colorado.kids.explore", "url": "https://www.instagram.com/colorado.kids.explore/"}, {"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver May newsletter", "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"}, {"label": "Days in Denver Aug newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-august-newsletter"}, {"label": "Englewood Farm & Train", "url": "https://www.englewoodco.gov/parks-recreation-library-golf/play-englewood-recreation/parks/englewood-parks/englewood-farm-train-at-belleview-park"}], "hours": "Park: dawn–dusk. Farm & Train: typically Memorial Day–Labor Day (~9am–3:30pm; check city)", "cost": "Park free; farm/train ~$3 each (under 2 free)", "toddler_notes": "Under-2 free for farm/train. Creek play + playground year-round.", "tags": ["park", "animals", "train", "englewood", "seasonal"], "drive_note": "~41 min drive from Arvada 80004 (~12.7 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 41, "straight_line_miles": 12.7}, {"id": "cheyenne-arapaho", "name": "Cheyenne-Arapaho (Tsistsistas-Hinono'ei) Park", "lat": 39.6870548, "lng": -104.8799131, "address": "9200 E Iowa Ave, Denver, CO 80247", "why": "On Colorado Kids Are Rad’s 10-park list. Natural-themed playground (bison climber, leaf playhouse, sand play, baby swings) geared toward younger kids (~2–8) plus dog park.", "toddler_notes": "Baby swings and sand play; supervise closely.", "tags": ["park", "playground", "ckar-10", "free"], "hours": "Dawn–dusk", "cost": "Free", "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}, {"label": "Park background", "url": "https://www.arapahoeco.gov/your_county/county_departments/open_spaces/our_work/current_projects/cheyenne_arapaho_park.php"}], "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "drive_note": "~43 min drive from Arvada 80004 (~13.3 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 43, "straight_line_miles": 13.3}, {"id": "bates-logan", "name": "Bates-Logan Park", "lat": 39.6633652, "lng": -104.9828059, "address": "2938 S Logan St, Englewood, CO 80113", "why": "On Colorado Kids Are Rad’s 10-park list; Days.in.denver calls it one of the most fun parks with three pump tracks, scooters/bike paths, and two playgrounds (including one for littles under 4).", "toddler_notes": "Younger kids area + inclusive features; bring a strider if ready.", "tags": ["park", "playground", "inclusive", "ckar-10", "englewood"], "hours": "Dawn–dusk", "cost": "Free", "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}, {"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver March newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter"}, {"label": "Days in Denver May newsletter", "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"}], "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list; also Days.in.denver (@days.in.denver)", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad", "@days.in.denver", "Facebook: Days.in.denver"], "drive_note": "~35 min drive from Arvada 80004 (~10.8 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 35, "straight_line_miles": 10.8}, {"id": "washington-park", "name": "Washington Park", "lat": 39.7020811, "lng": -104.9710337, "address": "S Downing St & E Louisiana Ave area, Denver, CO 80210", "why": "On Colorado Kids Are Rad’s 10-park list. Classic Denver park with playgrounds, lakes, paths — easy picnic + play. Days.in.denver also flags the shady creek behind the north playground for early water play.", "toddler_notes": "Multiple playground areas; spacious for stroller walks.", "tags": ["park", "playground", "ckar-10", "denver", "creek"], "hours": "Dawn–dusk", "cost": "Free", "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}, {"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver May newsletter", "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"}], "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list; also Days.in.denver (@days.in.denver)", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad", "@days.in.denver", "Facebook: Days.in.denver"], "drive_note": "~30 min drive from Arvada 80004 (~9.0 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 30, "straight_line_miles": 9.0}, {"id": "city-view", "name": "City View Park", "lat": 39.8450333, "lng": -104.9642197, "address": "Welby / North Metro (City View Park), Adams County, CO", "why": "On Colorado Kids Are Rad’s 10-park list. Neighborhood park with multi-level play and a quieter setting.", "toddler_notes": "Quieter option north of Denver.", "tags": ["park", "playground", "ckar-10"], "hours": "Dawn–dusk", "cost": "Free", "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}], "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "drive_note": "~24 min drive from Arvada 80004 (~6.9 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 24, "straight_line_miles": 6.9}, {"id": "la-raza", "name": "La Raza Park", "lat": 39.769369, "lng": -105.004298, "address": "1501 W 38th Ave, Denver, CO 80211", "why": "On Colorado Kids Are Rad’s 10-park list. Highland-area park with playground upgrades — solid toddler stop near N Denver.", "toddler_notes": "Good Highland/Sloan’s Lake corridor pairing.", "tags": ["park", "playground", "ckar-10", "highland"], "hours": "Dawn–dusk", "cost": "Free", "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}], "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "drive_note": "~17 min drive from Arvada 80004 (~4.6 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 17, "straight_line_miles": 4.6}, {"id": "paco-sanchez", "name": "Paco Sanchez Park", "lat": 39.7364138, "lng": -105.0320785, "address": "1290 Knox Ct, Denver, CO 80204", "why": "On Colorado Kids Are Rad’s 10-park list. Huge radio/music-themed adventure playground (giant mic, nets, spiral slide, zipline) — often called one of Denver’s best.", "toddler_notes": "Park is HUGE — stay in toddler-friendly zones; bring a second adult if possible.", "tags": ["park", "playground", "ckar-10", "destination"], "hours": "Dawn–dusk", "cost": "Free", "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}], "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "drive_note": "~19 min drive from Arvada 80004 (~5.1 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 19, "straight_line_miles": 5.1}, {"id": "joseph-p-martinez", "name": "Joseph P. Martinez Park", "lat": 39.731122, "lng": -105.041541, "address": "900 N Raleigh St, Denver, CO 80204", "why": "On Colorado Kids Are Rad’s 10-park list. West Denver park with cultural playground / Phase 1 improvements.", "toddler_notes": "Pair with Sloan’s Lake / Paco Sanchez corridor.", "tags": ["park", "playground", "ckar-10", "west-denver"], "hours": "Dawn–dusk", "cost": "Free", "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}], "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "drive_note": "~19 min drive from Arvada 80004 (~5.2 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 19, "straight_line_miles": 5.2}, {"id": "sloans-lake", "name": "Sloan's Lake Park", "lat": 39.7473715, "lng": -105.0447172, "address": "1700 N Sheridan Blvd, Denver, CO 80214", "why": "On Colorado Kids Are Rad’s 10-park list; Days.in.denver park pick — lake + skyline, playground, pump track, paved loop for strollers/bikes.", "toddler_notes": "Watch water edges; playgrounds + open lawn good for ~20 months.", "tags": ["park", "playground", "ckar-10", "lake"], "hours": "Dawn–dusk", "cost": "Free", "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}, {"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver April newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"}], "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list; also Days.in.denver (@days.in.denver)", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad", "@days.in.denver", "Facebook: Days.in.denver"], "drive_note": "~16 min drive from Arvada 80004 (~4.2 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 16, "straight_line_miles": 4.2}, {"id": "central-park", "name": "Central Park (playground)", "lat": 39.7615, "lng": -104.8915, "address": "Central Park neighborhood / near E Smith Rd, Denver, CO 80238", "why": "On Colorado Kids Are Rad’s 10-park list; Days.in.denver: one of Denver’s best playground destinations with huge modern play, climbing, open fields. Tip: start at Panda Coffee, bring scooters.", "toddler_notes": "Dedicated younger play; summer splash features when open.", "tags": ["park", "playground", "ckar-10", "splash"], "hours": "Dawn–dusk; splash seasonal", "cost": "Free", "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}, {"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver April newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"}], "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list; also Days.in.denver (@days.in.denver)", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad", "@days.in.denver", "Facebook: Days.in.denver"], "drive_note": "~34 min drive from Arvada 80004 (~10.4 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 34, "straight_line_miles": 10.4}, {"id": "wright-park", "name": "Wright Park", "lat": 39.7216528, "lng": -105.138471, "address": "500 Wright St, Lakewood, CO 80228", "why": "On Colorado Kids Are Rad’s 10-park list. Recently renovated: nature-based play, loop trail, shade, open lawn, dog park.", "toddler_notes": "Nature play + open lawn; freshly renovated.", "tags": ["park", "playground", "ckar-10", "lakewood"], "hours": "Dawn–dusk", "cost": "Free", "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}, {"label": "City of Lakewood — Wright Park", "url": "https://www.lakewoodco.gov/Local-Government/Departments/Community-Resources/Parks-Forestry-and-Open-Space/A-to-Z-Park-List/Wright-Park"}], "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "drive_note": "~22 min drive from Arvada 80004 (~6.2 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 22, "straight_line_miles": 6.2}, {"id": "childrens-museum-denver", "name": "Children's Museum of Denver (Bloom + Joy Park)", "lat": 39.7658, "lng": -105.0026, "address": "2121 Children's Museum Drive, Denver, CO 80211", "why": "Recurring Days.in.denver favorite — Bloom exhibit designed for newborn–36 months; Joy Park outdoor Colorado nature play. Featured for Mess Fest, Creative Calm, Party for the Planet, Harvest Hoot.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver March newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter"}, {"label": "Days in Denver April newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"}, {"label": "Days in Denver July newsletter", "url": "https://days-in-denver.beehiiv.com/p/july-newsletter"}, {"label": "Days in Denver Fall guide", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b"}, {"label": "Children's Museum", "url": "https://www.mychildsmuseum.org/"}], "hours": "Typically 9am–4pm daily (verify)", "cost": "Paid admission (under 1 often free; check current rates / SCFD free days)", "toddler_notes": "Bloom is purpose-built for ~20 months. Great rainy-day or cold-day option.", "tags": ["museum", "indoor", "outdoor", "toddler-specific"], "drive_note": "~18 min drive from Arvada 80004 (~4.8 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 18, "straight_line_miles": 4.8}, {"id": "dmns-nature-play", "name": "DMNS Nature Play Park + Museum", "lat": 39.7476, "lng": -104.9428, "address": "2001 Colorado Blvd, Denver, CO 80205", "why": "Days.in.denver weekend idea: Museum of Nature & Science then Nature Play Park right behind it (climbable bighorn sheep, tunnels, water features). Curious Kids programs for ages 2–5 also featured.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver March newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter"}, {"label": "DMNS Nature Play", "url": "https://www.dmns.org/"}, {"label": "Steal this weekend idea", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-steal-this-weekend-idea-0001"}], "hours": "Nature Play outdoor: typically dawn–dusk free; museum hours vary", "cost": "Nature Play free; museum paid (SCFD free days / library passes)", "toddler_notes": "Outdoor Nature Play works well for toddlers without buying museum tickets.", "tags": ["museum", "park", "free-outdoor", "city-park"], "drive_note": "~28 min drive from Arvada 80004 (~8.2 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 28, "straight_line_miles": 8.2}, {"id": "denver-botanic-mordecai", "name": "Denver Botanic Gardens — Mordecai Children's Garden", "lat": 39.732, "lng": -104.9605, "address": "1007 York St, Denver, CO 80206", "why": "Days.in.denver June favorite: Children's Garden + Springmelt Stream — 'one of the best hidden gems in Denver' with water play, nature exploration, space to roam. Suited to ages ~12 months–8 years.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver June newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-june-newsletter-6e6b3c54ee90a522"}, {"label": "Days in Denver April newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"}, {"label": "Mordecai Children's Garden", "url": "https://www.botanicgardens.org/york-street/mordecai-childrens-garden"}], "hours": "Typically 9am–5pm (seasonal hours vary)", "cost": "Included with Botanic Gardens admission (SCFD free days)", "toddler_notes": "Digging, stream splash, natural play — messy-friendly for toddlers.", "tags": ["garden", "outdoor", "water-play", "nature"], "drive_note": "~27 min drive from Arvada 80004 (~8.0 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 27, "straight_line_miles": 8.0}, {"id": "urban-farm", "name": "The Urban Farm", "lat": 39.7705, "lng": -104.8705, "address": "10200 Smith Rd, Denver, CO 80239", "why": "Days.in.denver weekly favorite and June spotlight: visit goats, chickens, pigs and other farm animals at this working farm in the city. Animal meet-and-greet experiences featured.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver April newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"}, {"label": "Days in Denver June newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-june-newsletter-6e6b3c54ee90a522"}, {"label": "The Urban Farm", "url": "https://www.theurbanfarm.org/"}], "hours": "Often Wed–Sat mornings (verify; ~9am–1pm cited)", "cost": "Check site; some programs ticketed", "toddler_notes": "Slow-paced animal outing — great for ~20 months if stroller-friendly paths.", "tags": ["farm", "animals", "outdoor"], "drive_note": "~37 min drive from Arvada 80004 (~11.4 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 37, "straight_line_miles": 11.4}, {"id": "clement-park", "name": "Clement Park (+ Columbine Library)", "lat": 39.5935, "lng": -105.0655, "address": "7306 W Bowles Ave, Littleton, CO 80123", "why": "Days.in.denver park pick: 'total standout' with incredible playground, trails, reservoir, summer splash park. Tip: pair with Columbine Library next door for park + library day; LEGO Build & Play events.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver April newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"}, {"label": "Days in Denver May newsletter", "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"}, {"label": "Clement Park", "url": "https://www.ssprd.org/clement-park"}], "hours": "Park dawn–dusk; library hours vary; splash seasonal", "cost": "Free park/library; splash may have fees", "toddler_notes": "Huge playground; go early or cloudy days to avoid crowds.", "tags": ["park", "library", "splash", "littleton"], "drive_note": "~45 min drive from Arvada 80004 (~14.3 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 45, "straight_line_miles": 14.3}, {"id": "cook-park", "name": "Cook Park", "lat": 39.6870564, "lng": -104.9088422, "address": "7100 E Cherry Creek South Dr, Denver, CO 80224", "why": "Days.in.denver March park pick: great for toddlers; bike Cherry Creek Trail straight to the playground. Tip: Detour Bakery pastries for a morning park picnic.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver March newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter"}], "hours": "Dawn–dusk", "cost": "Free", "toddler_notes": "Toddler-friendly playground + trail access.", "tags": ["park", "playground", "trail"], "drive_note": "~39 min drive from Arvada 80004 (~12.1 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 39, "straight_line_miles": 12.1}, {"id": "denver-rock-park", "name": "Denver Rock Park", "lat": 39.7615, "lng": -104.9055, "address": "Denver Rock Park / Central Park area boulder playground (approx)", "why": "Days.in.denver March park pick: unique playground with giant climbable boulders — perfect for adventurous climbers. Closed-toe shoes a must.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver March newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter"}], "hours": "Dawn–dusk", "cost": "Free", "toddler_notes": "Supervise closely; rocks can be dusty/slippery. Better for confident climbers; younger toddlers may prefer nearby soft-surface parks.", "tags": ["park", "playground", "climbing"], "drive_note": "~32 min drive from Arvada 80004 (~9.7 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 32, "straight_line_miles": 9.7}, {"id": "ralston-valley-park", "name": "Ralston Valley Park", "lat": 39.8235519, "lng": -105.1520672, "address": "Ralston Valley Park, Arvada, CO 80004", "why": "Days.in.denver May creek pick in Arvada: play structures for littles and bigger kids; standout is the shallow, shady creek. Street parking only.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver May newsletter", "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"}], "hours": "Dawn–dusk", "cost": "Free", "toddler_notes": "Near-home Arvada gem for creek toddling + playground.", "tags": ["park", "creek", "arvada", "near-home", "free"], "drive_note": "~16 min drive from Arvada 80004 (~4.1 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 16, "straight_line_miles": 4.1}, {"id": "paul-derda", "name": "Paul Derda Recreation Center", "lat": 39.9225, "lng": -105.0365, "address": "13201 Lowell Blvd, Broomfield, CO 80020", "why": "Days.in.denver May favorite: indoor playground FREE for kids 3 and under; family swim with zero-entry pool, toddler slides, water features, lazy river.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver May newsletter", "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"}, {"label": "Paul Derda Rec Center", "url": "https://www.broomfield.org/2664/Paul-Derda-Recreation-Center"}], "hours": "Daily; check family swim / playground schedule", "cost": "Admission fees apply; indoor playground free for 3 & under (per Days.in.denver)", "toddler_notes": "Indoor playground perfect for ~20 months on cold/rainy days.", "tags": ["indoor", "playground", "pool", "broomfield", "free-playground"], "drive_note": "~30 min drive from Arvada 80004 (~8.8 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 30, "straight_line_miles": 8.8}, {"id": "kids-wonder", "name": "Kids Wonder Indoor Play", "lat": 39.6535, "lng": -104.9405, "address": "Kids Wonder Indoor Play Denver metro (verify address)", "why": "Days.in.denver March favorite: indoor play with little town pretend play, climbing structures, and crawler zone for littles. Wednesdays Grandparents Day discount noted.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver March newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter"}], "hours": "Weekdays ~9am–5pm (verify)", "cost": "Paid admission", "toddler_notes": "Crawler zone suited to ~20 months.", "tags": ["indoor", "play", "pretend"], "drive_note": "~41 min drive from Arvada 80004 (~12.6 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 41, "straight_line_miles": 12.6}, {"id": "sweet-play", "name": "Sweet Play (Toddler Tuesday)", "lat": 39.6785, "lng": -104.9605, "address": "Sweet Play Denver metro (verify address)", "why": "Days.in.denver April weekly favorite: Toddler Tuesday discounted admission ($12) for toddlers 3 and under — great indoor option when spring weather is unpredictable.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver April newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"}], "hours": "Cited Tuesdays 9am–8pm for Toddler Tuesday (verify)", "cost": "~$12 Toddler Tuesday (3 & under)", "toddler_notes": "Discounted toddler indoor play.", "tags": ["indoor", "play"], "drive_note": "~35 min drive from Arvada 80004 (~10.6 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 35, "straight_line_miles": 10.6}, {"id": "bookies", "name": "The Bookies Bookstore", "lat": 39.6968, "lng": -104.9375, "address": "4315 E Mississippi Ave, Denver, CO 80246", "why": "Days.in.denver recurring favorite: Animal Cracker Story Time Tuesdays & Saturdays 10:30am — stories, crafts, songs, dancing in a lively children's bookstore.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver April newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"}, {"label": "Days in Denver Oct newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}, {"label": "Days in Denver Aug newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-august-newsletter"}], "hours": "Store hours vary; story time Tue & Sat 10:30am", "cost": "Free story time", "toddler_notes": "Excellent free toddler outing; browse children's section after.", "tags": ["free", "indoor", "storytime", "bookstore"], "drive_note": "~34 min drive from Arvada 80004 (~10.5 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 34, "straight_line_miles": 10.5}, {"id": "tumble-haus", "name": "Tumble Haus (Highlands)", "lat": 39.7628, "lng": -105.0168, "address": "Highlands neighborhood, Denver, CO (Tumble Haus)", "why": "Days.in.denver March spotlight & Sept favorite: open tumble play for little kids (adults free); Happy Hour Sun/Wed/Fri 4–6pm so kids climb/tumble while parents grab coffee or wine.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver March newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter"}, {"label": "Days in Denver Sept newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter"}], "hours": "Check schedule; Happy Hour 4–6pm select days", "cost": "Open tumble passes / drop-in (verify)", "toddler_notes": "Soft indoor play good for ~20 months; adults free per Days.in.denver.", "tags": ["indoor", "play", "highlands"], "drive_note": "~16 min drive from Arvada 80004 (~4.3 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 16, "straight_line_miles": 4.3}, {"id": "bonfire-burritos-arvada", "name": "Bonfire Burritos (Olde Town Arvada)", "lat": 39.8022417, "lng": -105.0810629, "address": "5800 Olde Wadsworth Blvd, Arvada, CO 80002", "why": "Days.in.denver July favorite: huge outdoor space with turf, toys, and room for kids to play while parents enjoy coffee and breakfast burritos — perfect for early risers near home.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver July newsletter", "url": "https://days-in-denver.beehiiv.com/p/july-newsletter"}], "hours": "Mon–Fri ~6am–2pm; Sat–Sun ~7am–3pm", "cost": "Food purchase", "toddler_notes": "Near-home Arvada hang with dedicated kid play space.", "tags": ["arvada", "near-home", "food", "outdoor-play"], "drive_note": "~8 min drive from Arvada 80004 (~0.1 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 8, "straight_line_miles": 0.1}, {"id": "wheat-ridge-rec", "name": "Wheat Ridge Recreation Center Pool", "lat": 39.7715389, "lng": -105.1113455, "address": "4005 Kipling St, Wheat Ridge, CO 80033", "why": "Days.in.denver Sept favorite: easy indoor activity — leisure pool with zero-depth entry, water features, kids' slide; 120-ft slide for 48\"+.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Sept newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter"}], "hours": "Cited ~12–6pm daily (verify current pool schedule)", "cost": "Day pass / membership", "toddler_notes": "Zero-depth entry great for ~20 months with close supervision.", "tags": ["indoor", "pool", "wheat-ridge"], "drive_note": "~12 min drive from Arvada 80004 (~2.6 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 12, "straight_line_miles": 2.6}, {"id": "lookout-mountain-nature", "name": "Lookout Mountain Nature Center", "lat": 39.7328, "lng": -105.2385, "address": "910 Colorow Rd, Golden, CO 80401", "why": "Days.in.denver June favorite: easy mountain escape with interactive exhibits; pair with Colorow Mountain loop for a full morning.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver June newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-june-newsletter-6e6b3c54ee90a522"}, {"label": "Lookout Mountain Nature Center", "url": "https://www.jeffco.us/1447/Lookout-Mountain-Nature-Center"}], "hours": "Fri–Mon often 10am–4pm (verify)", "cost": "Free / donation", "toddler_notes": "Short nature center visit + easy outdoor time; bring layers.", "tags": ["nature", "free", "golden", "outdoor"], "drive_note": "~32 min drive from Arvada 80004 (~9.6 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 32, "straight_line_miles": 9.6}, {"id": "denver-zoo", "name": "Denver Zoo", "lat": 39.7502, "lng": -104.949, "address": "2300 Steele St, Denver, CO 80205", "why": "Days.in.denver June feature (130th anniversary programming) and fall Boo at the Zoo — classic toddler outing with stroller paths and animal viewing.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver June newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-june-newsletter-6e6b3c54ee90a522"}, {"label": "Days in Denver Fall guide", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b"}, {"label": "Denver Zoo", "url": "https://denverzoo.org/"}], "hours": "Typically 9am–4pm (seasonal)", "cost": "Paid (library free zoo day prizes / SCFD free days when offered)", "toddler_notes": "Stroller-friendly; go early; shade/snack breaks essential.", "tags": ["zoo", "animals", "outdoor"], "drive_note": "~27 min drive from Arvada 80004 (~7.8 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 27, "straight_line_miles": 7.8}, {"id": "centennial-center-park", "name": "Centennial Center Park", "lat": 39.5966134, "lng": -104.8378392, "address": "13050 E Peakview Ave area, Centennial, CO 80112", "why": "Days.in.denver June splash/park pick: renovated large splash pad, modern playground, space for all ages — easy full morning.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver June newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-june-newsletter-6e6b3c54ee90a522"}], "hours": "Park dawn–dusk; splash pad seasonal (typically Memorial Day–Labor Day)", "cost": "Free", "toddler_notes": "Playground usable year-round; splash is summer-only.", "tags": ["park", "splash", "playground", "seasonal"], "drive_note": "~59 min drive from Arvada 80004 (~19.1 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 59, "straight_line_miles": 19.1}, {"id": "civic-green-park", "name": "Civic Green Park Splash Pad", "lat": 39.545758, "lng": -104.9958582, "address": "Civic Green Park, Highlands Ranch, CO", "why": "Days.in.denver June pick: community park with playground and multiple fountain areas. Tip: arrive ~9:30 before water features turn on; parking tricky.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver June newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-june-newsletter-6e6b3c54ee90a522"}], "hours": "Park dawn–dusk; splash seasonal", "cost": "Free", "toddler_notes": "Summer splash outing; playground year-round.", "tags": ["park", "splash", "highlands-ranch", "seasonal"], "drive_note": "~57 min drive from Arvada 80004 (~18.2 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 57, "straight_line_miles": 18.2}, {"id": "red-tailed-hawk", "name": "Red-tailed Hawk Park & Splash Pad", "lat": 39.5813997, "lng": -104.7130357, "address": "Red-Tailed Hawk Park, Aurora, CO", "why": "Days.in.denver July: one of the best metro splash pads paired with incredible inclusive playground — ziplines, musical play, accessible swings.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver July newsletter", "url": "https://days-in-denver.beehiiv.com/p/july-newsletter"}], "hours": "Dawn–dusk; splash seasonal", "cost": "Free", "toddler_notes": "Little shade — bring water, sunscreen. Inclusive features help mixed ages.", "tags": ["park", "splash", "inclusive", "aurora", "seasonal"], "drive_note": "~76 min drive from Arvada 80004 (~24.7 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 76, "straight_line_miles": 24.7}, {"id": "pirates-cove", "name": "Pirates Cove Water Park", "lat": 39.6251327, "lng": -105.0030989, "address": "Pirates Cove Water Park, Englewood, CO 80110", "why": "Days.in.denver July & May: summer favorite with slides, lazy river, spray gardens, zero-depth entry for little swimmers — water-park vibes without the huge price tag.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver July newsletter", "url": "https://days-in-denver.beehiiv.com/p/july-newsletter"}, {"label": "Days in Denver May newsletter", "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"}], "hours": "Summer season only (verify open dates)", "cost": "Day admission (verify)", "toddler_notes": "Zero-depth + spray gardens for toddlers. Arrive at open for chairs.", "tags": ["water-park", "seasonal", "englewood", "pool"], "drive_note": "~41 min drive from Arvada 80004 (~12.8 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 41, "straight_line_miles": 12.8}, {"id": "surfside-spray", "name": "Surfside Spray Park", "lat": 39.7435, "lng": -105.1105, "address": "Surfside Spray Park, Lakewood (approx)", "why": "Days.in.denver July: colorful spray features, dumping buckets, space to run and splash. Paid splash pad (~$2 residents / $4 non-residents cited).", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver July newsletter", "url": "https://days-in-denver.beehiiv.com/p/july-newsletter"}], "hours": "Summer season only", "cost": "~$2–$4 (Days.in.denver)", "toddler_notes": "Simple splash outing for littles; seasonal.", "tags": ["splash", "seasonal", "lakewood"], "drive_note": "~16 min drive from Arvada 80004 (~4.2 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 16, "straight_line_miles": 4.2}, {"id": "cherry-creek-ecological", "name": "Cherry Creek Valley Ecological Park", "lat": 39.5767923, "lng": -104.7972555, "address": "Cherry Creek Valley Ecological Park, Centennial, CO", "why": "Days.in.denver May creek pick: hidden gem with sandy creek areas, wide open space. ~15-min walk from parking to creek.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver May newsletter", "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"}], "hours": "Dawn–dusk", "cost": "Free", "toddler_notes": "Bring carrier/stroller for the walk in; shallow creek toddling.", "tags": ["park", "creek", "nature", "centennial"], "drive_note": "~67 min drive from Arvada 80004 (~21.6 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 67, "straight_line_miles": 21.6}, {"id": "ofallon-park", "name": "O'Fallon Park", "lat": 39.6494168, "lng": -105.2850948, "address": "O'Fallon Park, Kittredge / Evergreen, CO", "why": "Days.in.denver May creek pick: mountain escape with shady picnic spots and calm shallow creek with natural pools. Pair with downtown Evergreen.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver May newsletter", "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"}], "hours": "Dawn–dusk", "cost": "Free / park fees if any (verify)", "toddler_notes": "Stay-awhile creek day; farther mountain drive.", "tags": ["park", "creek", "mountains", "farther"], "drive_note": "~48 min drive from Arvada 80004 (~15.0 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 48, "straight_line_miles": 15.0}, {"id": "yetman-farms", "name": "Yetman Farms", "lat": 39.6965, "lng": -105.0818, "address": "Yetman Farms, Lakewood CO (approx)", "why": "Days.in.denver Sept spotlight & Oct Little Farmers Storytime: urban farm ~15 min from downtown — goats, horses, chickens, barn cats; fall festival with pumpkins, cider, live music. Storytime ~$13–15.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Sept newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter"}, {"label": "Days in Denver Oct newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}, {"label": "Days in Denver Fall guide", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b"}], "hours": "Event-based; check calendar", "cost": "Varies by event (storytime ~$13–15; fall fest ~$8, under 2 free cited)", "toddler_notes": "Animal meet + farm storytime excellent for ~20 months.", "tags": ["farm", "animals", "seasonal", "storytime", "lakewood"], "drive_note": "~25 min drive from Arvada 80004 (~7.2 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 25, "straight_line_miles": 7.2}, {"id": "hudson-gardens", "name": "Hudson Gardens", "lat": 39.6085, "lng": -105.0185, "address": "6115 S Santa Fe Dr, Littleton, CO 80120", "why": "Days.in.denver Oct library adventure: browse Hudson Gardens covered in thousands of pumpkins in early morning (free daytime; evening Magic of the Jack O’Lanterns ticketed), then Bemis Public Library for reading/play.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Oct newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}, {"label": "Days in Denver Fall guide", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b"}, {"label": "Hudson Gardens", "url": "https://hudsongardens.org/"}], "hours": "Daytime garden hours vary; fall evenings for ticketed glow events", "cost": "Daytime often free / low cost; evening events ticketed", "toddler_notes": "Morning pumpkin stroll = low-key toddler outing.", "tags": ["garden", "seasonal", "littleton", "free"], "drive_note": "~44 min drive from Arvada 80004 (~13.7 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 44, "straight_line_miles": 13.7}, {"id": "anythink-wright-farms", "name": "Anythink Wright Farms Library", "lat": 39.9125, "lng": -104.9405, "address": "9417 Colorado Blvd, Thornton, CO 80229", "why": "Days.in.denver Oct: start at this library (coffee spot on site) then head to Maize in the City for corn mazes and fall fun. Great library + adventure pairing.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Oct newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}, {"label": "Anythink Wright Farms", "url": "https://www.anythinklibraries.org/location/anythink-wright-farms"}], "hours": "Library hours vary", "cost": "Free library", "toddler_notes": "Indoor library play/storytime + nearby fall attractions.", "tags": ["library", "free", "thornton"], "drive_note": "~35 min drive from Arvada 80004 (~10.7 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 35, "straight_line_miles": 10.7}, {"id": "anythink-nature-library", "name": "Anythink Nature Library", "lat": 39.9145, "lng": -105.0555, "address": "Anythink Nature Library Thornton (approx)", "why": "Days.in.denver August: grand opening of 15-acre nature library — trails, interactive outdoor spaces, connect with nature. Ongoing visit destination.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Aug newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-august-newsletter"}, {"label": "Anythink Libraries", "url": "https://www.anythinklibraries.org/"}], "hours": "Library hours vary", "cost": "Free", "toddler_notes": "Nature + library combo; outdoor toddling on trails.", "tags": ["library", "nature", "free", "thornton"], "drive_note": "~27 min drive from Arvada 80004 (~8.0 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 27, "straight_line_miles": 8.0}, {"id": "denver-central-library", "name": "Denver Central Library", "lat": 39.7375, "lng": -104.9878, "address": "10 W 14th Ave Pkwy, Denver, CO 80204", "why": "Days.in.denver: Build/Make/Create Sundays; Oct Trick-or-Treat Street; museum & culture passes via DPL card (June hack). Pair with Civic Center / chalk fest area.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Sept newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter"}, {"label": "Days in Denver Oct newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}, {"label": "Days in Denver June newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-june-newsletter-6e6b3c54ee90a522"}, {"label": "Denver Public Library", "url": "https://www.denverlibrary.org/"}], "hours": "Library hours vary", "cost": "Free; museum passes free/discounted with card", "toddler_notes": "Children's area + free programs; reserve museum passes early in the month.", "tags": ["library", "free", "downtown"], "drive_note": "~23 min drive from Arvada 80004 (~6.6 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 23, "straight_line_miles": 6.6}, {"id": "girl-scout-dreamlab", "name": "Girl Scout DreamLab", "lat": 39.7195, "lng": -104.8915, "address": "Lowry, Denver, CO (Girl Scout DreamLab)", "why": "Days.in.denver August: 'one of Denver's coolest hidden gems' — bouldering wall, Camp DreamLab, podcast recording, rotating hands-on activities.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Aug newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-august-newsletter"}], "hours": "Tue–Fri ~11am–4pm (verify)", "cost": "Check Girl Scouts of Colorado", "toddler_notes": "Some activities better for older preschool+; still a unique indoor/outdoor exploratory stop.", "tags": ["indoor", "play", "lowry"], "drive_note": "~37 min drive from Arvada 80004 (~11.5 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 37, "straight_line_miles": 11.5}, {"id": "colorado-railroad-museum", "name": "Colorado Railroad Museum", "lat": 39.7705, "lng": -105.1925, "address": "17155 W 44th Ave, Golden, CO 80403", "why": "Days.in.denver Sept: Day Out With Thomas weekends; year-round train museum with outdoor exhibits kids can explore. Golden outing.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Sept newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter"}, {"label": "Colorado Railroad Museum", "url": "https://coloradorailroadmuseum.org/"}], "hours": "Typically daily; Thomas events seasonal weekends", "cost": "Museum admission; Thomas tickets separate/advance", "toddler_notes": "Trains fascinate toddlers; outdoor grounds for toddling.", "tags": ["museum", "trains", "golden", "seasonal"], "drive_note": "~22 min drive from Arvada 80004 (~6.3 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 22, "straight_line_miles": 6.3}, {"id": "chatfield-farms", "name": "Denver Botanic Gardens Chatfield Farms", "lat": 39.5625, "lng": -105.0705, "address": "8500 W Deer Creek Canyon Rd, Littleton, CO 80128", "why": "Days.in.denver Fall guide & Sept: corn maze celebrating Colorado 150th; Pumpkin Festival; trails and farm feel. Kids 3–15 free some 2nd Saturdays in summer (per Gardens).", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Sept newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter"}, {"label": "Days in Denver Fall guide", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b"}, {"label": "Chatfield Farms", "url": "https://www.botanicgardens.org/chatfield-farms"}], "hours": "Seasonal; corn maze Fri–Sun fall", "cost": "Admission / festival tickets (under 2 often free)", "toddler_notes": "Mini maze options for littles; stroller on paved paths.", "tags": ["farm", "seasonal", "nature", "littleton"], "drive_note": "~52 min drive from Arvada 80004 (~16.5 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 52, "straight_line_miles": 16.5}, {"id": "four-mile-historic", "name": "Four Mile Historic Park", "lat": 39.7205, "lng": -104.9285, "address": "715 S Forest St, Denver, CO 80246", "why": "Days.in.denver April: egg hunt / farm-feel historic park with animals, tractor rides, grounds to explore — year-round historic park visits beyond seasonal events.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver April newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"}, {"label": "Four Mile Historic Park", "url": "https://www.fourmilepark.org/"}], "hours": "Park/grounds hours vary", "cost": "Admission for some programs; grounds may have fees", "toddler_notes": "Animals + open space; check event calendar.", "tags": ["farm", "historic", "animals", "park"], "drive_note": "~32 min drive from Arvada 80004 (~9.8 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 32, "straight_line_miles": 9.8}, {"id": "spano-pumpkin", "name": "Spano's Greenhouse and Farm", "lat": 39.8365, "lng": -104.9655, "address": "North Denver / Spano's Greenhouse and Farm", "why": "Days.in.denver Fall guide: charming neighborhood pumpkin patch with straw maze and farm stand — 'perfect for toddlers and preschoolers who don't need all-day activities.' Kids under 10 free (cited).", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Fall guide", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b"}], "hours": "Fall season Mon–Sat ~9–5, Sun ~10–4", "cost": "~$5/person; kids under 10 free (per Days.in.denver)", "toddler_notes": "Low-key fall outing near north Denver — ideal scale for ~20 months.", "tags": ["farm", "seasonal", "pumpkin", "toddler-friendly"], "drive_note": "~23 min drive from Arvada 80004 (~6.6 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 23, "straight_line_miles": 6.6}, {"id": "maize-in-city", "name": "Maize in the City", "lat": 39.9505, "lng": -104.9805, "address": "Thornton, CO (Maize in the City)", "why": "Days.in.denver Fall guide & Oct library pairing: giant corn maze, pumpkins, kid-friendly attractions — easy full fall day; pair with Anythink Wright Farms.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Fall guide", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b"}, {"label": "Days in Denver Oct newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}], "hours": "Fall season (Sep–Oct); hours vary", "cost": "Attractions ~$0–$20", "toddler_notes": "Pick simpler attractions for toddlers; stroller on main paths.", "tags": ["seasonal", "pumpkin", "maze", "thornton"], "drive_note": "~38 min drive from Arvada 80004 (~11.7 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 38, "straight_line_miles": 11.7}, {"id": "nicks-garden", "name": "Nick's Garden Center", "lat": 39.6575, "lng": -104.7805, "address": "2001 S Havana St, Aurora, CO 80014", "why": "Days.in.denver Fall guide & Oct: thousands of pumpkins, free straw maze/photo ops, breakfast burritos; pay wristband for tractor rides etc. Pair with Aurora Mission Viejo Library (~2 mi).", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Fall guide", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b"}, {"label": "Days in Denver Oct newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}], "hours": "Fall Mon–Sat ~8–6, Sun ~9–5", "cost": "Free admission; pay per activity / ~$20 wristband", "toddler_notes": "Go early for fewer crowds; free maze works for littles.", "tags": ["seasonal", "pumpkin", "aurora", "free-entry"], "drive_note": "~59 min drive from Arvada 80004 (~18.8 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 59, "straight_line_miles": 18.8}, {"id": "bad-dog-farm", "name": "Bad Dog Farm (apple picking)", "lat": 39.6985, "lng": -105.1255, "address": "Lakewood, CO (Bad Dog Farm)", "why": "Days.in.denver Fall guide: local apple picking without leaving the metro — heirloom varieties by reservation. Tip: book ahead.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Fall guide", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b"}], "hours": "Aug–Sep by appointment", "cost": "~$25 deposit applied to apple purchase", "toddler_notes": "Short orchard toddle; reservation required.", "tags": ["farm", "seasonal", "lakewood", "apples"], "drive_note": "~25 min drive from Arvada 80004 (~7.4 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 25, "straight_line_miles": 7.4}, {"id": "tagawa-gardens", "name": "Tagawa Gardens", "lat": 39.5805, "lng": -104.8775, "address": "7711 S Parker Rd, Centennial, CO 80016", "why": "Days.in.denver Sept: Lil’ Buds Book Club (first Thursday) story time with plants/animals/crafts in the 'Park' on Aisle 3 (ages 3–5). Fall Family Weekend with music, animals, carriage rides.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Sept newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter"}, {"label": "Days in Denver Fall guide", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b"}], "hours": "Garden center daily; programs monthly/seasonal", "cost": "Free entry; some activities paid", "toddler_notes": "Story club skews 3–5 but garden wander works for younger with caregiver.", "tags": ["garden", "storytime", "seasonal", "centennial"], "drive_note": "~58 min drive from Arvada 80004 (~18.7 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 58, "straight_line_miles": 18.7}, {"id": "eloise-may-library", "name": "Eloise May Library (Arapahoe Libraries)", "lat": 39.6900035, "lng": -104.891316, "address": "1471 S Parker Rd, Denver, CO 80231", "why": "Days.in.denver March: Toddler Story time Mondays 9:30 (ages 2–3) and Family Story time 10:30 (ages 0–5).", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver March newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter"}, {"label": "Arapahoe Libraries", "url": "https://arapahoelibraries.org/"}], "hours": "Library hours + Monday story times", "cost": "Free", "toddler_notes": "Family story time includes 0–5 — good for ~20 months.", "tags": ["library", "free", "storytime"], "drive_note": "~41 min drive from Arvada 80004 (~12.7 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 41, "straight_line_miles": 12.7}, {"id": "stanley-marketplace", "name": "Stanley Marketplace (Tattered Cover story time)", "lat": 39.7530014, "lng": -104.8779448, "address": "2501 Dallas St, Aurora, CO 80010", "why": "Days.in.denver May: Tattered Cover story time Wed 11am & Sun 12pm at Stanley Marketplace — grab Logan House coffee and let kids play out back.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver May newsletter", "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"}], "hours": "Marketplace hours; story times Wed/Sun", "cost": "Free story time", "toddler_notes": "Indoor/outdoor marketplace outing with play space.", "tags": ["storytime", "free", "food", "aurora"], "drive_note": "~37 min drive from Arvada 80004 (~11.3 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 37, "straight_line_miles": 11.3}, {"id": "mines-museum", "name": "Mines Museum (Golden)", "lat": 39.7515, "lng": -105.2225, "address": "1310 Maple St, Golden, CO 80401", "why": "Days.in.denver Oct: Mines Museum Spooktacular — free teal-pumpkin-friendly trick-or-treat with STEM hands-on activities. Museum also visit-worthy year-round for geology/minerals curiosity.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Oct newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}, {"label": "Mines Museum", "url": "https://www.mines.edu/museumofearthscience/"}], "hours": "Museum hours vary; Spooktacular seasonal", "cost": "Often free / donation", "toddler_notes": "Short museum visit; seasonal free Halloween event is toddler-friendly.", "tags": ["museum", "free", "golden", "seasonal"], "drive_note": "~28 min drive from Arvada 80004 (~8.2 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 28, "straight_line_miles": 8.2}, {"id": "city-park", "name": "City Park (Farmers Market + Jazz lawn)", "lat": 39.7485, "lng": -104.9505, "address": "17th Ave & York St area, Denver, CO 80205", "why": "Days.in.denver: Saturday City Park Farmers Market (through Oct), Sunday City Park Jazz in summer — picnic lawn near Zoo/DMNS. Easy combine with Nature Play.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver May newsletter", "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"}, {"label": "Days in Denver July newsletter", "url": "https://days-in-denver.beehiiv.com/p/july-newsletter"}, {"label": "Days in Denver Oct newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}], "hours": "Park dawn–dusk; market Sat mornings seasonally", "cost": "Free park; market purchases", "toddler_notes": "Wide lawns for toddling; stroller-friendly paths.", "tags": ["park", "market", "free", "denver"], "drive_note": "~27 min drive from Arvada 80004 (~7.8 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 27, "straight_line_miles": 7.8}, {"id": "homegrown-arvada", "name": "Homegrown Tap & Dough (Arvada)", "lat": 39.8015, "lng": -105.0818, "address": "Olde Town / Arvada Homegrown location, Arvada, CO", "why": "Days.in.denver April: free arcade games for kids while you grab dinner — Arvada location among several metro spots.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver April newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0"}], "hours": "Restaurant hours daily", "cost": "Food purchase; arcade free for kids (per Days.in.denver)", "toddler_notes": "Near-home dinner + toddler distraction; supervise arcade area.", "tags": ["arvada", "near-home", "food", "indoor"], "drive_note": "~8 min drive from Arvada 80004 (~0.1 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 8, "straight_line_miles": 0.1}]};
 </script>
@@ -321,19 +748,40 @@ const PLACES_DOC = {"meta": {"title": "Denver/Arvada Toddler Outing Spots", "bas
 (function(){
   const places = PLACES_DOC.places || [];
   const base = PLACES_DOC.meta && PLACES_DOC.meta.base;
-  const map = L.map('map', { scrollWheelZoom: true, tapTolerance: 25 });
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap'
-  }).addTo(map);
+  const app = document.getElementById('app');
+  const listEl = document.getElementById('list');
+  const searchEl = document.getElementById('search');
+  const countChip = document.getElementById('count-chip');
+  const filterBar = document.getElementById('filter-bar');
+  const filterBarLabel = document.getElementById('filter-bar-label');
+  const sheet = document.getElementById('sheet');
+  const sheetBody = document.getElementById('sheet-body');
+  const sheetBackdrop = document.getElementById('sheet-backdrop');
+  const listSub = document.getElementById('list-sub');
 
+  let filter = 'all';
+  let query = '';
+  let currentTab = 'map';
+  let activeId = null;
   const markers = {};
-  const group = L.featureGroup();
+
+  // Soft light basemap: OpenFreeMap Positron (MapLibre, no token)
+  const map = new maplibregl.Map({
+    container: 'map',
+    style: 'https://tiles.openfreemap.org/styles/positron',
+    center: base ? [base.lng, base.lat] : [-105.0, 39.74],
+    zoom: 10.2,
+    attributionControl: true
+  });
+  map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+  map.addControl(new maplibregl.GeolocateControl({
+    positionOptions: { enableHighAccuracy: true },
+    trackUserLocation: false
+  }), 'top-right');
 
   function escapeHtml(s){
     return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
-
   function isFree(p){
     const c = (p.cost||'').toLowerCase();
     const tags = (p.tags||[]).map(t => String(t).toLowerCase());
@@ -344,126 +792,221 @@ const PLACES_DOC = {"meta": {"title": "Denver/Arvada Toddler Outing Spots", "bas
     const tags = (p.tags||[]).map(t => String(t).toLowerCase());
     return tags.includes('indoor') || tags.includes('museum') || tags.includes('library') || tags.includes('bookstore');
   }
+  function snippet(text, n){
+    const t = String(text||'').trim();
+    if (t.length <= n) return t;
+    return t.slice(0, n).replace(/\s+\S*$/, '') + '…';
+  }
+  function mapsUrl(p){
+    const q = encodeURIComponent(p.address || (p.name + ' Denver CO'));
+    return 'https://www.google.com/maps/search/?api=1&query=' + q;
+  }
 
-  function popupHtml(p){
-    const links = (p.links||[]).map(l => `<div><a href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label||l.url)}</a></div>`).join('');
+  function badgesHtml(p){
     const badges = [];
-    badges.push(p.farther_than_30min ? '<span class="badge far">Farther</span>' : '<span class="badge near">~30 min</span>');
-    if (isFree(p)) badges.push('<span class="badge free">Free-ish</span>');
-    if (isIndoor(p)) badges.push('<span class="badge indoor">Indoor-friendly</span>');
-    return `<div class="popup">
-      <h3>${escapeHtml(p.name)}</h3>
-      <div class="badges">${badges.join('')}</div>
-      <div><strong>Address:</strong> ${escapeHtml(p.address||'—')}</div>
-      <div class="why"><strong>Why:</strong> ${escapeHtml(p.why||'')}</div>
-      <div class="src"><strong>Source:</strong> ${escapeHtml(p.source||'')}</div>
-      <div class="src">${escapeHtml(p.drive_note||'')}</div>
-      ${p.hours ? `<div class="src"><strong>Hours:</strong> ${escapeHtml(p.hours)}</div>` : ''}
-      ${p.cost ? `<div class="src"><strong>Cost:</strong> ${escapeHtml(p.cost)}</div>` : ''}
-      ${p.toddler_notes ? `<div class="src"><strong>Toddler tip:</strong> ${escapeHtml(p.toddler_notes)}</div>` : ''}
-      <div style="margin-top:8px">${links}</div>
-    </div>`;
+    badges.push(p.farther_than_30min ? '<span class="badge far">Farther</span>' : '<span class="badge near">Near</span>');
+    if (isFree(p)) badges.push('<span class="badge free">Free</span>');
+    if (isIndoor(p)) badges.push('<span class="badge indoor">Indoor</span>');
+    return badges.join('');
   }
 
-  function colorFor(p){ return p.farther_than_30min ? '#c2410c' : '#0d9488'; }
-
-  places.forEach(p => {
-    const m = L.circleMarker([p.lat, p.lng], {
-      radius: 10, color: '#fff', weight: 2, fillColor: colorFor(p), fillOpacity: 0.95
+  function openSheet(p){
+    activeId = p.id;
+    Object.keys(markers).forEach(id => {
+      markers[id].el.classList.toggle('active', id === p.id);
     });
-    m.bindPopup(popupHtml(p), { maxWidth: 340, autoPanPadding: [48, 48] });
-    m.bindTooltip(p.name, { direction: 'top', offset: [0, -8] });
-    m.on('click', () => highlightList(p.id));
-    markers[p.id] = m;
-    group.addLayer(m);
+    const links = (p.links||[]).slice(0, 4).map(l =>
+      `<a class="ghost" href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label||'Link')}</a>`
+    ).join('');
+    sheetBody.innerHTML = `
+      <div class="sheet-badges">${badgesHtml(p)}</div>
+      <h2 id="sheet-title">${escapeHtml(p.name)}</h2>
+      <div class="sheet-section"><strong>Address</strong>${escapeHtml(p.address||'—')}</div>
+      <div class="sheet-section"><strong>Why go</strong>${escapeHtml(p.why||'')}</div>
+      <div class="sheet-section"><strong>Source</strong>${escapeHtml(p.source||'')}</div>
+      ${p.drive_note ? `<div class="sheet-section"><strong>Drive</strong>${escapeHtml(p.drive_note)}</div>` : ''}
+      ${p.hours ? `<div class="sheet-section"><strong>Hours</strong>${escapeHtml(p.hours)}</div>` : ''}
+      ${p.cost ? `<div class="sheet-section"><strong>Cost</strong>${escapeHtml(p.cost)}</div>` : ''}
+      ${p.toddler_notes ? `<div class="sheet-section"><strong>Toddler tip</strong>${escapeHtml(p.toddler_notes)}</div>` : ''}
+      <div class="sheet-actions">
+        <a class="primary" href="${mapsUrl(p)}" target="_blank" rel="noopener">Directions</a>
+        ${links}
+        <button type="button" class="sheet-close-btn" id="sheet-close">Close</button>
+      </div>`;
+    sheet.hidden = false;
+    requestAnimationFrame(() => {
+      sheet.classList.add('open');
+      sheetBackdrop.classList.add('open');
+    });
+    const closeBtn = document.getElementById('sheet-close');
+    if (closeBtn) closeBtn.onclick = closeSheet;
+    listEl.querySelectorAll('.place-card').forEach(el => el.classList.toggle('active', el.dataset.id === p.id));
+  }
+
+  function closeSheet(){
+    sheet.classList.remove('open');
+    sheetBackdrop.classList.remove('open');
+    activeId = null;
+    Object.keys(markers).forEach(id => markers[id].el.classList.remove('active'));
+    setTimeout(() => { if (!sheet.classList.contains('open')) sheet.hidden = true; }, 320);
+  }
+  sheetBackdrop.addEventListener('click', closeSheet);
+
+  function flyTo(p){
+    map.flyTo({ center: [p.lng, p.lat], zoom: Math.max(map.getZoom(), 13), essential: true, padding: { top: 80, bottom: 200, left: 40, right: 40 } });
+  }
+
+  // Markers after style loads
+  map.on('load', () => {
+    const bounds = new maplibregl.LngLatBounds();
+
+    places.forEach(p => {
+      const el = document.createElement('div');
+      el.className = 'pin ' + (p.farther_than_30min ? 'far' : 'near');
+      el.title = p.name;
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-label', p.name);
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openSheet(p);
+        flyTo(p);
+      });
+      const marker = new maplibregl.Marker({ element: el, anchor: 'center' })
+        .setLngLat([p.lng, p.lat])
+        .addTo(map);
+      markers[p.id] = { marker, el, place: p };
+      bounds.extend([p.lng, p.lat]);
+    });
+
+    if (base) {
+      const homeEl = document.createElement('div');
+      homeEl.className = 'home-pin';
+      homeEl.textContent = 'HOME';
+      new maplibregl.Marker({ element: homeEl, anchor: 'center' })
+        .setLngLat([base.lng, base.lat])
+        .addTo(map);
+      bounds.extend([base.lng, base.lat]);
+    }
+
+    if (!bounds.isEmpty()) {
+      map.fitBounds(bounds, { padding: { top: 100, bottom: 100, left: 40, right: 40 }, maxZoom: 11.5 });
+    }
+    setTimeout(() => map.resize(), 200);
   });
-
-  if (base) {
-    const home = L.marker([base.lat, base.lng], {
-      title: 'Arvada 80004 base',
-      icon: L.divIcon({
-        className: '',
-        html: '<div style="background:#2563eb;color:#fff;border-radius:10px;padding:5px 8px;font-size:12px;font-weight:800;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.28);letter-spacing:.02em">HOME</div>',
-        iconSize: [54, 24],
-        iconAnchor: [27, 12]
-      })
-    }).bindPopup('<strong>Base:</strong> Arvada, CO 80004');
-    group.addLayer(home);
-  }
-
-  group.addTo(map);
-  if (group.getLayers().length) map.fitBounds(group.getBounds().pad(0.12));
-  setTimeout(() => map.invalidateSize(), 200);
-
-  const listEl = document.getElementById('list');
-  const searchEl = document.getElementById('search');
-  let filter = 'all';
-  let query = '';
-
-  function highlightList(id){
-    listEl.querySelectorAll('.place').forEach(el => el.classList.toggle('active', el.dataset.id===id));
-    const el = listEl.querySelector(`.place[data-id="${CSS.escape(id)}"]`);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
 
   function matchesQuery(p, q){
     if (!q) return true;
     const blob = [p.name, p.address, p.why, p.source, p.toddler_notes, ...(p.tags||[])].join(' ').toLowerCase();
     return blob.includes(q);
   }
-
   function passesFilter(p){
-    if (filter==='near') return !p.farther_than_30min;
-    if (filter==='far') return !!p.farther_than_30min;
-    if (filter==='free') return isFree(p);
-    if (filter==='indoor') return isIndoor(p);
+    if (filter === 'near') return !p.farther_than_30min;
+    if (filter === 'far') return !!p.farther_than_30min;
+    if (filter === 'free') return isFree(p);
+    if (filter === 'indoor') return isIndoor(p);
     return true;
+  }
+
+  const FILTER_LABELS = {
+    all: 'All spots',
+    near: 'Near (~30 min)',
+    far: 'Farther',
+    free: 'Free',
+    indoor: 'Indoor'
+  };
+
+  function updateFilterBar(){
+    if (filter === 'all') {
+      filterBar.classList.remove('show');
+    } else {
+      filterBar.classList.add('show');
+      filterBarLabel.textContent = FILTER_LABELS[filter] || filter;
+    }
   }
 
   function renderList(){
     const sorted = places.slice().sort((a,b)=> (a.approx_drive_minutes||999)-(b.approx_drive_minutes||999));
     const filtered = sorted.filter(p => passesFilter(p) && matchesQuery(p, query));
+    countChip.textContent = filtered.length + (filtered.length === places.length ? '' : ' / ' + places.length);
+    listSub.textContent = filtered.length + ' spot' + (filtered.length===1?'':'s') + ' · sorted by drive from Arvada 80004';
+
     if (!filtered.length) {
-      listEl.innerHTML = '<div class="empty">No spots match. Try another filter or clear search.</div>';
+      listEl.innerHTML = '<div class="empty">No spots match.<br>Try another filter or clear search.</div>';
     } else {
-      listEl.innerHTML = filtered.map(p => {
-        const badges = [];
-        badges.push(p.farther_than_30min ? '<span class="badge far">Farther</span>' : '<span class="badge near">Near</span>');
-        if (isFree(p)) badges.push('<span class="badge free">Free</span>');
-        if (isIndoor(p)) badges.push('<span class="badge indoor">Indoor</span>');
-        return `<div class="place" data-id="${escapeHtml(p.id)}" role="button" tabindex="0">
-          <h3>${badges.join('')}<span>${escapeHtml(p.name)}</span></h3>
-          <div class="meta">${escapeHtml(p.drive_note||'')}</div>
-          <div class="meta">${escapeHtml(p.source||'')}</div>
-        </div>`;
-      }).join('') + '<footer class="note">Drive times are rough estimates from Arvada 80004 — confirm in Maps. Edit <code>data/places.json</code>, run <code>python3 scripts/build_map.py</code>, refresh. Sources: Days.in.denver newsletter, Colorado Kids Explore, Colorado Kids Are Rad.</footer>';
+      listEl.innerHTML = filtered.map(p => `
+        <article class="place-card${activeId===p.id?' active':''}" data-id="${escapeHtml(p.id)}" role="button" tabindex="0">
+          <div class="card-top">${badgesHtml(p)}</div>
+          <h3>${escapeHtml(p.name)}</h3>
+          <p class="why-snip">${escapeHtml(snippet(p.why, 120))}</p>
+          <div class="card-meta">
+            <span>${escapeHtml(p.drive_note ? p.drive_note.replace(' drive from Arvada 80004','') : '')}</span>
+            <span>${escapeHtml(snippet(p.source, 42))}</span>
+          </div>
+        </article>`).join('');
     }
-    listEl.querySelectorAll('.place').forEach(el => {
+
+    listEl.querySelectorAll('.place-card').forEach(el => {
       const go = () => {
-        const p = places.find(x => x.id===el.dataset.id);
+        const p = places.find(x => x.id === el.dataset.id);
         if (!p) return;
-        map.setView([p.lat, p.lng], 14);
-        markers[p.id].openPopup();
-        highlightList(p.id);
+        setTab('map');
+        openSheet(p);
+        flyTo(p);
       };
       el.addEventListener('click', go);
-      el.addEventListener('keydown', e => { if (e.key==='Enter' || e.key===' ') { e.preventDefault(); go(); } });
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+      });
     });
+
+    // Toggle markers
     places.forEach(p => {
       const show = passesFilter(p) && matchesQuery(p, query);
-      if (show) { if (!map.hasLayer(markers[p.id])) markers[p.id].addTo(map); }
-      else { if (map.hasLayer(markers[p.id])) map.removeLayer(markers[p.id]); }
+      const m = markers[p.id];
+      if (!m) return;
+      m.el.style.display = show ? '' : 'none';
     });
+    updateFilterBar();
   }
 
-  document.querySelectorAll('.filters button').forEach(btn => {
+  function setTab(name){
+    currentTab = name;
+    document.querySelectorAll('.tab').forEach(t => {
+      const on = t.dataset.tab === name;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    if (name === 'list') document.getElementById('panel-list').classList.add('active');
+    if (name === 'filters') document.getElementById('panel-filters').classList.add('active');
+    if (name === 'about') document.getElementById('panel-about').classList.add('active');
+    app.classList.toggle('map-shifted', name === 'list' || name === 'filters' || name === 'about');
+    if (name === 'map') setTimeout(() => map.resize(), 50);
+    else setTimeout(() => map.resize(), 50);
+  }
+
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => setTab(btn.dataset.tab));
+  });
+
+  function setFilter(f){
+    filter = f;
+    document.querySelectorAll('.filter-chip').forEach(b => {
+      const on = b.dataset.filter === f;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    renderList();
+  }
+
+  document.querySelectorAll('.filter-chip').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      filter = btn.dataset.filter;
-      renderList();
+      setFilter(btn.dataset.filter);
+      // After picking a filter, jump to list so results are visible
+      if (btn.dataset.filter !== 'all') setTab('list');
     });
   });
+  document.getElementById('clear-filter').addEventListener('click', () => setFilter('all'));
 
   let searchTimer;
   searchEl.addEventListener('input', () => {
@@ -471,10 +1014,15 @@ const PLACES_DOC = {"meta": {"title": "Denver/Arvada Toddler Outing Spots", "bas
     searchTimer = setTimeout(() => {
       query = searchEl.value.trim().toLowerCase();
       renderList();
-    }, 120);
+    }, 100);
   });
 
+  // Wait for markers then first render
+  map.on('load', () => renderList());
+  // Also render list HTML immediately (markers toggle later)
   renderList();
+
+  window.addEventListener('resize', () => map.resize());
 })();
 </script>
 </body>
