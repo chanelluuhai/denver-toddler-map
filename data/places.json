@@ -1,0 +1,494 @@
+{
+  "meta": {
+    "title": "Denver/Arvada Toddler Outing Spots",
+    "base": {
+      "label": "Arvada, CO 80004",
+      "lat": 39.8005505,
+      "lng": -105.0811573
+    },
+    "audience": "Toddler ~20 months; prefer ~30 min drive",
+    "sources_scrubbed": [
+      {
+        "name": "Days.in.denver",
+        "instagram": "https://www.instagram.com/days.in.denver/",
+        "facebook": "Days.in.denver"
+      },
+      {
+        "name": "Colorado Kids Explore",
+        "instagram": "https://www.instagram.com/colorado.kids.explore/",
+        "facebook": "Colorado Kids Explore - Adventure Guide"
+      },
+      {
+        "name": "Colorado Kids Are Rad",
+        "instagram": "https://www.instagram.com/coloradokidsarerad/",
+        "facebook": "Colorado Kids Are Rad"
+      }
+    ],
+    "updated": "2026-10-01",
+    "notes": "Why-notes paraphrased/quoted from source captions and newsletters. Drive times are rough estimates from Arvada 80004; verify in Google Maps before leaving. Instagram/Facebook posts change often \u2014 re-scrub and update this JSON."
+  },
+  "places": [
+    {
+      "id": "csu-spur",
+      "name": "CSU Spur",
+      "lat": 39.7870722,
+      "lng": -104.9693851,
+      "address": "4777 National Western Dr, Denver, CO 80216",
+      "why": "Completely free and open to the public \u2014 mock vet clinic, play kitchen, water table, and hands-on spots across three buildings; feels like a children's museum without the price. Open Mon\u2013Fri 9\u20135 and every 2nd Saturday 10\u20132 with extra activities.",
+      "source": "Days.in.denver (@days.in.denver)",
+      "source_accounts": [
+        "@days.in.denver",
+        "Facebook: Days.in.denver"
+      ],
+      "links": [
+        {
+          "label": "Instagram @days.in.denver",
+          "url": "https://www.instagram.com/days.in.denver/"
+        },
+        {
+          "label": "CSU Spur (hours/visit)",
+          "url": "https://csuspur.org/"
+        },
+        {
+          "label": "Days in Denver newsletter (Oct)",
+          "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"
+        }
+      ],
+      "hours": "Mon\u2013Fri 9am\u20135pm; 2nd Saturdays 10am\u20132pm; closed other Sat & Sun",
+      "cost": "Free",
+      "toddler_notes": "Great for ~20 months: indoor play kitchen, water table, mock vet. Free year-round (except Stock Show grounds fee).",
+      "tags": [
+        "free",
+        "indoor",
+        "animals",
+        "play",
+        "north-denver"
+      ],
+      "drive_note": "~22 min drive from Arvada 80004 (~6 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 22,
+      "straight_line_miles": 6.0
+    },
+    {
+      "id": "belleview-park",
+      "name": "Belleview Park (Farm & Train)",
+      "lat": 39.6265801,
+      "lng": -105.0045712,
+      "address": "5001 S Inca Dr, Englewood, CO 80110",
+      "why": "Free park with playgrounds and creek; seasonal petting farm and miniature train (~$3 ages 2+, under 2 free) \u2014 a classic toddler outing highlighted by Colorado Kids Explore.",
+      "source": "Colorado Kids Explore (@colorado.kids.explore)",
+      "source_accounts": [
+        "@colorado.kids.explore",
+        "Facebook: Colorado Kids Explore - Adventure Guide"
+      ],
+      "links": [
+        {
+          "label": "Instagram @colorado.kids.explore",
+          "url": "https://www.instagram.com/colorado.kids.explore/"
+        },
+        {
+          "label": "Englewood Farm & Train",
+          "url": "https://www.englewoodco.gov/parks-recreation-library-golf/play-englewood-recreation/parks/englewood-parks/englewood-farm-train-at-belleview-park"
+        },
+        {
+          "label": "Belleview Park info",
+          "url": "https://www.englewoodco.gov/parks-recreation-library-golf/play-englewood-recreation/parks/englewood-parks/find-a-park/belleview-park"
+        }
+      ],
+      "hours": "Park: dawn\u2013dusk. Farm & Train: typically Memorial Day weekend\u2013Labor Day (check city site; 2026 season noted ~9am\u20133:30pm)",
+      "cost": "Park free; farm/train ~$3 each (under 2 free)",
+      "toddler_notes": "Under-2 free for farm/train. Park playground usable year-round even when farm is closed.",
+      "tags": [
+        "park",
+        "animals",
+        "train",
+        "englewood",
+        "seasonal"
+      ],
+      "drive_note": "~47 min drive from Arvada 80004 (~13 mi straight-line) \u2014 FARTHER (>30 min; flag)",
+      "farther_than_30min": true,
+      "approx_drive_minutes": 47,
+      "straight_line_miles": 12.7
+    },
+    {
+      "id": "apex-center",
+      "name": "Apex Center (Indoor Playground)",
+      "lat": 39.8256417,
+      "lng": -105.1455838,
+      "address": "13150 W 72nd Ave, Arvada, CO 80005",
+      "why": "Days.in.denver: 'basically an entire day under one roof' \u2014 indoor water park, ice rinks, climbing wall, and a FREE indoor playground for little kids (Colorado-themed with a dedicated tots area for ages ~1\u20133).",
+      "source": "Days.in.denver (@days.in.denver)",
+      "source_accounts": [
+        "@days.in.denver",
+        "Facebook: Days.in.denver"
+      ],
+      "links": [
+        {
+          "label": "Instagram @days.in.denver",
+          "url": "https://www.instagram.com/days.in.denver/"
+        },
+        {
+          "label": "Days in Denver Oct newsletter",
+          "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"
+        },
+        {
+          "label": "Apex Center",
+          "url": "https://apexprd.org/facility/apex-center/"
+        },
+        {
+          "label": "Clubhouse Adventure Playground",
+          "url": "https://apexprd.org/facilities/apex-center-virtual-tour/clubhouse-adventure-playground-and-child-watch/"
+        }
+      ],
+      "hours": "Open daily; check Apex schedule for playground/pool hours",
+      "cost": "Daily admission typically ~$10.50 kids / $12.50 adults (playground included; verify current rates)",
+      "toddler_notes": "Tots section with small spinners/musical boards \u2014 ideal for ~20 months. Right in Arvada.",
+      "tags": [
+        "indoor",
+        "arvada",
+        "playground",
+        "near-home"
+      ],
+      "drive_note": "~14 min drive from Arvada 80004 (~4 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 14,
+      "straight_line_miles": 3.8
+    },
+    {
+      "id": "cheyenne-arapaho",
+      "name": "Cheyenne-Arapaho (Tsistsistas-Hinono'ei) Park",
+      "lat": 39.6870548,
+      "lng": -104.8799131,
+      "address": "9200 E Iowa Ave, Denver, CO 80247",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Natural-themed playground (bison climber, leaf playhouse, sand play, baby swings) geared toward younger kids (~2\u20138) plus dog park.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
+      "source_accounts": [
+        "@coloradokidsarerad",
+        "Facebook: Colorado Kids Are Rad"
+      ],
+      "links": [
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        },
+        {
+          "label": "Park background (Arapahoe County)",
+          "url": "https://www.arapahoeco.gov/your_county/county_departments/open_spaces/our_work/current_projects/cheyenne_arapaho_park.php"
+        }
+      ],
+      "hours": "Dawn\u2013dusk (typical city/county park)",
+      "cost": "Free",
+      "toddler_notes": "Baby swings and sand play; some structures better for slightly older toddlers \u2014 supervise closely.",
+      "tags": [
+        "park",
+        "playground",
+        "ckar-10",
+        "free"
+      ],
+      "drive_note": "~49 min drive from Arvada 80004 (~13 mi straight-line) \u2014 FARTHER (>30 min; flag)",
+      "farther_than_30min": true,
+      "approx_drive_minutes": 49,
+      "straight_line_miles": 13.3
+    },
+    {
+      "id": "bates-logan",
+      "name": "Bates-Logan Park",
+      "lat": 39.6633652,
+      "lng": -104.9828059,
+      "address": "2938 S Logan St, Englewood, CO 80113",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Inclusive play, hillside slides, separate younger-kid structure, bike/strider loops \u2014 all-ages gem in Englewood.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
+      "source_accounts": [
+        "@coloradokidsarerad",
+        "Facebook: Colorado Kids Are Rad"
+      ],
+      "links": [
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        }
+      ],
+      "hours": "Dawn\u2013dusk",
+      "cost": "Free",
+      "toddler_notes": "Younger kids area + inclusive features; bring a strider if toddler is ready.",
+      "tags": [
+        "park",
+        "playground",
+        "inclusive",
+        "ckar-10",
+        "englewood"
+      ],
+      "drive_note": "~40 min drive from Arvada 80004 (~11 mi straight-line) \u2014 FARTHER (>30 min; flag)",
+      "farther_than_30min": true,
+      "approx_drive_minutes": 40,
+      "straight_line_miles": 10.8
+    },
+    {
+      "id": "washington-park",
+      "name": "Washington Park",
+      "lat": 39.7020811,
+      "lng": -104.9710337,
+      "address": "South Downing St & E Louisiana Ave area, Denver, CO 80210",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Classic Denver park with playgrounds, lakes, paths \u2014 easy picnic + play outing for toddlers.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
+      "source_accounts": [
+        "@coloradokidsarerad",
+        "Facebook: Colorado Kids Are Rad"
+      ],
+      "links": [
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        },
+        {
+          "label": "Denver Parks \u2014 Washington Park",
+          "url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Parks-Recreation"
+        }
+      ],
+      "hours": "Dawn\u2013dusk",
+      "cost": "Free",
+      "toddler_notes": "Multiple playground areas; spacious for stroller walks around the lakes.",
+      "tags": [
+        "park",
+        "playground",
+        "ckar-10",
+        "denver"
+      ],
+      "drive_note": "~33 min drive from Arvada 80004 (~9 mi straight-line) \u2014 FARTHER (>30 min; flag)",
+      "farther_than_30min": true,
+      "approx_drive_minutes": 33,
+      "straight_line_miles": 9.0
+    },
+    {
+      "id": "city-view",
+      "name": "City View Park",
+      "lat": 39.8450333,
+      "lng": -104.9642197,
+      "address": "Welby / North Metro (City View Park), Adams County, CO",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Neighborhood park with multi-level play, rubber/wood-chip surfacing, and a quieter setting.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
+      "source_accounts": [
+        "@coloradokidsarerad",
+        "Facebook: Colorado Kids Are Rad"
+      ],
+      "links": [
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        }
+      ],
+      "hours": "Dawn\u2013dusk",
+      "cost": "Free",
+      "toddler_notes": "Quieter option north of Denver; verify playground condition on arrival.",
+      "tags": [
+        "park",
+        "playground",
+        "ckar-10"
+      ],
+      "drive_note": "~26 min drive from Arvada 80004 (~7 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 26,
+      "straight_line_miles": 6.9
+    },
+    {
+      "id": "la-raza",
+      "name": "La Raza Park",
+      "lat": 39.769369,
+      "lng": -105.004298,
+      "address": "1501 W 38th Ave, Denver, CO 80211",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Highland-area park with playground upgrades (revitalized play, picnic, paths) \u2014 solid toddler stop near N Denver.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
+      "source_accounts": [
+        "@coloradokidsarerad",
+        "Facebook: Colorado Kids Are Rad"
+      ],
+      "links": [
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        },
+        {
+          "label": "La Raza Park Improvements (Denver)",
+          "url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Parks-Recreation/Planning-Design-Construction-Community-Engagement/Park-Facility-Projects/La-Raza-Park-Improvements"
+        }
+      ],
+      "hours": "Dawn\u2013dusk",
+      "cost": "Free",
+      "toddler_notes": "Playground after city improvements; good Highland/Sloan\u2019s Lake corridor pairing.",
+      "tags": [
+        "park",
+        "playground",
+        "ckar-10",
+        "highland"
+      ],
+      "drive_note": "~17 min drive from Arvada 80004 (~5 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 17,
+      "straight_line_miles": 4.6
+    },
+    {
+      "id": "paco-sanchez",
+      "name": "Paco Sanchez Park",
+      "lat": 39.7364138,
+      "lng": -105.0320785,
+      "address": "1290 Knox Ct, Denver, CO 80204",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Huge radio/music-themed adventure playground (giant mic, nets, spiral slide, zipline) \u2014 destination playground often called one of Denver\u2019s best.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
+      "source_accounts": [
+        "@coloradokidsarerad",
+        "Facebook: Colorado Kids Are Rad"
+      ],
+      "links": [
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        }
+      ],
+      "hours": "Dawn\u2013dusk",
+      "cost": "Free",
+      "toddler_notes": "Park is HUGE \u2014 easy to lose sight of a toddler; go early, stay in toddler-friendly zones, bring a second adult if possible.",
+      "tags": [
+        "park",
+        "playground",
+        "ckar-10",
+        "destination"
+      ],
+      "drive_note": "~19 min drive from Arvada 80004 (~5 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 19,
+      "straight_line_miles": 5.1
+    },
+    {
+      "id": "joseph-p-martinez",
+      "name": "Joseph P. Martinez Park",
+      "lat": 39.731122,
+      "lng": -105.041541,
+      "address": "900 N Raleigh St, Denver, CO 80204",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. West Denver park with cultural playground / Phase 1 improvements (play, plaza, lawn) \u2014 neighborhood outing.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
+      "source_accounts": [
+        "@coloradokidsarerad",
+        "Facebook: Colorado Kids Are Rad"
+      ],
+      "links": [
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        }
+      ],
+      "hours": "Dawn\u2013dusk",
+      "cost": "Free",
+      "toddler_notes": "Improvements phased \u2014 check what\u2019s open; pair with nearby Sloan\u2019s Lake / Paco Sanchez corridor.",
+      "tags": [
+        "park",
+        "playground",
+        "ckar-10",
+        "west-denver"
+      ],
+      "drive_note": "~19 min drive from Arvada 80004 (~5 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 19,
+      "straight_line_miles": 5.2
+    },
+    {
+      "id": "sloans-lake",
+      "name": "Sloan's Lake Park",
+      "lat": 39.7473715,
+      "lng": -105.0447172,
+      "address": "1700 N Sheridan Blvd, Denver, CO 80214",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Lake + skyline views, paths, playgrounds \u2014 peaceful picnic/stroller loop with room to toddle.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
+      "source_accounts": [
+        "@coloradokidsarerad",
+        "Facebook: Colorado Kids Are Rad"
+      ],
+      "links": [
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        }
+      ],
+      "hours": "Dawn\u2013dusk",
+      "cost": "Free",
+      "toddler_notes": "Watch water edges; playgrounds + open lawn good for ~20 months.",
+      "tags": [
+        "park",
+        "playground",
+        "ckar-10",
+        "lake"
+      ],
+      "drive_note": "~15 min drive from Arvada 80004 (~4 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 15,
+      "straight_line_miles": 4.2
+    },
+    {
+      "id": "central-park",
+      "name": "Central Park (playground)",
+      "lat": 39.7615,
+      "lng": -104.8915,
+      "address": "Central Park neighborhood / near E Smith Rd, Denver, CO 80238",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Refurbished playground with toddler structure (musical elements, hot-wheels track), splash/water play in summer, slides, inclusive merry-go-round.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
+      "source_accounts": [
+        "@coloradokidsarerad",
+        "Facebook: Colorado Kids Are Rad"
+      ],
+      "links": [
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        }
+      ],
+      "hours": "Dawn\u2013dusk; splash features seasonal",
+      "cost": "Free",
+      "toddler_notes": "Dedicated 2\u20135 play structure; summer water features are a hit.",
+      "tags": [
+        "park",
+        "playground",
+        "ckar-10",
+        "splash"
+      ],
+      "drive_note": "~39 min drive from Arvada 80004 (~10 mi straight-line) \u2014 FARTHER (>30 min; flag)",
+      "farther_than_30min": true,
+      "approx_drive_minutes": 39,
+      "straight_line_miles": 10.4
+    },
+    {
+      "id": "wright-park",
+      "name": "Wright Park",
+      "lat": 39.7216528,
+      "lng": -105.138471,
+      "address": "500 Wright St, Lakewood, CO 80228",
+      "why": "On Colorado Kids Are Rad\u2019s 10-park list. Recently renovated (2026 reopen): nature-based play, loop trail, shade, open lawn, dog park \u2014 kid-driven redesign.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) \u2014 10-park list",
+      "source_accounts": [
+        "@coloradokidsarerad",
+        "Facebook: Colorado Kids Are Rad"
+      ],
+      "links": [
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        },
+        {
+          "label": "City of Lakewood \u2014 Wright Park",
+          "url": "https://www.lakewoodco.gov/Local-Government/Departments/Community-Resources/Parks-Forestry-and-Open-Space/A-to-Z-Park-List/Wright-Park"
+        }
+      ],
+      "hours": "Dawn\u2013dusk",
+      "cost": "Free",
+      "toddler_notes": "Nature play + open lawn; freshly renovated as of mid-2026.",
+      "tags": [
+        "park",
+        "playground",
+        "ckar-10",
+        "lakewood"
+      ],
+      "drive_note": "~23 min drive from Arvada 80004 (~6 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 23,
+      "straight_line_miles": 6.2
+    }
+  ]
+}

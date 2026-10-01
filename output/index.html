@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Denver/Arvada Toddler Outing Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<style>
+  :root { --ink:#1a2332; --muted:#5a6a7a; --card:#fff; --bg:#f4f7fb; --accent:#0b6e4f; --far:#b45309; --near:#0b6e4f; }
+  * { box-sizing: border-box; }
+  html, body { height:100%; margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--ink); background:var(--bg); }
+  #app { display:grid; grid-template-columns: 360px 1fr; height:100%; }
+  @media (max-width: 860px) { #app { grid-template-columns: 1fr; grid-template-rows: 45% 55%; } }
+  aside { overflow:auto; background:var(--card); border-right:1px solid #dbe3ec; padding:14px 14px 28px; }
+  h1 { font-size:1.15rem; margin:0 0 4px; }
+  .sub { color:var(--muted); font-size:0.82rem; margin:0 0 12px; line-height:1.35; }
+  .filters { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+  .filters button { border:1px solid #c9d4e0; background:#fff; border-radius:999px; padding:5px 10px; font-size:0.75rem; cursor:pointer; }
+  .filters button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .place { border:1px solid #e2e8f0; border-radius:10px; padding:10px; margin-bottom:8px; cursor:pointer; background:#fff; }
+  .place:hover { border-color:#9ec5b3; }
+  .place.active { outline:2px solid var(--accent); }
+  .place h3 { margin:0 0 4px; font-size:0.95rem; }
+  .badge { display:inline-block; font-size:0.68rem; font-weight:600; padding:2px 7px; border-radius:999px; margin-right:4px; }
+  .badge.near { background:#d8f3e7; color:var(--near); }
+  .badge.far { background:#ffedd5; color:var(--far); }
+  .meta { font-size:0.78rem; color:var(--muted); }
+  #map { height:100%; width:100%; }
+  .leaflet-popup-content { min-width:220px; max-width:300px; font-size:0.88rem; line-height:1.35; }
+  .popup h3 { margin:0 0 6px; font-size:1rem; }
+  .popup a { color:#0b57a4; }
+  .why { margin:8px 0; }
+  .src { font-size:0.78rem; color:var(--muted); }
+  footer.note { font-size:0.72rem; color:var(--muted); margin-top:16px; line-height:1.4; }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside>
+    <h1>Toddler outings — Denver / Arvada</h1>
+    <p class="sub">Base: Arvada 80004 · ~20 months · sources: Days.in.denver, Colorado Kids Explore, Colorado Kids Are Rad · updated 2026-10-01</p>
+    <div class="filters">
+      <button type="button" data-filter="all" class="active">All (13)</button>
+      <button type="button" data-filter="near">Within ~30 min</button>
+      <button type="button" data-filter="far">Farther</button>
+    </div>
+    <div id="list"></div>
+    <footer class="note">Open this file in a browser (file:// works). To update: edit <code>data/places.json</code>, run <code>python3 scripts/build_map.py</code>, refresh. Drive times are rough estimates — confirm in Google Maps.</footer>
+  </aside>
+  <div id="map"></div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+// Embedded source-of-truth snapshot (file:// safe). Rebuild via scripts/build_map.py
+const PLACES_DOC = {"meta": {"title": "Denver/Arvada Toddler Outing Spots", "base": {"label": "Arvada, CO 80004", "lat": 39.8005505, "lng": -105.0811573}, "audience": "Toddler ~20 months; prefer ~30 min drive", "sources_scrubbed": [{"name": "Days.in.denver", "instagram": "https://www.instagram.com/days.in.denver/", "facebook": "Days.in.denver"}, {"name": "Colorado Kids Explore", "instagram": "https://www.instagram.com/colorado.kids.explore/", "facebook": "Colorado Kids Explore - Adventure Guide"}, {"name": "Colorado Kids Are Rad", "instagram": "https://www.instagram.com/coloradokidsarerad/", "facebook": "Colorado Kids Are Rad"}], "updated": "2026-10-01", "notes": "Why-notes paraphrased/quoted from source captions and newsletters. Drive times are rough estimates from Arvada 80004; verify in Google Maps before leaving. Instagram/Facebook posts change often — re-scrub and update this JSON."}, "places": [{"id": "csu-spur", "name": "CSU Spur", "lat": 39.7870722, "lng": -104.9693851, "address": "4777 National Western Dr, Denver, CO 80216", "why": "Completely free and open to the public — mock vet clinic, play kitchen, water table, and hands-on spots across three buildings; feels like a children's museum without the price. Open Mon–Fri 9–5 and every 2nd Saturday 10–2 with extra activities.", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "CSU Spur (hours/visit)", "url": "https://csuspur.org/"}, {"label": "Days in Denver newsletter (Oct)", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}], "hours": "Mon–Fri 9am–5pm; 2nd Saturdays 10am–2pm; closed other Sat & Sun", "cost": "Free", "toddler_notes": "Great for ~20 months: indoor play kitchen, water table, mock vet. Free year-round (except Stock Show grounds fee).", "tags": ["free", "indoor", "animals", "play", "north-denver"], "drive_note": "~22 min drive from Arvada 80004 (~6 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 22, "straight_line_miles": 6.0}, {"id": "belleview-park", "name": "Belleview Park (Farm & Train)", "lat": 39.6265801, "lng": -105.0045712, "address": "5001 S Inca Dr, Englewood, CO 80110", "why": "Free park with playgrounds and creek; seasonal petting farm and miniature train (~$3 ages 2+, under 2 free) — a classic toddler outing highlighted by Colorado Kids Explore.", "source": "Colorado Kids Explore (@colorado.kids.explore)", "source_accounts": ["@colorado.kids.explore", "Facebook: Colorado Kids Explore - Adventure Guide"], "links": [{"label": "Instagram @colorado.kids.explore", "url": "https://www.instagram.com/colorado.kids.explore/"}, {"label": "Englewood Farm & Train", "url": "https://www.englewoodco.gov/parks-recreation-library-golf/play-englewood-recreation/parks/englewood-parks/englewood-farm-train-at-belleview-park"}, {"label": "Belleview Park info", "url": "https://www.englewoodco.gov/parks-recreation-library-golf/play-englewood-recreation/parks/englewood-parks/find-a-park/belleview-park"}], "hours": "Park: dawn–dusk. Farm & Train: typically Memorial Day weekend–Labor Day (check city site; 2026 season noted ~9am–3:30pm)", "cost": "Park free; farm/train ~$3 each (under 2 free)", "toddler_notes": "Under-2 free for farm/train. Park playground usable year-round even when farm is closed.", "tags": ["park", "animals", "train", "englewood", "seasonal"], "drive_note": "~47 min drive from Arvada 80004 (~13 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 47, "straight_line_miles": 12.7}, {"id": "apex-center", "name": "Apex Center (Indoor Playground)", "lat": 39.8256417, "lng": -105.1455838, "address": "13150 W 72nd Ave, Arvada, CO 80005", "why": "Days.in.denver: 'basically an entire day under one roof' — indoor water park, ice rinks, climbing wall, and a FREE indoor playground for little kids (Colorado-themed with a dedicated tots area for ages ~1–3).", "source": "Days.in.denver (@days.in.denver)", "source_accounts": ["@days.in.denver", "Facebook: Days.in.denver"], "links": [{"label": "Instagram @days.in.denver", "url": "https://www.instagram.com/days.in.denver/"}, {"label": "Days in Denver Oct newsletter", "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"}, {"label": "Apex Center", "url": "https://apexprd.org/facility/apex-center/"}, {"label": "Clubhouse Adventure Playground", "url": "https://apexprd.org/facilities/apex-center-virtual-tour/clubhouse-adventure-playground-and-child-watch/"}], "hours": "Open daily; check Apex schedule for playground/pool hours", "cost": "Daily admission typically ~$10.50 kids / $12.50 adults (playground included; verify current rates)", "toddler_notes": "Tots section with small spinners/musical boards — ideal for ~20 months. Right in Arvada.", "tags": ["indoor", "arvada", "playground", "near-home"], "drive_note": "~14 min drive from Arvada 80004 (~4 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 14, "straight_line_miles": 3.8}, {"id": "cheyenne-arapaho", "name": "Cheyenne-Arapaho (Tsistsistas-Hinono'ei) Park", "lat": 39.6870548, "lng": -104.8799131, "address": "9200 E Iowa Ave, Denver, CO 80247", "why": "On Colorado Kids Are Rad’s 10-park list. Natural-themed playground (bison climber, leaf playhouse, sand play, baby swings) geared toward younger kids (~2–8) plus dog park.", "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}, {"label": "Park background (Arapahoe County)", "url": "https://www.arapahoeco.gov/your_county/county_departments/open_spaces/our_work/current_projects/cheyenne_arapaho_park.php"}], "hours": "Dawn–dusk (typical city/county park)", "cost": "Free", "toddler_notes": "Baby swings and sand play; some structures better for slightly older toddlers — supervise closely.", "tags": ["park", "playground", "ckar-10", "free"], "drive_note": "~49 min drive from Arvada 80004 (~13 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 49, "straight_line_miles": 13.3}, {"id": "bates-logan", "name": "Bates-Logan Park", "lat": 39.6633652, "lng": -104.9828059, "address": "2938 S Logan St, Englewood, CO 80113", "why": "On Colorado Kids Are Rad’s 10-park list. Inclusive play, hillside slides, separate younger-kid structure, bike/strider loops — all-ages gem in Englewood.", "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}], "hours": "Dawn–dusk", "cost": "Free", "toddler_notes": "Younger kids area + inclusive features; bring a strider if toddler is ready.", "tags": ["park", "playground", "inclusive", "ckar-10", "englewood"], "drive_note": "~40 min drive from Arvada 80004 (~11 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 40, "straight_line_miles": 10.8}, {"id": "washington-park", "name": "Washington Park", "lat": 39.7020811, "lng": -104.9710337, "address": "South Downing St & E Louisiana Ave area, Denver, CO 80210", "why": "On Colorado Kids Are Rad’s 10-park list. Classic Denver park with playgrounds, lakes, paths — easy picnic + play outing for toddlers.", "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}, {"label": "Denver Parks — Washington Park", "url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Parks-Recreation"}], "hours": "Dawn–dusk", "cost": "Free", "toddler_notes": "Multiple playground areas; spacious for stroller walks around the lakes.", "tags": ["park", "playground", "ckar-10", "denver"], "drive_note": "~33 min drive from Arvada 80004 (~9 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 33, "straight_line_miles": 9.0}, {"id": "city-view", "name": "City View Park", "lat": 39.8450333, "lng": -104.9642197, "address": "Welby / North Metro (City View Park), Adams County, CO", "why": "On Colorado Kids Are Rad’s 10-park list. Neighborhood park with multi-level play, rubber/wood-chip surfacing, and a quieter setting.", "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}], "hours": "Dawn–dusk", "cost": "Free", "toddler_notes": "Quieter option north of Denver; verify playground condition on arrival.", "tags": ["park", "playground", "ckar-10"], "drive_note": "~26 min drive from Arvada 80004 (~7 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 26, "straight_line_miles": 6.9}, {"id": "la-raza", "name": "La Raza Park", "lat": 39.769369, "lng": -105.004298, "address": "1501 W 38th Ave, Denver, CO 80211", "why": "On Colorado Kids Are Rad’s 10-park list. Highland-area park with playground upgrades (revitalized play, picnic, paths) — solid toddler stop near N Denver.", "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}, {"label": "La Raza Park Improvements (Denver)", "url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Parks-Recreation/Planning-Design-Construction-Community-Engagement/Park-Facility-Projects/La-Raza-Park-Improvements"}], "hours": "Dawn–dusk", "cost": "Free", "toddler_notes": "Playground after city improvements; good Highland/Sloan’s Lake corridor pairing.", "tags": ["park", "playground", "ckar-10", "highland"], "drive_note": "~17 min drive from Arvada 80004 (~5 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 17, "straight_line_miles": 4.6}, {"id": "paco-sanchez", "name": "Paco Sanchez Park", "lat": 39.7364138, "lng": -105.0320785, "address": "1290 Knox Ct, Denver, CO 80204", "why": "On Colorado Kids Are Rad’s 10-park list. Huge radio/music-themed adventure playground (giant mic, nets, spiral slide, zipline) — destination playground often called one of Denver’s best.", "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}], "hours": "Dawn–dusk", "cost": "Free", "toddler_notes": "Park is HUGE — easy to lose sight of a toddler; go early, stay in toddler-friendly zones, bring a second adult if possible.", "tags": ["park", "playground", "ckar-10", "destination"], "drive_note": "~19 min drive from Arvada 80004 (~5 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 19, "straight_line_miles": 5.1}, {"id": "joseph-p-martinez", "name": "Joseph P. Martinez Park", "lat": 39.731122, "lng": -105.041541, "address": "900 N Raleigh St, Denver, CO 80204", "why": "On Colorado Kids Are Rad’s 10-park list. West Denver park with cultural playground / Phase 1 improvements (play, plaza, lawn) — neighborhood outing.", "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}], "hours": "Dawn–dusk", "cost": "Free", "toddler_notes": "Improvements phased — check what’s open; pair with nearby Sloan’s Lake / Paco Sanchez corridor.", "tags": ["park", "playground", "ckar-10", "west-denver"], "drive_note": "~19 min drive from Arvada 80004 (~5 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 19, "straight_line_miles": 5.2}, {"id": "sloans-lake", "name": "Sloan's Lake Park", "lat": 39.7473715, "lng": -105.0447172, "address": "1700 N Sheridan Blvd, Denver, CO 80214", "why": "On Colorado Kids Are Rad’s 10-park list. Lake + skyline views, paths, playgrounds — peaceful picnic/stroller loop with room to toddle.", "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}], "hours": "Dawn–dusk", "cost": "Free", "toddler_notes": "Watch water edges; playgrounds + open lawn good for ~20 months.", "tags": ["park", "playground", "ckar-10", "lake"], "drive_note": "~15 min drive from Arvada 80004 (~4 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 15, "straight_line_miles": 4.2}, {"id": "central-park", "name": "Central Park (playground)", "lat": 39.7615, "lng": -104.8915, "address": "Central Park neighborhood / near E Smith Rd, Denver, CO 80238", "why": "On Colorado Kids Are Rad’s 10-park list. Refurbished playground with toddler structure (musical elements, hot-wheels track), splash/water play in summer, slides, inclusive merry-go-round.", "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}], "hours": "Dawn–dusk; splash features seasonal", "cost": "Free", "toddler_notes": "Dedicated 2–5 play structure; summer water features are a hit.", "tags": ["park", "playground", "ckar-10", "splash"], "drive_note": "~39 min drive from Arvada 80004 (~10 mi straight-line) — FARTHER (>30 min; flag)", "farther_than_30min": true, "approx_drive_minutes": 39, "straight_line_miles": 10.4}, {"id": "wright-park", "name": "Wright Park", "lat": 39.7216528, "lng": -105.138471, "address": "500 Wright St, Lakewood, CO 80228", "why": "On Colorado Kids Are Rad’s 10-park list. Recently renovated (2026 reopen): nature-based play, loop trail, shade, open lawn, dog park — kid-driven redesign.", "source": "Colorado Kids Are Rad (@coloradokidsarerad) — 10-park list", "source_accounts": ["@coloradokidsarerad", "Facebook: Colorado Kids Are Rad"], "links": [{"label": "Instagram @coloradokidsarerad", "url": "https://www.instagram.com/coloradokidsarerad/"}, {"label": "City of Lakewood — Wright Park", "url": "https://www.lakewoodco.gov/Local-Government/Departments/Community-Resources/Parks-Forestry-and-Open-Space/A-to-Z-Park-List/Wright-Park"}], "hours": "Dawn–dusk", "cost": "Free", "toddler_notes": "Nature play + open lawn; freshly renovated as of mid-2026.", "tags": ["park", "playground", "ckar-10", "lakewood"], "drive_note": "~23 min drive from Arvada 80004 (~6 mi straight-line)", "farther_than_30min": false, "approx_drive_minutes": 23, "straight_line_miles": 6.2}]};
+</script>
+<script>
+(function(){
+  const places = PLACES_DOC.places || [];
+  const base = PLACES_DOC.meta && PLACES_DOC.meta.base;
+  const map = L.map('map', { scrollWheelZoom: true });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap'
+  }).addTo(map);
+
+  const markers = {};
+  const group = L.featureGroup();
+
+  function escapeHtml(s){
+    return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function popupHtml(p){
+    const links = (p.links||[]).map(l => `<div><a href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label||l.url)}</a></div>`).join('');
+    const far = p.farther_than_30min ? '<span class="badge far">Farther</span>' : '<span class="badge near">~30 min</span>';
+    return `<div class="popup">
+      <h3>${escapeHtml(p.name)} ${far}</h3>
+      <div><strong>Address:</strong> ${escapeHtml(p.address||'—')}</div>
+      <div class="why"><strong>Why:</strong> ${escapeHtml(p.why||'')}</div>
+      <div class="src"><strong>Source:</strong> ${escapeHtml(p.source||'')}</div>
+      <div class="src">${escapeHtml(p.drive_note||'')}</div>
+      ${p.hours ? `<div class="src"><strong>Hours:</strong> ${escapeHtml(p.hours)}</div>` : ''}
+      ${p.cost ? `<div class="src"><strong>Cost:</strong> ${escapeHtml(p.cost)}</div>` : ''}
+      ${p.toddler_notes ? `<div class="src"><strong>Toddler tip:</strong> ${escapeHtml(p.toddler_notes)}</div>` : ''}
+      <div style="margin-top:6px">${links}</div>
+    </div>`;
+  }
+
+  function colorFor(p){ return p.farther_than_30min ? '#b45309' : '#0b6e4f'; }
+
+  places.forEach(p => {
+    const m = L.circleMarker([p.lat, p.lng], {
+      radius: 9, color: '#fff', weight: 2, fillColor: colorFor(p), fillOpacity: 0.95
+    });
+    m.bindPopup(popupHtml(p), { maxWidth: 320 });
+    m.bindTooltip(p.name);
+    m.on('click', () => highlightList(p.id));
+    markers[p.id] = m;
+    group.addLayer(m);
+  });
+
+  if (base) {
+    const home = L.marker([base.lat, base.lng], {
+      title: 'Arvada 80004 base',
+      icon: L.divIcon({ className:'', html:'<div style="background:#2563eb;color:#fff;border-radius:8px;padding:3px 6px;font-size:11px;font-weight:700;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)">HOME</div>', iconSize:[48,20], iconAnchor:[24,10] })
+    }).bindPopup('<strong>Base:</strong> Arvada, CO 80004');
+    group.addLayer(home);
+  }
+
+  group.addTo(map);
+  if (group.getLayers().length) map.fitBounds(group.getBounds().pad(0.12));
+
+  const listEl = document.getElementById('list');
+  let filter = 'all';
+
+  function highlightList(id){
+    listEl.querySelectorAll('.place').forEach(el => el.classList.toggle('active', el.dataset.id===id));
+  }
+
+  function renderList(){
+    const sorted = places.slice().sort((a,b)=> (a.approx_drive_minutes||999)-(b.approx_drive_minutes||999));
+    const filtered = sorted.filter(p => {
+      if (filter==='near') return !p.farther_than_30min;
+      if (filter==='far') return !!p.farther_than_30min;
+      return true;
+    });
+    listEl.innerHTML = filtered.map(p => {
+      const badge = p.farther_than_30min ? '<span class="badge far">Farther</span>' : '<span class="badge near">Near</span>';
+      return `<div class="place" data-id="${escapeHtml(p.id)}">
+        <h3>${badge}${escapeHtml(p.name)}</h3>
+        <div class="meta">${escapeHtml(p.drive_note||'')}</div>
+        <div class="meta">${escapeHtml(p.source||'')}</div>
+      </div>`;
+    }).join('');
+    listEl.querySelectorAll('.place').forEach(el => {
+      el.addEventListener('click', () => {
+        const p = places.find(x => x.id===el.dataset.id);
+        if (!p) return;
+        map.setView([p.lat, p.lng], 14);
+        markers[p.id].openPopup();
+        highlightList(p.id);
+      });
+    });
+    // show/hide markers
+    places.forEach(p => {
+      const show = filter==='all' || (filter==='near' && !p.farther_than_30min) || (filter==='far' && p.farther_than_30min);
+      if (show) { if (!map.hasLayer(markers[p.id])) markers[p.id].addTo(map); }
+      else { if (map.hasLayer(markers[p.id])) map.removeLayer(markers[p.id]); }
+    });
+  }
+
+  document.querySelectorAll('.filters button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filter = btn.dataset.filter;
+      renderList();
+    });
+  });
+
+  renderList();
+})();
+</script>
+</body>
+</html>
