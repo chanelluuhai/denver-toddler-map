@@ -3,7 +3,7 @@
 Updated: 2026-10-02  
 Base: Arvada, CO 80004  
 Audience: Toddler ~20 months; prefer ~30 min drive  
-Places: 64
+Places: 65
 
 Each pin has a why-note from a named social/newsletter source. Drive times are rough estimates.
 
@@ -30,6 +30,17 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - **Toddler tip:** Near-home dinner + toddler distraction; supervise arcade area.
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 - [Days in Denver April newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0)
+
+## The Green at 38th (near)
+
+- **Address:** 7101 W 38th Ave, Wheat Ridge, CO 80033
+- **Drive:** ~10 min drive from Arvada 80004 (~2.1 mi straight-line)
+- **Why:** Chanel shared this Google Maps pin as a nearby outdoor/park option in Wheat Ridge — an easy short outing from Arvada.
+- **Source:** Chanel Luu — shared Google Maps pin
+- **Hours:** Verify current access and amenities
+- **Cost:** Verify current access details
+- **Toddler tip:** Nearby outdoor option; check current amenities and conditions before visiting.
+- [Google Maps shared by Chanel](https://maps.app.goo.gl/WLPcX74tqMqfAyVN7?g_st=ic)
 
 ## Vital Root (Tennyson) (near)
 

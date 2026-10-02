@@ -2598,6 +2598,38 @@
       "farther_than_30min": true,
       "approx_drive_minutes": 44,
       "straight_line_miles": 13.5
+    },
+    {
+      "id": "green-at-38th",
+      "name": "The Green at 38th",
+      "lat": 39.7698,
+      "lng": -105.0775,
+      "address": "7101 W 38th Ave, Wheat Ridge, CO 80033",
+      "why": "Chanel shared this Google Maps pin as a nearby outdoor/park option in Wheat Ridge \u2014 an easy short outing from Arvada.",
+      "source": "Chanel Luu \u2014 shared Google Maps pin",
+      "source_accounts": [
+        "Chanel Luu"
+      ],
+      "links": [
+        {
+          "label": "Google Maps shared by Chanel",
+          "url": "https://maps.app.goo.gl/WLPcX74tqMqfAyVN7?g_st=ic"
+        }
+      ],
+      "toddler_notes": "Nearby outdoor option; check current amenities and conditions before visiting.",
+      "tags": [
+        "park",
+        "outdoor",
+        "wheat-ridge",
+        "near-home",
+        "toddler"
+      ],
+      "drive_note": "~10 min drive from Arvada 80004 (~2.1 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 10,
+      "straight_line_miles": 2.1,
+      "hours": "Verify current access and amenities",
+      "cost": "Verify current access details"
     }
   ]
 }
