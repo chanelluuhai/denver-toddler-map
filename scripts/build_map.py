@@ -120,13 +120,9 @@ TEMPLATE = r'''<!DOCTYPE html>
     display: grid; place-items: center;
     flex-shrink: 0;
   }
-  .brand-mark svg {
-    width: 21px; height: 21px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+  .brand-mark .brand-emoji {
+    font-size: 22px;
+    line-height: 1;
   }
   .brand-text {
     font-family: var(--display);
@@ -675,7 +671,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   <header class="topbar">
     <div class="brand" aria-hidden="true">
       <span class="brand-mark">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.2 9.8a3.8 3.8 0 1 1 7.6 0v3.1a3.8 3.8 0 0 1-7.6 0z"/><path d="M9.3 7.2c.1-2 1.1-3.2 2.7-3.2s2.6 1.2 2.7 3.2M10.2 11.2h.01M13.8 11.2h.01M10.3 14.1c1 .8 2.4.8 3.4 0"/></svg>
+        <span class="brand-emoji" role="img" aria-label="Baby">👶</span>
       </span>
       <span class="brand-text">Toddler Spots<span class="brand-sub">Denver · Arvada</span></span>
     </div>
@@ -837,12 +833,6 @@ const EVENTS_DOC = __EVENTS_JSON__;
     zoom: 10.2,
     attributionControl: true
   });
-  map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
-  map.addControl(new maplibregl.GeolocateControl({
-    positionOptions: { enableHighAccuracy: true },
-    trackUserLocation: false
-  }), 'top-right');
-
   function escapeHtml(s){
     return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
