@@ -251,26 +251,36 @@ TEMPLATE = r'''<!DOCTYPE html>
         #F0E6E6 72%,
         #E9D5D8 100%);
     display: none;
-    flex-direction: column;
-    padding-top: var(--safe-top);
-    padding-bottom: var(--tab-h);
-    overflow: hidden;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
-  .panel.active { display: flex; }
+  .panel.active { display: block; }
   .panel-header {
-    position: relative;
-    padding: 28px 24px 18px;
-    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    padding: calc(22px + var(--safe-top)) 24px 10px;
   }
-  .panel-header::after {
+  /* Frosted fade: content scrolls under the title and blurs out, no hard edge. */
+  .panel-header::before {
     content: "";
     position: absolute;
-    left: 0; right: 0; bottom: -28px;
-    height: 28px;
+    left: 0; right: 0; top: 0;
+    height: calc(100% + 56px);
     pointer-events: none;
-    background: linear-gradient(to bottom, rgba(232, 230, 228, 0.92), transparent);
+    z-index: -1;
+    background: linear-gradient(to bottom,
+      rgba(232, 230, 228, 0.55) 0%,
+      rgba(235, 231, 229, 0.28) 46%,
+      rgba(235, 231, 229, 0.08) 72%,
+      transparent 100%);
+    backdrop-filter: blur(18px) saturate(1.25);
+    -webkit-backdrop-filter: blur(18px) saturate(1.25);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 48%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 48%, transparent 100%);
   }
   .panel-header h1 {
+    position: relative;
     font-family: var(--display);
     font-size: 1.95rem;
     font-weight: 600;
@@ -280,18 +290,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     line-height: 1.2;
     color: var(--ink);
   }
-  .panel-header p {
-    margin: 8px 0 0;
-    color: var(--muted);
-    font-size: 0.84rem;
-    font-weight: 400;
-    line-height: 1.45;
-  }
   .panel-body {
-    flex: 1;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 8px 18px 32px;
+    padding: 6px 18px calc(var(--tab-h) + 28px);
   }
 
   /* List cards */
@@ -299,8 +299,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     background: var(--card);
     border: none;
     border-radius: var(--radius);
-    padding: 22px 22px 18px;
-    margin-bottom: 16px;
+    padding: 18px 22px;
+    margin-bottom: 12px;
     cursor: pointer;
     box-shadow: var(--shadow);
     transition: transform .12s, box-shadow .15s;
@@ -331,32 +331,20 @@ TEMPLATE = r'''<!DOCTYPE html>
   .badge.free { background: var(--free-soft); color: var(--free); }
   .badge.indoor { background: var(--indoor-soft); color: var(--indoor); }
   .place-card h3 {
-    margin: 0 0 10px;
+    margin: 0;
     font-family: var(--display);
-    font-size: 1.28rem;
+    font-size: 1.22rem;
     font-weight: 600;
     letter-spacing: -0.015em;
-    line-height: 1.35;
+    line-height: 1.3;
     color: var(--ink);
   }
-  .why-snip {
-    margin: 0 0 12px;
-    font-size: 0.9rem;
-    color: var(--ink-2);
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .card-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 14px;
-    font-size: 0.78rem;
+  .card-line {
+    margin: 4px 0 0;
+    font-size: 0.84rem;
     color: var(--muted);
+    line-height: 1.35;
   }
-  .card-meta span { display: inline-flex; align-items: center; gap: 4px; }
   .empty {
     text-align: center;
     color: var(--muted);
@@ -376,13 +364,13 @@ TEMPLATE = r'''<!DOCTYPE html>
   .event-day-heading span { color: var(--muted); font-family: var(--font); font-size: .7rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; }
   .event-card {
     background: var(--card); border: none; border-radius: var(--radius);
-    padding: 20px 22px; margin-bottom: 14px; box-shadow: var(--shadow);
+    padding: 18px 22px; margin-bottom: 12px; box-shadow: var(--shadow);
   }
   .event-card.linked { cursor: pointer; transition: transform .12s, box-shadow .15s, border-color .15s; }
   .event-card.linked:hover, .event-card.linked:focus { box-shadow: var(--shadow-lg); outline: none; }
   .event-card.linked:active { transform: scale(.985); }
   .event-date-label { color: var(--muted); font-size: .72rem; font-weight: 500; margin-bottom: 6px; letter-spacing: 0.01em; }
-  .event-card h3 { margin: 0 0 8px; font-family: var(--display); font-size: 1.22rem; line-height: 1.35; font-weight: 600; color: var(--ink); }
+  .event-card h3 { margin: 0; font-family: var(--display); font-size: 1.18rem; line-height: 1.3; font-weight: 600; color: var(--ink); }
   .event-meta { display: flex; flex-wrap: wrap; gap: 5px 12px; color: var(--muted); font-size: .78rem; margin-bottom: 8px; }
   .event-note { margin: 0 0 8px; color: var(--ink-2); font-size: .88rem; line-height: 1.5; }
   .event-place { color: var(--muted); font-size: .78rem; }
@@ -525,29 +513,14 @@ TEMPLATE = r'''<!DOCTYPE html>
     height: 58px;
     padding: 4px;
     padding-bottom: 4px;
-    background: rgba(255, 254, 252, 0.72);
-    backdrop-filter: blur(28px) saturate(1.25);
-    -webkit-backdrop-filter: blur(28px) saturate(1.25);
-    border-top: none;
+    background: rgba(255, 254, 252, 0.22);
+    backdrop-filter: blur(22px) saturate(1.45);
+    -webkit-backdrop-filter: blur(22px) saturate(1.45);
+    border: 1px solid rgba(255, 254, 252, 0.45);
     border-radius: 999px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    box-shadow: 0 12px 36px rgba(70, 45, 50, 0.10);
-  }
-  .tabbar::before {
-    content: "";
-    position: absolute;
-    left: -12px; right: -12px;
-    bottom: calc(-10px - var(--safe-bottom));
-    height: calc(120px + var(--safe-bottom));
-    pointer-events: none;
-    z-index: -1;
-    background: linear-gradient(to top,
-      rgba(233, 213, 216, 0.92) 0%,
-      rgba(240, 226, 228, 0.55) 45%,
-      transparent 100%);
-    -webkit-mask-image: linear-gradient(to top, #000 30%, transparent 100%);
-    mask-image: linear-gradient(to top, #000 30%, transparent 100%);
+    box-shadow: 0 10px 28px rgba(70, 45, 50, 0.08);
   }
   .tab {
     display: flex;
@@ -567,7 +540,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     transition: color .15s, background .15s;
   }
   .tab svg { width: 22px; height: 22px; stroke-width: 1.6; }
-  .tab.active { color: var(--accent-dark); background: var(--accent-soft); }
+  .tab.active { color: var(--accent-dark); background: rgba(181, 122, 136, 0.16); }
   .tab:active { opacity: 0.7; }
 
   /* —— Bottom sheet (place detail) —— */
@@ -684,9 +657,9 @@ TEMPLATE = r'''<!DOCTYPE html>
       padding-bottom: 6px;
       border-radius: 999px;
       border: none;
-      background: rgba(255, 254, 252, 0.85);
-      backdrop-filter: blur(24px) saturate(1.2);
-      -webkit-backdrop-filter: blur(24px) saturate(1.2);
+      background: rgba(255, 254, 252, 0.22);
+      backdrop-filter: blur(22px) saturate(1.45);
+      -webkit-backdrop-filter: blur(22px) saturate(1.45);
       grid-template-columns: repeat(5, auto);
       gap: 2px;
       box-shadow: var(--shadow-lg);
@@ -699,16 +672,15 @@ TEMPLATE = r'''<!DOCTYPE html>
       border-radius: 999px;
       font-size: 0.82rem;
     }
-    .tabbar::before { display: none; }
-    .tab.active { background: var(--accent-soft); color: var(--accent-dark); }
+    .tab.active { background: rgba(181, 122, 136, 0.16); color: var(--accent-dark); }
     .panel {
       left: 0;
       width: min(420px, 40vw);
       right: auto;
-      padding-bottom: 0;
       border-right: none;
       box-shadow: 18px 0 40px rgba(70, 50, 48, 0.05);
     }
+    .panel-body { padding-bottom: 32px; }
     #map { left: 0; }
     .map-shifted #map { left: min(420px, 40vw); }
     .sheet {
@@ -758,7 +730,6 @@ TEMPLATE = r'''<!DOCTYPE html>
   <section class="panel" id="panel-list" aria-label="Place list">
     <div class="panel-header">
       <h1>All spots</h1>
-      <p id="list-sub">Sorted by drive time from __BASE_LABEL__</p>
     </div>
     <div class="panel-body" id="list"></div>
   </section>
@@ -766,7 +737,6 @@ TEMPLATE = r'''<!DOCTYPE html>
   <section class="panel" id="panel-events" aria-label="Upcoming events">
     <div class="panel-header">
       <h1>Upcoming events</h1>
-      <p id="events-sub">Dated family activities, soonest first</p>
     </div>
     <div class="panel-body" id="events"></div>
   </section>
@@ -774,7 +744,6 @@ TEMPLATE = r'''<!DOCTYPE html>
   <section class="panel" id="panel-filters" aria-label="Filters">
     <div class="panel-header">
       <h1>Filters</h1>
-      <p>Narrow by drive time, cost, or indoor-friendly</p>
     </div>
     <div class="panel-body">
       <div class="filter-grid" role="listbox" aria-label="Filter options">
@@ -810,7 +779,6 @@ TEMPLATE = r'''<!DOCTYPE html>
   <section class="panel" id="panel-about" aria-label="About">
     <div class="panel-header">
       <h1>About</h1>
-      <p>Curated toddler outings near home</p>
     </div>
     <div class="panel-body">
       <div class="about-card">
@@ -879,14 +847,12 @@ const EVENTS_DOC = __EVENTS_JSON__;
   const topbar = document.querySelector('.topbar');
   const listEl = document.getElementById('list');
   const eventsEl = document.getElementById('events');
-  const eventsSub = document.getElementById('events-sub');
   const searchEl = document.getElementById('search');
   const filterBar = document.getElementById('filter-bar');
   const filterBarLabel = document.getElementById('filter-bar-label');
   const sheet = document.getElementById('sheet');
   const sheetBody = document.getElementById('sheet-body');
   const sheetBackdrop = document.getElementById('sheet-backdrop');
-  const listSub = document.getElementById('list-sub');
 
   let filter = 'all';
   let query = '';
@@ -1050,20 +1016,13 @@ const EVENTS_DOC = __EVENTS_JSON__;
   function renderList(){
     const sorted = places.slice().sort((a,b)=> (a.approx_drive_minutes||999)-(b.approx_drive_minutes||999));
     const filtered = sorted.filter(p => passesFilter(p) && matchesQuery(p, query));
-    listSub.textContent = filtered.length + ' spot' + (filtered.length===1?'':'s') + ' · sorted by drive from ' + (base ? base.label : 'home');
-
     if (!filtered.length) {
       listEl.innerHTML = '<div class="empty">No spots match.<br>Try another filter or clear search.</div>';
     } else {
       listEl.innerHTML = filtered.map(p => `
         <article class="place-card${activeId===p.id?' active':''}" data-id="${escapeHtml(p.id)}" role="button" tabindex="0">
-          <div class="card-top">${badgesHtml(p)}</div>
           <h3>${escapeHtml(p.name)}</h3>
-          <p class="why-snip">${escapeHtml(snippet(p.why, 120))}</p>
-          <div class="card-meta">
-            <span>${escapeHtml(p.drive_note||'')}</span>
-            <span>${escapeHtml(snippet(p.source, 42))}</span>
-          </div>
+          <p class="card-line">${escapeHtml(placeKeyLine(p))}</p>
         </article>`).join('');
     }
 
@@ -1102,6 +1061,17 @@ const EVENTS_DOC = __EVENTS_JSON__;
   function eventDateLabel(e){
     return e.end_date && e.end_date !== e.date ? shortDate(e.date) + '–' + shortDate(e.end_date) : shortDate(e.date);
   }
+  function eventKeyLine(e){
+    const date = eventDateLabel(e);
+    const time = String(e.time || '').trim();
+    if (time && !/confirm/i.test(time)) return date + ' · ' + time;
+    return date;
+  }
+  function placeKeyLine(p){
+    if (p.drive_note) return p.drive_note;
+    if (p.approx_drive_minutes) return '~' + p.approx_drive_minutes + ' min';
+    return '';
+  }
   function eventDateKeys(e){
     const keys = [];
     const end = e.end_date || e.date;
@@ -1116,27 +1086,14 @@ const EVENTS_DOC = __EVENTS_JSON__;
   function renderEvents(){
     const today = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'America/Denver' }).format(new Date());
     const upcoming = events.filter(e => String(e.end_date || e.date) >= today).sort((a,b) => String(a.date).localeCompare(String(b.date)));
-    eventsSub.textContent = upcoming.length + ' upcoming event' + (upcoming.length===1?'':'s') + ' · grouped by day';
-    const groups = {};
-    upcoming.forEach(e => eventDateKeys(e).forEach(key => { (groups[key] ||= []).push(e); }));
-    const days = Object.keys(groups).sort();
-    if (!days.length) { eventsEl.innerHTML = '<div class="empty">No upcoming events listed yet.</div>'; return; }
-    eventsEl.innerHTML = days.map(day => `
-      <section class="event-day" aria-labelledby="event-day-${day}">
-        <h2 class="event-day-heading" id="event-day-${day}">${escapeHtml(longDate(day))}<span>${groups[day].length} event${groups[day].length===1?'':'s'}</span></h2>
-        ${groups[day].map(e => {
-          const linked = e.place_id && placesById[e.place_id];
-          return `<article class="event-card${linked?' linked':''}"${linked?` data-place-id="${escapeHtml(e.place_id)}" role="button" tabindex="0"`:''}>
-            <div class="event-date-label">${escapeHtml(eventDateLabel(e))}</div>
-            <h3>${escapeHtml(e.title)}</h3>
-            <div class="event-meta"><span>${escapeHtml(e.time||'Time to be confirmed')}</span><span class="event-place">${escapeHtml(e.place || '')}</span></div>
-            <p class="event-note">${escapeHtml(e.note||'')}</p>
-            ${e.drive_note ? `<div class="event-meta"><span>${escapeHtml(e.drive_note)}</span></div>` : ''}
-            ${e.link ? `<a class="event-link" href="${escapeHtml(e.link)}" target="_blank" rel="noopener">Event details ↗</a>` : ''}
-            ${linked ? '<span class="event-meta">Tap card to open map pin</span>' : ''}
-          </article>`;
-        }).join('')}
-      </section>`).join('');
+    if (!upcoming.length) { eventsEl.innerHTML = '<div class="empty">No upcoming events listed yet.</div>'; return; }
+    eventsEl.innerHTML = upcoming.map(e => {
+      const linked = e.place_id && placesById[e.place_id];
+      return `<article class="event-card${linked?' linked':''}"${linked?` data-place-id="${escapeHtml(e.place_id)}" role="button" tabindex="0"`:''}>
+        <h3>${escapeHtml(e.title)}</h3>
+        <p class="card-line">${escapeHtml(eventKeyLine(e))}</p>
+      </article>`;
+    }).join('');
     eventsEl.querySelectorAll('.event-card[data-place-id]').forEach(el => {
       const go = () => {
         const place = placesById[el.dataset.placeId];
