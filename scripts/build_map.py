@@ -152,21 +152,16 @@ TEMPLATE = r'''<!DOCTYPE html>
     letter-spacing: -0.015em;
     line-height: 1.15;
   }
-  .brand-sub {
-    display: block;
-    font-family: var(--font);
-    font-weight: 400;
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 0.02em;
-  }
+
   .search-pill {
-    flex: 1;
+    flex: 0 0 48px;
     min-width: 0;
     position: relative;
-    max-width: 420px;
+    max-width: none;
+    height: 44px;
   }
   .search-pill input {
+    display: none;
     position: relative;
     z-index: 0;
     width: 100%;
@@ -186,16 +181,35 @@ TEMPLATE = r'''<!DOCTYPE html>
     outline: none;
     color: var(--ink);
   }
+  .topbar.search-focused .search-pill input { display: block; }
+  .topbar.search-focused .search-pill .ico { display: block; }
   .search-pill input::placeholder { color: #A89E96; }
   .search-pill input:focus {
     box-shadow: 0 8px 24px rgba(70, 50, 48, 0.09), 0 0 0 3px rgba(181, 122, 136, 0.22);
   }
   .search-pill .ico {
     position: absolute; left: 14px; top: 50%; z-index: 1;
-    display: block; transform: translateY(-50%);
+    display: none; transform: translateY(-50%);
     color: var(--muted); pointer-events: none; width: 18px; height: 18px;
     stroke: currentColor; stroke-width: 2; overflow: visible;
   }
+  .search-toggle {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 44px;
+    border: none;
+    border-radius: 999px;
+    color: var(--muted);
+    background: rgba(255, 254, 252, 0.82);
+    backdrop-filter: blur(24px) saturate(1.2);
+    -webkit-backdrop-filter: blur(24px) saturate(1.2);
+    box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
+    cursor: pointer;
+  }
+  .search-toggle svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; }
+  .topbar.search-focused .search-toggle { display: none; }
+  .search-toggle:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
 
   /* —— Map (full-bleed) —— */
   #map {
@@ -454,37 +468,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     color: #fff;
   }
   .filter-chip.active .check::after { content: "✓"; font-size: 12px; font-weight: 700; }
-  .active-filter-bar {
-    position: absolute;
-    left: 14px; right: 14px;
-    bottom: calc(var(--tab-h) + 14px);
-    z-index: 15;
-    display: none;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 254, 252, 0.88);
-    backdrop-filter: blur(20px) saturate(1.15);
-    -webkit-backdrop-filter: blur(20px) saturate(1.15);
-    border: none;
-    border-radius: 999px;
-    padding: 8px 8px 8px 16px;
-    box-shadow: var(--shadow);
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-  .active-filter-bar.show { display: flex; }
-  .active-filter-bar button {
-    margin-left: auto;
-    border: none;
-    background: var(--bg);
-    border-radius: 999px;
-    padding: 8px 14px;
-    min-height: 36px;
-    font-weight: 600;
-    font-size: 0.8rem;
-    cursor: pointer;
-    color: var(--ink);
-  }
+
 
   /* About */
   .about-card {
@@ -549,7 +533,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 48%, #000 100%);
     mask-image: linear-gradient(to bottom, transparent 0%, #000 48%, #000 100%);
   }
-  .dock-left, .dock-btn, .seg, .events-shell { pointer-events: auto; }
+  .dock-left, .dock-btn, .seg, .events-shell, .filter-shell { pointer-events: auto; }
   .dock-left {
     display: flex;
     align-items: flex-end;
@@ -621,18 +605,20 @@ TEMPLATE = r'''<!DOCTYPE html>
     border-radius: 24px;
     font-size: 0;
   }
-  /* Events uses the same button-within-glass treatment as Map/List. */
-  .events-shell {
-    display: flex;
-    align-items: stretch;
+  /* Standalone actions use the same button-within-glass treatment. */
+  .filter-shell, .events-shell {
+    display: grid;
+    place-items: center;
+    width: 68px;
     height: 68px;
     padding: 6px;
     border-radius: 999px;
   }
-  .events-shell .dock-btn {
+  .filter-shell .dock-btn, .events-shell .dock-btn {
+    width: 56px;
     height: 56px;
     min-width: 56px;
-    padding: 8px 14px;
+    padding: 8px;
     border-radius: 999px;
   }
   .tab svg, .dock-btn svg { width: 30px; height: 30px; stroke-width: 1.75; }
@@ -824,6 +810,10 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   @media (min-width: 900px) {
     .topbar { padding-left: 24px; padding-right: 24px; }
+    .search-pill { flex: 1; max-width: 420px; height: auto; }
+    .search-pill input { display: block; }
+    .search-pill .ico { display: block; }
+    .search-toggle { display: none; }
     .dock { left: 24px; right: 24px; bottom: 24px; }
     .tab { flex-direction: column; gap: 0; min-width: 68px; font-size: 0; padding: 8px 14px; }
     .dock-btn { flex-direction: column; gap: 0; min-width: 74px; font-size: 0; padding: 8px 14px; border-radius: 24px; }
@@ -840,13 +830,6 @@ TEMPLATE = r'''<!DOCTYPE html>
       padding-bottom: 0;
     }
     .sheet.open { transform: translate(-50%, 0); }
-    .active-filter-bar {
-      left: auto;
-      right: 24px;
-      bottom: calc(var(--tab-h) + 12px);
-      width: auto;
-      max-width: 360px;
-    }
   }
 </style>
 </head>
@@ -859,18 +842,16 @@ TEMPLATE = r'''<!DOCTYPE html>
       <span class="brand-mark">
         <span class="brand-emoji" role="img" aria-label="Baby">👶</span>
       </span>
-      <span class="brand-text">Toddler Spots<span class="brand-sub">Denver · Arvada</span></span>
+      <span class="brand-text">Toddler Spots</span>
     </button>
     <div class="search-pill">
+      <button type="button" class="search-toggle" id="search-toggle" aria-label="Search" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
+      </button>
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
       <input type="search" id="search" placeholder="Search" autocomplete="off" enterkeyhint="search" aria-label="Search places"/>
     </div>
   </header>
-
-  <div class="active-filter-bar" id="filter-bar" aria-live="polite">
-    <span id="filter-bar-label">Filtered</span>
-    <button type="button" id="clear-filter">Clear</button>
-  </div>
 
   <section class="panel" id="panel-list" aria-label="Place list">
     <div class="panel-header">
@@ -958,9 +939,11 @@ __SOURCES_HTML__
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12" stroke-linecap="round"/><circle cx="4" cy="6" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.2" fill="currentColor" stroke="none"/></svg>
         </button>
       </div>
-      <button type="button" class="dock-btn glass" id="filter-btn" aria-label="Filter" aria-pressed="false" aria-expanded="false" aria-controls="filter-sheet">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg>
-      </button>
+      <div class="filter-shell glass" id="filter-shell">
+        <button type="button" class="dock-btn" id="filter-btn" aria-label="Filter" aria-pressed="false" aria-expanded="false" aria-controls="filter-sheet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg>
+        </button>
+      </div>
     </div>
     <div class="events-shell glass">
       <button type="button" class="dock-btn" id="events-btn" aria-label="Events" aria-pressed="false">
@@ -992,8 +975,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
   const listEl = document.getElementById('list');
   const eventsEl = document.getElementById('events');
   const searchEl = document.getElementById('search');
-  const filterBar = document.getElementById('filter-bar');
-  const filterBarLabel = document.getElementById('filter-bar-label');
+  const searchToggle = document.getElementById('search-toggle');
   const sheet = document.getElementById('sheet');
   const sheetBody = document.getElementById('sheet-body');
   const sheetBackdrop = document.getElementById('sheet-backdrop');
@@ -1002,6 +984,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
   const tabs = Array.from(document.querySelectorAll('.seg .tab'));
   const eventsBtn = document.getElementById('events-btn');
   const filterBtn = document.getElementById('filter-btn');
+  const filterShell = document.getElementById('filter-shell');
   const filterSheet = document.getElementById('filter-sheet');
   const filterBackdrop = document.getElementById('filter-backdrop');
   const aboutDrawer = document.getElementById('about-drawer');
@@ -1152,22 +1135,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
     return true;
   }
 
-  const FILTER_LABELS = {
-    all: 'All spots',
-    near: 'Near (~30 min)',
-    far: 'Farther',
-    free: 'Free',
-    indoor: 'Indoor'
-  };
 
-  function updateFilterBar(){
-    if (filter === 'all') {
-      filterBar.classList.remove('show');
-    } else {
-      filterBar.classList.add('show');
-      filterBarLabel.textContent = FILTER_LABELS[filter] || filter;
-    }
-  }
 
   function renderList(){
     const sorted = places.slice().sort((a,b)=> (a.approx_drive_minutes||999)-(b.approx_drive_minutes||999));
@@ -1203,7 +1171,6 @@ const EVENTS_DOC = __EVENTS_JSON__;
       if (!m) return;
       m.el.style.display = show ? '' : 'none';
     });
-    updateFilterBar();
   }
 
   function shortDate(key){
@@ -1452,7 +1419,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
     const mapActive = name === 'map';
     const eventsActive = name === 'events';
     if (eventsActive && filterOpen) closeFilterSheet();
-    filterBtn.hidden = eventsActive;
+    filterShell.hidden = eventsActive;
     topbar.hidden = !mapActive;
     topbar.setAttribute('aria-hidden', mapActive ? 'false' : 'true');
     const viewOn = name === 'map' || name === 'list';
@@ -1503,18 +1470,27 @@ const EVENTS_DOC = __EVENTS_JSON__;
   document.querySelectorAll('.filter-chip').forEach(btn => {
     btn.addEventListener('click', () => setFilter(btn.dataset.filter));
   });
-  document.getElementById('clear-filter').addEventListener('click', () => setFilter('all'));
 
   let searchTimer;
+  function openSearch(){
+    topbar.classList.add('search-focused');
+    searchToggle.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(() => searchEl.focus());
+  }
+  function closeSearchIfEmpty(){
+    if (!searchEl.value.trim()) {
+      topbar.classList.remove('search-focused');
+      searchToggle.setAttribute('aria-expanded', 'false');
+    }
+  }
+  searchToggle.addEventListener('click', openSearch);
   searchEl.addEventListener('focus', () => {
     topbar.classList.add('search-focused');
+    searchToggle.setAttribute('aria-expanded', 'true');
   });
-  searchEl.addEventListener('blur', () => {
-    if (!searchEl.value.trim()) topbar.classList.remove('search-focused');
-  });
+  searchEl.addEventListener('blur', closeSearchIfEmpty);
   searchEl.addEventListener('input', () => {
     clearTimeout(searchTimer);
-    if (!searchEl.value.trim()) topbar.classList.remove('search-focused');
     searchTimer = setTimeout(() => {
       query = searchEl.value.trim().toLowerCase();
       renderList();
