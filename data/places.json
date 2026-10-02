@@ -2,9 +2,9 @@
   "meta": {
     "title": "Denver/Arvada Toddler Outing Spots",
     "base": {
-      "label": "Arvada, CO 80004",
-      "lat": 39.8005505,
-      "lng": -105.0811573
+      "label": "W 64th Ave & Ward Rd, Arvada, CO 80004",
+      "lat": 39.812596,
+      "lng": -105.139898
     },
     "audience": "Toddler ~20 months; prefer ~30 min drive",
     "sources_scrubbed": [
@@ -36,7 +36,7 @@
     ],
     "updated": "2026-10-02",
     "scrub_window": "2026-10-02 Mon scrub: Days.in.denver Oct newsletter + Fall guide re-check; CKE Facebook (Giggling Life Fall Festival); IG/FB Mama Life & CKAR login-walled; prior 2026-10-01 deep pass retained",
-    "notes": "Why-notes paraphrased/quoted from source captions and newsletters. Drive times are rough estimates from Arvada 80004; verify in Google Maps. Do not invent venues — every pin cites a named source. Seasonal spots kept if still relevant for fall 2026 or evergreen otherwise."
+    "notes": "Why-notes paraphrased/quoted from source captions and newsletters. Drive times are rough estimates from Arvada 80004; verify in Google Maps. Do not invent venues — every pin cites a named source. Seasonal spots kept if still relevant for fall 2026 or evergreen otherwise. Home base updated to W 64th Ave & Ward Rd; drive times refreshed via public OSRM routing on 2026-10-02."
   },
   "places": [
     {
@@ -79,10 +79,10 @@
         "play",
         "north-denver"
       ],
-      "drive_note": "~21 min drive from Arvada 80004 (~6.0 mi straight-line)",
+      "drive_note": "~19 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~9.2 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 21,
-      "straight_line_miles": 6.0
+      "approx_drive_minutes": 19,
+      "straight_line_miles": 9.2
     },
     {
       "id": "apex-center",
@@ -120,10 +120,10 @@
         "near-home",
         "free-playground"
       ],
-      "drive_note": "~15 min drive from Arvada 80004 (~3.8 mi straight-line)",
+      "drive_note": "~4 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~1.0 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 15,
-      "straight_line_miles": 3.8
+      "approx_drive_minutes": 4,
+      "straight_line_miles": 1.0
     },
     {
       "id": "belleview-park",
@@ -171,10 +171,10 @@
         "englewood",
         "seasonal"
       ],
-      "drive_note": "~41 min drive from Arvada 80004 (~12.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~34 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~14.7 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 41,
-      "straight_line_miles": 12.7
+      "approx_drive_minutes": 34,
+      "straight_line_miles": 14.7
     },
     {
       "id": "cheyenne-arapaho",
@@ -207,10 +207,10 @@
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad"
       ],
-      "drive_note": "~43 min drive from Arvada 80004 (~13.3 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~36 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~16.3 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 43,
-      "straight_line_miles": 13.3
+      "approx_drive_minutes": 36,
+      "straight_line_miles": 16.3
     },
     {
       "id": "bates-logan",
@@ -254,10 +254,10 @@
         "@days.in.denver",
         "Facebook: Days.in.denver"
       ],
-      "drive_note": "~35 min drive from Arvada 80004 (~10.8 mi straight-line) — FARTHER (>30 min; flag)",
-      "farther_than_30min": true,
-      "approx_drive_minutes": 35,
-      "straight_line_miles": 10.8
+      "drive_note": "~29 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~13.3 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 29,
+      "straight_line_miles": 13.3
     },
     {
       "id": "washington-park",
@@ -297,10 +297,10 @@
         "@days.in.denver",
         "Facebook: Days.in.denver"
       ],
-      "drive_note": "~30 min drive from Arvada 80004 (~9.0 mi straight-line)",
+      "drive_note": "~30 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~11.8 mi straight-line)",
       "farther_than_30min": false,
       "approx_drive_minutes": 30,
-      "straight_line_miles": 9.0
+      "straight_line_miles": 11.8
     },
     {
       "id": "city-view",
@@ -328,10 +328,10 @@
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad"
       ],
-      "drive_note": "~24 min drive from Arvada 80004 (~6.9 mi straight-line)",
+      "drive_note": "~23 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~9.6 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 24,
-      "straight_line_miles": 6.9
+      "approx_drive_minutes": 23,
+      "straight_line_miles": 9.6
     },
     {
       "id": "la-raza",
@@ -360,10 +360,10 @@
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad"
       ],
-      "drive_note": "~17 min drive from Arvada 80004 (~4.6 mi straight-line)",
+      "drive_note": "~16 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~7.8 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 17,
-      "straight_line_miles": 4.6
+      "approx_drive_minutes": 16,
+      "straight_line_miles": 7.8
     },
     {
       "id": "paco-sanchez",
@@ -392,10 +392,10 @@
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad"
       ],
-      "drive_note": "~19 min drive from Arvada 80004 (~5.1 mi straight-line)",
+      "drive_note": "~21 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~7.8 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 19,
-      "straight_line_miles": 5.1
+      "approx_drive_minutes": 21,
+      "straight_line_miles": 7.8
     },
     {
       "id": "joseph-p-martinez",
@@ -424,10 +424,10 @@
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad"
       ],
-      "drive_note": "~19 min drive from Arvada 80004 (~5.2 mi straight-line)",
+      "drive_note": "~20 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~7.7 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 19,
-      "straight_line_miles": 5.2
+      "approx_drive_minutes": 20,
+      "straight_line_miles": 7.7
     },
     {
       "id": "sloans-lake",
@@ -466,10 +466,10 @@
         "@days.in.denver",
         "Facebook: Days.in.denver"
       ],
-      "drive_note": "~16 min drive from Arvada 80004 (~4.2 mi straight-line)",
+      "drive_note": "~18 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~6.8 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 16,
-      "straight_line_miles": 4.2
+      "approx_drive_minutes": 18,
+      "straight_line_miles": 6.8
     },
     {
       "id": "central-park",
@@ -508,10 +508,10 @@
         "@days.in.denver",
         "Facebook: Days.in.denver"
       ],
-      "drive_note": "~34 min drive from Arvada 80004 (~10.4 mi straight-line) — FARTHER (>30 min; flag)",
-      "farther_than_30min": true,
-      "approx_drive_minutes": 34,
-      "straight_line_miles": 10.4
+      "drive_note": "~25 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~13.7 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 25,
+      "straight_line_miles": 13.7
     },
     {
       "id": "wright-park",
@@ -544,10 +544,10 @@
         "@coloradokidsarerad",
         "Facebook: Colorado Kids Are Rad"
       ],
-      "drive_note": "~22 min drive from Arvada 80004 (~6.2 mi straight-line)",
+      "drive_note": "~16 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~6.3 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 22,
-      "straight_line_miles": 6.2
+      "approx_drive_minutes": 16,
+      "straight_line_miles": 6.3
     },
     {
       "id": "childrens-museum-denver",
@@ -596,10 +596,10 @@
         "outdoor",
         "toddler-specific"
       ],
-      "drive_note": "~18 min drive from Arvada 80004 (~4.8 mi straight-line)",
+      "drive_note": "~17 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~8.0 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 18,
-      "straight_line_miles": 4.8
+      "approx_drive_minutes": 17,
+      "straight_line_miles": 8.0
     },
     {
       "id": "dmns-nature-play",
@@ -640,10 +640,10 @@
         "free-outdoor",
         "city-park"
       ],
-      "drive_note": "~28 min drive from Arvada 80004 (~8.2 mi straight-line)",
+      "drive_note": "~24 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~11.4 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 28,
-      "straight_line_miles": 8.2
+      "approx_drive_minutes": 24,
+      "straight_line_miles": 11.4
     },
     {
       "id": "denver-botanic-mordecai",
@@ -684,10 +684,10 @@
         "water-play",
         "nature"
       ],
-      "drive_note": "~27 min drive from Arvada 80004 (~8.0 mi straight-line)",
+      "drive_note": "~26 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~11.0 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 27,
-      "straight_line_miles": 8.0
+      "approx_drive_minutes": 26,
+      "straight_line_miles": 11.0
     },
     {
       "id": "urban-farm",
@@ -727,10 +727,10 @@
         "animals",
         "outdoor"
       ],
-      "drive_note": "~37 min drive from Arvada 80004 (~11.4 mi straight-line) — FARTHER (>30 min; flag)",
-      "farther_than_30min": true,
-      "approx_drive_minutes": 37,
-      "straight_line_miles": 11.4
+      "drive_note": "~26 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~14.6 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 26,
+      "straight_line_miles": 14.6
     },
     {
       "id": "clement-park",
@@ -771,10 +771,10 @@
         "splash",
         "littleton"
       ],
-      "drive_note": "~45 min drive from Arvada 80004 (~14.3 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~33 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~15.6 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 45,
-      "straight_line_miles": 14.3
+      "approx_drive_minutes": 33,
+      "straight_line_miles": 15.6
     },
     {
       "id": "cook-park",
@@ -806,10 +806,10 @@
         "playground",
         "trail"
       ],
-      "drive_note": "~39 min drive from Arvada 80004 (~12.1 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~34 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~15.0 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 39,
-      "straight_line_miles": 12.1
+      "approx_drive_minutes": 34,
+      "straight_line_miles": 15.0
     },
     {
       "id": "denver-rock-park",
@@ -841,10 +841,10 @@
         "playground",
         "climbing"
       ],
-      "drive_note": "~32 min drive from Arvada 80004 (~9.7 mi straight-line) — FARTHER (>30 min; flag)",
-      "farther_than_30min": true,
-      "approx_drive_minutes": 32,
-      "straight_line_miles": 9.7
+      "drive_note": "~23 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~12.9 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 23,
+      "straight_line_miles": 12.9
     },
     {
       "id": "ralston-valley-park",
@@ -878,10 +878,10 @@
         "near-home",
         "free"
       ],
-      "drive_note": "~16 min drive from Arvada 80004 (~4.1 mi straight-line)",
+      "drive_note": "~4 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~1.0 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 16,
-      "straight_line_miles": 4.1
+      "approx_drive_minutes": 4,
+      "straight_line_miles": 1.0
     },
     {
       "id": "paul-derda",
@@ -919,10 +919,10 @@
         "broomfield",
         "free-playground"
       ],
-      "drive_note": "~30 min drive from Arvada 80004 (~8.8 mi straight-line)",
+      "drive_note": "~23 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~9.4 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 30,
-      "straight_line_miles": 8.8
+      "approx_drive_minutes": 23,
+      "straight_line_miles": 9.4
     },
     {
       "id": "kids-wonder",
@@ -954,10 +954,10 @@
         "play",
         "pretend"
       ],
-      "drive_note": "~41 min drive from Arvada 80004 (~12.6 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~33 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~15.3 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 41,
-      "straight_line_miles": 12.6
+      "approx_drive_minutes": 33,
+      "straight_line_miles": 15.3
     },
     {
       "id": "sweet-play",
@@ -988,10 +988,10 @@
         "indoor",
         "play"
       ],
-      "drive_note": "~35 min drive from Arvada 80004 (~10.6 mi straight-line) — FARTHER (>30 min; flag)",
-      "farther_than_30min": true,
-      "approx_drive_minutes": 35,
-      "straight_line_miles": 10.6
+      "drive_note": "~28 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~13.3 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 28,
+      "straight_line_miles": 13.3
     },
     {
       "id": "bookies",
@@ -1032,10 +1032,10 @@
         "storytime",
         "bookstore"
       ],
-      "drive_note": "~34 min drive from Arvada 80004 (~10.5 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~31 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~13.4 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 34,
-      "straight_line_miles": 10.5
+      "approx_drive_minutes": 31,
+      "straight_line_miles": 13.4
     },
     {
       "id": "tumble-haus",
@@ -1071,10 +1071,10 @@
         "play",
         "highlands"
       ],
-      "drive_note": "~16 min drive from Arvada 80004 (~4.3 mi straight-line)",
+      "drive_note": "~17 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~7.4 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 16,
-      "straight_line_miles": 4.3
+      "approx_drive_minutes": 17,
+      "straight_line_miles": 7.4
     },
     {
       "id": "bonfire-burritos-arvada",
@@ -1107,10 +1107,10 @@
         "food",
         "outdoor-play"
       ],
-      "drive_note": "~8 min drive from Arvada 80004 (~0.1 mi straight-line)",
+      "drive_note": "~7 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~3.2 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 8,
-      "straight_line_miles": 0.1
+      "approx_drive_minutes": 7,
+      "straight_line_miles": 3.2
     },
     {
       "id": "wheat-ridge-rec",
@@ -1142,10 +1142,10 @@
         "pool",
         "wheat-ridge"
       ],
-      "drive_note": "~12 min drive from Arvada 80004 (~2.6 mi straight-line)",
+      "drive_note": "~8 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~3.2 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 12,
-      "straight_line_miles": 2.6
+      "approx_drive_minutes": 8,
+      "straight_line_miles": 3.2
     },
     {
       "id": "lookout-mountain-nature",
@@ -1182,10 +1182,10 @@
         "golden",
         "outdoor"
       ],
-      "drive_note": "~32 min drive from Arvada 80004 (~9.6 mi straight-line) — FARTHER (>30 min; flag)",
-      "farther_than_30min": true,
-      "approx_drive_minutes": 32,
-      "straight_line_miles": 9.6
+      "drive_note": "~24 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~7.6 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 24,
+      "straight_line_miles": 7.6
     },
     {
       "id": "denver-zoo",
@@ -1225,10 +1225,10 @@
         "animals",
         "outdoor"
       ],
-      "drive_note": "~27 min drive from Arvada 80004 (~7.8 mi straight-line)",
+      "drive_note": "~24 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~11.0 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 27,
-      "straight_line_miles": 7.8
+      "approx_drive_minutes": 24,
+      "straight_line_miles": 11.0
     },
     {
       "id": "centennial-center-park",
@@ -1261,10 +1261,10 @@
         "playground",
         "seasonal"
       ],
-      "drive_note": "~59 min drive from Arvada 80004 (~19.1 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~41 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~21.9 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 59,
-      "straight_line_miles": 19.1
+      "approx_drive_minutes": 41,
+      "straight_line_miles": 21.9
     },
     {
       "id": "civic-green-park",
@@ -1297,10 +1297,10 @@
         "highlands-ranch",
         "seasonal"
       ],
-      "drive_note": "~57 min drive from Arvada 80004 (~18.2 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~37 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~20.0 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 57,
-      "straight_line_miles": 18.2
+      "approx_drive_minutes": 37,
+      "straight_line_miles": 20.0
     },
     {
       "id": "red-tailed-hawk",
@@ -1334,10 +1334,10 @@
         "aurora",
         "seasonal"
       ],
-      "drive_note": "~76 min drive from Arvada 80004 (~24.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~49 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~27.8 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 76,
-      "straight_line_miles": 24.7
+      "approx_drive_minutes": 49,
+      "straight_line_miles": 27.8
     },
     {
       "id": "pirates-cove",
@@ -1374,10 +1374,10 @@
         "englewood",
         "pool"
       ],
-      "drive_note": "~41 min drive from Arvada 80004 (~12.8 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~33 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~14.9 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 41,
-      "straight_line_miles": 12.8
+      "approx_drive_minutes": 33,
+      "straight_line_miles": 14.9
     },
     {
       "id": "surfside-spray",
@@ -1409,10 +1409,10 @@
         "seasonal",
         "lakewood"
       ],
-      "drive_note": "~16 min drive from Arvada 80004 (~4.2 mi straight-line)",
+      "drive_note": "~11 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~5.0 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 16,
-      "straight_line_miles": 4.2
+      "approx_drive_minutes": 11,
+      "straight_line_miles": 5.0
     },
     {
       "id": "cherry-creek-ecological",
@@ -1445,10 +1445,10 @@
         "nature",
         "centennial"
       ],
-      "drive_note": "~67 min drive from Arvada 80004 (~21.6 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~45 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~24.4 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 67,
-      "straight_line_miles": 21.6
+      "approx_drive_minutes": 45,
+      "straight_line_miles": 24.4
     },
     {
       "id": "ofallon-park",
@@ -1481,10 +1481,10 @@
         "mountains",
         "farther"
       ],
-      "drive_note": "~48 min drive from Arvada 80004 (~15.0 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~36 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~13.7 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 48,
-      "straight_line_miles": 15.0
+      "approx_drive_minutes": 36,
+      "straight_line_miles": 13.7
     },
     {
       "id": "yetman-farms",
@@ -1526,10 +1526,10 @@
         "storytime",
         "lakewood"
       ],
-      "drive_note": "~25 min drive from Arvada 80004 (~7.2 mi straight-line)",
+      "drive_note": "~20 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~8.6 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 25,
-      "straight_line_miles": 7.2
+      "approx_drive_minutes": 20,
+      "straight_line_miles": 8.6
     },
     {
       "id": "hudson-gardens",
@@ -1570,10 +1570,10 @@
         "littleton",
         "free"
       ],
-      "drive_note": "~44 min drive from Arvada 80004 (~13.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~34 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~15.5 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 44,
-      "straight_line_miles": 13.7
+      "approx_drive_minutes": 34,
+      "straight_line_miles": 15.5
     },
     {
       "id": "anythink-wright-farms",
@@ -1609,10 +1609,10 @@
         "free",
         "thornton"
       ],
-      "drive_note": "~35 min drive from Arvada 80004 (~10.7 mi straight-line) — FARTHER (>30 min; flag)",
-      "farther_than_30min": true,
-      "approx_drive_minutes": 35,
-      "straight_line_miles": 10.7
+      "drive_note": "~30 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~12.6 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 30,
+      "straight_line_miles": 12.6
     },
     {
       "id": "anythink-nature-library",
@@ -1649,10 +1649,10 @@
         "free",
         "thornton"
       ],
-      "drive_note": "~27 min drive from Arvada 80004 (~8.0 mi straight-line)",
+      "drive_note": "~21 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~8.3 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 27,
-      "straight_line_miles": 8.0
+      "approx_drive_minutes": 21,
+      "straight_line_miles": 8.3
     },
     {
       "id": "denver-central-library",
@@ -1696,10 +1696,10 @@
         "free",
         "downtown"
       ],
-      "drive_note": "~23 min drive from Arvada 80004 (~6.6 mi straight-line)",
+      "drive_note": "~22 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~9.6 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 23,
-      "straight_line_miles": 6.6
+      "approx_drive_minutes": 22,
+      "straight_line_miles": 9.6
     },
     {
       "id": "girl-scout-dreamlab",
@@ -1731,10 +1731,10 @@
         "play",
         "lowry"
       ],
-      "drive_note": "~37 min drive from Arvada 80004 (~11.5 mi straight-line) — FARTHER (>30 min; flag)",
-      "farther_than_30min": true,
-      "approx_drive_minutes": 37,
-      "straight_line_miles": 11.5
+      "drive_note": "~30 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~14.7 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 30,
+      "straight_line_miles": 14.7
     },
     {
       "id": "colorado-railroad-museum",
@@ -1771,10 +1771,10 @@
         "golden",
         "seasonal"
       ],
-      "drive_note": "~22 min drive from Arvada 80004 (~6.3 mi straight-line)",
+      "drive_note": "~11 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~4.0 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 22,
-      "straight_line_miles": 6.3
+      "approx_drive_minutes": 11,
+      "straight_line_miles": 4.0
     },
     {
       "id": "chatfield-farms",
@@ -1815,10 +1815,10 @@
         "nature",
         "littleton"
       ],
-      "drive_note": "~52 min drive from Arvada 80004 (~16.5 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~38 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~17.7 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 52,
-      "straight_line_miles": 16.5
+      "approx_drive_minutes": 38,
+      "straight_line_miles": 17.7
     },
     {
       "id": "four-mile-historic",
@@ -1855,10 +1855,10 @@
         "animals",
         "park"
       ],
-      "drive_note": "~32 min drive from Arvada 80004 (~9.8 mi straight-line) — FARTHER (>30 min; flag)",
-      "farther_than_30min": true,
-      "approx_drive_minutes": 32,
-      "straight_line_miles": 9.8
+      "drive_note": "~29 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~12.9 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 29,
+      "straight_line_miles": 12.9
     },
     {
       "id": "spano-pumpkin",
@@ -1891,10 +1891,10 @@
         "pumpkin",
         "toddler-friendly"
       ],
-      "drive_note": "~23 min drive from Arvada 80004 (~6.6 mi straight-line)",
+      "drive_note": "~22 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~9.4 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 23,
-      "straight_line_miles": 6.6
+      "approx_drive_minutes": 22,
+      "straight_line_miles": 9.4
     },
     {
       "id": "maize-in-city",
@@ -1931,10 +1931,10 @@
         "maze",
         "thornton"
       ],
-      "drive_note": "~38 min drive from Arvada 80004 (~11.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~31 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~12.7 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 38,
-      "straight_line_miles": 11.7
+      "approx_drive_minutes": 31,
+      "straight_line_miles": 12.7
     },
     {
       "id": "nicks-garden",
@@ -1971,10 +1971,10 @@
         "aurora",
         "free-entry"
       ],
-      "drive_note": "~59 min drive from Arvada 80004 (~18.8 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~43 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~21.9 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 59,
-      "straight_line_miles": 18.8
+      "approx_drive_minutes": 43,
+      "straight_line_miles": 21.9
     },
     {
       "id": "bad-dog-farm",
@@ -2007,10 +2007,10 @@
         "lakewood",
         "apples"
       ],
-      "drive_note": "~25 min drive from Arvada 80004 (~7.4 mi straight-line)",
+      "drive_note": "~19 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~7.9 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 25,
-      "straight_line_miles": 7.4
+      "approx_drive_minutes": 19,
+      "straight_line_miles": 7.9
     },
     {
       "id": "tagawa-gardens",
@@ -2047,10 +2047,10 @@
         "seasonal",
         "centennial"
       ],
-      "drive_note": "~58 min drive from Arvada 80004 (~18.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~37 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~21.3 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 58,
-      "straight_line_miles": 18.7
+      "approx_drive_minutes": 37,
+      "straight_line_miles": 21.3
     },
     {
       "id": "eloise-may-library",
@@ -2086,10 +2086,10 @@
         "free",
         "storytime"
       ],
-      "drive_note": "~41 min drive from Arvada 80004 (~12.7 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~34 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~15.7 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 41,
-      "straight_line_miles": 12.7
+      "approx_drive_minutes": 34,
+      "straight_line_miles": 15.7
     },
     {
       "id": "stanley-marketplace",
@@ -2122,10 +2122,10 @@
         "food",
         "aurora"
       ],
-      "drive_note": "~37 min drive from Arvada 80004 (~11.3 mi straight-line) — FARTHER (>30 min; flag)",
-      "farther_than_30min": true,
-      "approx_drive_minutes": 37,
-      "straight_line_miles": 11.3
+      "drive_note": "~30 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~14.5 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 30,
+      "straight_line_miles": 14.5
     },
     {
       "id": "mines-museum",
@@ -2162,10 +2162,10 @@
         "golden",
         "seasonal"
       ],
-      "drive_note": "~28 min drive from Arvada 80004 (~8.2 mi straight-line)",
+      "drive_note": "~15 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~6.1 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 28,
-      "straight_line_miles": 8.2
+      "approx_drive_minutes": 15,
+      "straight_line_miles": 6.1
     },
     {
       "id": "city-park",
@@ -2206,10 +2206,10 @@
         "free",
         "denver"
       ],
-      "drive_note": "~27 min drive from Arvada 80004 (~7.8 mi straight-line)",
+      "drive_note": "~26 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~11.0 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 27,
-      "straight_line_miles": 7.8
+      "approx_drive_minutes": 26,
+      "straight_line_miles": 11.0
     },
     {
       "id": "homegrown-arvada",
@@ -2242,10 +2242,10 @@
         "food",
         "indoor"
       ],
-      "drive_note": "~8 min drive from Arvada 80004 (~0.1 mi straight-line)",
+      "drive_note": "~7 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~3.2 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 8,
-      "straight_line_miles": 0.1
+      "approx_drive_minutes": 7,
+      "straight_line_miles": 3.2
     },
     {
       "id": "mcfall-park",
@@ -2294,10 +2294,10 @@
         "meals",
         "toddler"
       ],
-      "drive_note": "~16 min drive from Arvada 80004 (~4.7 mi straight-line)",
+      "drive_note": "~15 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~6.0 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 16,
-      "straight_line_miles": 4.7
+      "approx_drive_minutes": 15,
+      "straight_line_miles": 6.0
     },
     {
       "id": "vital-root",
@@ -2336,10 +2336,10 @@
         "tennyson",
         "toddler"
       ],
-      "drive_note": "~11 min drive from Arvada 80004 (~2.8 mi straight-line)",
+      "drive_note": "~14 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~5.8 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 11,
-      "straight_line_miles": 2.8
+      "approx_drive_minutes": 14,
+      "straight_line_miles": 5.8
     },
     {
       "id": "fairmount-park",
@@ -2378,10 +2378,10 @@
         "fall-event",
         "toddler"
       ],
-      "drive_note": "~18 min drive from Arvada 80004 (~5.5 mi straight-line)",
+      "drive_note": "~9 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~2.9 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 18,
-      "straight_line_miles": 5.5
+      "approx_drive_minutes": 9,
+      "straight_line_miles": 2.9
     },
     {
       "id": "denver-firefighters-museum",
@@ -2420,10 +2420,10 @@
         "preschool",
         "toddler"
       ],
-      "drive_note": "~20 min drive from Arvada 80004 (~6.3 mi straight-line)",
+      "drive_note": "~22 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~9.3 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 20,
-      "straight_line_miles": 6.3
+      "approx_drive_minutes": 22,
+      "straight_line_miles": 9.3
     },
     {
       "id": "belmar-park",
@@ -2461,10 +2461,10 @@
         "festival",
         "toddler"
       ],
-      "drive_note": "~22 min drive from Arvada 80004 (~6.7 mi straight-line)",
+      "drive_note": "~19 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~8.0 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 22,
-      "straight_line_miles": 6.7
+      "approx_drive_minutes": 19,
+      "straight_line_miles": 8.0
     },
     {
       "id": "rock-creek-farm",
@@ -2504,10 +2504,10 @@
         "broomfield",
         "toddler"
       ],
-      "drive_note": "~34 min drive from Arvada 80004 (~10.4 mi straight-line) — FARTHER (>30 min; flag)",
-      "farther_than_30min": true,
-      "approx_drive_minutes": 34,
-      "straight_line_miles": 10.4
+      "drive_note": "~23 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~9.8 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 23,
+      "straight_line_miles": 9.8
     },
     {
       "id": "cottonwood-farms",
@@ -2547,10 +2547,10 @@
         "lafayette",
         "toddler"
       ],
-      "drive_note": "~53 min drive from Arvada 80004 (~16.4 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~31 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~15.6 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 53,
-      "straight_line_miles": 16.4
+      "approx_drive_minutes": 31,
+      "straight_line_miles": 15.6
     },
     {
       "id": "giggling-life-care-farm",
@@ -2594,10 +2594,10 @@
         "festival",
         "toddler"
       ],
-      "drive_note": "~44 min drive from Arvada 80004 (~13.5 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~34 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~15.0 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 44,
-      "straight_line_miles": 13.5
+      "approx_drive_minutes": 34,
+      "straight_line_miles": 15.0
     },
     {
       "id": "green-at-38th",
@@ -2624,10 +2624,10 @@
         "near-home",
         "toddler"
       ],
-      "drive_note": "~10 min drive from Arvada 80004 (~2.1 mi straight-line)",
+      "drive_note": "~11 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~4.4 mi straight-line)",
       "farther_than_30min": false,
-      "approx_drive_minutes": 10,
-      "straight_line_miles": 2.1,
+      "approx_drive_minutes": 11,
+      "straight_line_miles": 4.4,
       "hours": "Verify current access and amenities",
       "cost": "Verify current access details"
     }

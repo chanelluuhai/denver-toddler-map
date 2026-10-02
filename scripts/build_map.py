@@ -7,10 +7,12 @@ import shutil
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "places.json"
+EVENTS_DATA = ROOT / "data" / "events.json"
 OUT_DIR = ROOT / "output"
 DOCS_DIR = ROOT / "docs"
 OUT_HTML = OUT_DIR / "index.html"
 OUT_JSON = OUT_DIR / "places.json"
+OUT_EVENTS = OUT_DIR / "events.json"
 OUT_MD = OUT_DIR / "INDEX.md"
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -318,6 +320,29 @@ TEMPLATE = r'''<!DOCTYPE html>
     line-height: 1.5;
   }
 
+  /* Events panel */
+  .event-day { margin: 0 0 18px; }
+  .event-day-heading {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 10px; margin: 4px 4px 8px;
+    font-family: var(--display); font-size: 1.12rem; font-weight: 600;
+  }
+  .event-day-heading span { color: var(--muted); font-family: var(--font); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .event-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 14px 15px; margin-bottom: 9px; box-shadow: 0 1px 3px rgba(26,26,26,.04);
+  }
+  .event-card.linked { cursor: pointer; transition: transform .12s, box-shadow .15s, border-color .15s; }
+  .event-card.linked:hover, .event-card.linked:focus { border-color: #B8DED9; box-shadow: var(--shadow); outline: none; }
+  .event-card.linked:active { transform: scale(.985); }
+  .event-date-label { color: var(--accent-dark); font-size: .72rem; font-weight: 700; margin-bottom: 4px; }
+  .event-card h3 { margin: 0 0 6px; font-family: var(--display); font-size: 1.06rem; line-height: 1.25; font-weight: 600; }
+  .event-meta { display: flex; flex-wrap: wrap; gap: 5px 12px; color: var(--muted); font-size: .78rem; margin-bottom: 7px; }
+  .event-note { margin: 0 0 8px; color: var(--ink-2); font-size: .84rem; line-height: 1.4; }
+  .event-place { color: var(--muted); font-size: .78rem; }
+  .event-link { color: var(--accent-dark); font-size: .8rem; font-weight: 700; text-decoration: none; }
+  .event-link:hover { text-decoration: underline; }
+
   /* Filters panel */
   .filter-grid {
     display: grid;
@@ -452,7 +477,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     -webkit-backdrop-filter: blur(20px);
     border-top: 1px solid var(--line);
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     box-shadow: 0 -4px 24px rgba(26,26,26,0.06);
   }
   .tab {
@@ -586,7 +611,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       padding-bottom: 6px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      grid-template-columns: repeat(4, auto);
+      grid-template-columns: repeat(5, auto);
       gap: 2px;
       box-shadow: var(--shadow-lg);
     }
@@ -655,9 +680,17 @@ TEMPLATE = r'''<!DOCTYPE html>
   <section class="panel" id="panel-list" aria-label="Place list">
     <div class="panel-header">
       <h1>All spots</h1>
-      <p id="list-sub">Sorted by drive time from Arvada 80004</p>
+      <p id="list-sub">Sorted by drive time from __BASE_LABEL__</p>
     </div>
     <div class="panel-body" id="list"></div>
+  </section>
+
+  <section class="panel" id="panel-events" aria-label="Upcoming events">
+    <div class="panel-header">
+      <h1>Upcoming events</h1>
+      <p id="events-sub">Dated family activities, soonest first</p>
+    </div>
+    <div class="panel-body" id="events"></div>
   </section>
 
   <section class="panel" id="panel-filters" aria-label="Filters">
@@ -674,7 +707,7 @@ TEMPLATE = r'''<!DOCTYPE html>
         </button>
         <button type="button" class="filter-chip" data-filter="near" role="option" aria-selected="false">
           <span class="dot"></span>
-          <span class="label">Near (~30 min)<span class="hint"><br>From Arvada 80004</span></span>
+          <span class="label">Near (~30 min)<span class="hint"><br>From __BASE_LABEL__</span></span>
           <span class="check"></span>
         </button>
         <button type="button" class="filter-chip" data-filter="far" role="option" aria-selected="false">
@@ -704,8 +737,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="panel-body">
       <div class="about-card">
         <h2>Base & audience</h2>
-        <p>Home base: <strong>Arvada, CO 80004</strong>. Aimed at a toddler ~20 months; prefer spots within ~30 minutes.</p>
-        <p>Updated __UPDATED__ · __COUNT__ places</p>
+        <p>Home base: <strong>__BASE_LABEL__</strong>. Aimed at a toddler ~20 months; prefer spots within ~30 minutes.</p>
+        <p>Updated __UPDATED__ · __COUNT__ places · __EVENT_COUNT__ upcoming events</p>
       </div>
       <div class="about-card">
         <h2>Map legend</h2>
@@ -738,6 +771,10 @@ TEMPLATE = r'''<!DOCTYPE html>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 6h12M8 12h12M8 18h12" stroke-linecap="round"/><circle cx="4" cy="6" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.2" fill="currentColor" stroke="none"/></svg>
       List
     </button>
+    <button type="button" class="tab" data-tab="events" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7 3v4M17 3v4M3.5 10h17M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Events
+    </button>
     <button type="button" class="tab" data-tab="filters" role="tab" aria-selected="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg>
       Filters
@@ -758,13 +795,18 @@ TEMPLATE = r'''<!DOCTYPE html>
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
 const PLACES_DOC = __PLACES_JSON__;
+const EVENTS_DOC = __EVENTS_JSON__;
 </script>
 <script>
 (function(){
   const places = PLACES_DOC.places || [];
+  const events = EVENTS_DOC.events || [];
+  const placesById = Object.fromEntries(places.map(p => [p.id, p]));
   const base = PLACES_DOC.meta && PLACES_DOC.meta.base;
   const app = document.getElementById('app');
   const listEl = document.getElementById('list');
+  const eventsEl = document.getElementById('events');
+  const eventsSub = document.getElementById('events-sub');
   const searchEl = document.getElementById('search');
   const countChip = document.getElementById('count-chip');
   const filterBar = document.getElementById('filter-bar');
@@ -943,7 +985,7 @@ const PLACES_DOC = __PLACES_JSON__;
     const sorted = places.slice().sort((a,b)=> (a.approx_drive_minutes||999)-(b.approx_drive_minutes||999));
     const filtered = sorted.filter(p => passesFilter(p) && matchesQuery(p, query));
     countChip.textContent = filtered.length + (filtered.length === places.length ? '' : ' / ' + places.length);
-    listSub.textContent = filtered.length + ' spot' + (filtered.length===1?'':'s') + ' · sorted by drive from Arvada 80004';
+    listSub.textContent = filtered.length + ' spot' + (filtered.length===1?'':'s') + ' · sorted by drive from ' + (base ? base.label : 'home');
 
     if (!filtered.length) {
       listEl.innerHTML = '<div class="empty">No spots match.<br>Try another filter or clear search.</div>';
@@ -954,7 +996,7 @@ const PLACES_DOC = __PLACES_JSON__;
           <h3>${escapeHtml(p.name)}</h3>
           <p class="why-snip">${escapeHtml(snippet(p.why, 120))}</p>
           <div class="card-meta">
-            <span>${escapeHtml(p.drive_note ? p.drive_note.replace(' drive from Arvada 80004','') : '')}</span>
+            <span>${escapeHtml(p.drive_note||'')}</span>
             <span>${escapeHtml(snippet(p.source, 42))}</span>
           </div>
         </article>`).join('');
@@ -984,6 +1026,63 @@ const PLACES_DOC = __PLACES_JSON__;
     updateFilterBar();
   }
 
+  function shortDate(key){
+    const d = new Date(key + 'T12:00:00Z');
+    return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(d);
+  }
+  function longDate(key){
+    const d = new Date(key + 'T12:00:00Z');
+    return new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(d);
+  }
+  function eventDateLabel(e){
+    return e.end_date && e.end_date !== e.date ? shortDate(e.date) + '–' + shortDate(e.end_date) : shortDate(e.date);
+  }
+  function eventDateKeys(e){
+    const keys = [];
+    const end = e.end_date || e.date;
+    let d = new Date(e.date + 'T12:00:00Z');
+    const last = new Date(end + 'T12:00:00Z');
+    while (d <= last) {
+      keys.push(d.toISOString().slice(0,10));
+      d.setUTCDate(d.getUTCDate() + 1);
+    }
+    return keys;
+  }
+  function renderEvents(){
+    const today = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'America/Denver' }).format(new Date());
+    const upcoming = events.filter(e => String(e.end_date || e.date) >= today).sort((a,b) => String(a.date).localeCompare(String(b.date)));
+    eventsSub.textContent = upcoming.length + ' upcoming event' + (upcoming.length===1?'':'s') + ' · grouped by day';
+    const groups = {};
+    upcoming.forEach(e => eventDateKeys(e).forEach(key => { (groups[key] ||= []).push(e); }));
+    const days = Object.keys(groups).sort();
+    if (!days.length) { eventsEl.innerHTML = '<div class="empty">No upcoming events listed yet.</div>'; return; }
+    eventsEl.innerHTML = days.map(day => `
+      <section class="event-day" aria-labelledby="event-day-${day}">
+        <h2 class="event-day-heading" id="event-day-${day}">${escapeHtml(longDate(day))}<span>${groups[day].length} event${groups[day].length===1?'':'s'}</span></h2>
+        ${groups[day].map(e => {
+          const linked = e.place_id && placesById[e.place_id];
+          return `<article class="event-card${linked?' linked':''}"${linked?` data-place-id="${escapeHtml(e.place_id)}" role="button" tabindex="0"`:''}>
+            <div class="event-date-label">${escapeHtml(eventDateLabel(e))}</div>
+            <h3>${escapeHtml(e.title)}</h3>
+            <div class="event-meta"><span>${escapeHtml(e.time||'Time to be confirmed')}</span><span class="event-place">${escapeHtml(e.place || '')}</span></div>
+            <p class="event-note">${escapeHtml(e.note||'')}</p>
+            ${e.drive_note ? `<div class="event-meta"><span>${escapeHtml(e.drive_note)}</span></div>` : ''}
+            ${e.link ? `<a class="event-link" href="${escapeHtml(e.link)}" target="_blank" rel="noopener">Event details ↗</a>` : ''}
+            ${linked ? '<span class="event-meta">Tap card to open map pin</span>' : ''}
+          </article>`;
+        }).join('')}
+      </section>`).join('');
+    eventsEl.querySelectorAll('.event-card[data-place-id]').forEach(el => {
+      const go = () => {
+        const place = placesById[el.dataset.placeId];
+        if (!place) return;
+        setTab('map'); openSheet(place); flyTo(place);
+      };
+      el.addEventListener('click', e => { if (!e.target.closest('a')) go(); });
+      el.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !e.target.closest('a')) { e.preventDefault(); go(); } });
+    });
+  }
+
   function setTab(name){
     currentTab = name;
     document.querySelectorAll('.tab').forEach(t => {
@@ -993,9 +1092,10 @@ const PLACES_DOC = __PLACES_JSON__;
     });
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     if (name === 'list') document.getElementById('panel-list').classList.add('active');
+    if (name === 'events') document.getElementById('panel-events').classList.add('active');
     if (name === 'filters') document.getElementById('panel-filters').classList.add('active');
     if (name === 'about') document.getElementById('panel-about').classList.add('active');
-    app.classList.toggle('map-shifted', name === 'list' || name === 'filters' || name === 'about');
+    app.classList.toggle('map-shifted', name === 'list' || name === 'events' || name === 'filters' || name === 'about');
     if (name === 'map') setTimeout(() => map.resize(), 50);
     else setTimeout(() => map.resize(), 50);
   }
@@ -1032,6 +1132,8 @@ const PLACES_DOC = __PLACES_JSON__;
     }, 100);
   });
 
+  renderEvents();
+
   // Wait for markers then first render
   map.on('load', () => renderList());
   // Also render list HTML immediately (markers toggle later)
@@ -1046,13 +1148,18 @@ const PLACES_DOC = __PLACES_JSON__;
 
 def build():
     doc = json.loads(DATA.read_text())
+    events_doc = json.loads(EVENTS_DATA.read_text())
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    OUT_JSON.write_text(json.dumps(doc, indent=2) + "\n")
+    OUT_JSON.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
+    OUT_EVENTS.write_text(json.dumps(events_doc, indent=2, ensure_ascii=False) + "\n")
     places_json = json.dumps(doc, ensure_ascii=False)
     html_out = (TEMPLATE
         .replace("__PLACES_JSON__", places_json)
+        .replace("__EVENTS_JSON__", json.dumps(events_doc, ensure_ascii=False))
         .replace("__UPDATED__", str(doc.get("meta", {}).get("updated", "")))
         .replace("__COUNT__", str(len(doc.get("places", []))))
+        .replace("__EVENT_COUNT__", str(len(events_doc.get("events", []))))
+        .replace("__BASE_LABEL__", str(doc.get("meta", {}).get("base", {}).get("label", "home")))
     )
     OUT_HTML.write_text(html_out)
 
@@ -1088,7 +1195,7 @@ def build():
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
     sources = DOCS_DIR / "SOURCES.md"
     sources_backup = sources.read_text() if sources.exists() else None
-    for name in ("index.html", "places.json", "INDEX.md"):
+    for name in ("index.html", "places.json", "events.json", "INDEX.md"):
         src = OUT_DIR / name
         if src.exists():
             shutil.copy2(src, DOCS_DIR / name)
@@ -1098,6 +1205,7 @@ def build():
     print(f"Wrote {OUT_HTML}")
     print(f"Wrote {OUT_JSON}")
     print(f"Wrote {OUT_MD}")
+    print(f"Events: {len(events_doc.get('events', []))}")
     print(f"Synced docs/ for GitHub Pages")
     print(f"Places: {len(doc['places'])}")
 

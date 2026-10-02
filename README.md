@@ -1,6 +1,6 @@
 # Denver / Arvada toddler outing map
 
-Self-contained MapLibre map of toddler-friendly spots near **Arvada, CO 80004**, curated from:
+Self-contained MapLibre map of toddler-friendly spots near **W 64th Ave & Ward Rd, Arvada, CO 80004**, curated from:
 
 - [Days.in.denver](https://www.instagram.com/days.in.denver/) (`@days.in.denver`) + [beehiiv newsletter](https://days-in-denver.beehiiv.com/)
 - [Colorado Kids Explore](https://www.instagram.com/colorado.kids.explore/) (`@colorado.kids.explore`)
@@ -26,7 +26,7 @@ Mobile-app shell with bottom tabs (**Map · List · Filters · About**), bottom-
 3. Commit & push `main`.
 4. Confirm Pages still serves from `/docs` on `main`.
 
-Drive times in the JSON are **rough estimates** from Arvada 80004 — always confirm in Google Maps.
+Drive times in the JSON are **rough estimates** from W 64th Ave & Ward Rd, Arvada 80004 — always confirm in Google Maps.
 
 ## Files
 
@@ -39,7 +39,11 @@ Drive times in the JSON are **rough estimates** from Arvada 80004 — always con
 
 ## Constraints
 
-- Prefer ~30 min from Arvada 80004; farther spots are flagged.
+- Prefer ~30 min from W 64th Ave & Ward Rd, Arvada 80004; farther spots are flagged.
 - Toddler ~20 months.
 - Keep source attribution + clickable links on every pin.
 - Do not invent venues not mentioned in the named sources.
+
+## Events
+
+Upcoming dated family events live in `data/events.json` and appear in the mobile-friendly Events tab, grouped by day.

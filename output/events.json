@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "updated": "2026-10-02",
+    "as_of": "2026-10-02",
+    "timezone": "America/Denver",
+    "notes": "Upcoming, dated family events kept separate from map pins. Confirm times, access, and weather with the linked organizer before heading out."
+  },
+  "events": [
+    {
+      "id": "fairmount-pumpkin-fest-2026",
+      "title": "Pumpkin Fest",
+      "date": "2026-10-03",
+      "end_date": "2026-10-03",
+      "time": "10:00 AM–1:00 PM",
+      "place_id": "fairmount-park",
+      "place": "Fairmount Park, Golden",
+      "link": "https://prospectdistrict.org/events/pumpkin-fest/",
+      "note": "Free pancakes, games, live music, and fall fun; no reservation listed.",
+      "drive_note": "~18 min from the 64th & Ward base",
+      "source": "Prospect Recreation / Days.in.denver"
+    },
+    {
+      "id": "belmar-cider-days-2026",
+      "title": "Lakewood Cider Days",
+      "date": "2026-10-03",
+      "end_date": "2026-10-04",
+      "time": "Sat 10:00 AM–5:00 PM · Sun 10:00 AM–4:00 PM",
+      "place_id": "belmar-park",
+      "place": "Belmar Park, Lakewood",
+      "link": "https://www.lakewoodco.gov/Local-Government/Departments/Community-Resources/Arts-and-Culture/Arts-and-Culture-Events/Cider-Days",
+      "note": "Cider pressing, vintage tractors, wagon rides, and family activities; verify tickets and pricing.",
+      "drive_note": "~19 min from the 64th & Ward base",
+      "source": "City of Lakewood / Days.in.denver Fall guide"
+    },
+    {
+      "id": "csu-spur-2nd-saturday-oct-2026",
+      "title": "2nd Saturday at CSU Spur: Día de los Muertos",
+      "date": "2026-10-10",
+      "end_date": "2026-10-10",
+      "time": "10:00 AM–2:00 PM",
+      "place_id": "csu-spur",
+      "place": "CSU Spur, Denver",
+      "link": "https://csuspur.org/event/2nd-saturday-at-csu-spur-dia-de-los-muertos-celebration-2/",
+      "note": "Free, family-friendly 2nd Saturday; October activities may be announced closer to the date.",
+      "drive_note": "~19 min from the 64th & Ward base",
+      "source": "CSU Spur"
+    },
+    {
+      "id": "denver-firefighters-free-day-2026",
+      "title": "Free admission day: Fire Safety & Prevention Week",
+      "date": "2026-10-10",
+      "end_date": "2026-10-10",
+      "time": "10:00 AM–4:00 PM",
+      "place_id": "denver-firefighters-museum",
+      "place": "Denver Firefighters Museum",
+      "link": "https://denverfirefightersmuseum.org/free-days-at-the-museum",
+      "note": "Free museum admission for Fire Safety & Prevention Week; check the museum before going.",
+      "drive_note": "~22 min from the 64th & Ward base",
+      "source": "Denver Firefighters Museum"
+    },
+    {
+      "id": "giggling-life-fall-festival-2026",
+      "title": "Fall Festival at Giggling Life Care Farm",
+      "date": "2026-10-10",
+      "end_date": "2026-10-10",
+      "time": "10:00 AM–12:00 PM or 4:00–6:00 PM",
+      "place_id": "giggling-life-care-farm",
+      "place": "Giggling Life Care Farm, Brighton",
+      "link": "https://www.thegigglinglife.com/copy-of-the-farm",
+      "note": "Ticketed farm festival with animals, hay ride, crafts, and pumpkin; code coloradokid5 was listed for $5 off per person.",
+      "drive_note": "~34 min from the 64th & Ward base",
+      "source": "Colorado Kids Explore / Giggling Life Care Farm"
+    },
+    {
+      "id": "infinity-park-trunk-or-treat-2026",
+      "title": "Trunk-or-Treat + Outdoor Movie: Monsters vs. Aliens",
+      "date": "2026-10-12",
+      "end_date": "2026-10-12",
+      "time": "Gates 4:30 PM · movie 6:00 PM",
+      "place": "Infinity Park, Glendale",
+      "link": "https://www.infinityparkatglendale.com/events/trunk-or-treat-outdoor-movie-night-monsters-vs-aliens/",
+      "note": "Free family evening; bring blankets or lawn chairs. Trunk-or-treat starts at gate opening.",
+      "drive_note": "Drive time not calculated",
+      "source": "Infinity Park at Glendale"
+    },
+    {
+      "id": "westy-fest-2026",
+      "title": "Westy Fest",
+      "date": "2026-10-17",
+      "end_date": "2026-10-17",
+      "time": "12:00–8:00 PM",
+      "place": "Westminster City Park, 10455 N Sheridan Blvd",
+      "link": "https://denver.beyondthenest.com/content/westy-fest-2026",
+      "note": "Free fall festival with carnival games, trick-or-treating, live music, pumpkin patch, and hot-air-balloon glow; parking is limited, so use a shuttle if possible.",
+      "drive_note": "Drive time not calculated",
+      "source": "City of Westminster"
+    },
+    {
+      "id": "mines-spooktacular-2026",
+      "title": "Mines Museum Spooktacular",
+      "date": "2026-10-17",
+      "end_date": "2026-10-17",
+      "time": "2:00–5:00 PM",
+      "place_id": "mines-museum",
+      "place": "Mines Museum of Earth Science, Golden",
+      "link": "https://www.visitgolden.com/event/mines-museum-spooktacular/",
+      "note": "Free teal-pumpkin trick-or-treat with STEM activities, prizes, face painting, and spooky exhibits.",
+      "drive_note": "~15 min from the 64th & Ward base",
+      "source": "Mines Museum / Visit Golden"
+    },
+    {
+      "id": "central-library-trick-or-treat-2026",
+      "title": "Trick-or-Treat Street",
+      "date": "2026-10-29",
+      "end_date": "2026-10-29",
+      "time": "2:30–5:30 PM",
+      "place_id": "denver-central-library",
+      "place": "Denver Public Library Central Library",
+      "link": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter",
+      "note": "Free indoor trick-or-treating with candy and non-candy treats plus activities on each floor; no registration listed.",
+      "drive_note": "~26 min from the 64th & Ward base",
+      "source": "Denver Public Library / Days.in.denver"
+    }
+  ]
+}
