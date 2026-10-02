@@ -120,12 +120,18 @@
     max-width: 420px;
   }
   .search-pill input {
+    position: relative;
+    z-index: 0;
     width: 100%;
     min-height: 44px;
     border: 1px solid rgba(232,230,225,0.9);
     border-radius: 999px;
     padding: 10px 16px 10px 42px;
-    font-size: 0.95rem;
+    /* 16px prevents iOS Safari from auto-zooming on focus. */
+    font-size: 16px;
+    line-height: 1.25;
+    -webkit-appearance: none;
+    appearance: none;
     background: rgba(255,255,255,0.94);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -139,8 +145,10 @@
     box-shadow: var(--shadow), 0 0 0 3px rgba(42,157,143,0.18);
   }
   .search-pill .ico {
-    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    position: absolute; left: 14px; top: 50%; z-index: 1;
+    display: block; transform: translateY(-50%);
     color: var(--muted); pointer-events: none; width: 18px; height: 18px;
+    stroke: currentColor; stroke-width: 2; overflow: visible;
   }
   .count-chip {
     flex-shrink: 0;
@@ -651,7 +659,7 @@
       <span class="brand-text">Toddler Spots<span class="brand-sub">Denver · Arvada</span></span>
     </div>
     <div class="search-pill">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
       <input type="search" id="search" placeholder="Search parks, museums…" autocomplete="off" enterkeyhint="search" aria-label="Search places"/>
     </div>
     <span class="count-chip" id="count-chip">65</span>
