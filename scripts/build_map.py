@@ -45,10 +45,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     --bg: #E8E6E4;
     --bg-mid: #EDE8E6;
     --card: #FFFEFC;
-    --far: #C4967E;
-    --far-soft: #F7EEE8;
-    --near: #C48998;
-    --near-soft: #F7EBEF;
+    --far: #4F6F86;
+    --far-soft: #E6EEF2;
+    --near: #C4536E;
+    --near-soft: #F8E7EB;
     --free: #B57A88;
     --free-soft: #F6EBEE;
     --indoor: #A08B8E;
@@ -58,7 +58,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     --radius: 34px;
     --radius-sm: 26px;
     --tap: 48px;
-    --tab-h: calc(78px + env(safe-area-inset-bottom, 0px));
+    --tab-h: calc(104px + env(safe-area-inset-bottom, 0px));
     --top-h: 56px;
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -266,7 +266,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     content: "";
     position: absolute;
     left: 0; right: 0; top: 0;
-    height: calc(100% + 56px);
+    height: calc(100% + 18px);
     pointer-events: none;
     z-index: -1;
     background: linear-gradient(to bottom,
@@ -292,7 +292,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   .panel-body {
     /* Leave the frosted sticky heading room to fade before content begins. */
-    padding: 56px 18px calc(var(--tab-h) + 28px);
+    padding: 12px 18px calc(var(--tab-h) + 22px);
   }
 
   /* List cards */
@@ -371,7 +371,16 @@ TEMPLATE = r'''<!DOCTYPE html>
   .event-card.linked:hover, .event-card.linked:focus { box-shadow: var(--shadow-lg); outline: none; }
   .event-card.linked:active { transform: scale(.985); }
   .event-date-label { color: var(--muted); font-size: .72rem; font-weight: 500; margin-bottom: 6px; letter-spacing: 0.01em; }
-  .event-card h3 { margin: 0 0 5px; font-family: var(--display); font-size: 1.18rem; line-height: 1.3; font-weight: 600; color: var(--ink); }
+  .event-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin: 0 0 6px; }
+  .event-card h3 { margin: 0; flex: 1 1 auto; font-family: var(--display); font-size: 1.18rem; line-height: 1.3; font-weight: 600; color: var(--ink); }
+  .cal-add {
+    flex: 0 0 auto; align-self: flex-start;
+    font-size: 0.75rem; font-weight: 600; line-height: 1.2;
+    color: var(--accent-dark); text-decoration: none;
+    background: var(--accent-soft); border-radius: 999px;
+    padding: 7px 10px; white-space: nowrap;
+  }
+  .cal-add:hover { text-decoration: underline; }
   .event-meta { display: flex; flex-wrap: wrap; gap: 5px 12px; color: var(--muted); font-size: .78rem; margin: 0; }
   .event-time { color: var(--accent-dark); font-weight: 600; }
   .event-note {
@@ -513,27 +522,43 @@ TEMPLATE = r'''<!DOCTYPE html>
     display: inline-block;
   }
 
-  /* —— Bottom tab bar —— */
-  .tabbar {
-    --tab-pad: 4px;
-    --tab-left: 0px;
-    --tab-width: 0px;
+  /* —— Split glass navigation —— */
+  .dock {
     position: absolute;
     left: 12px; right: 12px;
     bottom: calc(10px + var(--safe-bottom));
-    z-index: 30;
-    height: 58px;
-    padding: var(--tab-pad);
-    background: rgba(255, 254, 252, 0.22);
+    z-index: 45;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    pointer-events: none;
+  }
+  .dock-left, .dock-btn, .seg { pointer-events: auto; }
+  .dock-left {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    min-width: 0;
+  }
+  .glass {
+    background: rgba(255, 254, 252, 0.28);
     backdrop-filter: blur(22px) saturate(1.45);
     -webkit-backdrop-filter: blur(22px) saturate(1.45);
-    border: 1px solid rgba(255, 254, 252, 0.45);
-    border-radius: 999px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    box-shadow: 0 10px 28px rgba(70, 45, 50, 0.08);
+    border: 1px solid rgba(255, 254, 252, 0.5);
+    box-shadow: 0 10px 28px rgba(70, 45, 50, 0.10);
   }
-  /* A single moving pill keeps the selected tab obvious without five competing backgrounds. */
+  .seg {
+    --tab-pad: 6px;
+    --tab-left: 0px;
+    --tab-width: 0px;
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    height: 80px;
+    padding: var(--tab-pad);
+    border-radius: 999px;
+  }
   .tab-indicator {
     position: absolute;
     z-index: 0;
@@ -543,39 +568,129 @@ TEMPLATE = r'''<!DOCTYPE html>
     width: var(--tab-width);
     border: 1px solid rgba(255, 254, 252, 0.52);
     border-radius: 999px;
-    background: linear-gradient(135deg, rgba(229, 184, 194, 0.82), rgba(196, 168, 180, 0.72));
+    background: linear-gradient(135deg, rgba(229, 184, 194, 0.88), rgba(196, 168, 180, 0.78));
     box-shadow: 0 5px 14px rgba(142, 90, 104, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.28);
     pointer-events: none;
     transform: translateX(var(--tab-left));
-    transition: transform 480ms cubic-bezier(.22, 1, .36, 1), width 220ms ease;
+    transition: transform 480ms cubic-bezier(.22, 1, .36, 1), width 220ms ease, opacity 200ms ease;
     will-change: transform;
   }
-  .tab {
+  .seg.idle .tab-indicator { opacity: 0; }
+  .tab, .dock-btn {
     position: relative;
     z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 3px;
     border: none;
     background: transparent;
     color: var(--muted);
-    font-size: 0.66rem;
-    font-weight: 500;
+    font-size: 0.86rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
     cursor: pointer;
-    min-height: 50px;
-    padding: 6px 4px;
     border-radius: 999px;
-    transition: color 220ms ease, opacity 160ms ease, transform 180ms ease;
+    transition: color 220ms ease, background 220ms ease, opacity 160ms ease, transform 180ms ease;
   }
-  .tab svg { width: 22px; height: 22px; stroke-width: 1.6; }
+  .tab {
+    min-width: 64px;
+    padding: 8px 14px;
+    font-size: 0.92rem;
+  }
+  .dock-btn {
+    height: 80px;
+    min-width: 74px;
+    padding: 8px 14px;
+    border-radius: 28px;
+    font-size: 0.92rem;
+  }
+  .tab svg, .dock-btn svg { width: 26px; height: 26px; stroke-width: 1.75; }
   .tab.active { color: var(--accent-dark); }
-  .tab:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: -2px; }
-  .tab:active { opacity: 0.72; transform: scale(0.96); }
-  @media (prefers-reduced-motion: reduce) {
-    .tab-indicator, .tab { transition: none; }
+  .dock-btn.on {
+    color: var(--accent-dark);
+    background: linear-gradient(135deg, rgba(229, 184, 194, 0.88), rgba(196, 168, 180, 0.78));
+    border-color: rgba(255, 254, 252, 0.55);
+    box-shadow: 0 8px 18px rgba(142, 90, 104, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.28);
   }
+  .tab:focus-visible, .dock-btn:focus-visible, .brand:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+  .tab:active, .dock-btn:active { opacity: 0.72; transform: scale(0.97); }
+  @media (prefers-reduced-motion: reduce) {
+    .tab-indicator, .tab, .dock-btn, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop { transition: none; }
+  }
+
+  /* Filter sheet sits above the map, under the nav so Filter stays tappable. */
+  .filter-backdrop, .drawer-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(55, 42, 40, 0.18);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s;
+  }
+  .filter-backdrop { z-index: 34; }
+  .drawer-backdrop { z-index: 60; }
+  .filter-backdrop.open, .drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+  .filter-sheet {
+    position: absolute;
+    left: 12px; right: 12px;
+    bottom: calc(var(--tab-h) - 6px);
+    z-index: 36;
+    max-height: min(64dvh, 520px);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    background: rgba(255, 254, 252, 0.94);
+    backdrop-filter: blur(26px) saturate(1.2);
+    -webkit-backdrop-filter: blur(26px) saturate(1.2);
+    border-radius: 28px;
+    box-shadow: var(--shadow-lg);
+    padding: 8px 12px 14px;
+    transform: translateY(18px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .36s cubic-bezier(.22, 1, .36, 1), opacity .24s;
+  }
+  .filter-sheet.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+  .filter-sheet-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; padding: 8px 8px 6px;
+  }
+  .filter-sheet-head h2 {
+    margin: 0; font-family: var(--display); font-size: 1.35rem; font-weight: 600; color: var(--ink);
+  }
+  .icon-x {
+    width: 40px; height: 40px; border: none; border-radius: 999px;
+    background: rgba(232, 230, 228, 0.9); color: var(--ink);
+    font-size: 1.35rem; line-height: 1; cursor: pointer; flex-shrink: 0;
+  }
+  .filter-sheet .filter-chip { border-radius: 22px; padding: 14px 16px; box-shadow: none; background: rgba(255,254,252,0.7); }
+  .filter-sheet .filter-chip.active { background: var(--accent-soft); }
+
+  .about-drawer {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: min(440px, 100%);
+    z-index: 70;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    transform: translateX(104%);
+    transition: transform .42s cubic-bezier(.22, 1, .36, 1);
+    background: linear-gradient(180deg, #E8E6E4 0%, #EBE7E5 42%, #F0E6E6 74%, #E9D5D8 100%);
+    box-shadow: -18px 0 48px rgba(60, 40, 42, 0.14);
+    padding: calc(14px + var(--safe-top)) 18px calc(24px + var(--safe-bottom));
+    border-radius: 28px 0 0 28px;
+  }
+  .about-drawer.open { transform: translateX(0); }
+  .drawer-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 12px; margin-bottom: 12px; position: sticky; top: 0; z-index: 2;
+    padding-bottom: 8px;
+  }
+  .drawer-top h1 {
+    margin: 6px 0 0; font-family: var(--display); font-size: 1.8rem; font-weight: 600; color: var(--ink);
+  }
+  button.brand { cursor: pointer; color: inherit; text-align: left; font: inherit; }
 
   /* —— Bottom sheet (place detail) —— */
   .sheet-backdrop {
@@ -678,51 +793,19 @@ TEMPLATE = r'''<!DOCTYPE html>
     margin-left: auto;
   }
 
-  /* Desktop: side list + map */
   @media (min-width: 900px) {
     .topbar { padding-left: 24px; padding-right: 24px; }
-    .tabbar {
-      --tab-pad: 6px;
-      left: auto;
-      right: 24px;
-      bottom: 24px;
-      width: auto;
-      height: auto;
-      padding: var(--tab-pad);
-      border-radius: 999px;
-      border: none;
-      background: rgba(255, 254, 252, 0.22);
-      backdrop-filter: blur(22px) saturate(1.45);
-      -webkit-backdrop-filter: blur(22px) saturate(1.45);
-      grid-template-columns: repeat(5, auto);
-      gap: 2px;
-      box-shadow: var(--shadow-lg);
-    }
-    .tab {
-      flex-direction: row;
-      gap: 8px;
-      padding: 10px 18px;
-      min-height: 44px;
-      border-radius: 999px;
-      font-size: 0.82rem;
-    }
-    .tab.active { background: rgba(181, 122, 136, 0.16); color: var(--accent-dark); }
-    .panel {
-      left: 0;
-      width: min(420px, 40vw);
-      right: auto;
-      border-right: none;
-      box-shadow: 18px 0 40px rgba(70, 50, 48, 0.05);
-    }
-    .panel-body { padding-bottom: 32px; }
-    #map { left: 0; }
-    .map-shifted #map { left: min(420px, 40vw); }
+    .dock { left: 24px; right: 24px; bottom: 24px; }
+    .tab { flex-direction: row; gap: 8px; min-width: 108px; font-size: 1rem; padding: 10px 20px; }
+    .dock-btn { flex-direction: row; gap: 8px; min-width: 112px; font-size: 1rem; padding: 10px 20px; border-radius: 999px; }
+    .about-drawer { width: min(460px, 42vw); }
+    .filter-sheet { left: 24px; right: auto; width: min(420px, 40vw); bottom: 122px; }
     .sheet {
       left: 50%;
       right: auto;
       width: min(440px, 92vw);
       transform: translate(-50%, 110%);
-      bottom: 96px;
+      bottom: calc(var(--tab-h) + 8px);
       border-radius: 36px;
       max-height: min(70vh, 560px);
       padding-bottom: 0;
@@ -731,11 +814,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     .active-filter-bar {
       left: auto;
       right: 24px;
-      bottom: 96px;
+      bottom: calc(var(--tab-h) + 12px);
       width: auto;
       max-width: 360px;
     }
-    .map-shifted .active-filter-bar { /* stay over map */ }
   }
 </style>
 </head>
@@ -744,15 +826,15 @@ TEMPLATE = r'''<!DOCTYPE html>
   <div id="map" role="application" aria-label="Map of toddler outing spots"></div>
 
   <header class="topbar">
-    <div class="brand" aria-hidden="true">
+    <button type="button" class="brand" id="open-about" aria-haspopup="dialog" aria-controls="about-drawer" aria-expanded="false">
       <span class="brand-mark">
         <span class="brand-emoji" role="img" aria-label="Baby">👶</span>
       </span>
       <span class="brand-text">Toddler Spots<span class="brand-sub">Denver · Arvada</span></span>
-    </div>
+    </button>
     <div class="search-pill">
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
-      <input type="search" id="search" placeholder="Search parks, museums…" autocomplete="off" enterkeyhint="search" aria-label="Search places"/>
+      <input type="search" id="search" placeholder="Search" autocomplete="off" enterkeyhint="search" aria-label="Search places"/>
     </div>
   </header>
 
@@ -775,88 +857,88 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="panel-body" id="events"></div>
   </section>
 
-  <section class="panel" id="panel-filters" aria-label="Filters">
-    <div class="panel-header">
-      <h1>Filters</h1>
+  <div class="filter-backdrop" id="filter-backdrop" hidden></div>
+  <aside class="filter-sheet" id="filter-sheet" role="dialog" aria-modal="true" aria-labelledby="filter-title" hidden>
+    <div class="filter-sheet-head">
+      <h2 id="filter-title">Filters</h2>
+      <button type="button" class="icon-x" id="filter-close" aria-label="Close filters">&times;</button>
     </div>
-    <div class="panel-body">
-      <div class="filter-grid" role="listbox" aria-label="Filter options">
-        <button type="button" class="filter-chip active" data-filter="all" role="option" aria-selected="true">
-          <span class="dot"></span>
-          <span class="label">All spots<span class="hint"><br>Show everything</span></span>
-          <span class="check"></span>
-        </button>
-        <button type="button" class="filter-chip" data-filter="near" role="option" aria-selected="false">
-          <span class="dot"></span>
-          <span class="label">Near (~30 min)<span class="hint"><br>From __BASE_LABEL__</span></span>
-          <span class="check"></span>
-        </button>
-        <button type="button" class="filter-chip" data-filter="far" role="option" aria-selected="false">
-          <span class="dot"></span>
-          <span class="label">Farther<span class="hint"><br>Worth the drive</span></span>
-          <span class="check"></span>
-        </button>
-        <button type="button" class="filter-chip" data-filter="free" role="option" aria-selected="false">
-          <span class="dot"></span>
-          <span class="label">Free<span class="hint"><br>Parks & free-entry spots</span></span>
-          <span class="check"></span>
-        </button>
-        <button type="button" class="filter-chip" data-filter="indoor" role="option" aria-selected="false">
-          <span class="dot"></span>
-          <span class="label">Indoor<span class="hint"><br>Museums, play, libraries</span></span>
-          <span class="check"></span>
-        </button>
-      </div>
+    <div class="filter-grid" role="listbox" aria-label="Filter options">
+      <button type="button" class="filter-chip active" data-filter="all" role="option" aria-selected="true">
+        <span class="dot"></span>
+        <span class="label">All spots<span class="hint"><br>Show everything</span></span>
+        <span class="check"></span>
+      </button>
+      <button type="button" class="filter-chip" data-filter="near" role="option" aria-selected="false">
+        <span class="dot"></span>
+        <span class="label">Near (~30 min)<span class="hint"><br>From __BASE_LABEL__</span></span>
+        <span class="check"></span>
+      </button>
+      <button type="button" class="filter-chip" data-filter="far" role="option" aria-selected="false">
+        <span class="dot"></span>
+        <span class="label">Farther<span class="hint"><br>Worth the drive</span></span>
+        <span class="check"></span>
+      </button>
+      <button type="button" class="filter-chip" data-filter="free" role="option" aria-selected="false">
+        <span class="dot"></span>
+        <span class="label">Free<span class="hint"><br>Parks & free-entry spots</span></span>
+        <span class="check"></span>
+      </button>
+      <button type="button" class="filter-chip" data-filter="indoor" role="option" aria-selected="false">
+        <span class="dot"></span>
+        <span class="label">Indoor<span class="hint"><br>Museums, play, libraries</span></span>
+        <span class="check"></span>
+      </button>
     </div>
-  </section>
+  </aside>
 
-  <section class="panel" id="panel-about" aria-label="About">
-    <div class="panel-header">
-      <h1>About</h1>
+  <div class="drawer-backdrop" id="about-backdrop" hidden></div>
+  <aside class="about-drawer" id="about-drawer" role="dialog" aria-modal="true" aria-labelledby="about-title" hidden>
+    <div class="drawer-top">
+      <h1 id="about-title">About</h1>
+      <button type="button" class="icon-x" id="about-close" aria-label="Close">&times;</button>
     </div>
-    <div class="panel-body">
-      <div class="about-card">
-        <h2>Base & audience</h2>
-        <p>Home base: <strong>__BASE_LABEL__</strong>. Aimed at a toddler ~20 months; prefer spots within ~30 minutes.</p>
-        <p>Updated __UPDATED__ · __COUNT__ places · __EVENT_COUNT__ upcoming events</p>
-      </div>
-      <div class="about-card">
-        <h2>Map legend</h2>
-        <div class="legend-row"><i style="background:#C48998"></i> Within ~30 min</div>
-        <div class="legend-row"><i style="background:#C4967E"></i> Farther</div>
-        <div class="legend-row"><i style="background:#B57A88"></i> Home (80004)</div>
-      </div>
-      <div class="about-card">
-        <h2>Sources</h2>
-        <ul>
+    <div class="about-card">
+      <h2>Base & audience</h2>
+      <p>Home base: <strong>__BASE_LABEL__</strong>. Aimed at a toddler ~20 months; prefer spots within ~30 minutes.</p>
+      <p>Updated __UPDATED__ · __COUNT__ places · __EVENT_COUNT__ upcoming events</p>
+    </div>
+    <div class="about-card">
+      <h2>Map legend</h2>
+      <div class="legend-row"><i style="background:#C4536E"></i> Within ~30 min</div>
+      <div class="legend-row"><i style="background:#4F6F86"></i> Farther</div>
+      <div class="legend-row"><i style="background:#B57A88"></i> Home (80004)</div>
+    </div>
+    <div class="about-card">
+      <h2>Sources</h2>
+      <ul>
 __SOURCES_HTML__
-        </ul>
-        <p>Why-notes paraphrased from those guides. Drive times are rough estimates — confirm in Maps.</p>
-      </div>
+      </ul>
+      <p>Why-notes paraphrased from those guides. Drive times are rough estimates — confirm in Maps.</p>
     </div>
-  </section>
+  </aside>
 
-  <nav class="tabbar" role="tablist" aria-label="Main">
-    <span class="tab-indicator" aria-hidden="true"></span>
-    <button type="button" class="tab active" data-tab="map" role="tab" aria-selected="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 4l-5 2v14l5-2 6 2 5-2V4l-5 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
-      Map
-    </button>
-    <button type="button" class="tab" data-tab="list" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 6h12M8 12h12M8 18h12" stroke-linecap="round"/><circle cx="4" cy="6" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.2" fill="currentColor" stroke="none"/></svg>
-      List
-    </button>
-    <button type="button" class="tab" data-tab="events" role="tab" aria-selected="false">
+  <nav class="dock" aria-label="Main">
+    <div class="dock-left">
+      <div class="seg glass" id="view-seg" role="tablist" aria-label="Map or list">
+        <span class="tab-indicator" aria-hidden="true"></span>
+        <button type="button" class="tab active" data-tab="map" role="tab" aria-selected="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 4l-5 2v14l5-2 6 2 5-2V4l-5 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
+          Map
+        </button>
+        <button type="button" class="tab" data-tab="list" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 6h12M8 12h12M8 18h12" stroke-linecap="round"/><circle cx="4" cy="6" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.2" fill="currentColor" stroke="none"/></svg>
+          List
+        </button>
+      </div>
+      <button type="button" class="dock-btn glass" id="filter-btn" aria-pressed="false" aria-expanded="false" aria-controls="filter-sheet">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg>
+        Filter
+      </button>
+    </div>
+    <button type="button" class="dock-btn glass" id="events-btn" aria-pressed="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7 3v4M17 3v4M3.5 10h17M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Events
-    </button>
-    <button type="button" class="tab" data-tab="filters" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg>
-      Filters
-    </button>
-    <button type="button" class="tab" data-tab="about" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7.5v.5" stroke-linecap="round"/></svg>
-      About
     </button>
   </nav>
 
@@ -888,9 +970,18 @@ const EVENTS_DOC = __EVENTS_JSON__;
   const sheet = document.getElementById('sheet');
   const sheetBody = document.getElementById('sheet-body');
   const sheetBackdrop = document.getElementById('sheet-backdrop');
-  const tabbar = document.querySelector('.tabbar');
+  const seg = document.getElementById('view-seg');
   const tabIndicator = document.querySelector('.tab-indicator');
-  const tabs = Array.from(document.querySelectorAll('.tab'));
+  const tabs = Array.from(document.querySelectorAll('.seg .tab'));
+  const eventsBtn = document.getElementById('events-btn');
+  const filterBtn = document.getElementById('filter-btn');
+  const filterSheet = document.getElementById('filter-sheet');
+  const filterBackdrop = document.getElementById('filter-backdrop');
+  const aboutDrawer = document.getElementById('about-drawer');
+  const aboutBackdrop = document.getElementById('about-backdrop');
+  const openAboutBtn = document.getElementById('open-about');
+  let filterOpen = false;
+  let aboutOpen = false;
 
   let filter = 'all';
   let query = '';
@@ -1125,6 +1216,103 @@ const EVENTS_DOC = __EVENTS_JSON__;
     }
     return keys;
   }
+  function pad2(n){ return String(n).padStart(2, '0'); }
+  function addDays(iso, n){
+    const d = new Date(iso + 'T12:00:00Z');
+    d.setUTCDate(d.getUTCDate() + n);
+    return d.toISOString().slice(0, 10);
+  }
+  function readClock(text, inherit){
+    const m = String(text || '').trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(a\.?m\.?|p\.?m\.?)?$/i);
+    if (!m) return null;
+    let h = parseInt(m[1], 10);
+    const min = m[2] ? parseInt(m[2], 10) : 0;
+    if (h > 23 || min > 59) return null;
+    let mer = m[3] ? m[3].replace(/\./g, '').toUpperCase() : (inherit || '');
+    if (!mer) return { h: h, min: min, mer: '', minutes: null };
+    if (h > 12) mer = '';
+    if (mer === 'PM' && h < 12) h += 12;
+    if (mer === 'AM' && h === 12) h = 0;
+    return { h: h, min: min, mer: mer, minutes: h * 60 + min };
+  }
+  function withMer(text, mer){
+    const c = readClock(text, mer);
+    return c && c.minutes != null ? c : null;
+  }
+  function resolvePair(aRaw, bRaw){
+    let a = readClock(aRaw, '');
+    let b = readClock(bRaw, '');
+    if (!a || !b) return null;
+    if (!a.mer && b.mer) {
+      const same = withMer(aRaw, b.mer);
+      const other = withMer(aRaw, b.mer === 'PM' ? 'AM' : 'PM');
+      a = (same && b.minutes != null && same.minutes < b.minutes) ? same : (other || same);
+    }
+    if (a && !b.mer && a.mer) {
+      const same = withMer(bRaw, a.mer);
+      const other = withMer(bRaw, a.mer === 'AM' ? 'PM' : 'AM');
+      b = (same && a.minutes != null && same.minutes > a.minutes) ? same : (other || same);
+    }
+    if (a && a.minutes == null) a = withMer(aRaw, 'PM');
+    if (b && b.minutes == null) b = withMer(bRaw, 'PM');
+    if (!a || !b || a.minutes == null || b.minutes == null) return null;
+    return [a, b];
+  }
+  function stamp(date, clock){
+    return date.replace(/-/g, '') + 'T' + pad2(clock.h) + pad2(clock.min) + '00';
+  }
+  function calendarUrl(e){
+    const startDate = e.date;
+    const endDate = e.end_date || e.date;
+    const time = String(e.time || '');
+    const rangeRe = /(\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)?)\s*[–—-]\s*(\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)?)/gi;
+    const ranges = [];
+    let rm;
+    while ((rm = rangeRe.exec(time))) ranges.push(rm);
+    let dates = '';
+    if (ranges.length) {
+      const first = resolvePair(ranges[0][1], ranges[0][2]);
+      if (first) {
+        let endClock = first[1];
+        let endD = startDate;
+        if (endDate !== startDate && ranges.length > 1) {
+          const last = resolvePair(ranges[ranges.length - 1][1], ranges[ranges.length - 1][2]);
+          if (last) { endClock = last[1]; endD = endDate; }
+        }
+        const start = stamp(startDate, first[0]);
+        let end = stamp(endD, endClock);
+        if (end <= start) end = stamp(addDays(endD, 1), endClock);
+        dates = start + '/' + end;
+      }
+    }
+    if (!dates) {
+      const clocks = [];
+      const clockRe = /\b(\d{1,2}:\d{2}\s*(?:a\.?m\.?|p\.?m\.?)?)\b/gi;
+      let cm;
+      while ((cm = clockRe.exec(time))) clocks.push(cm[1]);
+      if (clocks.length) {
+        const a = readClock(clocks[0], /[ap]\.?m/i.test(clocks[0]) ? '' : 'PM');
+        let b = clocks.length > 1 ? readClock(clocks[clocks.length - 1], /[ap]\.?m/i.test(clocks[clocks.length - 1]) ? '' : 'PM') : null;
+        if (a && a.minutes != null) {
+          if (!b || b.minutes == null || b.minutes <= a.minutes) {
+            const mins = a.minutes + 120;
+            b = { h: Math.floor(mins / 60) % 24, min: mins % 60 };
+            dates = stamp(startDate, a) + '/' + stamp(addDays(startDate, Math.floor(mins / 1440)), b);
+          } else {
+            dates = stamp(startDate, a) + '/' + stamp(endDate !== startDate ? endDate : startDate, b);
+          }
+        }
+      }
+    }
+    if (!dates) dates = startDate.replace(/-/g, '') + '/' + addDays(endDate, 1).replace(/-/g, '');
+    const details = [e.note, e.time, e.source].filter(Boolean).join('\n');
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+      + '&text=' + encodeURIComponent(e.title || 'Event')
+      + '&dates=' + dates
+      + '&details=' + encodeURIComponent(details)
+      + '&location=' + encodeURIComponent(e.place || '')
+      + '&ctz=America%2FDenver';
+  }
   function renderEvents(){
     const today = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'America/Denver' }).format(new Date());
     const upcoming = events.filter(e => String(e.end_date || e.date) >= today).sort((a,b) => String(a.date).localeCompare(String(b.date)));
@@ -1133,7 +1321,10 @@ const EVENTS_DOC = __EVENTS_JSON__;
       const linked = e.place_id && placesById[e.place_id];
       const venue = e.place || (linked && linked.name) || 'Location to be confirmed';
       return `<article class="event-card${linked?' linked':''}"${linked?` data-place-id="${escapeHtml(e.place_id)}" role="button" tabindex="0"`:''}>
-        <h3>${escapeHtml(e.title)}</h3>
+        <div class="event-card-top">
+          <h3>${escapeHtml(e.title)}</h3>
+          <a class="cal-add" href="${calendarUrl(e)}" target="_blank" rel="noopener">Add to calendar</a>
+        </div>
         <p class="event-place">${escapeHtml(venue)}</p>
         <p class="event-note">${escapeHtml(snippet(e.note || 'Family-friendly event details coming soon.', 120))}</p>
         <div class="event-meta"><span>${escapeHtml(eventDateLabel(e))}</span><span class="event-time">${escapeHtml(eventTimeLabel(e))}</span></div>
@@ -1152,14 +1343,58 @@ const EVENTS_DOC = __EVENTS_JSON__;
 
   function moveTabIndicator(name, immediate = false){
     const selected = tabs.find(t => t.dataset.tab === name);
-    if (!selected || !tabIndicator || !tabbar) return;
+    if (!selected || !tabIndicator || !seg || name === 'events') return;
     if (immediate) tabIndicator.style.transition = 'none';
-    tabbar.style.setProperty('--tab-left', `${selected.offsetLeft}px`);
-    tabbar.style.setProperty('--tab-width', `${selected.offsetWidth}px`);
+    seg.style.setProperty('--tab-left', `${selected.offsetLeft}px`);
+    seg.style.setProperty('--tab-width', `${selected.offsetWidth}px`);
     if (immediate) {
-      // Let the first layout settle before restoring the sliding transition.
       requestAnimationFrame(() => { tabIndicator.style.removeProperty('transition'); });
     }
+  }
+
+  function paintFilterButton(){
+    const on = filterOpen || filter !== 'all';
+    filterBtn.classList.toggle('on', on);
+    filterBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    filterBtn.setAttribute('aria-expanded', filterOpen ? 'true' : 'false');
+  }
+  function openFilterSheet(){
+    filterOpen = true;
+    filterSheet.hidden = false;
+    filterBackdrop.hidden = false;
+    requestAnimationFrame(() => {
+      filterSheet.classList.add('open');
+      filterBackdrop.classList.add('open');
+    });
+    paintFilterButton();
+  }
+  function closeFilterSheet(){
+    filterOpen = false;
+    filterSheet.classList.remove('open');
+    filterBackdrop.classList.remove('open');
+    paintFilterButton();
+    setTimeout(() => {
+      if (!filterOpen) { filterSheet.hidden = true; filterBackdrop.hidden = true; }
+    }, 320);
+  }
+  function openAbout(){
+    aboutOpen = true;
+    aboutDrawer.hidden = false;
+    aboutBackdrop.hidden = false;
+    openAboutBtn.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(() => {
+      aboutDrawer.classList.add('open');
+      aboutBackdrop.classList.add('open');
+    });
+  }
+  function closeAbout(){
+    aboutOpen = false;
+    aboutDrawer.classList.remove('open');
+    aboutBackdrop.classList.remove('open');
+    openAboutBtn.setAttribute('aria-expanded', 'false');
+    setTimeout(() => {
+      if (!aboutOpen) { aboutDrawer.hidden = true; aboutBackdrop.hidden = true; }
+    }, 420);
   }
 
   function setTab(name){
@@ -1167,24 +1402,36 @@ const EVENTS_DOC = __EVENTS_JSON__;
     const mapActive = name === 'map';
     topbar.hidden = !mapActive;
     topbar.setAttribute('aria-hidden', mapActive ? 'false' : 'true');
+    const viewOn = name === 'map' || name === 'list';
     tabs.forEach(t => {
-      const on = t.dataset.tab === name;
+      const on = viewOn && t.dataset.tab === name;
       t.classList.toggle('active', on);
       t.setAttribute('aria-selected', on ? 'true' : 'false');
     });
-    moveTabIndicator(name);
+    seg.classList.toggle('idle', !viewOn);
+    eventsBtn.classList.toggle('on', name === 'events');
+    eventsBtn.setAttribute('aria-pressed', name === 'events' ? 'true' : 'false');
+    if (viewOn) moveTabIndicator(name);
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     if (name === 'list') document.getElementById('panel-list').classList.add('active');
     if (name === 'events') document.getElementById('panel-events').classList.add('active');
-    if (name === 'filters') document.getElementById('panel-filters').classList.add('active');
-    if (name === 'about') document.getElementById('panel-about').classList.add('active');
-    app.classList.toggle('map-shifted', name === 'list' || name === 'events' || name === 'filters' || name === 'about');
-    if (name === 'map') setTimeout(() => map.resize(), 50);
-    else setTimeout(() => map.resize(), 50);
+    setTimeout(() => map.resize(), 50);
   }
 
   tabs.forEach(btn => {
     btn.addEventListener('click', () => setTab(btn.dataset.tab));
+  });
+  eventsBtn.addEventListener('click', () => setTab('events'));
+  filterBtn.addEventListener('click', () => { filterOpen ? closeFilterSheet() : openFilterSheet(); });
+  document.getElementById('filter-close').addEventListener('click', closeFilterSheet);
+  filterBackdrop.addEventListener('click', closeFilterSheet);
+  openAboutBtn.addEventListener('click', openAbout);
+  document.getElementById('about-close').addEventListener('click', closeAbout);
+  aboutBackdrop.addEventListener('click', closeAbout);
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (aboutOpen) closeAbout();
+    else if (filterOpen) closeFilterSheet();
   });
   moveTabIndicator(currentTab, true);
 
@@ -1196,14 +1443,11 @@ const EVENTS_DOC = __EVENTS_JSON__;
       b.setAttribute('aria-selected', on ? 'true' : 'false');
     });
     renderList();
+    paintFilterButton();
   }
 
   document.querySelectorAll('.filter-chip').forEach(btn => {
-    btn.addEventListener('click', () => {
-      setFilter(btn.dataset.filter);
-      // After picking a filter, jump to list so results are visible
-      if (btn.dataset.filter !== 'all') setTab('list');
-    });
+    btn.addEventListener('click', () => setFilter(btn.dataset.filter));
   });
   document.getElementById('clear-filter').addEventListener('click', () => setFilter('all'));
 
@@ -1232,7 +1476,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
 
   window.addEventListener('resize', () => {
     map.resize();
-    moveTabIndicator(currentTab, true);
+    if (currentTab === 'map' || currentTab === 'list') moveTabIndicator(currentTab, true);
   });
 })();
 </script>
