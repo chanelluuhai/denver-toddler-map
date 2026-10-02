@@ -3,7 +3,7 @@
 Updated: 2026-10-02  
 Base: W 64th Ave & Ward Rd, Arvada, CO 80004  
 Audience: Toddler ~20 months; prefer ~30 min drive  
-Places: 65
+Places: 66
 
 Each pin has a why-note from a named social/newsletter source. Drive times are rough estimates.
 
@@ -731,6 +731,20 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Giggling Life Care Farm](https://www.thegigglinglife.com/)
 - [Fall Festival page](https://www.thegigglinglife.com/copy-of-the-farm)
 - [Instagram @colorado.kids.explore](https://www.instagram.com/colorado.kids.explore/)
+
+## Boulder Canyon Trail (FARTHER)
+
+- **Address:** Eben G. Fine Park, 101 Arapahoe Ave, Boulder, CO 80302 (eastern trailhead)
+- **Drive:** ~35 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~16.1 mi straight-line) — FARTHER (>30 min; flag)
+- **Why:** Colorado Mama Life (Angelica Quintanilla) reel: stroller-friendly walk along Boulder Creek with canyon views. Her favorite part was watching mountain bikers fly by — it kept her toddler entertained the whole way. First stretch from Eben G. Fine Park is paved; farther on it becomes a wide gravel path.
+- **Source:** Colorado Mama Life / Angelica Quintanilla Facebook reel 2026-10-02 share
+- **Hours:** Daylight use; open space trail (no gates listed). Parking at Eben G. Fine Park and informal pull-offs along CO 119.
+- **Cost:** Free
+- **Toddler tip:** Turn around on the paved creek section if the stroller or energy runs out. Watch bikes on the path. ~35 min — farther than the usual 30.
+- [Facebook reel](https://www.facebook.com/reel/1015401847940077/)
+- [Facebook Colorado Mama Life](https://www.facebook.com/profile.php?id=61577651781310)
+- [Instagram @coloradomamalife](https://www.instagram.com/coloradomamalife/)
+- [Boulder County — Boulder Canyon Trail](https://bouldercounty.gov/open-space/parks-and-trails/boulder-canyon-trail/)
 
 ## Cheyenne-Arapaho (Tsistsistas-Hinono'ei) Park (FARTHER)
 

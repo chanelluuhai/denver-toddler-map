@@ -9,6 +9,10 @@
 | Colorado Kids Are Rad | https://www.instagram.com/coloradokidsarerad/ | Colorado Kids Are Rad | |
 | Colorado Mama Life (Angelica) | https://www.instagram.com/coloradomamalife/ | https://www.facebook.com/profile.php?id=61577651781310 | https://www.tiktok.com/@coloradomamalife |
 
+## Chanel share (2026-10-02)
+
+- Facebook reel https://www.facebook.com/share/r/1F3TqSRV9P/ → https://www.facebook.com/reel/1015401847940077/ — Angelica Quintanilla / Colorado Mama Life (existing account): **Boulder Canyon Trail**, start at Eben G. Fine Park, 101 Arapahoe Ave, Boulder. Stroller-friendly creek walk; mountain bikers kept a toddler entertained. Pin `boulder-canyon-trail` (~35 min, farther). No dated event.
+
 ## Scrub window (2026-10-02 Mon/Wed/Fri pass)
 
 **Checked**

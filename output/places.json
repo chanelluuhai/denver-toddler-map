@@ -31,11 +31,11 @@
         "instagram": "https://www.instagram.com/coloradomamalife/",
         "facebook": "https://www.facebook.com/profile.php?id=61577651781310",
         "tiktok": "https://www.tiktok.com/@coloradomamalife",
-        "note": "Angelica Quintanilla — family adventures + raw motherhood; added from FB reel share 2026-10-01"
+        "note": "Angelica Quintanilla — family adventures + raw motherhood; added from FB reel share 2026-10-01. Boulder Canyon Trail reel scrubbed 2026-10-02 from Chanel FB share."
       }
     ],
     "updated": "2026-10-02",
-    "scrub_window": "2026-10-02 Mon scrub: Days.in.denver Oct newsletter + Fall guide re-check; CKE Facebook (Giggling Life Fall Festival); IG/FB Mama Life & CKAR login-walled; prior 2026-10-01 deep pass retained",
+    "scrub_window": "2026-10-02 Mon scrub: Days.in.denver Oct newsletter + Fall guide re-check; CKE Facebook (Giggling Life Fall Festival); IG/FB Mama Life & CKAR login-walled; prior 2026-10-01 deep pass retained. Chanel FB share 2026-10-02: Mama Life reel → Boulder Canyon Trail (existing account).",
     "notes": "Why-notes paraphrased/quoted from source captions and newsletters. Drive times are rough estimates from Arvada 80004; verify in Google Maps. Do not invent venues — every pin cites a named source. Seasonal spots kept if still relevant for fall 2026 or evergreen otherwise. Home base updated to W 64th Ave & Ward Rd; drive times refreshed via public OSRM routing on 2026-10-02."
   },
   "places": [
@@ -2630,6 +2630,54 @@
       "straight_line_miles": 4.4,
       "hours": "Verify current access and amenities",
       "cost": "Verify current access details"
+    },
+    {
+      "id": "boulder-canyon-trail",
+      "name": "Boulder Canyon Trail",
+      "lat": 40.01331,
+      "lng": -105.295493,
+      "address": "Eben G. Fine Park, 101 Arapahoe Ave, Boulder, CO 80302 (eastern trailhead)",
+      "why": "Colorado Mama Life (Angelica Quintanilla) reel: stroller-friendly walk along Boulder Creek with canyon views. Her favorite part was watching mountain bikers fly by — it kept her toddler entertained the whole way. First stretch from Eben G. Fine Park is paved; farther on it becomes a wide gravel path.",
+      "source": "Colorado Mama Life / Angelica Quintanilla Facebook reel 2026-10-02 share",
+      "source_accounts": [
+        "@coloradomamalife",
+        "Facebook: Angelica Quintanilla (Colorado Mama Life)",
+        "TikTok: @coloradomamalife"
+      ],
+      "links": [
+        {
+          "label": "Facebook reel",
+          "url": "https://www.facebook.com/reel/1015401847940077/"
+        },
+        {
+          "label": "Facebook Colorado Mama Life",
+          "url": "https://www.facebook.com/profile.php?id=61577651781310"
+        },
+        {
+          "label": "Instagram @coloradomamalife",
+          "url": "https://www.instagram.com/coloradomamalife/"
+        },
+        {
+          "label": "Boulder County — Boulder Canyon Trail",
+          "url": "https://bouldercounty.gov/open-space/parks-and-trails/boulder-canyon-trail/"
+        }
+      ],
+      "hours": "Daylight use; open space trail (no gates listed). Parking at Eben G. Fine Park and informal pull-offs along CO 119.",
+      "cost": "Free",
+      "toddler_notes": "Turn around on the paved creek section if the stroller or energy runs out. Watch bikes on the path. ~35 min — farther than the usual 30.",
+      "tags": [
+        "hike",
+        "outdoor",
+        "stroller",
+        "creek",
+        "boulder",
+        "free",
+        "nature"
+      ],
+      "drive_note": "~35 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~16.1 mi straight-line) — FARTHER (>30 min; flag)",
+      "farther_than_30min": true,
+      "approx_drive_minutes": 35,
+      "straight_line_miles": 16.1
     }
   ]
 }
