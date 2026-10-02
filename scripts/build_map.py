@@ -3,6 +3,7 @@
 from __future__ import annotations
 import json
 import pathlib
+import html
 import shutil
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -759,15 +760,9 @@ TEMPLATE = r'''<!DOCTYPE html>
       <div class="about-card">
         <h2>Sources</h2>
         <ul>
-          <li><a href="https://www.instagram.com/days.in.denver/" target="_blank" rel="noopener">Days.in.denver</a> + <a href="https://days-in-denver.beehiiv.com/" target="_blank" rel="noopener">newsletter</a></li>
-          <li><a href="https://www.instagram.com/colorado.kids.explore/" target="_blank" rel="noopener">Colorado Kids Explore</a></li>
-          <li><a href="https://www.instagram.com/coloradokidsarerad/" target="_blank" rel="noopener">Colorado Kids Are Rad</a></li>
+__SOURCES_HTML__
         </ul>
         <p>Why-notes paraphrased from those guides. Drive times are rough estimates — confirm in Maps.</p>
-      </div>
-      <div class="about-card">
-        <h2>Basemap</h2>
-        <p>MapLibre GL · OpenFreeMap Positron (soft light). No Mapbox token required.</p>
       </div>
     </div>
   </section>
@@ -1160,6 +1155,40 @@ const EVENTS_DOC = __EVENTS_JSON__;
 </html>
 '''
 
+def source_link(label, url):
+    """Return a safe external link for a source metadata field."""
+    if not isinstance(url, str) or not url.startswith(("https://", "http://")):
+        return ""
+    return (f'<a href="{html.escape(url, quote=True)}" target="_blank" '
+            f'rel="noopener">{html.escape(label)}</a>')
+
+
+def sources_html(meta):
+    """Render the About source list directly from meta.sources_scrubbed."""
+    fields = (("instagram", "Instagram"), ("facebook", "Facebook"),
+              ("newsletter", "newsletter"), ("tiktok", "TikTok"))
+    rows = []
+    for source in meta.get("sources_scrubbed", []):
+        name = str(source.get("name", "")).strip()
+        if not name:
+            continue
+        available = [(field, label, source.get(field)) for field, label in fields
+                     if source_link(label, source.get(field))]
+        if available:
+            # Make the account name itself the primary social link, then expose
+            # additional accounts/newsletters without hard-coding the list.
+            primary_field, _, primary_url = next(
+                (item for item in available if item[0] == "instagram"), available[0]
+            )
+            primary = source_link(name, primary_url)
+            extras = [source_link(label, url) for field, label, url in available
+                      if field != primary_field]
+            rendered = primary + (" (" + " · ".join(extras) + ")" if extras else "")
+        else:
+            rendered = html.escape(name)
+        rows.append(f"          <li>{rendered}</li>")
+    return "\n".join(rows)
+
 def build():
     doc = json.loads(DATA.read_text())
     events_doc = json.loads(EVENTS_DATA.read_text())
@@ -1168,6 +1197,7 @@ def build():
     OUT_EVENTS.write_text(json.dumps(events_doc, indent=2, ensure_ascii=False) + "\n")
     places_json = json.dumps(doc, ensure_ascii=False)
     html_out = (TEMPLATE
+        .replace("__SOURCES_HTML__", sources_html(doc.get("meta", {})))
         .replace("__PLACES_JSON__", places_json)
         .replace("__EVENTS_JSON__", json.dumps(events_doc, ensure_ascii=False))
         .replace("__UPDATED__", str(doc.get("meta", {}).get("updated", "")))
