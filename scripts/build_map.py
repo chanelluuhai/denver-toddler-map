@@ -58,7 +58,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     --radius: 34px;
     --radius-sm: 26px;
     --tap: 48px;
-    --tab-h: calc(104px + env(safe-area-inset-bottom, 0px));
+    --tab-h: calc(80px + env(safe-area-inset-bottom, 0px));
     --top-h: 56px;
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -534,6 +534,21 @@ TEMPLATE = r'''<!DOCTYPE html>
     gap: 12px;
     pointer-events: none;
   }
+  /* A quiet frosted fade keeps scrolling content from competing with the dock. */
+  .dock::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: -12px; right: -12px;
+    bottom: calc(-10px - var(--safe-bottom));
+    height: 148px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent 0%, rgba(232, 230, 228, 0.10) 25%, rgba(232, 230, 228, 0.74) 100%);
+    backdrop-filter: blur(16px) saturate(1.08);
+    -webkit-backdrop-filter: blur(16px) saturate(1.08);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 48%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 48%, #000 100%);
+  }
   .dock-left, .dock-btn, .seg { pointer-events: auto; }
   .dock-left {
     display: flex;
@@ -555,7 +570,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     position: relative;
     display: flex;
     align-items: stretch;
-    height: 80px;
+    height: 68px;
     padding: var(--tab-pad);
     border-radius: 999px;
   }
@@ -587,7 +602,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     border: none;
     background: transparent;
     color: var(--muted);
-    font-size: 0.86rem;
+    font-size: 0;
     font-weight: 600;
     letter-spacing: 0.01em;
     cursor: pointer;
@@ -595,18 +610,18 @@ TEMPLATE = r'''<!DOCTYPE html>
     transition: color 220ms ease, background 220ms ease, opacity 160ms ease, transform 180ms ease;
   }
   .tab {
-    min-width: 64px;
+    min-width: 62px;
     padding: 8px 14px;
-    font-size: 0.92rem;
+    font-size: 0;
   }
   .dock-btn {
-    height: 80px;
-    min-width: 74px;
+    height: 68px;
+    min-width: 68px;
     padding: 8px 14px;
-    border-radius: 28px;
-    font-size: 0.92rem;
+    border-radius: 24px;
+    font-size: 0;
   }
-  .tab svg, .dock-btn svg { width: 26px; height: 26px; stroke-width: 1.75; }
+  .tab svg, .dock-btn svg { width: 30px; height: 30px; stroke-width: 1.75; }
   .tab.active { color: var(--accent-dark); }
   .dock-btn.on {
     color: var(--accent-dark);
@@ -679,7 +694,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     background: linear-gradient(180deg, #E8E6E4 0%, #EBE7E5 42%, #F0E6E6 74%, #E9D5D8 100%);
     box-shadow: -18px 0 48px rgba(60, 40, 42, 0.14);
     padding: calc(14px + var(--safe-top)) 18px calc(24px + var(--safe-bottom));
-    border-radius: 28px 0 0 28px;
+    border-radius: 0;
   }
   .about-drawer.open { transform: translateX(0); }
   .drawer-top {
@@ -796,8 +811,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   @media (min-width: 900px) {
     .topbar { padding-left: 24px; padding-right: 24px; }
     .dock { left: 24px; right: 24px; bottom: 24px; }
-    .tab { flex-direction: row; gap: 8px; min-width: 108px; font-size: 1rem; padding: 10px 20px; }
-    .dock-btn { flex-direction: row; gap: 8px; min-width: 112px; font-size: 1rem; padding: 10px 20px; border-radius: 999px; }
+    .tab { flex-direction: column; gap: 0; min-width: 68px; font-size: 0; padding: 8px 14px; }
+    .dock-btn { flex-direction: column; gap: 0; min-width: 74px; font-size: 0; padding: 8px 14px; border-radius: 24px; }
     .about-drawer { width: min(460px, 42vw); }
     .filter-sheet { left: 24px; right: auto; width: min(420px, 40vw); bottom: 122px; }
     .sheet {
@@ -922,23 +937,19 @@ __SOURCES_HTML__
     <div class="dock-left">
       <div class="seg glass" id="view-seg" role="tablist" aria-label="Map or list">
         <span class="tab-indicator" aria-hidden="true"></span>
-        <button type="button" class="tab active" data-tab="map" role="tab" aria-selected="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 4l-5 2v14l5-2 6 2 5-2V4l-5 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
-          Map
+        <button type="button" class="tab active" data-tab="map" role="tab" aria-label="Map" aria-selected="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M9 4l-5 2v14l5-2 6 2 5-2V4l-5 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
         </button>
-        <button type="button" class="tab" data-tab="list" role="tab" aria-selected="false">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 6h12M8 12h12M8 18h12" stroke-linecap="round"/><circle cx="4" cy="6" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.2" fill="currentColor" stroke="none"/></svg>
-          List
+        <button type="button" class="tab" data-tab="list" role="tab" aria-label="List" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12" stroke-linecap="round"/><circle cx="4" cy="6" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.2" fill="currentColor" stroke="none"/></svg>
         </button>
       </div>
-      <button type="button" class="dock-btn glass" id="filter-btn" aria-pressed="false" aria-expanded="false" aria-controls="filter-sheet">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg>
-        Filter
+      <button type="button" class="dock-btn glass" id="filter-btn" aria-label="Filter" aria-pressed="false" aria-expanded="false" aria-controls="filter-sheet">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg>
       </button>
     </div>
-    <button type="button" class="dock-btn glass" id="events-btn" aria-pressed="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7 3v4M17 3v4M3.5 10h17M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Events
+    <button type="button" class="dock-btn glass" id="events-btn" aria-label="Events" aria-pressed="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7 3v4M17 3v4M3.5 10h17M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </nav>
 
@@ -1185,7 +1196,9 @@ const EVENTS_DOC = __EVENTS_JSON__;
   }
   function longDate(key){
     const d = new Date(key + 'T12:00:00Z');
-    return new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(d);
+    const parts = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }).formatToParts(d);
+    const values = Object.fromEntries(parts.filter(part => part.type !== 'literal').map(part => [part.type, part.value]));
+    return `${values.weekday} ${values.month} ${values.day}`;
   }
   function eventDateLabel(e){
     return e.end_date && e.end_date !== e.date ? shortDate(e.date) + '–' + shortDate(e.end_date) : shortDate(e.date);
@@ -1313,6 +1326,16 @@ const EVENTS_DOC = __EVENTS_JSON__;
       + '&location=' + encodeURIComponent(e.place || '')
       + '&ctz=America%2FDenver';
   }
+  function eventStartMinutes(e){
+    const time = String(e.time || '');
+    const first = time.match(/(\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)?)/i);
+    if (!first) return Number.MAX_SAFE_INTEGER;
+    const hasAm = /a\.?m\.?/i.test(time);
+    const hasPm = /p\.?m\.?/i.test(time);
+    const inherit = hasAm && !hasPm ? 'AM' : 'PM';
+    const clock = readClock(first[1], inherit);
+    return clock && clock.minutes != null ? clock.minutes : Number.MAX_SAFE_INTEGER;
+  }
   function renderEvents(){
     const today = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'America/Denver' }).format(new Date());
     // Keep an event visible while any part of its date range is still upcoming,
@@ -1325,9 +1348,9 @@ const EVENTS_DOC = __EVENTS_JSON__;
     const days = Object.keys(groups).sort();
     if (!days.length) { eventsEl.innerHTML = '<div class="empty">No upcoming events listed yet.</div>'; return; }
     eventsEl.innerHTML = days.map(day => `
-      <section class="event-day" aria-labelledby="event-day-${day}">
+      <section class="event-day" data-day="${day}" aria-labelledby="event-day-${day}">
         <h2 class="event-day-heading" id="event-day-${day}">${escapeHtml(longDate(day))}<span>${groups[day].length} event${groups[day].length === 1 ? '' : 's'}</span></h2>
-        ${groups[day].sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.title).localeCompare(String(b.title))).map(e => {
+        ${groups[day].sort((a, b) => eventStartMinutes(a) - eventStartMinutes(b) || String(a.date).localeCompare(String(b.date)) || String(a.title).localeCompare(String(b.title))).map(e => {
           const linked = e.place_id && placesById[e.place_id];
           const venue = e.place || (linked && linked.name) || 'Location to be confirmed';
           return `<article class="event-card${linked?' linked':''}"${linked?` data-place-id="${escapeHtml(e.place_id)}" role="button" tabindex="0"`:''}>
