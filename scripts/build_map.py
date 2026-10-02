@@ -1434,6 +1434,9 @@ const EVENTS_DOC = __EVENTS_JSON__;
   function setTab(name){
     currentTab = name;
     const mapActive = name === 'map';
+    const eventsActive = name === 'events';
+    if (eventsActive && filterOpen) closeFilterSheet();
+    filterBtn.hidden = eventsActive;
     topbar.hidden = !mapActive;
     topbar.setAttribute('aria-hidden', mapActive ? 'false' : 'true');
     const viewOn = name === 'map' || name === 'list';
