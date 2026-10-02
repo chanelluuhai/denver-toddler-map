@@ -632,7 +632,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .tab:focus-visible, .dock-btn:focus-visible, .brand:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
   .tab:active, .dock-btn:active { opacity: 0.72; transform: scale(0.97); }
   @media (prefers-reduced-motion: reduce) {
-    .tab-indicator, .tab, .dock-btn, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop { transition: none; }
+    .tab-indicator, .tab, .dock-btn, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome { transition: none; }
   }
 
   /* Filter sheet and its backdrop sit above the map and nav. */
@@ -706,6 +706,101 @@ TEMPLATE = r'''<!DOCTYPE html>
     margin: 6px 0 0; font-family: var(--display); font-size: 1.8rem; font-weight: 600; color: var(--ink);
   }
   button.brand { cursor: pointer; color: inherit; text-align: left; font: inherit; }
+
+  /* First-visit welcome */
+  .welcome {
+    position: absolute;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    padding: calc(28px + var(--safe-top)) 28px calc(22px + var(--safe-bottom));
+    background:
+      linear-gradient(180deg,
+        rgba(232, 230, 228, 0.78) 0%,
+        rgba(240, 230, 230, 0.82) 58%,
+        rgba(233, 213, 216, 0.90) 100%);
+    backdrop-filter: blur(22px) saturate(1.15);
+    -webkit-backdrop-filter: blur(22px) saturate(1.15);
+    opacity: 0;
+    transition: opacity .32s ease;
+  }
+  .welcome[hidden] { display: none; }
+  .welcome.open { opacity: 1; }
+  .welcome-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: min(420px, 100%);
+  }
+  .welcome-emoji {
+    font-size: 56px;
+    line-height: 1;
+    margin: 0 0 18px;
+  }
+  .welcome h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1.85rem, 6vw, 2.35rem);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+  .welcome-line {
+    margin: 0;
+    max-width: 28ch;
+    color: var(--ink-2);
+    font-size: 1.02rem;
+    line-height: 1.55;
+  }
+  .welcome-foot {
+    width: min(420px, 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .welcome-credit {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+    letter-spacing: 0.01em;
+  }
+  .welcome-enter, .about-replay {
+    width: 100%;
+    min-height: 52px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: var(--font);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+  }
+  .welcome-enter {
+    color: #fff;
+    background: linear-gradient(135deg, #C98998, #B57A88);
+    box-shadow: 0 10px 24px rgba(142, 90, 104, 0.22);
+  }
+  .welcome-enter:active { transform: scale(0.98); }
+  .welcome-enter:focus-visible, .about-replay:focus-visible {
+    outline: 2px solid var(--accent-dark);
+    outline-offset: 3px;
+  }
+  .about-replay {
+    margin: 4px 0 8px;
+    color: var(--accent-dark);
+    background: rgba(255, 254, 252, 0.72);
+    box-shadow: var(--shadow);
+  }
+  .about-replay:active { transform: scale(0.985); }
+
 
   /* —— Bottom sheet (place detail) —— */
   .sheet-backdrop {
@@ -926,6 +1021,7 @@ __SOURCES_HTML__
       </ul>
       <p>Why-notes paraphrased from those guides. Drive times are rough estimates — confirm in Maps.</p>
     </div>
+    <button type="button" class="about-replay" id="welcome-replay">What is this</button>
   </aside>
 
   <nav class="dock" aria-label="Main">
@@ -957,6 +1053,18 @@ __SOURCES_HTML__
     <div class="sheet-handle" aria-hidden="true"></div>
     <div class="sheet-scroll" id="sheet-body"></div>
   </aside>
+
+  <div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title" hidden>
+    <div class="welcome-main">
+      <div class="welcome-emoji" aria-hidden="true">👶</div>
+      <h1 id="welcome-title">Welcome to Toddler Spots</h1>
+      <p class="welcome-line">A map of toddler outings near home in Arvada — spots and events.</p>
+    </div>
+    <div class="welcome-foot">
+      <p class="welcome-credit">Created with love by Chanel</p>
+      <button type="button" class="welcome-enter" id="welcome-enter">Enter</button>
+    </div>
+  </div>
 </div>
 
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
@@ -992,6 +1100,22 @@ const EVENTS_DOC = __EVENTS_JSON__;
   const openAboutBtn = document.getElementById('open-about');
   let filterOpen = false;
   let aboutOpen = false;
+  const welcome = document.getElementById('welcome');
+  const welcomeEnter = document.getElementById('welcome-enter');
+  const WELCOME_KEY = 'toddler-spots-welcome';
+  function openWelcome(){
+    welcome.hidden = false;
+    requestAnimationFrame(() => welcome.classList.add('open'));
+    welcomeEnter.focus();
+  }
+  function closeWelcome(persist){
+    if (persist) {
+      try { localStorage.setItem(WELCOME_KEY, '1'); } catch (err) {}
+    }
+    welcome.classList.remove('open');
+    setTimeout(() => { if (!welcome.classList.contains('open')) welcome.hidden = true; }, 320);
+  }
+
 
   let filter = 'all';
   let query = '';
@@ -1450,10 +1574,18 @@ const EVENTS_DOC = __EVENTS_JSON__;
   aboutBackdrop.addEventListener('click', closeAbout);
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
-    if (aboutOpen) closeAbout();
+    if (!welcome.hidden) closeWelcome(false);
+    else if (aboutOpen) closeAbout();
     else if (filterOpen) closeFilterSheet();
   });
+  welcomeEnter.addEventListener('click', () => closeWelcome(true));
+  document.getElementById('welcome-replay').addEventListener('click', openWelcome);
   moveTabIndicator(currentTab, true);
+  try {
+    if (localStorage.getItem(WELCOME_KEY) !== '1') openWelcome();
+  } catch (err) {
+    openWelcome();
+  }
 
   function setFilter(f){
     filter = f;
