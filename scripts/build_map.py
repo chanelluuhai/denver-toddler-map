@@ -21,7 +21,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<meta name="theme-color" content="#2A9D8F"/>
+<meta name="theme-color" content="#E7D5D4"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="description" content="Toddler outing map near Arvada/Denver — parks, museums, indoor play, farms from local parent guides."/>
@@ -32,27 +32,29 @@ TEMPLATE = r'''<!DOCTYPE html>
 <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet"/>
 <style>
   :root {
-    --accent: #2A9D8F;
-    --accent-soft: #E6F5F3;
-    --accent-dark: #1F7A6E;
-    --ink: #1A1A1A;
-    --ink-2: #3D3D3D;
-    --muted: #6B7280;
-    --line: #E8E6E1;
-    --bg: #F7F5F2;
-    --card: #FFFFFF;
-    --far: #C45C26;
-    --far-soft: #FBEDE6;
-    --near: #2A9D8F;
-    --near-soft: #E6F5F3;
-    --free: #3B6EA5;
-    --free-soft: #E8F0F8;
-    --indoor: #7A5C9E;
-    --indoor-soft: #F0EAF5;
-    --shadow: 0 4px 24px rgba(26,26,26,0.08);
-    --shadow-lg: 0 12px 40px rgba(26,26,26,0.14);
-    --radius: 18px;
-    --radius-sm: 12px;
+    --accent: #8A6A96;
+    --accent-soft: #F3E9F4;
+    --accent-dark: #6B4F76;
+    --blush: #E7B7C2;
+    --blush-deep: #C98998;
+    --ink: #3C342F;
+    --ink-2: #5C514B;
+    --muted: #8A7E76;
+    --line: rgba(90, 62, 68, 0.10);
+    --bg: #EBE6E1;
+    --card: rgba(255, 251, 248, 0.82);
+    --far: #C4897A;
+    --far-soft: #F8EBE6;
+    --near: #8A6A96;
+    --near-soft: #F3E9F4;
+    --free: #C47A90;
+    --free-soft: #F8E8ED;
+    --indoor: #746894;
+    --indoor-soft: #EEE8F4;
+    --shadow: 0 14px 36px rgba(92, 62, 70, 0.08);
+    --shadow-lg: 0 22px 50px rgba(80, 50, 62, 0.14);
+    --radius: 28px;
+    --radius-sm: 22px;
     --tap: 48px;
     --tab-h: calc(56px + env(safe-area-inset-bottom, 0px));
     --top-h: 56px;
@@ -66,7 +68,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   body {
     font-family: var(--font);
     color: var(--ink);
-    background: var(--bg);
+    background:
+      radial-gradient(120% 42% at 50% 108%, rgba(231, 183, 194, 0.55), transparent 58%),
+      radial-gradient(70% 32% at 100% 0%, rgba(186, 166, 206, 0.28), transparent 55%),
+      var(--bg);
     -webkit-font-smoothing: antialiased;
   }
   button, input { font-family: inherit; }
@@ -99,24 +104,36 @@ TEMPLATE = r'''<!DOCTYPE html>
     flex: 1 1 100%;
     max-width: none;
   }
+  .topbar::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: calc(108px + var(--safe-top));
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(235, 226, 222, 0.72), rgba(235, 226, 222, 0));
+    backdrop-filter: blur(10px) saturate(1.2);
+    -webkit-backdrop-filter: blur(10px) saturate(1.2);
+    -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 30%, transparent 100%);
+  }
   .brand {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(232,230,225,0.9);
+    background: rgba(255, 250, 247, 0.58);
+    backdrop-filter: blur(22px) saturate(1.35);
+    -webkit-backdrop-filter: blur(22px) saturate(1.35);
+    border: none;
     border-radius: 999px;
-    padding: 8px 14px 8px 10px;
-    box-shadow: var(--shadow);
+    padding: 8px 16px 8px 10px;
+    box-shadow: 0 10px 28px rgba(92, 62, 70, 0.10), inset 0 0 0 1px rgba(255,255,255,0.55);
     flex-shrink: 0;
   }
   .brand-mark {
-    width: 28px; height: 28px;
-    border-radius: 9px;
-    background: var(--accent);
-    color: #fff;
+    width: auto; height: auto;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
     display: grid; place-items: center;
     flex-shrink: 0;
   }
@@ -126,8 +143,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   .brand-text {
     font-family: var(--display);
-    font-weight: 600;
-    font-size: 0.95rem;
+    font-weight: 560;
+    font-size: 1.02rem;
     letter-spacing: -0.02em;
     line-height: 1.1;
   }
@@ -150,7 +167,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     z-index: 0;
     width: 100%;
     min-height: 44px;
-    border: 1px solid rgba(232,230,225,0.9);
+    border: none;
     border-radius: 999px;
     padding: 10px 16px 10px 42px;
     /* 16px prevents iOS Safari from auto-zooming on focus. */
@@ -158,17 +175,16 @@ TEMPLATE = r'''<!DOCTYPE html>
     line-height: 1.25;
     -webkit-appearance: none;
     appearance: none;
-    background: rgba(255,255,255,0.94);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: var(--shadow);
+    background: rgba(255, 250, 247, 0.62);
+    backdrop-filter: blur(22px) saturate(1.35);
+    -webkit-backdrop-filter: blur(22px) saturate(1.35);
+    box-shadow: 0 10px 28px rgba(92, 62, 70, 0.10), inset 0 0 0 1px rgba(255,255,255,0.55);
     outline: none;
     color: var(--ink);
   }
-  .search-pill input::placeholder { color: #9CA3AF; }
+  .search-pill input::placeholder { color: #A89890; }
   .search-pill input:focus {
-    border-color: var(--accent);
-    box-shadow: var(--shadow), 0 0 0 3px rgba(42,157,143,0.18);
+    box-shadow: 0 10px 28px rgba(92, 62, 70, 0.12), 0 0 0 3px rgba(138, 106, 150, 0.22);
   }
   .search-pill .ico {
     position: absolute; left: 14px; top: 50%; z-index: 1;
@@ -205,7 +221,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   .pin.near { background: var(--near); }
   .pin.far { background: var(--far); }
-  .pin.active { transform: scale(1.35); box-shadow: 0 0 0 4px rgba(42,157,143,0.28), 0 2px 10px rgba(0,0,0,0.3); }
+  .pin.active { transform: scale(1.35); box-shadow: 0 0 0 4px rgba(138,106,150,0.32), 0 2px 10px rgba(60,40,50,0.28); }
   .home-pin {
     background: var(--free);
     color: #fff;
@@ -224,7 +240,9 @@ TEMPLATE = r'''<!DOCTYPE html>
     position: absolute;
     inset: 0;
     z-index: 10;
-    background: var(--bg);
+    background:
+      radial-gradient(100% 36% at 50% 100%, rgba(231, 183, 194, 0.42), transparent 62%),
+      var(--bg);
     display: none;
     flex-direction: column;
     padding-top: var(--safe-top);
@@ -233,13 +251,23 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   .panel.active { display: flex; }
   .panel-header {
-    padding: 18px 20px 12px;
+    position: relative;
+    padding: 22px 22px 16px;
     flex-shrink: 0;
+  }
+  .panel-header::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -22px;
+    height: 22px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(235, 230, 225, 0.95), transparent);
   }
   .panel-header h1 {
     font-family: var(--display);
-    font-size: 1.55rem;
-    font-weight: 600;
+    font-size: 1.85rem;
+    font-weight: 560;
+    font-optical-sizing: auto;
     margin: 0;
     letter-spacing: -0.03em;
     line-height: 1.15;
@@ -260,20 +288,21 @@ TEMPLATE = r'''<!DOCTYPE html>
   /* List cards */
   .place-card {
     background: var(--card);
-    border: 1px solid var(--line);
+    border: none;
     border-radius: var(--radius);
-    padding: 16px 16px 14px;
-    margin-bottom: 12px;
+    padding: 18px 18px 16px;
+    margin-bottom: 14px;
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(26,26,26,0.04);
-    transition: transform .12s, box-shadow .15s, border-color .15s;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: transform .12s, box-shadow .15s;
   }
   .place-card:active { transform: scale(0.985); }
   .place-card:hover, .place-card.active {
-    border-color: #B8DED9;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-lg);
   }
-  .place-card.active { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .place-card.active { outline: 2px solid rgba(138,106,150,0.45); outline-offset: 2px; }
   .card-top {
     display: flex;
     flex-wrap: wrap;
@@ -297,8 +326,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   .place-card h3 {
     margin: 0 0 8px;
     font-family: var(--display);
-    font-size: 1.12rem;
-    font-weight: 600;
+    font-size: 1.22rem;
+    font-weight: 560;
     letter-spacing: -0.02em;
     line-height: 1.25;
   }
@@ -337,14 +366,15 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   .event-day-heading span { color: var(--muted); font-family: var(--font); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
   .event-card {
-    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-sm);
-    padding: 14px 15px; margin-bottom: 9px; box-shadow: 0 1px 3px rgba(26,26,26,.04);
+    background: var(--card); border: none; border-radius: var(--radius);
+    padding: 16px 18px; margin-bottom: 12px; box-shadow: var(--shadow);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
   }
   .event-card.linked { cursor: pointer; transition: transform .12s, box-shadow .15s, border-color .15s; }
-  .event-card.linked:hover, .event-card.linked:focus { border-color: #B8DED9; box-shadow: var(--shadow); outline: none; }
+  .event-card.linked:hover, .event-card.linked:focus { box-shadow: var(--shadow-lg); outline: none; }
   .event-card.linked:active { transform: scale(.985); }
   .event-date-label { color: var(--accent-dark); font-size: .72rem; font-weight: 700; margin-bottom: 4px; }
-  .event-card h3 { margin: 0 0 6px; font-family: var(--display); font-size: 1.06rem; line-height: 1.25; font-weight: 600; }
+  .event-card h3 { margin: 0 0 6px; font-family: var(--display); font-size: 1.16rem; line-height: 1.25; font-weight: 560; }
   .event-meta { display: flex; flex-wrap: wrap; gap: 5px 12px; color: var(--muted); font-size: .78rem; margin-bottom: 7px; }
   .event-note { margin: 0 0 8px; color: var(--ink-2); font-size: .84rem; line-height: 1.4; }
   .event-place { color: var(--muted); font-size: .78rem; }
@@ -363,8 +393,9 @@ TEMPLATE = r'''<!DOCTYPE html>
     width: 100%;
     text-align: left;
     background: var(--card);
-    border: 1.5px solid var(--line);
+    border: none;
     border-radius: var(--radius);
+    box-shadow: var(--shadow);
     padding: 16px 18px;
     min-height: var(--tap);
     cursor: pointer;
@@ -372,8 +403,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   .filter-chip:active { transform: scale(0.98); }
   .filter-chip.active {
-    border-color: var(--accent);
     background: var(--accent-soft);
+    box-shadow: 0 0 0 1.5px var(--accent), var(--shadow);
   }
   .filter-chip .dot {
     width: 12px; height: 12px;
@@ -417,9 +448,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     display: none;
     align-items: center;
     gap: 8px;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--line);
+    background: rgba(255, 250, 247, 0.72);
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    border: none;
     border-radius: 999px;
     padding: 8px 8px 8px 16px;
     box-shadow: var(--shadow);
@@ -443,10 +475,13 @@ TEMPLATE = r'''<!DOCTYPE html>
   /* About */
   .about-card {
     background: var(--card);
-    border: 1px solid var(--line);
+    border: none;
     border-radius: var(--radius);
-    padding: 20px;
+    padding: 22px;
     margin-bottom: 14px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
   .about-card h2 {
     font-family: var(--display);
@@ -480,13 +515,26 @@ TEMPLATE = r'''<!DOCTYPE html>
     z-index: 30;
     height: var(--tab-h);
     padding-bottom: var(--safe-bottom);
-    background: rgba(255,255,255,0.94);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid var(--line);
+    background: linear-gradient(to top, rgba(246, 232, 234, 0.88) 42%, rgba(246, 236, 236, 0.55) 100%);
+    backdrop-filter: blur(28px) saturate(1.45);
+    -webkit-backdrop-filter: blur(28px) saturate(1.45);
+    border-top: none;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    box-shadow: 0 -4px 24px rgba(26,26,26,0.06);
+    box-shadow: none;
+  }
+  .tabbar::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 100%;
+    height: 42px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(235, 226, 222, 0), rgba(244, 228, 230, 0.72));
+    backdrop-filter: blur(14px) saturate(1.3);
+    -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000);
+    mask-image: linear-gradient(to bottom, transparent, #000);
   }
   .tab {
     display: flex;
@@ -513,7 +561,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     position: absolute;
     inset: 0;
     z-index: 40;
-    background: rgba(26,26,26,0.35);
+    background: rgba(70, 48, 56, 0.28);
     opacity: 0;
     pointer-events: none;
     transition: opacity .25s;
@@ -524,8 +572,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     left: 0; right: 0; bottom: 0;
     z-index: 50;
     max-height: min(78dvh, 640px);
-    background: var(--card);
-    border-radius: 22px 22px 0 0;
+    background: rgba(255, 250, 247, 0.92);
+    backdrop-filter: blur(24px) saturate(1.3);
+    -webkit-backdrop-filter: blur(24px) saturate(1.3);
+    border-radius: 32px 32px 0 0;
     box-shadow: var(--shadow-lg);
     transform: translateY(110%);
     transition: transform .32s cubic-bezier(.32,.72,0,1);
@@ -536,7 +586,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .sheet.open { transform: translateY(0); }
   .sheet-handle {
     width: 40px; height: 4px;
-    background: #D1D5DB;
+    background: rgba(138, 106, 150, 0.35);
     border-radius: 999px;
     margin: 10px auto 6px;
     flex-shrink: 0;
@@ -549,8 +599,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   .sheet-scroll h2 {
     font-family: var(--display);
-    font-size: 1.4rem;
-    font-weight: 600;
+    font-size: 1.65rem;
+    font-weight: 560;
     letter-spacing: -0.03em;
     margin: 4px 0 10px;
     line-height: 1.2;
@@ -618,7 +668,10 @@ TEMPLATE = r'''<!DOCTYPE html>
       padding: 6px;
       padding-bottom: 6px;
       border-radius: 999px;
-      border: 1px solid var(--line);
+      border: none;
+      background: rgba(255, 250, 247, 0.72);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
       grid-template-columns: repeat(5, auto);
       gap: 2px;
       box-shadow: var(--shadow-lg);
@@ -631,14 +684,15 @@ TEMPLATE = r'''<!DOCTYPE html>
       border-radius: 999px;
       font-size: 0.82rem;
     }
+    .tabbar::before { display: none; }
     .tab.active { background: var(--accent-soft); }
     .panel {
       left: 0;
       width: min(420px, 40vw);
       right: auto;
       padding-bottom: 0;
-      border-right: 1px solid var(--line);
-      box-shadow: var(--shadow);
+      border-right: none;
+      box-shadow: 18px 0 40px rgba(92, 62, 70, 0.06);
     }
     #map { left: 0; }
     .map-shifted #map { left: min(420px, 40vw); }
@@ -648,7 +702,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       width: min(440px, 92vw);
       transform: translate(-50%, 110%);
       bottom: 96px;
-      border-radius: 22px;
+      border-radius: 32px;
       max-height: min(70vh, 560px);
       padding-bottom: 0;
     }
@@ -751,9 +805,9 @@ TEMPLATE = r'''<!DOCTYPE html>
       </div>
       <div class="about-card">
         <h2>Map legend</h2>
-        <div class="legend-row"><i style="background:#2A9D8F"></i> Within ~30 min</div>
-        <div class="legend-row"><i style="background:#C45C26"></i> Farther</div>
-        <div class="legend-row"><i style="background:#3B6EA5"></i> Home (80004)</div>
+        <div class="legend-row"><i style="background:#8A6A96"></i> Within ~30 min</div>
+        <div class="legend-row"><i style="background:#C4897A"></i> Farther</div>
+        <div class="legend-row"><i style="background:#C47A90"></i> Home (80004)</div>
       </div>
       <div class="about-card">
         <h2>Sources</h2>

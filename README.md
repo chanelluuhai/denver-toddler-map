@@ -10,7 +10,7 @@ Self-contained MapLibre map of toddler-friendly spots near **W 64th Ave & Ward R
 
 **https://chanelluuhai.github.io/denver-toddler-map/**
 
-Mobile-app shell with bottom tabs (**Map · List · Filters · About**), bottom-sheet place details, search, and filters (near / farther / free / indoor). Soft light basemap via **MapLibre GL + OpenFreeMap Positron** (no Mapbox token). Teal pins ≈ within 30 min of 80004; terracotta = farther.
+Mobile-app shell with bottom tabs (**Map · List · Filters · About**), bottom-sheet place details, search, and filters (near / farther / free / indoor). Soft light basemap via **MapLibre GL + OpenFreeMap Positron** (no Mapbox token). Dusty-purple pins ≈ within 30 min of 80004; warm clay = farther.
 
 ## Open locally
 
