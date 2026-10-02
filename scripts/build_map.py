@@ -667,7 +667,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .tab:focus-visible, .dock-btn:focus-visible, .brand:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
   .tab:active, .dock-btn:active { opacity: 0.72; transform: scale(0.97); }
   @media (prefers-reduced-motion: reduce) {
-    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome h1, .welcome-line, .welcome-sources, .welcome-credit, .welcome-enter { transition: none !important; animation: none !important; }
+    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome h1, .welcome-line, .welcome-credit, .welcome-enter { transition: none !important; animation: none !important; }
   }
 
   /* Filter sheet and its backdrop sit above the map and nav. */
@@ -722,39 +722,52 @@ TEMPLATE = r'''<!DOCTYPE html>
     top: 0; right: 0; bottom: 0;
     width: min(440px, 100%);
     z-index: 70;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     transform: translateX(104%);
     transition: transform .42s cubic-bezier(.22, 1, .36, 1);
     background: linear-gradient(180deg, #E8E6E4 0%, #EBE7E5 42%, #F0E6E6 74%, #E9D5D8 100%);
     box-shadow: -18px 0 48px rgba(60, 40, 42, 0.14);
-    padding: calc(14px + var(--safe-top)) 18px calc(24px + var(--safe-bottom));
+    padding: 0;
     border-radius: 0;
   }
   .about-drawer.open { transform: translateX(0); }
+  .drawer-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 18px calc(24px + var(--safe-bottom));
+  }
   .drawer-top {
     display: flex; align-items: flex-start; justify-content: space-between;
-    gap: 12px; margin-bottom: 12px; position: sticky; top: 0; z-index: 2;
-    padding-bottom: 8px;
+    gap: 12px;
+    position: sticky; top: 0; z-index: 2;
+    margin: 0 -18px 12px;
+    padding: calc(14px + var(--safe-top)) 18px 20px;
+    /* Solid cap so scrolled cards cannot show through or above the top edge. */
+    background: #E8E6E4;
     isolation: isolate;
   }
-  /* Match the other tabs: content scrolls beneath a frosted, fading header. */
+  /* Frosted fade only below the solid cap. The scrollport clips anything above it. */
   .drawer-top::before {
     content: "";
     position: absolute;
-    left: -18px; right: -18px; top: 0;
-    height: calc(100% + 18px);
+    left: 0; right: 0; top: 0;
+    height: calc(100% + 32px);
     pointer-events: none;
     z-index: 0;
     background: linear-gradient(to bottom,
-      rgba(232, 230, 228, 0.55) 0%,
-      rgba(235, 231, 229, 0.28) 46%,
-      rgba(235, 231, 229, 0.08) 72%,
+      #E8E6E4 0%,
+      #E8E6E4 68%,
+      rgba(235, 231, 229, 0.82) 84%,
       transparent 100%);
     backdrop-filter: blur(18px) saturate(1.25);
     -webkit-backdrop-filter: blur(18px) saturate(1.25);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 48%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 48%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
   }
   .drawer-top h1, .drawer-top .icon-x {
     position: relative;
@@ -777,7 +790,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     text-align: center;
     padding: calc(28px + var(--safe-top)) 28px calc(28px + var(--safe-bottom));
     background:
@@ -807,7 +820,6 @@ TEMPLATE = r'''<!DOCTYPE html>
   .welcome-emoji,
   .welcome h1,
   .welcome-line,
-  .welcome-sources,
   .welcome-credit,
   .welcome-enter {
     opacity: 0;
@@ -817,11 +829,14 @@ TEMPLATE = r'''<!DOCTYPE html>
   .welcome.open .welcome-emoji { opacity: 1; transform: none; transition-delay: 90ms; }
   .welcome.open h1 { opacity: 1; transform: none; transition-delay: 220ms; }
   .welcome.open .welcome-line { opacity: 1; transform: none; transition-delay: 350ms; }
-  .welcome.open .welcome-sources { opacity: 1; transform: none; transition-delay: 480ms; }
+  .welcome.open .welcome-enter { opacity: 1; transform: none; transition-delay: 480ms; }
   .welcome.open .welcome-credit { opacity: 1; transform: none; transition-delay: 620ms; }
-  .welcome.open .welcome-enter { opacity: 1; transform: none; transition-delay: 760ms; }
   .welcome-emoji {
-    font-size: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 44px;
     line-height: 1;
     margin: 0 0 18px;
   }
@@ -835,32 +850,19 @@ TEMPLATE = r'''<!DOCTYPE html>
     color: var(--ink);
   }
   .welcome-line {
-    margin: 0 0 12px;
-    max-width: 28ch;
+    margin: 0 0 22px;
+    max-width: 32ch;
     color: var(--ink-2);
     font-size: 1.02rem;
     line-height: 1.55;
   }
-  .welcome-sources {
-    margin: 0;
-    max-width: 30ch;
-    color: var(--muted);
-    font-size: 0.92rem;
-    line-height: 1.5;
-  }
-  .welcome-foot {
-    width: min(420px, 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    margin-top: auto;
-    padding-bottom: 4px;
-  }
   .welcome-credit {
-    margin: 0;
+    margin-top: auto;
+    margin-bottom: 0;
     color: var(--muted);
-    font-size: 0.88rem;
+    font-size: 0.75rem;
+    font-style: italic;
+    font-weight: 400;
     letter-spacing: 0.01em;
   }
   .welcome-enter, .about-replay {
@@ -879,6 +881,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     color: #fff;
     background: linear-gradient(135deg, #C98998, #B57A88);
     box-shadow: 0 10px 24px rgba(142, 90, 104, 0.22);
+    margin: 0;
   }
   .welcome-enter:active { transform: scale(0.98); }
   .welcome-enter:focus-visible {
@@ -999,6 +1002,26 @@ TEMPLATE = r'''<!DOCTYPE html>
     margin-left: auto;
   }
 
+  /* Desktop: center a comfortable column. Phone layout under 768px is unchanged. */
+  @media (min-width: 768px) and (min-height: 700px) {
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(1100px 560px at 50% -12%, rgba(255, 254, 252, 0.55), transparent 64%),
+        linear-gradient(165deg, #E3DFDD 0%, #EFE6E6 46%, #E6CFD4 100%);
+    }
+    #app {
+      width: min(860px, calc(100vw - 48px));
+      height: min(1080px, calc(100dvh - 48px));
+      border-radius: 32px;
+      box-shadow:
+        0 28px 72px rgba(60, 40, 42, 0.16),
+        0 0 0 1px rgba(255, 255, 255, 0.6);
+    }
+  }
+
   @media (min-width: 900px) {
     .topbar { padding-left: 24px; padding-right: 24px; }
     .search-pill { flex: 1; max-width: 420px; height: auto; }
@@ -1095,6 +1118,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   <div class="drawer-backdrop" id="about-backdrop" hidden></div>
   <aside class="about-drawer" id="about-drawer" role="dialog" aria-modal="true" aria-labelledby="about-title" hidden>
+    <div class="drawer-scroll">
     <div class="drawer-top">
       <h1 id="about-title">About</h1>
       <button type="button" class="icon-x" id="about-close" aria-label="Close">&times;</button>
@@ -1118,6 +1142,7 @@ __SOURCES_HTML__
       <p>Why-notes paraphrased from those guides. Drive times are rough estimates — confirm in Maps.</p>
     </div>
     <button type="button" class="about-replay" id="welcome-replay">What is this</button>
+    </div>
   </aside>
 
   <nav class="dock" aria-label="Main">
@@ -1152,15 +1177,12 @@ __SOURCES_HTML__
 
   <div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title" hidden>
     <div class="welcome-main">
-      <div class="welcome-emoji" aria-hidden="true">👶</div>
+      <div class="welcome-emoji" aria-hidden="true"><span>👶</span><span>🛝</span><span>☀️</span></div>
       <h1 id="welcome-title">Welcome to Toddler Spots</h1>
-      <p class="welcome-line">A map of toddler outings near home in Arvada — spots and events.</p>
-      <p class="welcome-sources">Spots and events come from local parent guides, refreshed a few times a week.</p>
-    </div>
-    <div class="welcome-foot">
-      <p class="welcome-credit">Created with love by Chanel</p>
+      <p class="welcome-line">Locations and events for toddlers, sourced from local guides.</p>
       <button type="button" class="welcome-enter" id="welcome-enter">Enter</button>
     </div>
+    <p class="welcome-credit">Created by Chanel and her bot</p>
   </div>
 </div>
 
