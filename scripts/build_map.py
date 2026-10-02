@@ -124,12 +124,13 @@ TEMPLATE = r'''<!DOCTYPE html>
     display: flex;
     align-items: center;
     gap: 8px;
+    height: 48px;
     background: rgba(255, 254, 252, 0.78);
     backdrop-filter: blur(24px) saturate(1.2);
     -webkit-backdrop-filter: blur(24px) saturate(1.2);
     border: none;
     border-radius: 999px;
-    padding: 8px 16px 8px 10px;
+    padding: 0 18px 0 12px;
     box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
     flex-shrink: 0;
   }
@@ -148,27 +149,28 @@ TEMPLATE = r'''<!DOCTYPE html>
   .brand-text {
     font-family: var(--display);
     font-weight: 600;
-    font-size: 1.02rem;
+    font-size: 1.08rem;
     letter-spacing: -0.015em;
-    line-height: 1.15;
+    line-height: 1;
   }
 
   .search-pill {
     flex: 0 0 48px;
+    margin-left: auto;
     min-width: 0;
     position: relative;
     max-width: none;
-    height: 44px;
+    height: 48px;
   }
   .search-pill input {
     display: none;
     position: relative;
     z-index: 0;
     width: 100%;
-    min-height: 44px;
+    min-height: 48px;
     border: none;
     border-radius: 999px;
-    padding: 10px 16px 10px 42px;
+    padding: 12px 16px 12px 42px;
     /* 16px prevents iOS Safari from auto-zooming on focus. */
     font-size: 16px;
     line-height: 1.25;
@@ -197,7 +199,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     display: grid;
     place-items: center;
     width: 48px;
-    height: 44px;
+    height: 48px;
     border: none;
     border-radius: 999px;
     color: var(--muted);
@@ -611,17 +613,50 @@ TEMPLATE = r'''<!DOCTYPE html>
     place-items: center;
     width: 68px;
     height: 68px;
+    max-width: 68px;
     padding: 6px;
     border-radius: 999px;
+    overflow: hidden;
+    transform-origin: center;
+    transition:
+      opacity 340ms cubic-bezier(.22, 1, .36, 1),
+      transform 340ms cubic-bezier(.22, 1, .36, 1),
+      max-width 340ms cubic-bezier(.22, 1, .36, 1),
+      width 340ms cubic-bezier(.22, 1, .36, 1),
+      padding 340ms cubic-bezier(.22, 1, .36, 1),
+      margin 340ms cubic-bezier(.22, 1, .36, 1),
+      border-color 240ms ease,
+      box-shadow 240ms ease;
+  }
+  .filter-shell.is-away {
+    opacity: 0;
+    transform: scale(0.82);
+    max-width: 0;
+    width: 0;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: -10px;
+    border-color: transparent;
+    box-shadow: none;
+    pointer-events: none;
   }
   .filter-shell .dock-btn, .events-shell .dock-btn {
-    width: 56px;
-    height: 56px;
-    min-width: 56px;
-    padding: 8px;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    padding: 0;
+    gap: 0;
+    line-height: 0;
     border-radius: 999px;
   }
-  .tab svg, .dock-btn svg { width: 30px; height: 30px; stroke-width: 1.75; }
+  .tab svg, .dock-btn svg { width: 30px; height: 30px; stroke-width: 1.75; display: block; }
+  .filter-shell .dock-btn svg, .events-shell .dock-btn svg {
+    width: 28px;
+    height: 28px;
+    margin: 0;
+  }
   .tab.active { color: var(--accent-dark); }
   .dock-btn.on {
     color: var(--accent-dark);
@@ -632,7 +667,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .tab:focus-visible, .dock-btn:focus-visible, .brand:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
   .tab:active, .dock-btn:active { opacity: 0.72; transform: scale(0.97); }
   @media (prefers-reduced-motion: reduce) {
-    .tab-indicator, .tab, .dock-btn, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome { transition: none; }
+    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome h1, .welcome-line, .welcome-sources, .welcome-credit, .welcome-enter { transition: none !important; animation: none !important; }
   }
 
   /* Filter sheet and its backdrop sit above the map and nav. */
@@ -708,6 +743,11 @@ TEMPLATE = r'''<!DOCTYPE html>
   button.brand { cursor: pointer; color: inherit; text-align: left; font: inherit; }
 
   /* First-visit welcome */
+  @keyframes welcomeGradient {
+    0% { background-position: 0% 40%; }
+    50% { background-position: 100% 60%; }
+    100% { background-position: 0% 40%; }
+  }
   .welcome {
     position: absolute;
     inset: 0;
@@ -717,18 +757,21 @@ TEMPLATE = r'''<!DOCTYPE html>
     align-items: center;
     justify-content: space-between;
     text-align: center;
-    padding: calc(28px + var(--safe-top)) 28px calc(22px + var(--safe-bottom));
+    padding: calc(28px + var(--safe-top)) 28px calc(28px + var(--safe-bottom));
     background:
-      linear-gradient(180deg,
-        rgba(232, 230, 228, 0.78) 0%,
-        rgba(240, 230, 230, 0.82) 58%,
-        rgba(233, 213, 216, 0.90) 100%);
+      linear-gradient(135deg,
+        rgba(232, 230, 228, 0.88) 0%,
+        rgba(246, 235, 238, 0.90) 38%,
+        rgba(233, 213, 216, 0.92) 68%,
+        rgba(230, 238, 242, 0.88) 100%);
+    background-size: 180% 180%;
+    animation: welcomeGradient 14s ease-in-out infinite;
     backdrop-filter: blur(22px) saturate(1.15);
     -webkit-backdrop-filter: blur(22px) saturate(1.15);
     opacity: 0;
-    transition: opacity .32s ease;
+    transition: opacity .36s ease;
   }
-  .welcome[hidden] { display: none; }
+  .welcome[hidden] { display: none; animation: none; }
   .welcome.open { opacity: 1; }
   .welcome-main {
     flex: 1;
@@ -738,6 +781,22 @@ TEMPLATE = r'''<!DOCTYPE html>
     justify-content: center;
     width: min(420px, 100%);
   }
+  .welcome-emoji,
+  .welcome h1,
+  .welcome-line,
+  .welcome-sources,
+  .welcome-credit,
+  .welcome-enter {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 560ms cubic-bezier(.22, 1, .36, 1), transform 560ms cubic-bezier(.22, 1, .36, 1);
+  }
+  .welcome.open .welcome-emoji { opacity: 1; transform: none; transition-delay: 90ms; }
+  .welcome.open h1 { opacity: 1; transform: none; transition-delay: 220ms; }
+  .welcome.open .welcome-line { opacity: 1; transform: none; transition-delay: 350ms; }
+  .welcome.open .welcome-sources { opacity: 1; transform: none; transition-delay: 480ms; }
+  .welcome.open .welcome-credit { opacity: 1; transform: none; transition-delay: 620ms; }
+  .welcome.open .welcome-enter { opacity: 1; transform: none; transition-delay: 760ms; }
   .welcome-emoji {
     font-size: 56px;
     line-height: 1;
@@ -753,11 +812,18 @@ TEMPLATE = r'''<!DOCTYPE html>
     color: var(--ink);
   }
   .welcome-line {
-    margin: 0;
+    margin: 0 0 12px;
     max-width: 28ch;
     color: var(--ink-2);
     font-size: 1.02rem;
     line-height: 1.55;
+  }
+  .welcome-sources {
+    margin: 0;
+    max-width: 30ch;
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.5;
   }
   .welcome-foot {
     width: min(420px, 100%);
@@ -765,6 +831,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     flex-direction: column;
     align-items: center;
     gap: 14px;
+    margin-top: auto;
+    padding-bottom: 4px;
   }
   .welcome-credit {
     margin: 0;
@@ -776,6 +844,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     width: 100%;
     min-height: 52px;
     border: none;
+    outline: none;
     border-radius: 999px;
     cursor: pointer;
     font-family: var(--font);
@@ -789,7 +858,11 @@ TEMPLATE = r'''<!DOCTYPE html>
     box-shadow: 0 10px 24px rgba(142, 90, 104, 0.22);
   }
   .welcome-enter:active { transform: scale(0.98); }
-  .welcome-enter:focus-visible, .about-replay:focus-visible {
+  .welcome-enter:focus-visible {
+    outline: none;
+    box-shadow: 0 10px 24px rgba(142, 90, 104, 0.22), 0 0 0 3px rgba(181, 122, 136, 0.35);
+  }
+  .about-replay:focus-visible {
     outline: 2px solid var(--accent-dark);
     outline-offset: 3px;
   }
@@ -1037,13 +1110,13 @@ __SOURCES_HTML__
       </div>
       <div class="filter-shell glass" id="filter-shell">
         <button type="button" class="dock-btn" id="filter-btn" aria-label="Filter" aria-pressed="false" aria-expanded="false" aria-controls="filter-sheet">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 7h14M8 12h8M10.5 17h3" stroke-linecap="round"/></svg>
         </button>
       </div>
     </div>
     <div class="events-shell glass">
       <button type="button" class="dock-btn" id="events-btn" aria-label="Events" aria-pressed="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7 3v4M17 3v4M3.5 10h17M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M8 3.5v3.5M16 3.5v3.5M4 10h16M8.5 14h.01M12 14h.01M15.5 14h.01M8.5 17.5h.01M12 17.5h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </div>
   </nav>
@@ -1059,6 +1132,7 @@ __SOURCES_HTML__
       <div class="welcome-emoji" aria-hidden="true">👶</div>
       <h1 id="welcome-title">Welcome to Toddler Spots</h1>
       <p class="welcome-line">A map of toddler outings near home in Arvada — spots and events.</p>
+      <p class="welcome-sources">Spots and events come from local parent guides, refreshed a few times a week.</p>
     </div>
     <div class="welcome-foot">
       <p class="welcome-credit">Created with love by Chanel</p>
@@ -1105,8 +1179,11 @@ const EVENTS_DOC = __EVENTS_JSON__;
   const WELCOME_KEY = 'toddler-spots-welcome';
   function openWelcome(){
     welcome.hidden = false;
-    requestAnimationFrame(() => welcome.classList.add('open'));
-    welcomeEnter.focus();
+    welcome.classList.remove('open');
+    requestAnimationFrame(() => {
+      welcome.classList.add('open');
+      setTimeout(() => { if (welcome.classList.contains('open')) welcomeEnter.focus({ preventScroll: true }); }, 820);
+    });
   }
   function closeWelcome(persist){
     if (persist) {
@@ -1543,7 +1620,9 @@ const EVENTS_DOC = __EVENTS_JSON__;
     const mapActive = name === 'map';
     const eventsActive = name === 'events';
     if (eventsActive && filterOpen) closeFilterSheet();
-    filterShell.hidden = eventsActive;
+    filterShell.classList.toggle('is-away', eventsActive);
+    filterShell.setAttribute('aria-hidden', eventsActive ? 'true' : 'false');
+    filterBtn.tabIndex = eventsActive ? -1 : 0;
     topbar.hidden = !mapActive;
     topbar.setAttribute('aria-hidden', mapActive ? 'false' : 'true');
     const viewOn = name === 'map' || name === 'list';
@@ -1566,7 +1645,10 @@ const EVENTS_DOC = __EVENTS_JSON__;
     btn.addEventListener('click', () => setTab(btn.dataset.tab));
   });
   eventsBtn.addEventListener('click', () => setTab('events'));
-  filterBtn.addEventListener('click', () => { filterOpen ? closeFilterSheet() : openFilterSheet(); });
+  filterBtn.addEventListener('click', () => {
+    if (currentTab === 'events' || filterShell.classList.contains('is-away')) return;
+    filterOpen ? closeFilterSheet() : openFilterSheet();
+  });
   document.getElementById('filter-close').addEventListener('click', closeFilterSheet);
   filterBackdrop.addEventListener('click', closeFilterSheet);
   openAboutBtn.addEventListener('click', openAbout);
