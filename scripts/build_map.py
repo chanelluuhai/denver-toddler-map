@@ -93,6 +93,12 @@ TEMPLATE = r'''<!DOCTYPE html>
   .topbar > * { pointer-events: auto; }
   /* The map-only chrome must not reserve or cover space in other views. */
   .topbar[hidden] { display: none; }
+  .topbar.search-focused { gap: 0; }
+  .topbar.search-focused .brand { display: none; }
+  .topbar.search-focused .search-pill {
+    flex: 1 1 100%;
+    max-width: none;
+  }
   .brand {
     display: flex;
     align-items: center;
@@ -112,9 +118,15 @@ TEMPLATE = r'''<!DOCTYPE html>
     background: var(--accent);
     color: #fff;
     display: grid; place-items: center;
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+  .brand-mark svg {
+    width: 21px; height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
   .brand-text {
     font-family: var(--display);
@@ -167,17 +179,6 @@ TEMPLATE = r'''<!DOCTYPE html>
     display: block; transform: translateY(-50%);
     color: var(--muted); pointer-events: none; width: 18px; height: 18px;
     stroke: currentColor; stroke-width: 2; overflow: visible;
-  }
-  .count-chip {
-    flex-shrink: 0;
-    background: var(--accent);
-    color: #fff;
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 8px 12px;
-    border-radius: 999px;
-    box-shadow: var(--shadow);
-    white-space: nowrap;
   }
 
   /* —— Map (full-bleed) —— */
@@ -673,14 +674,15 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   <header class="topbar">
     <div class="brand" aria-hidden="true">
-      <span class="brand-mark">T</span>
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.2 9.8a3.8 3.8 0 1 1 7.6 0v3.1a3.8 3.8 0 0 1-7.6 0z"/><path d="M9.3 7.2c.1-2 1.1-3.2 2.7-3.2s2.6 1.2 2.7 3.2M10.2 11.2h.01M13.8 11.2h.01M10.3 14.1c1 .8 2.4.8 3.4 0"/></svg>
+      </span>
       <span class="brand-text">Toddler Spots<span class="brand-sub">Denver · Arvada</span></span>
     </div>
     <div class="search-pill">
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
       <input type="search" id="search" placeholder="Search parks, museums…" autocomplete="off" enterkeyhint="search" aria-label="Search places"/>
     </div>
-    <span class="count-chip" id="count-chip">__COUNT__</span>
   </header>
 
   <div class="active-filter-bar" id="filter-bar" aria-live="polite">
@@ -814,7 +816,6 @@ const EVENTS_DOC = __EVENTS_JSON__;
   const eventsEl = document.getElementById('events');
   const eventsSub = document.getElementById('events-sub');
   const searchEl = document.getElementById('search');
-  const countChip = document.getElementById('count-chip');
   const filterBar = document.getElementById('filter-bar');
   const filterBarLabel = document.getElementById('filter-bar-label');
   const sheet = document.getElementById('sheet');
@@ -990,7 +991,6 @@ const EVENTS_DOC = __EVENTS_JSON__;
   function renderList(){
     const sorted = places.slice().sort((a,b)=> (a.approx_drive_minutes||999)-(b.approx_drive_minutes||999));
     const filtered = sorted.filter(p => passesFilter(p) && matchesQuery(p, query));
-    countChip.textContent = filtered.length + (filtered.length === places.length ? '' : ' / ' + places.length);
     listSub.textContent = filtered.length + ' spot' + (filtered.length===1?'':'s') + ' · sorted by drive from ' + (base ? base.label : 'home');
 
     if (!filtered.length) {
@@ -1133,8 +1133,15 @@ const EVENTS_DOC = __EVENTS_JSON__;
   document.getElementById('clear-filter').addEventListener('click', () => setFilter('all'));
 
   let searchTimer;
+  searchEl.addEventListener('focus', () => {
+    topbar.classList.add('search-focused');
+  });
+  searchEl.addEventListener('blur', () => {
+    if (!searchEl.value.trim()) topbar.classList.remove('search-focused');
+  });
   searchEl.addEventListener('input', () => {
     clearTimeout(searchTimer);
+    if (!searchEl.value.trim()) topbar.classList.remove('search-focused');
     searchTimer = setTimeout(() => {
       query = searchEl.value.trim().toLowerCase();
       renderList();
