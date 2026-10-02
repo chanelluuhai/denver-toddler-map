@@ -549,7 +549,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 48%, #000 100%);
     mask-image: linear-gradient(to bottom, transparent 0%, #000 48%, #000 100%);
   }
-  .dock-left, .dock-btn, .seg { pointer-events: auto; }
+  .dock-left, .dock-btn, .seg, .events-shell { pointer-events: auto; }
   .dock-left {
     display: flex;
     align-items: flex-end;
@@ -621,6 +621,20 @@ TEMPLATE = r'''<!DOCTYPE html>
     border-radius: 24px;
     font-size: 0;
   }
+  /* Events uses the same button-within-glass treatment as Map/List. */
+  .events-shell {
+    display: flex;
+    align-items: stretch;
+    height: 68px;
+    padding: 6px;
+    border-radius: 999px;
+  }
+  .events-shell .dock-btn {
+    height: 56px;
+    min-width: 56px;
+    padding: 8px 14px;
+    border-radius: 999px;
+  }
   .tab svg, .dock-btn svg { width: 30px; height: 30px; stroke-width: 1.75; }
   .tab.active { color: var(--accent-dark); }
   .dock-btn.on {
@@ -635,7 +649,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     .tab-indicator, .tab, .dock-btn, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop { transition: none; }
   }
 
-  /* Filter sheet sits above the map, under the nav so Filter stays tappable. */
+  /* Filter sheet and its backdrop sit above the map and nav. */
   .filter-backdrop, .drawer-backdrop {
     position: absolute;
     inset: 0;
@@ -644,21 +658,21 @@ TEMPLATE = r'''<!DOCTYPE html>
     pointer-events: none;
     transition: opacity .25s;
   }
-  .filter-backdrop { z-index: 34; }
+  .filter-backdrop { z-index: 52; }
   .drawer-backdrop { z-index: 60; }
   .filter-backdrop.open, .drawer-backdrop.open { opacity: 1; pointer-events: auto; }
   .filter-sheet {
     position: absolute;
-    left: 12px; right: 12px;
-    bottom: calc(var(--tab-h) - 6px);
-    z-index: 36;
+    left: 0; right: 0;
+    bottom: 0;
+    z-index: 56;
     max-height: min(64dvh, 520px);
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     background: rgba(255, 254, 252, 0.94);
     backdrop-filter: blur(26px) saturate(1.2);
     -webkit-backdrop-filter: blur(26px) saturate(1.2);
-    border-radius: 28px;
+    border-radius: 28px 28px 0 0;
     box-shadow: var(--shadow-lg);
     padding: 8px 12px 14px;
     transform: translateY(18px);
@@ -814,7 +828,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     .tab { flex-direction: column; gap: 0; min-width: 68px; font-size: 0; padding: 8px 14px; }
     .dock-btn { flex-direction: column; gap: 0; min-width: 74px; font-size: 0; padding: 8px 14px; border-radius: 24px; }
     .about-drawer { width: min(460px, 42vw); }
-    .filter-sheet { left: 24px; right: auto; width: min(420px, 40vw); bottom: 122px; }
+    .filter-sheet { left: 0; right: 0; width: auto; bottom: 0; }
     .sheet {
       left: 50%;
       right: auto;
@@ -948,9 +962,11 @@ __SOURCES_HTML__
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round"/></svg>
       </button>
     </div>
-    <button type="button" class="dock-btn glass" id="events-btn" aria-label="Events" aria-pressed="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7 3v4M17 3v4M3.5 10h17M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
+    <div class="events-shell glass">
+      <button type="button" class="dock-btn" id="events-btn" aria-label="Events" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7 3v4M17 3v4M3.5 10h17M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
   </nav>
 
   <div class="sheet-backdrop" id="sheet-backdrop"></div>
@@ -1481,6 +1497,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
     });
     renderList();
     paintFilterButton();
+    if (filterOpen) closeFilterSheet();
   }
 
   document.querySelectorAll('.filter-chip').forEach(btn => {
