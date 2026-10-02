@@ -718,6 +718,29 @@
     display: flex; align-items: flex-start; justify-content: space-between;
     gap: 12px; margin-bottom: 12px; position: sticky; top: 0; z-index: 2;
     padding-bottom: 8px;
+    isolation: isolate;
+  }
+  /* Match the other tabs: content scrolls beneath a frosted, fading header. */
+  .drawer-top::before {
+    content: "";
+    position: absolute;
+    left: -18px; right: -18px; top: 0;
+    height: calc(100% + 18px);
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(to bottom,
+      rgba(232, 230, 228, 0.55) 0%,
+      rgba(235, 231, 229, 0.28) 46%,
+      rgba(235, 231, 229, 0.08) 72%,
+      transparent 100%);
+    backdrop-filter: blur(18px) saturate(1.25);
+    -webkit-backdrop-filter: blur(18px) saturate(1.25);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 48%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 48%, transparent 100%);
+  }
+  .drawer-top h1, .drawer-top .icon-x {
+    position: relative;
+    z-index: 1;
   }
   .drawer-top h1 {
     margin: 6px 0 0; font-family: var(--display); font-size: 1.8rem; font-weight: 600; color: var(--ink);
