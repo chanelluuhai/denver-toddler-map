@@ -1315,21 +1315,32 @@ const EVENTS_DOC = __EVENTS_JSON__;
   }
   function renderEvents(){
     const today = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'America/Denver' }).format(new Date());
-    const upcoming = events.filter(e => String(e.end_date || e.date) >= today).sort((a,b) => String(a.date).localeCompare(String(b.date)));
-    if (!upcoming.length) { eventsEl.innerHTML = '<div class="empty">No upcoming events listed yet.</div>'; return; }
-    eventsEl.innerHTML = upcoming.map(e => {
-      const linked = e.place_id && placesById[e.place_id];
-      const venue = e.place || (linked && linked.name) || 'Location to be confirmed';
-      return `<article class="event-card${linked?' linked':''}"${linked?` data-place-id="${escapeHtml(e.place_id)}" role="button" tabindex="0"`:''}>
-        <div class="event-card-top">
-          <h3>${escapeHtml(e.title)}</h3>
-          <a class="cal-add" href="${calendarUrl(e)}" target="_blank" rel="noopener">Add to calendar</a>
-        </div>
-        <p class="event-place">${escapeHtml(venue)}</p>
-        <p class="event-note">${escapeHtml(snippet(e.note || 'Family-friendly event details coming soon.', 120))}</p>
-        <div class="event-meta"><span>${escapeHtml(eventDateLabel(e))}</span><span class="event-time">${escapeHtml(eventTimeLabel(e))}</span></div>
-      </article>`;
-    }).join('');
+    // Keep an event visible while any part of its date range is still upcoming,
+    // but do not render already-past day groups.
+    const upcoming = events.filter(e => String(e.end_date || e.date) >= today);
+    const groups = {};
+    upcoming.forEach(e => eventDateKeys(e).filter(day => day >= today).forEach(day => {
+      (groups[day] ||= []).push(e);
+    }));
+    const days = Object.keys(groups).sort();
+    if (!days.length) { eventsEl.innerHTML = '<div class="empty">No upcoming events listed yet.</div>'; return; }
+    eventsEl.innerHTML = days.map(day => `
+      <section class="event-day" aria-labelledby="event-day-${day}">
+        <h2 class="event-day-heading" id="event-day-${day}">${escapeHtml(longDate(day))}<span>${groups[day].length} event${groups[day].length === 1 ? '' : 's'}</span></h2>
+        ${groups[day].sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.title).localeCompare(String(b.title))).map(e => {
+          const linked = e.place_id && placesById[e.place_id];
+          const venue = e.place || (linked && linked.name) || 'Location to be confirmed';
+          return `<article class="event-card${linked?' linked':''}"${linked?` data-place-id="${escapeHtml(e.place_id)}" role="button" tabindex="0"`:''}>
+            <div class="event-card-top">
+              <h3>${escapeHtml(e.title)}</h3>
+              <a class="cal-add" href="${calendarUrl(e)}" target="_blank" rel="noopener">Add to calendar</a>
+            </div>
+            <p class="event-place">${escapeHtml(venue)}</p>
+            <p class="event-note">${escapeHtml(snippet(e.note || 'Family-friendly event details coming soon.', 120))}</p>
+            <div class="event-meta"><span>${escapeHtml(eventDateLabel(e))}</span><span class="event-time">${escapeHtml(eventTimeLabel(e))}</span></div>
+          </article>`;
+        }).join('')}
+      </section>`).join('');
     eventsEl.querySelectorAll('.event-card[data-place-id]').forEach(el => {
       const go = () => {
         const place = placesById[el.dataset.placeId];
