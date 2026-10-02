@@ -765,6 +765,10 @@
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
   }
+  @keyframes welcomeButtonGradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
   .welcome {
     position: absolute;
     inset: 0;
@@ -841,9 +845,10 @@
   .welcome-credit {
     margin-top: auto;
     margin-bottom: 0;
-    color: var(--muted);
-    font-size: 0.75rem;
-    font-style: italic;
+    color: var(--ink-2);
+    font-size: 1.02rem;
+    line-height: 1.55;
+    font-style: normal;
     font-weight: 400;
     letter-spacing: 0.01em;
   }
@@ -860,15 +865,23 @@
     letter-spacing: 0.01em;
   }
   .welcome-enter {
+    width: min(176px, 100%);
+    min-height: 46px;
+    margin: clamp(30px, 6vh, 54px) 0 0;
     color: #fff;
-    background: linear-gradient(135deg, #C98998, #B57A88);
-    box-shadow: 0 10px 24px rgba(142, 90, 104, 0.22);
-    margin: 0;
+    background: linear-gradient(120deg, #C98998 0%, #DFA9B5 44%, #B57A88 100%);
+    background-size: 220% 100%;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow: none;
+    animation: welcomeButtonGradient 8s ease-in-out infinite;
   }
   .welcome-enter:active { transform: scale(0.98); }
   .welcome-enter:focus-visible {
-    outline: none;
-    box-shadow: 0 10px 24px rgba(142, 90, 104, 0.22), 0 0 0 3px rgba(181, 122, 136, 0.35);
+    outline: 2px solid rgba(255, 255, 255, 0.86);
+    outline-offset: 3px;
+    box-shadow: none;
   }
   .about-replay:focus-visible {
     outline: 2px solid var(--accent-dark);
