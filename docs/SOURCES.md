@@ -9,6 +9,29 @@
 | Colorado Kids Are Rad | https://www.instagram.com/coloradokidsarerad/ | Colorado Kids Are Rad | |
 | Colorado Mama Life (Angelica) | https://www.instagram.com/coloradomamalife/ | https://www.facebook.com/profile.php?id=61577651781310 | https://www.tiktok.com/@coloradomamalife |
 
+## Scrub window (2026-10-02 Mon/Wed/Fri pass)
+
+**Checked**
+- Days.in.denver beehiiv: October newsletter (full) + Fall guide re-read for gaps vs `places.json`
+- Colorado Kids Explore Facebook page (public): Giggling Life Care Farm Fall Festival post (2026-09-29)
+- Colorado Kids Are Rad IG/FB: login-walled — no new captions
+- Colorado Mama Life IG/FB/TikTok: login-walled / FB fetch timeout — no new venue named
+- Days.in.denver / CKE / CKAR / Mama Life Instagram: login wall (OG only)
+
+**New pins added (7)**
+- Vital Root (Tennyson) — kids eat free + play area (Oct newsletter)
+- Fairmount Park (Golden) — playground + Pumpkin Fest Oct 3 (Oct newsletter / Prospect)
+- Denver Firefighters Museum — Squirt’s class + free day Oct 10 (Oct newsletter)
+- Belmar Park — Lakewood Cider Days Oct 3–4 (Fall guide)
+- Rock Creek Farm (Broomfield) — fall patch (Fall guide; Wed free admission)
+- Cottonwood Farms (Lafayette) — ages 5 & under free (Fall guide; farther)
+- Giggling Life Care Farm (Brighton) — CKE Oct 10 festival tip (farther)
+
+**Notable tips (no new pin / age mismatch)**
+- Übergrippen Wednesday Wiggles (Central Park) — Oct newsletter; Chipmunks program is ages 3–5 so skipped for ~20mo map focus
+- Westy Fest (Westminster, Oct 17), Infinity Park Trunk-or-Treat (Oct 12), Central Library Trick or Treat Street (Oct 29), Mines Museum Spooktacular (Oct 17), CSU Spur 2nd Saturday (Oct 10) — event reminders at existing or temporary venues
+- Hudson Gardens morning pumpkin stroll still free (nighttime Magic of the Jack O’Lanterns ticketed)
+
 ## Scrub window (2026-10-01 deep pass)
 
 **Days.in.denver beehiiv (~90 days / Mar–Oct 2026 + Fall guide)**

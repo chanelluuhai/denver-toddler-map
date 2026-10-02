@@ -1,9 +1,9 @@
 # Denver/Arvada Toddler Outing Spots
 
-Updated: 2026-10-01  
+Updated: 2026-10-02  
 Base: Arvada, CO 80004  
 Audience: Toddler ~20 months; prefer ~30 min drive  
-Places: 57
+Places: 64
 
 Each pin has a why-note from a named social/newsletter source. Drive times are rough estimates.
 
@@ -30,6 +30,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - **Toddler tip:** Near-home dinner + toddler distraction; supervise arcade area.
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 - [Days in Denver April newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0)
+
+## Vital Root (Tennyson) (near)
+
+- **Address:** 3915 Tennyson St, Denver, CO 80212
+- **Drive:** ~11 min drive from Arvada 80004 (~2.8 mi straight-line)
+- **Why:** Days.in.denver October weekly favorite: easy weekday lunch with kids eat free Mon–Fri (restaurant lists 3–5pm dine-in, kids 12 & under) plus a small outdoor kids play area — burn energy while you eat plant-forward meals on Tennyson.
+- **Source:** Days.in.denver (@days.in.denver) October 2026 newsletter
+- **Hours:** Mon–Fri 10:45am–8pm; Sat–Sun 9am–8pm. Kids Eat Free: Mon–Fri 3–5pm dine-in (verify before you go).
+- **Cost:** Kids 12 & under free with adult food purchase during Kids Eat Free window; otherwise normal menu.
+- **Toddler tip:** ~20mo: outdoor play pocket is the draw for a short weekday outing; confirm Kids Eat Free hours (newsletter said Mon–Fri; venue site specifies 3–5pm).
+- [Days in Denver Oct newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter)
+- [Vital Root (Edible Beats)](https://ediblebeats.com/restaurants/vital-root/)
+- [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 
 ## Wheat Ridge Recreation Center Pool (near)
 
@@ -148,6 +161,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
 - [Children's Museum](https://www.mychildsmuseum.org/)
 
+## Fairmount Park (Golden) (near)
+
+- **Address:** 5222 Quaker St, Golden, CO 80403
+- **Drive:** ~18 min drive from Arvada 80004 (~5.5 mi straight-line)
+- **Why:** Days.in.denver October pick for Pumpkin Fest (pancake breakfast, games, live music — free, no reservations). Year-round: playground, picnic pavilions, 0.5-mile trail with North Table Mountain views — easy Arvada-radius park day.
+- **Source:** Days.in.denver (@days.in.denver) October 2026 newsletter + Prospect Recreation Pumpkin Fest
+- **Hours:** Park open daily (typical dawn–dusk). Pumpkin Fest 2026: Sat Oct 3, 10am–1pm (Prospect calendar — newsletter said Oct 4; use district date).
+- **Cost:** Park free. Pumpkin Fest free.
+- **Toddler tip:** ~20mo: playground + open fields; seasonal restroom ~May–Oct. Great nearby Golden park when you want mountains views without a long drive.
+- [Days in Denver Oct newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter)
+- [Pumpkin Fest (Prospect)](https://prospectdistrict.org/events/pumpkin-fest/)
+- [Fairmount Park](https://prospectdistrict.org/parksfacilities/parks/fairmount-park/)
+
 ## Paco Sanchez Park (near)
 
 - **Address:** 1290 Knox Ct, Denver, CO 80204
@@ -169,6 +195,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - **Cost:** Free
 - **Toddler tip:** Pair with Sloan’s Lake / Paco Sanchez corridor.
 - [Instagram @coloradokidsarerad](https://www.instagram.com/coloradokidsarerad/)
+
+## Denver Firefighters Museum (near)
+
+- **Address:** 1326 Tremont Pl, Denver, CO 80204
+- **Drive:** ~20 min drive from Arvada 80004 (~6.3 mi straight-line)
+- **Why:** Days.in.denver October special: Squirt’s Fire Safety Class for preschoolers (books, videos, crawl-low practice). Also Fire Prevention Week free day (Oct 10, 2026) and Halloween costume free admission for kids on Oct 31 — compact downtown museum outing.
+- **Source:** Days.in.denver (@days.in.denver) October 2026 newsletter
+- **Hours:** Check museum calendar (hours vary; some days by appointment). Squirt’s Fire Safety Class Oct 23–24 2026, 9:30–11am per newsletter — register/verify.
+- **Cost:** Standard admission varies; free day Oct 10 2026 (Fire Prevention Week); kids in costume free Oct 31 (adults pay).
+- **Toddler tip:** ~20mo: class is preschool-aimed; museum still fun for truck/gear look-sees with a short visit. Pair with nearby Civic Center stroll if energy remains.
+- [Days in Denver Oct newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter)
+- [Denver Firefighters Museum](https://www.denverfirefightersmuseum.org/)
+- [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 
 ## CSU Spur (near)
 
@@ -208,6 +247,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 - [Days in Denver Sept newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter)
 - [Colorado Railroad Museum](https://coloradorailroadmuseum.org/)
+
+## Belmar Park (Lakewood Cider Days) (near)
+
+- **Address:** 801 S Reed St, Lakewood, CO 80226
+- **Drive:** ~22 min drive from Arvada 80004 (~6.7 mi straight-line)
+- **Why:** Days.in.denver Fall guide: Lakewood Cider Days (cider pressing, vintage power, family activities — Oct 3–4 2026). Belmar Park itself is a solid year-round Lakewood outing with trails, ponds, and room to run near the cultural center.
+- **Source:** Days.in.denver (@days.in.denver) Fall 2026 guide
+- **Hours:** Park roughly dawn–dusk. Cider Days 2026: Sat Oct 3 10am–5pm, Sun Oct 4 10am–4pm (verify tickets/pricing).
+- **Cost:** Park free. Cider Days: adults ~$12–17, kids 1–12 ~$10, under 1 free (Fall guide — confirm current pricing).
+- **Toddler tip:** ~20mo: park paths + open space good for stroller/walk; festival weekends will be busier — go early.
+- [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
+- [City of Lakewood — Belmar Park](https://www.lakewood.org/Government/Departments/Community-Resources/Parks/Parks-and-Facilities/Belmar-Park)
+- [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 
 ## Denver Central Library (near)
 
@@ -446,6 +498,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Days in Denver Oct newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter)
 - [Days in Denver Aug newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-august-newsletter)
 
+## Rock Creek Farm (Broomfield) (FARTHER)
+
+- **Address:** 2005 S 112th St, Broomfield, CO 80020
+- **Drive:** ~34 min drive from Arvada 80004 (~10.4 mi straight-line) — FARTHER (>30 min; flag)
+- **Why:** Days.in.denver Fall guide pumpkin-patch pick: hay bale maze, farm animals, corn mazes, caramel apples. Solid northern-metro fall day; Wednesday farm admission free (corn maze tickets sold separately) — weekend admission charged ages 4+.
+- **Source:** Days.in.denver (@days.in.denver) Fall 2026 guide
+- **Hours:** Fall season ~Sept 26–Oct 31 2026, typically 9:30am–7pm (weather may close — check site/voicemail).
+- **Cost:** Wed: free farm admission (maze tickets extra). Mon/Tue/Thu/Fri: ~$10 ages 4+. Sat/Sun: ~$12 ages 4+. Ages 3 & under typically free farm admission — verify. Pumpkins separate.
+- **Toddler tip:** ~20mo: animals + hay maze are the win; skip giant corn maze if nap windows are short. Weekday mornings quieter.
+- [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
+- [Rock Creek Farm](https://rockcreekfarm.com/)
+- [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
+
 ## Bates-Logan Park (FARTHER)
 
 - **Address:** 2938 S Logan St, Englewood, CO 80113
@@ -627,6 +692,20 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
 - [Hudson Gardens](https://hudsongardens.org/)
 
+## Giggling Life Care Farm (Brighton) (FARTHER)
+
+- **Address:** 14583 Cherry St, Brighton, CO 80602
+- **Drive:** ~44 min drive from Arvada 80004 (~13.5 mi straight-line) — FARTHER (>30 min; flag)
+- **Why:** Colorado Kids Explore FB tip (Sep 29): one-day Fall Festival Oct 10 2026 — animal interactions (goats, sheep, horses, cows, donkeys), hay ride, crafts, pumpkin included with ticket; breakfast/dinner slots are donation-based. Code coloradokid5 for $5 off per person (per CKE post).
+- **Source:** Colorado Kids Explore (@colorado.kids.explore) Facebook post 2026-09-29
+- **Hours:** Fall Festival 2026: Sat Oct 10 — 10am–12pm and 4–6pm slots (CKE/farm pages). Farm programs otherwise by schedule — check site.
+- **Cost:** Ticketed festival (pumpkin + animals + hay ride included); CKE code coloradokid5 = $5 off/person. Extra paid: horseback, games. Parking in back.
+- **Toddler tip:** ~20mo: animal time + pumpkin are the wins; short festival slots fit nap windows better than all-day patches. Farther drive — make it a dedicated morning or evening.
+- [Facebook Colorado Kids Explore](https://www.facebook.com/profile.php?id=61575843462964)
+- [Giggling Life Care Farm](https://www.thegigglinglife.com/)
+- [Fall Festival page](https://www.thegigglinglife.com/copy-of-the-farm)
+- [Instagram @colorado.kids.explore](https://www.instagram.com/colorado.kids.explore/)
+
 ## Clement Park (+ Columbine Library) (FARTHER)
 
 - **Address:** 7306 W Bowles Ave, Littleton, CO 80123
@@ -666,6 +745,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Days in Denver Sept newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter)
 - [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
 - [Chatfield Farms](https://www.botanicgardens.org/chatfield-farms)
+
+## Cottonwood Farms (Lafayette) (FARTHER)
+
+- **Address:** 10600 Isabelle Rd, Lafayette, CO 80026
+- **Drive:** ~53 min drive from Arvada 80004 (~16.4 mi straight-line) — FARTHER (>30 min; flag)
+- **Why:** Days.in.denver Fall guide favorite: pumpkins, corn + kids mazes, farm animals, vintage equipment — ages 5 & under free for admission and weekend wagon rides. Real working-farm vibe without the mega-festival chaos.
+- **Source:** Days.in.denver (@days.in.denver) Fall 2026 guide
+- **Hours:** Daily Sept 23–Oct 31, 10am–6pm (verify).
+- **Cost:** Ages 6–64 ~$10–12.50 admission; ages 5 & under and seniors 65+ free (no ticket). Weekend wagon rides ~$5; under 5 free.
+- **Toddler tip:** ~20mo: kids maze + animal viewing are perfect; not a petting zoo (animals choose to approach). Prepaid tickets recommended weekends.
+- [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
+- [Cottonwood Farms pumpkin patch](https://cottonwoodfarms.com/halloween-pumpkin-patch-fall-festival-boulder-co/)
+- [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 
 ## Civic Green Park Splash Pad (FARTHER)
 
