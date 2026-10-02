@@ -726,9 +726,8 @@
 
   /* First-visit welcome */
   @keyframes welcomeGradient {
-    0% { background-position: 0% 40%; }
-    50% { background-position: 100% 60%; }
-    100% { background-position: 0% 40%; }
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
   .welcome {
     position: absolute;
@@ -741,13 +740,14 @@
     text-align: center;
     padding: calc(28px + var(--safe-top)) 28px calc(28px + var(--safe-bottom));
     background:
-      linear-gradient(135deg,
-        rgba(232, 230, 228, 0.88) 0%,
-        rgba(246, 235, 238, 0.90) 38%,
-        rgba(233, 213, 216, 0.92) 68%,
-        rgba(230, 238, 242, 0.88) 100%);
-    background-size: 180% 180%;
-    animation: welcomeGradient 14s ease-in-out infinite;
+      linear-gradient(120deg,
+        #E8E6E4 0%,
+        #E8E6E4 24%,
+        #F2DDE1 56%,
+        #E7B8C2 82%,
+        #DFA9B5 100%);
+    background-size: 220% 100%;
+    animation: welcomeGradient 16s ease-in-out infinite;
     backdrop-filter: blur(22px) saturate(1.15);
     -webkit-backdrop-filter: blur(22px) saturate(1.15);
     opacity: 0;
