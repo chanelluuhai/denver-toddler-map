@@ -291,7 +291,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     color: var(--ink);
   }
   .panel-body {
-    padding: 6px 18px calc(var(--tab-h) + 28px);
+    /* Leave the frosted sticky heading room to fade before content begins. */
+    padding: 56px 18px calc(var(--tab-h) + 28px);
   }
 
   /* List cards */
@@ -506,13 +507,15 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   /* —— Bottom tab bar —— */
   .tabbar {
+    --tab-pad: 4px;
+    --tab-left: 0px;
+    --tab-width: 0px;
     position: absolute;
     left: 12px; right: 12px;
     bottom: calc(10px + var(--safe-bottom));
     z-index: 30;
     height: 58px;
-    padding: 4px;
-    padding-bottom: 4px;
+    padding: var(--tab-pad);
     background: rgba(255, 254, 252, 0.22);
     backdrop-filter: blur(22px) saturate(1.45);
     -webkit-backdrop-filter: blur(22px) saturate(1.45);
@@ -522,7 +525,26 @@ TEMPLATE = r'''<!DOCTYPE html>
     grid-template-columns: repeat(5, 1fr);
     box-shadow: 0 10px 28px rgba(70, 45, 50, 0.08);
   }
+  /* A single moving pill keeps the selected tab obvious without five competing backgrounds. */
+  .tab-indicator {
+    position: absolute;
+    z-index: 0;
+    top: var(--tab-pad);
+    bottom: var(--tab-pad);
+    left: 0;
+    width: var(--tab-width);
+    border: 1px solid rgba(255, 254, 252, 0.52);
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(229, 184, 194, 0.82), rgba(196, 168, 180, 0.72));
+    box-shadow: 0 5px 14px rgba(142, 90, 104, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    pointer-events: none;
+    transform: translateX(var(--tab-left));
+    transition: transform 480ms cubic-bezier(.22, 1, .36, 1), width 220ms ease;
+    will-change: transform;
+  }
   .tab {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -537,11 +559,15 @@ TEMPLATE = r'''<!DOCTYPE html>
     min-height: 50px;
     padding: 6px 4px;
     border-radius: 999px;
-    transition: color .15s, background .15s;
+    transition: color 220ms ease, opacity 160ms ease, transform 180ms ease;
   }
   .tab svg { width: 22px; height: 22px; stroke-width: 1.6; }
-  .tab.active { color: var(--accent-dark); background: rgba(181, 122, 136, 0.16); }
-  .tab:active { opacity: 0.7; }
+  .tab.active { color: var(--accent-dark); }
+  .tab:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: -2px; }
+  .tab:active { opacity: 0.72; transform: scale(0.96); }
+  @media (prefers-reduced-motion: reduce) {
+    .tab-indicator, .tab { transition: none; }
+  }
 
   /* —— Bottom sheet (place detail) —— */
   .sheet-backdrop {
@@ -648,13 +674,13 @@ TEMPLATE = r'''<!DOCTYPE html>
   @media (min-width: 900px) {
     .topbar { padding-left: 24px; padding-right: 24px; }
     .tabbar {
+      --tab-pad: 6px;
       left: auto;
       right: 24px;
       bottom: 24px;
       width: auto;
       height: auto;
-      padding: 6px;
-      padding-bottom: 6px;
+      padding: var(--tab-pad);
       border-radius: 999px;
       border: none;
       background: rgba(255, 254, 252, 0.22);
@@ -803,6 +829,7 @@ __SOURCES_HTML__
   </section>
 
   <nav class="tabbar" role="tablist" aria-label="Main">
+    <span class="tab-indicator" aria-hidden="true"></span>
     <button type="button" class="tab active" data-tab="map" role="tab" aria-selected="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 4l-5 2v14l5-2 6 2 5-2V4l-5 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
       Map
@@ -853,6 +880,9 @@ const EVENTS_DOC = __EVENTS_JSON__;
   const sheet = document.getElementById('sheet');
   const sheetBody = document.getElementById('sheet-body');
   const sheetBackdrop = document.getElementById('sheet-backdrop');
+  const tabbar = document.querySelector('.tabbar');
+  const tabIndicator = document.querySelector('.tab-indicator');
+  const tabs = Array.from(document.querySelectorAll('.tab'));
 
   let filter = 'all';
   let query = '';
@@ -1105,16 +1135,29 @@ const EVENTS_DOC = __EVENTS_JSON__;
     });
   }
 
+  function moveTabIndicator(name, immediate = false){
+    const selected = tabs.find(t => t.dataset.tab === name);
+    if (!selected || !tabIndicator || !tabbar) return;
+    if (immediate) tabIndicator.style.transition = 'none';
+    tabbar.style.setProperty('--tab-left', `${selected.offsetLeft}px`);
+    tabbar.style.setProperty('--tab-width', `${selected.offsetWidth}px`);
+    if (immediate) {
+      // Let the first layout settle before restoring the sliding transition.
+      requestAnimationFrame(() => { tabIndicator.style.removeProperty('transition'); });
+    }
+  }
+
   function setTab(name){
     currentTab = name;
     const mapActive = name === 'map';
     topbar.hidden = !mapActive;
     topbar.setAttribute('aria-hidden', mapActive ? 'false' : 'true');
-    document.querySelectorAll('.tab').forEach(t => {
+    tabs.forEach(t => {
       const on = t.dataset.tab === name;
       t.classList.toggle('active', on);
       t.setAttribute('aria-selected', on ? 'true' : 'false');
     });
+    moveTabIndicator(name);
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     if (name === 'list') document.getElementById('panel-list').classList.add('active');
     if (name === 'events') document.getElementById('panel-events').classList.add('active');
@@ -1125,9 +1168,10 @@ const EVENTS_DOC = __EVENTS_JSON__;
     else setTimeout(() => map.resize(), 50);
   }
 
-  document.querySelectorAll('.tab').forEach(btn => {
+  tabs.forEach(btn => {
     btn.addEventListener('click', () => setTab(btn.dataset.tab));
   });
+  moveTabIndicator(currentTab, true);
 
   function setFilter(f){
     filter = f;
@@ -1171,7 +1215,10 @@ const EVENTS_DOC = __EVENTS_JSON__;
   // Also render list HTML immediately (markers toggle later)
   renderList();
 
-  window.addEventListener('resize', () => map.resize());
+  window.addEventListener('resize', () => {
+    map.resize();
+    moveTabIndicator(currentTab, true);
+  });
 })();
 </script>
 </body>
