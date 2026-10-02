@@ -90,6 +90,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     pointer-events: none;
   }
   .topbar > * { pointer-events: auto; }
+  /* The map-only chrome must not reserve or cover space in other views. */
+  .topbar[hidden] { display: none; }
   .brand {
     display: flex;
     align-items: center;
@@ -804,6 +806,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
   const placesById = Object.fromEntries(places.map(p => [p.id, p]));
   const base = PLACES_DOC.meta && PLACES_DOC.meta.base;
   const app = document.getElementById('app');
+  const topbar = document.querySelector('.topbar');
   const listEl = document.getElementById('list');
   const eventsEl = document.getElementById('events');
   const eventsSub = document.getElementById('events-sub');
@@ -1085,6 +1088,9 @@ const EVENTS_DOC = __EVENTS_JSON__;
 
   function setTab(name){
     currentTab = name;
+    const mapActive = name === 'map';
+    topbar.hidden = !mapActive;
+    topbar.setAttribute('aria-hidden', mapActive ? 'false' : 'true');
     document.querySelectorAll('.tab').forEach(t => {
       const on = t.dataset.tab === name;
       t.classList.toggle('active', on);
