@@ -371,10 +371,18 @@ TEMPLATE = r'''<!DOCTYPE html>
   .event-card.linked:hover, .event-card.linked:focus { box-shadow: var(--shadow-lg); outline: none; }
   .event-card.linked:active { transform: scale(.985); }
   .event-date-label { color: var(--muted); font-size: .72rem; font-weight: 500; margin-bottom: 6px; letter-spacing: 0.01em; }
-  .event-card h3 { margin: 0; font-family: var(--display); font-size: 1.18rem; line-height: 1.3; font-weight: 600; color: var(--ink); }
-  .event-meta { display: flex; flex-wrap: wrap; gap: 5px 12px; color: var(--muted); font-size: .78rem; margin-bottom: 8px; }
-  .event-note { margin: 0 0 8px; color: var(--ink-2); font-size: .88rem; line-height: 1.5; }
-  .event-place { color: var(--muted); font-size: .78rem; }
+  .event-card h3 { margin: 0 0 5px; font-family: var(--display); font-size: 1.18rem; line-height: 1.3; font-weight: 600; color: var(--ink); }
+  .event-meta { display: flex; flex-wrap: wrap; gap: 5px 12px; color: var(--muted); font-size: .78rem; margin: 0; }
+  .event-time { color: var(--accent-dark); font-weight: 600; }
+  .event-note {
+    margin: 0 0 10px; color: var(--ink-2); font-size: .86rem; line-height: 1.4;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+  .event-place {
+    margin: 0 0 7px; color: var(--muted); font-size: .8rem; line-height: 1.3;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
   .event-link { color: var(--accent-dark); font-size: .82rem; font-weight: 600; text-decoration: none; }
   .event-link:hover { text-decoration: underline; }
 
@@ -1097,6 +1105,10 @@ const EVENTS_DOC = __EVENTS_JSON__;
     if (time && !/confirm/i.test(time)) return date + ' · ' + time;
     return date;
   }
+  function eventTimeLabel(e){
+    const time = String(e.time || '').trim();
+    return time && !/confirm/i.test(time) ? time : 'Time to be confirmed';
+  }
   function placeKeyLine(p){
     if (p.drive_note) return p.drive_note;
     if (p.approx_drive_minutes) return '~' + p.approx_drive_minutes + ' min';
@@ -1119,9 +1131,12 @@ const EVENTS_DOC = __EVENTS_JSON__;
     if (!upcoming.length) { eventsEl.innerHTML = '<div class="empty">No upcoming events listed yet.</div>'; return; }
     eventsEl.innerHTML = upcoming.map(e => {
       const linked = e.place_id && placesById[e.place_id];
+      const venue = e.place || (linked && linked.name) || 'Location to be confirmed';
       return `<article class="event-card${linked?' linked':''}"${linked?` data-place-id="${escapeHtml(e.place_id)}" role="button" tabindex="0"`:''}>
         <h3>${escapeHtml(e.title)}</h3>
-        <p class="card-line">${escapeHtml(eventKeyLine(e))}</p>
+        <p class="event-place">${escapeHtml(venue)}</p>
+        <p class="event-note">${escapeHtml(snippet(e.note || 'Family-friendly event details coming soon.', 120))}</p>
+        <div class="event-meta"><span>${escapeHtml(eventDateLabel(e))}</span><span class="event-time">${escapeHtml(eventTimeLabel(e))}</span></div>
       </article>`;
     }).join('');
     eventsEl.querySelectorAll('.event-card[data-place-id]').forEach(el => {
