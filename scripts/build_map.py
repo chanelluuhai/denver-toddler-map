@@ -102,11 +102,18 @@ TEMPLATE = r'''<!DOCTYPE html>
   .topbar > * { pointer-events: auto; }
   /* The map-only chrome must not reserve or cover space in other views. */
   .topbar[hidden] { display: none; }
+  .topbar { transition: gap 460ms cubic-bezier(0.4, 0, 0.2, 1); }
   .topbar.search-focused { gap: 0; }
-  .topbar.search-focused .brand { display: none; }
+  .topbar.search-focused .brand {
+    max-width: 0;
+    margin-right: 0;
+    opacity: 0;
+    padding-left: 0;
+    padding-right: 0;
+    pointer-events: none;
+  }
   .topbar.search-focused .search-pill {
-    flex: 1 1 100%;
-    max-width: none;
+    width: calc(100% - 28px);
   }
   .topbar::before {
     content: "";
@@ -133,6 +140,14 @@ TEMPLATE = r'''<!DOCTYPE html>
     padding: 0 18px 0 12px;
     box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
     flex-shrink: 0;
+    max-width: 320px;
+    margin-right: 58px;
+    overflow: hidden;
+    transition:
+      max-width 460ms cubic-bezier(0.4, 0, 0.2, 1),
+      padding 460ms cubic-bezier(0.4, 0, 0.2, 1),
+      margin 460ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 280ms ease;
   }
   .brand-mark {
     width: auto; height: auto;
@@ -155,18 +170,32 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
 
   .search-pill {
-    flex: 0 0 48px;
-    margin-left: auto;
-    min-width: 0;
-    position: relative;
-    max-width: none;
+    position: absolute;
+    z-index: 3;
+    right: 14px;
+    top: calc(8px + var(--safe-top));
+    flex: none;
+    margin: 0;
+    width: 48px;
     height: 48px;
+    border-radius: 999px;
+    background: rgba(255, 254, 252, 0.82);
+    backdrop-filter: blur(24px) saturate(1.2);
+    -webkit-backdrop-filter: blur(24px) saturate(1.2);
+    box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
+    overflow: hidden;
+    transition:
+      width 460ms cubic-bezier(0.4, 0, 0.2, 1),
+      background 220ms ease,
+      box-shadow 220ms ease;
   }
   .search-pill input {
-    display: none;
-    position: relative;
+    display: block;
+    position: absolute;
     z-index: 0;
+    left: 0; right: 0; top: 0;
     width: 100%;
+    height: 48px;
     min-height: 48px;
     border: none;
     border-radius: 999px;
@@ -176,41 +205,57 @@ TEMPLATE = r'''<!DOCTYPE html>
     line-height: 1.25;
     -webkit-appearance: none;
     appearance: none;
-    background: rgba(255, 254, 252, 0.82);
-    backdrop-filter: blur(24px) saturate(1.2);
-    -webkit-backdrop-filter: blur(24px) saturate(1.2);
-    box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
+    background: transparent;
+    box-shadow: none;
     outline: none;
-    color: var(--ink);
+    color: transparent;
+    caret-color: transparent;
+    opacity: 1;
+    pointer-events: none;
   }
-  .topbar.search-focused .search-pill input { display: block; }
-  .topbar.search-focused .search-pill .ico { display: block; }
-  .search-pill input::placeholder { color: #A89E96; }
-  .search-pill input:focus {
+  .topbar.search-focused .search-pill input {
+    color: var(--ink);
+    caret-color: var(--ink);
+    pointer-events: auto;
+  }
+  .search-pill input::placeholder { color: transparent; }
+  .topbar.search-focused .search-pill input::placeholder { color: #A89E96; }
+  .search-pill input:focus { box-shadow: none; }
+  .topbar.search-focused .search-pill:focus-within {
     box-shadow: 0 8px 24px rgba(70, 50, 48, 0.09), 0 0 0 3px rgba(181, 122, 136, 0.22);
   }
   .search-pill .ico {
-    position: absolute; left: 14px; top: 50%; z-index: 1;
-    display: none; transform: translateY(-50%);
-    color: var(--muted); pointer-events: none; width: 18px; height: 18px;
+    position: absolute; left: 50%; top: 50%; z-index: 1;
+    display: block;
+    transform: translate(-50%, -50%);
+    color: var(--muted); pointer-events: none; width: 20px; height: 20px;
     stroke: currentColor; stroke-width: 2; overflow: visible;
+    transition: left 460ms cubic-bezier(0.4, 0, 0.2, 1), color 180ms ease;
   }
+  .topbar.search-focused .search-pill .ico { left: 26px; }
   .search-toggle {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
     display: grid;
     place-items: center;
-    width: 48px;
-    height: 48px;
+    width: 100%;
+    height: 100%;
     border: none;
     border-radius: 999px;
     color: var(--muted);
-    background: rgba(255, 254, 252, 0.82);
-    backdrop-filter: blur(24px) saturate(1.2);
-    -webkit-backdrop-filter: blur(24px) saturate(1.2);
-    box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
+    background: transparent;
+    box-shadow: none;
     cursor: pointer;
   }
-  .search-toggle svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; }
-  .topbar.search-focused .search-toggle { display: none; }
+  .search-toggle svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; opacity: 0; }
+  .topbar.search-focused .search-toggle { pointer-events: none; }
+  .search-toggle.is-active { color: var(--accent-dark); }
+  .search-pill:has(.search-toggle.is-active) {
+    background: linear-gradient(135deg, rgba(229, 184, 194, 0.94), rgba(255, 254, 252, 0.9));
+    box-shadow: 0 8px 20px rgba(142, 90, 104, 0.16);
+  }
+  .search-pill:has(.search-toggle.is-active) .ico { color: var(--accent-dark); }
   .search-toggle:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
 
   /* —— Map (full-bleed) —— */
@@ -608,6 +653,26 @@ TEMPLATE = r'''<!DOCTYPE html>
     font-size: 0;
   }
   /* Standalone actions use the same button-within-glass treatment. */
+  @keyframes filterShellIn {
+    from {
+      opacity: 0;
+      transform: scale(0.82);
+      max-width: 0px;
+      width: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
+      margin-left: -10px;
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+      max-width: 68px;
+      width: 68px;
+      padding-left: 6px;
+      padding-right: 6px;
+      margin-left: 0px;
+    }
+  }
   .filter-shell, .events-shell {
     display: grid;
     place-items: center;
@@ -618,26 +683,13 @@ TEMPLATE = r'''<!DOCTYPE html>
     border-radius: 999px;
     overflow: hidden;
     transform-origin: center;
-    transition:
-      opacity 340ms cubic-bezier(.22, 1, .36, 1),
-      transform 340ms cubic-bezier(.22, 1, .36, 1),
-      max-width 340ms cubic-bezier(.22, 1, .36, 1),
-      width 340ms cubic-bezier(.22, 1, .36, 1),
-      padding 340ms cubic-bezier(.22, 1, .36, 1),
-      margin 340ms cubic-bezier(.22, 1, .36, 1),
-      border-color 240ms ease,
-      box-shadow 240ms ease;
+  }
+  /* Same curve as the show animation, played backwards on hide. */
+  .filter-shell.is-shown {
+    animation: filterShellIn 420ms cubic-bezier(.22, 1, .36, 1) both;
   }
   .filter-shell.is-away {
-    opacity: 0;
-    transform: scale(0.82);
-    max-width: 0;
-    width: 0;
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: -10px;
-    border-color: transparent;
-    box-shadow: none;
+    animation: filterShellIn 420ms cubic-bezier(.22, 1, .36, 1) reverse both;
     pointer-events: none;
   }
   .filter-shell .dock-btn, .events-shell .dock-btn {
@@ -667,7 +719,17 @@ TEMPLATE = r'''<!DOCTYPE html>
   .tab:focus-visible, .dock-btn:focus-visible, .brand:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
   .tab:active, .dock-btn:active { opacity: 0.72; transform: scale(0.97); }
   @media (prefers-reduced-motion: reduce) {
-    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome h1, .welcome-line, .welcome-credit, .welcome-enter { transition: none !important; animation: none !important; }
+    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome h1, .welcome-line, .welcome-credit, .welcome-enter, .search-pill, .search-pill .ico, .search-pill input, .brand, .topbar { transition: none !important; animation: none !important; }
+    .filter-shell.is-away {
+      opacity: 0;
+      transform: scale(0.82);
+      max-width: 0;
+      width: 0;
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: -10px;
+      pointer-events: none;
+    }
   }
 
   /* Filter sheet and its backdrop sit above the map and nav. */
@@ -726,13 +788,24 @@ TEMPLATE = r'''<!DOCTYPE html>
     display: flex;
     flex-direction: column;
     transform: translateX(104%);
-    transition: transform .42s cubic-bezier(.22, 1, .36, 1);
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      transform 480ms cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0s linear 480ms;
     background: linear-gradient(180deg, #E8E6E4 0%, #EBE7E5 42%, #F0E6E6 74%, #E9D5D8 100%);
     box-shadow: -18px 0 48px rgba(60, 40, 42, 0.14);
     padding: 0;
     border-radius: 0;
   }
-  .about-drawer.open { transform: translateX(0); }
+  .about-drawer.open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+      transform 480ms cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0s linear 0s;
+  }
   .drawer-scroll {
     flex: 1 1 auto;
     min-height: 0;
@@ -1056,18 +1129,61 @@ TEMPLATE = r'''<!DOCTYPE html>
     }
     .topbar::before { display: none; }
     .topbar.search-focused { gap: 14px; }
-    .topbar.search-focused .brand { display: flex; }
-    .topbar.search-focused .search-pill { flex: none; max-width: none; }
-    .brand { align-self: flex-start; }
-    .search-pill {
+    .brand,
+    .topbar.search-focused .brand {
+      display: flex;
+      align-self: flex-start;
+      max-width: none;
+      margin-right: 0;
+      opacity: 1;
+      overflow: visible;
+      padding: 0 18px 0 12px;
+      pointer-events: auto;
+    }
+    .search-pill,
+    .topbar.search-focused .search-pill {
+      position: relative;
+      top: auto;
+      right: auto;
+      z-index: auto;
       flex: none;
-      margin-left: 0;
+      margin: 0;
       width: 100%;
       height: auto;
       max-width: none;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      overflow: visible;
     }
-    .search-pill input { display: block; }
-    .search-pill .ico { display: block; }
+    .search-pill input,
+    .topbar.search-focused .search-pill input {
+      display: block;
+      position: relative;
+      opacity: 1;
+      pointer-events: auto;
+      height: auto;
+      color: var(--ink);
+      caret-color: auto;
+      background: rgba(255, 254, 252, 0.82);
+      backdrop-filter: blur(24px) saturate(1.2);
+      -webkit-backdrop-filter: blur(24px) saturate(1.2);
+      box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
+    }
+    .search-pill input::placeholder,
+    .topbar.search-focused .search-pill input::placeholder { color: #A89E96; }
+    .search-pill input:focus {
+      box-shadow: 0 8px 24px rgba(70, 50, 48, 0.09), 0 0 0 3px rgba(181, 122, 136, 0.22);
+    }
+    .topbar.search-focused .search-pill:focus-within { box-shadow: none; }
+    .search-pill .ico {
+      display: block;
+      left: 14px;
+      width: 18px;
+      height: 18px;
+      transform: translateY(-50%);
+    }
     .search-toggle { display: none; }
 
     .panel {
@@ -1144,7 +1260,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <span class="brand-text">Toddler Spots</span>
     </button>
     <div class="search-pill">
-      <button type="button" class="search-toggle" id="search-toggle" aria-label="Search" aria-expanded="false">
+      <button type="button" class="search-toggle" id="search-toggle" aria-label="Search" aria-expanded="false" aria-pressed="false">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
       </button>
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
@@ -1308,8 +1424,14 @@ const EVENTS_DOC = __EVENTS_JSON__;
   const welcomeEnter = document.getElementById('welcome-enter');
   const WELCOME_KEY = 'toddler-spots-welcome';
   function openWelcome(){
-    welcome.hidden = false;
+    const bits = welcome.querySelectorAll('.welcome-emoji, h1, .welcome-line, .welcome-enter, .welcome-credit');
     welcome.classList.remove('open');
+    welcome.hidden = false;
+    welcome.style.transition = 'none';
+    bits.forEach((el) => { el.style.transition = 'none'; });
+    void welcome.offsetWidth;
+    welcome.style.removeProperty('transition');
+    bits.forEach((el) => { el.style.removeProperty('transition'); });
     requestAnimationFrame(() => {
       welcome.classList.add('open');
       setTimeout(() => { if (welcome.classList.contains('open')) welcomeEnter.focus({ preventScroll: true }); }, 820);
@@ -1732,24 +1854,29 @@ const EVENTS_DOC = __EVENTS_JSON__;
       if (!filterOpen) { filterSheet.hidden = true; filterBackdrop.hidden = true; }
     }, 320);
   }
+  let aboutTimer = 0;
   function openAbout(){
     aboutOpen = true;
+    clearTimeout(aboutTimer);
     aboutDrawer.hidden = false;
     aboutBackdrop.hidden = false;
+    aboutDrawer.classList.remove('open');
+    aboutBackdrop.classList.remove('open');
     openAboutBtn.setAttribute('aria-expanded', 'true');
-    requestAnimationFrame(() => {
-      aboutDrawer.classList.add('open');
-      aboutBackdrop.classList.add('open');
-    });
+    void aboutDrawer.offsetWidth;
+    aboutDrawer.classList.add('open');
+    aboutBackdrop.classList.add('open');
   }
   function closeAbout(){
+    if (!aboutOpen && !aboutDrawer.classList.contains('open')) return;
     aboutOpen = false;
     aboutDrawer.classList.remove('open');
     aboutBackdrop.classList.remove('open');
     openAboutBtn.setAttribute('aria-expanded', 'false');
-    setTimeout(() => {
+    clearTimeout(aboutTimer);
+    aboutTimer = setTimeout(() => {
       if (!aboutOpen) { aboutDrawer.hidden = true; aboutBackdrop.hidden = true; }
-    }, 420);
+    }, 520);
   }
 
   function setTab(name){
@@ -1758,7 +1885,10 @@ const EVENTS_DOC = __EVENTS_JSON__;
     const mapActive = name === 'map';
     const eventsActive = name === 'events';
     if (eventsActive && filterOpen) closeFilterSheet();
+    const filterMoved = filterShell.dataset.moved === '1';
     filterShell.classList.toggle('is-away', eventsActive);
+    filterShell.classList.toggle('is-shown', filterMoved && !eventsActive);
+    if (eventsActive) filterShell.dataset.moved = '1';
     filterShell.setAttribute('aria-hidden', eventsActive ? 'true' : 'false');
     filterBtn.tabIndex = eventsActive ? -1 : 0;
     topbar.hidden = !mapActive;
@@ -1825,16 +1955,24 @@ const EVENTS_DOC = __EVENTS_JSON__;
 
   let searchTimer;
   function openSearch(){
-    topbar.classList.add('search-focused');
+    searchToggle.classList.add('is-active');
     searchToggle.setAttribute('aria-expanded', 'true');
-    requestAnimationFrame(() => searchEl.focus());
+    searchToggle.setAttribute('aria-pressed', 'true');
+    /* Focus in the tap, before the bar grows, so iOS opens the keyboard. */
+    searchEl.focus({ preventScroll: true });
+    topbar.classList.add('search-focused');
   }
   function closeSearchIfEmpty(){
     if (!searchEl.value.trim()) {
       topbar.classList.remove('search-focused');
+      searchToggle.classList.remove('is-active');
       searchToggle.setAttribute('aria-expanded', 'false');
+      searchToggle.setAttribute('aria-pressed', 'false');
     }
   }
+  searchToggle.addEventListener('pointerdown', () => {
+    searchToggle.classList.add('is-active');
+  });
   searchToggle.addEventListener('click', openSearch);
   searchEl.addEventListener('focus', () => {
     topbar.classList.add('search-focused');
