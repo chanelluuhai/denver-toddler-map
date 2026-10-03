@@ -735,7 +735,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .tab:focus-visible, .dock-btn:focus-visible, .brand:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
   .tab:active, .dock-btn:active { opacity: 0.72; transform: scale(0.97); }
   @media (prefers-reduced-motion: reduce) {
-    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome h1, .welcome-line, .welcome-credit, .welcome-enter, .loc-secondary, .loc-note, .search-pill, .search-pill .ico, .search-pill input, .brand, .brand-text, .topbar { transition: none !important; animation: none !important; }
+    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome-emoji img, .welcome h1, .welcome-line, .welcome-credit, .welcome-enter, .loc-secondary, .loc-note, .search-pill, .search-pill .ico, .search-pill input, .brand, .brand-text, .topbar { transition: none !important; animation: none !important; }
     .filter-shell.is-away {
       opacity: 0;
       transform: scale(0.82);
@@ -872,6 +872,12 @@ TEMPLATE = r'''<!DOCTYPE html>
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
   }
+  @keyframes welcomeIconBounce {
+    0% { opacity: 0; transform: translateY(12px) scale(.88); }
+    55% { opacity: 1; transform: translateY(-5px) scale(1.03); }
+    78% { transform: translateY(2px) scale(.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
   .welcome {
     position: absolute;
     inset: 0;
@@ -925,7 +931,14 @@ TEMPLATE = r'''<!DOCTYPE html>
     height: 92px;
     object-fit: contain;
     display: block;
+    opacity: 0;
+    transform: translateY(12px) scale(.88);
   }
+  .welcome.open .welcome-emoji img {
+    animation: welcomeIconBounce 500ms cubic-bezier(.22, 1, .36, 1) both;
+  }
+  .welcome.open .welcome-emoji img:nth-child(2) { animation-delay: 110ms; }
+  .welcome.open .welcome-emoji img:nth-child(3) { animation-delay: 220ms; }
   @media (max-width: 380px) {
     .welcome-emoji img { width: 76px; height: 76px; }
   }
@@ -2227,7 +2240,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
   function noteMapReadyForHint(){
     if (hintSeen() || hintBusy) return;
     clearTimeout(hintWait);
-    hintWait = setTimeout(runHeaderHint, 1000);
+    hintWait = setTimeout(runHeaderHint, 300);
   }
   function measureBrandWidth(mutate){
     const pill = openAboutBtn;
