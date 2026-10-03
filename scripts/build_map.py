@@ -32,7 +32,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 <title>Toddler Spots · Denver / Arvada</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Alice&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Alice&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet"/>
 <style>
   :root {
@@ -66,7 +66,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     --top-h: 56px;
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
-    --font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     --display: "Alice", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
