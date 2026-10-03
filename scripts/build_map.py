@@ -461,7 +461,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     background: var(--card); border: none; border-radius: var(--radius);
     padding: 18px 22px; margin-bottom: 12px; box-shadow: var(--shadow);
   }
-  .event-card.linked { cursor: pointer; transition: transform .12s, box-shadow .15s, border-color .15s; }
+  .event-card { cursor: pointer; }
+  .event-card.linked { transition: transform .12s, box-shadow .15s, border-color .15s; }
   .event-card.linked:hover, .event-card.linked:focus { box-shadow: var(--shadow-lg); outline: none; }
   .event-card.linked:active { transform: scale(.985); }
   .event-date-label { color: var(--muted); font-size: .72rem; font-weight: 500; margin-bottom: 6px; letter-spacing: 0.01em; }
@@ -1101,7 +1102,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     position: absolute;
     left: 0; right: 0; bottom: 0;
     z-index: 50;
-    max-height: min(78dvh, 640px);
+    height: 90dvh;
+    max-height: 90dvh;
     background: rgba(255, 254, 252, 0.96);
     backdrop-filter: blur(28px) saturate(1.15);
     -webkit-backdrop-filter: blur(28px) saturate(1.15);
@@ -1121,6 +1123,30 @@ TEMPLATE = r'''<!DOCTYPE html>
     margin: 12px auto 8px;
     flex-shrink: 0;
   }
+  .sheet-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 2px 14px 0;
+    flex-shrink: 0;
+  }
+  .sheet-nav {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(232, 230, 228, 0.9);
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1.45rem;
+    line-height: 1;
+  }
+  .sheet-nav svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.75; display: block; }
+  .sheet-cal { display: inline-flex; margin: 0 0 16px; }
   .sheet-scroll {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
@@ -1159,7 +1185,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     margin-top: 8px;
     padding-top: 4px;
   }
-  .sheet-actions a, .sheet-close-btn {
+  .sheet-actions a, .sheet-actions button.primary, .sheet-close-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1172,10 +1198,11 @@ TEMPLATE = r'''<!DOCTYPE html>
     border: none;
     cursor: pointer;
   }
-  .sheet-actions a.primary {
+  .sheet-actions a.primary, .sheet-actions button.primary {
     background: var(--accent-dark);
     color: #fff;
   }
+  .sheet-close-btn { display: none; }
   .sheet-actions a.ghost {
     background: var(--bg);
     color: var(--ink);
@@ -1193,7 +1220,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       --side: clamp(340px, 32vw, 440px);
       display: grid;
       grid-template-columns: var(--side) minmax(0, 1fr);
-      grid-template-rows: auto minmax(0, 1fr) auto;
+      grid-template-rows: minmax(0, 1fr);
       width: 100%;
       height: 100%;
       height: 100dvh;
@@ -1215,41 +1242,50 @@ TEMPLATE = r'''<!DOCTYPE html>
       position: relative;
       inset: auto;
       grid-column: 2;
-      grid-row: 1 / -1;
+      grid-row: 1;
       width: auto;
       height: auto;
       min-width: 0;
       min-height: 0;
       z-index: 1;
     }
+    .maplibregl-ctrl-top-right {
+      margin-top: 78px !important;
+    }
     .maplibregl-ctrl-bottom-left,
     .maplibregl-ctrl-bottom-right {
       margin-bottom: 14px !important;
     }
 
+    /* Header sits on the map. Search stays an icon beside the wordmark. */
     #app .topbar,
     #app .topbar[hidden] {
-      position: relative;
-      top: auto; left: auto; right: auto;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: auto;
       display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 14px;
-      grid-column: 1;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      grid-column: 2;
       grid-row: 1;
-      padding: 22px 20px 4px;
-      pointer-events: auto;
+      z-index: 30;
+      width: auto;
+      padding: calc(14px + var(--safe-top)) 18px 10px;
+      pointer-events: none;
     }
-    .topbar::before { display: none; }
-    .topbar.search-focused { gap: 14px; }
+    #app .topbar > * { pointer-events: auto; }
+    .topbar::before { display: block; }
+    .topbar.search-focused { gap: 10px; }
     .brand,
     .topbar.search-focused .brand {
       display: flex;
-      align-self: flex-start;
+      align-self: center;
+      flex-shrink: 0;
       max-width: none;
       margin-right: 0;
       opacity: 1;
-      overflow: visible;
+      overflow: hidden;
       padding: 0 18px 0 12px;
       pointer-events: auto;
     }
@@ -1258,85 +1294,117 @@ TEMPLATE = r'''<!DOCTYPE html>
       position: relative;
       top: auto;
       right: auto;
-      z-index: auto;
-      flex: none;
+      left: auto;
+      z-index: 3;
+      flex: 0 1 auto;
       margin: 0;
-      width: 100%;
-      height: auto;
+      width: 48px;
+      height: 48px;
       max-width: none;
+      border-radius: 999px;
+      background: rgba(255, 254, 252, 0.82);
+      box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
+      backdrop-filter: blur(24px) saturate(1.2);
+      -webkit-backdrop-filter: blur(24px) saturate(1.2);
+      overflow: hidden;
+    }
+    .topbar.search-focused .search-pill {
+      width: min(300px, calc(100% - 240px));
+      min-width: 148px;
+    }
+    .search-pill input,
+    .topbar.search-focused .search-pill input {
+      position: absolute;
+      display: block;
+      left: 0; right: 0; top: 0;
+      width: 100%;
+      height: 48px;
+      min-height: 48px;
+      opacity: 1;
       background: transparent;
       box-shadow: none;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
-      overflow: visible;
     }
-    .search-pill input,
+    .search-pill input {
+      color: transparent;
+      caret-color: transparent;
+      pointer-events: none;
+    }
     .topbar.search-focused .search-pill input {
-      display: block;
-      position: relative;
-      opacity: 1;
-      pointer-events: auto;
-      height: auto;
       color: var(--ink);
-      caret-color: auto;
-      background: rgba(255, 254, 252, 0.82);
-      backdrop-filter: blur(24px) saturate(1.2);
-      -webkit-backdrop-filter: blur(24px) saturate(1.2);
-      box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
+      caret-color: var(--ink);
+      pointer-events: auto;
     }
-    .search-pill input::placeholder,
+    .search-pill input::placeholder { color: transparent; }
     .topbar.search-focused .search-pill input::placeholder { color: #A89E96; }
-    .search-pill input:focus {
+    .search-pill input:focus { box-shadow: none; }
+    .topbar.search-focused .search-pill:focus-within {
       box-shadow: 0 8px 24px rgba(70, 50, 48, 0.09), 0 0 0 3px rgba(181, 122, 136, 0.22);
     }
-    .topbar.search-focused .search-pill:focus-within { box-shadow: none; }
     .search-pill .ico {
       display: block;
-      left: 14px;
-      width: 18px;
-      height: 18px;
-      transform: translateY(-50%);
+      left: 50%;
+      top: 50%;
+      width: 20px;
+      height: 20px;
+      transform: translate(-50%, -50%);
     }
-    .search-toggle { display: none; }
+    .topbar.search-focused .search-pill .ico { left: 26px; }
+    .search-toggle { display: grid; }
 
     .panel {
       position: relative;
       inset: auto;
       grid-column: 1;
-      grid-row: 2;
+      grid-row: 1;
       min-height: 0;
+      height: 100%;
       background: transparent;
       flex-direction: column;
-      overflow: hidden;
+      overflow: auto;
     }
     #app:not([data-view="events"]) #panel-list,
     #app[data-view="events"] #panel-events {
       display: flex;
     }
     .panel-header {
-      position: relative;
+      position: sticky;
+      top: 0;
       flex: 0 0 auto;
-      padding: 10px 22px 2px;
+      padding: calc(18px + var(--safe-top)) 22px 2px;
     }
     .panel-header h1 { min-height: 36px; }
     .panel-wordmark { height: 36px; }
     .panel-wordmark-all-spots { height: 40px; }
     .panel-wordmark-events { height: 32.4px; margin-left: -4px; }
     .panel-body {
-      flex: 1 1 auto;
-      min-height: 0;
-      overflow: auto;
-      padding: 10px 16px 8px;
+      flex: 0 0 auto;
+      min-height: auto;
+      overflow: visible;
+      padding: 12px 16px calc(136px + var(--safe-bottom));
     }
 
     .dock {
-      position: relative;
-      left: auto; right: auto; bottom: auto;
+      position: absolute;
+      top: auto;
+      left: 0;
+      right: auto;
+      bottom: 0;
+      width: var(--side);
       grid-column: 1;
-      grid-row: 3;
-      padding: 4px 14px 16px;
+      grid-row: 1;
+      z-index: 45;
+      padding: 0 14px calc(16px + var(--safe-bottom));
     }
-    .dock::before { display: none; }
+    .dock::before {
+      display: block;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    /* Map and list are both on screen, so the switch is phone-only. */
+    .seg { display: none; }
 
     .filter-sheet {
       left: 14px;
@@ -1349,11 +1417,14 @@ TEMPLATE = r'''<!DOCTYPE html>
     .about-drawer { width: min(420px, 36vw); }
 
     .sheet-handle { display: none; }
+    .sheet-bar { display: none; }
+    .sheet-close-btn { display: inline-flex; }
     .sheet {
       left: auto;
       right: 24px;
       bottom: 24px;
       width: min(400px, calc(100% - var(--side) - 48px));
+      height: auto;
       max-height: min(72vh, 640px);
       border-radius: 32px;
       padding-bottom: 0;
@@ -1490,6 +1561,12 @@ __SOURCES_HTML__
   <div class="sheet-backdrop" id="sheet-backdrop"></div>
   <aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden>
     <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-bar">
+      <button type="button" class="sheet-nav" id="sheet-back" aria-label="Back">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" class="sheet-nav sheet-nav-close" id="sheet-dismiss" aria-label="Close">&times;</button>
+    </div>
     <div class="sheet-scroll" id="sheet-body"></div>
   </aside>
 
@@ -1785,7 +1862,16 @@ const EVENTS_DOC = __EVENTS_JSON__;
     return badges.join('');
   }
 
-  function openSheet(p){
+  let sheetReturn = 'map';
+  function showSheet(){
+    sheet.hidden = false;
+    requestAnimationFrame(() => {
+      sheet.classList.add('open');
+      sheetBackdrop.classList.add('open');
+    });
+  }
+  function openSheet(p, returnTo){
+    sheetReturn = returnTo || 'map';
     activeId = p.id;
     Object.keys(markers).forEach(id => {
       markers[id].el.classList.toggle('active', id === p.id);
@@ -1808,14 +1894,43 @@ const EVENTS_DOC = __EVENTS_JSON__;
         ${links}
         <button type="button" class="sheet-close-btn" id="sheet-close">Close</button>
       </div>`;
-    sheet.hidden = false;
-    requestAnimationFrame(() => {
-      sheet.classList.add('open');
-      sheetBackdrop.classList.add('open');
-    });
+    showSheet();
     const closeBtn = document.getElementById('sheet-close');
     if (closeBtn) closeBtn.onclick = closeSheet;
     listEl.querySelectorAll('.place-card').forEach(el => el.classList.toggle('active', el.dataset.id === p.id));
+  }
+
+  function openEventSheet(ev){
+    sheetReturn = currentTab;
+    activeId = null;
+    Object.keys(markers).forEach(id => markers[id].el.classList.remove('active'));
+    const place = ev.place_id && placesById[ev.place_id];
+    const venue = ev.place || (place && place.name) || 'Location to be confirmed';
+    const when = eventDateLabel(ev) + ' · ' + eventTimeLabel(ev);
+    const page = ev.link
+      ? `<a class="ghost" href="${escapeHtml(ev.link)}" target="_blank" rel="noopener">Event page</a>`
+      : '';
+    sheetBody.innerHTML = `
+      <h2 id="sheet-title">${escapeHtml(ev.title)}</h2>
+      <a class="cal-add sheet-cal" href="${calendarUrl(ev)}" target="_blank" rel="noopener">Add to calendar</a>
+      <div class="sheet-section"><strong>When</strong>${escapeHtml(when)}</div>
+      <div class="sheet-section"><strong>Where</strong>${escapeHtml(venue)}</div>
+      ${ev.drive_note ? `<div class="sheet-section"><strong>Drive</strong>${escapeHtml(ev.drive_note)}</div>` : ''}
+      <div class="sheet-section"><strong>Details</strong>${escapeHtml(ev.note || 'Family-friendly event details coming soon.')}</div>
+      ${ev.source ? `<div class="sheet-section"><strong>Source</strong>${escapeHtml(ev.source)}</div>` : ''}
+      <div class="sheet-actions">
+        ${place ? '<button type="button" class="primary" id="event-show-map">Show on map</button>' : ''}
+        ${page}
+      </div>`;
+    const show = document.getElementById('event-show-map');
+    if (show && place) show.onclick = () => {
+      const origin = sheetReturn;
+      closeSheet();
+      setTab('map');
+      openSheet(place, origin);
+      flyTo(place);
+    };
+    showSheet();
   }
 
   function closeSheet(){
@@ -1826,10 +1941,16 @@ const EVENTS_DOC = __EVENTS_JSON__;
     setTimeout(() => { if (!sheet.classList.contains('open')) sheet.hidden = true; }, 320);
   }
   sheetBackdrop.addEventListener('click', closeSheet);
+  document.getElementById('sheet-back').addEventListener('click', () => {
+    const dest = sheetReturn;
+    closeSheet();
+    if (dest && dest !== 'map') setTab(dest);
+  });
+  document.getElementById('sheet-dismiss').addEventListener('click', closeSheet);
 
   function flyTo(p){
     const pad = window.matchMedia('(min-width: 768px)').matches
-      ? { top: 64, bottom: 48, left: 40, right: 40 }
+      ? { top: 96, bottom: 48, left: 40, right: 40 }
       : { top: 80, bottom: 200, left: 40, right: 40 };
     map.flyTo({ center: [p.lng, p.lat], zoom: Math.max(map.getZoom(), 13), essential: true, padding: pad });
   }
@@ -1846,7 +1967,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
       el.setAttribute('aria-label', p.name);
       el.addEventListener('click', (e) => {
         e.stopPropagation();
-        openSheet(p);
+        openSheet(p, 'map');
         flyTo(p);
       });
       const marker = new maplibregl.Marker({ element: el, anchor: 'center' })
@@ -1869,7 +1990,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
 
     if (!bounds.isEmpty()) {
       const pad = window.matchMedia('(min-width: 768px)').matches
-        ? { top: 64, bottom: 48, left: 40, right: 40 }
+        ? { top: 96, bottom: 48, left: 40, right: 40 }
         : { top: 100, bottom: 100, left: 40, right: 40 };
       map.fitBounds(bounds, { padding: pad, maxZoom: 11.5 });
     }
@@ -1908,8 +2029,9 @@ const EVENTS_DOC = __EVENTS_JSON__;
       const go = () => {
         const p = places.find(x => x.id === el.dataset.id);
         if (!p) return;
+        const origin = currentTab;
         setTab('map');
-        openSheet(p);
+        openSheet(p, origin);
         flyTo(p);
       };
       el.addEventListener('click', go);
@@ -2092,7 +2214,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
         ${groups[day].sort((a, b) => eventStartMinutes(a) - eventStartMinutes(b) || String(a.date).localeCompare(String(b.date)) || String(a.title).localeCompare(String(b.title))).map(e => {
           const linked = e.place_id && placesById[e.place_id];
           const venue = e.place || (linked && linked.name) || 'Location to be confirmed';
-          return `<article class="event-card${linked?' linked':''}"${linked?` data-place-id="${escapeHtml(e.place_id)}" role="button" tabindex="0"`:''}>
+          return `<article class="event-card${linked?' linked':''}" data-event-id="${escapeHtml(e.id)}"${linked?` data-place-id="${escapeHtml(e.place_id)}"`:''} role="button" tabindex="0">
             <div class="event-card-top">
               <h3>${escapeHtml(e.title)}</h3>
               <a class="cal-add" href="${calendarUrl(e)}" target="_blank" rel="noopener">Add to calendar</a>
@@ -2103,11 +2225,20 @@ const EVENTS_DOC = __EVENTS_JSON__;
           </article>`;
         }).join('')}
       </section>`).join('');
-    eventsEl.querySelectorAll('.event-card[data-place-id]').forEach(el => {
+    eventsEl.querySelectorAll('.event-card[data-event-id]').forEach(el => {
       const go = () => {
-        const place = placesById[el.dataset.placeId];
-        if (!place) return;
-        setTab('map'); openSheet(place); flyTo(place);
+        const ev = events.find(item => item.id === el.dataset.eventId);
+        if (!ev) return;
+        const place = ev.place_id && placesById[ev.place_id];
+        const desktop = window.matchMedia('(min-width: 768px)').matches;
+        if (desktop && place) {
+          const origin = currentTab;
+          setTab('map');
+          openSheet(place, origin);
+          flyTo(place);
+          return;
+        }
+        openEventSheet(ev);
       };
       el.addEventListener('click', e => { if (!e.target.closest('a')) go(); });
       el.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !e.target.closest('a')) { e.preventDefault(); go(); } });
@@ -2194,8 +2325,10 @@ const EVENTS_DOC = __EVENTS_JSON__;
     if (eventsActive !== wasEvents) replayFilterShellAnimation(!eventsActive);
     filterShell.setAttribute('aria-hidden', eventsActive ? 'true' : 'false');
     filterBtn.tabIndex = eventsActive ? -1 : 0;
-    topbar.hidden = !mapActive;
-    topbar.setAttribute('aria-hidden', mapActive ? 'false' : 'true');
+    const desktopLayout = window.matchMedia('(min-width: 768px)').matches;
+    const showTopbar = mapActive || desktopLayout;
+    topbar.hidden = !showTopbar;
+    topbar.setAttribute('aria-hidden', showTopbar ? 'false' : 'true');
     if (mapActive) noteMapReadyForHint();
     else {
       clearTimeout(hintWait);
@@ -2220,7 +2353,11 @@ const EVENTS_DOC = __EVENTS_JSON__;
   tabs.forEach(btn => {
     btn.addEventListener('click', () => setTab(btn.dataset.tab));
   });
-  eventsBtn.addEventListener('click', () => setTab('events'));
+  eventsBtn.addEventListener('click', () => {
+    const desktop = window.matchMedia('(min-width: 768px)').matches;
+    if (desktop && currentTab === 'events') setTab('list');
+    else setTab('events');
+  });
   filterBtn.addEventListener('click', () => {
     if (currentTab === 'events' || filterShell.classList.contains('is-away')) return;
     filterOpen ? closeFilterSheet() : openFilterSheet();
