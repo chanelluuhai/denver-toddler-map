@@ -22,6 +22,8 @@ TEMPLATE = r'''<!DOCTYPE html>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="theme-color" content="#E8E6E4"/>
+<link rel="icon" type="image/png" href="favicon.png"/>
+<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="description" content="Toddler outing map near Arvada/Denver — parks, museums, indoor play, farms from local parent guides."/>
@@ -720,7 +722,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .tab:focus-visible, .dock-btn:focus-visible, .brand:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
   .tab:active, .dock-btn:active { opacity: 0.72; transform: scale(0.97); }
   @media (prefers-reduced-motion: reduce) {
-    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome h1, .welcome-line, .welcome-credit, .welcome-enter, .search-pill, .search-pill .ico, .search-pill input, .brand, .topbar { transition: none !important; animation: none !important; }
+    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome h1, .welcome-line, .welcome-credit, .welcome-enter, .loc-secondary, .loc-note, .search-pill, .search-pill .ico, .search-pill input, .brand, .topbar { transition: none !important; animation: none !important; }
     .filter-shell.is-away {
       opacity: 0;
       transform: scale(0.82);
@@ -885,7 +887,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   .welcome h1,
   .welcome-line,
   .welcome-credit,
-  .welcome-enter {
+  .welcome-enter,
+  .loc-secondary {
     opacity: 0;
     transform: translateY(14px);
     transition: opacity 560ms cubic-bezier(.22, 1, .36, 1), transform 560ms cubic-bezier(.22, 1, .36, 1);
@@ -894,15 +897,24 @@ TEMPLATE = r'''<!DOCTYPE html>
   .welcome.open h1 { opacity: 1; transform: none; transition-delay: 220ms; }
   .welcome.open .welcome-line { opacity: 1; transform: none; transition-delay: 350ms; }
   .welcome.open .welcome-enter { opacity: 1; transform: none; transition-delay: 480ms; }
+  .welcome.open .loc-secondary { opacity: 1; transform: none; transition-delay: 560ms; }
   .welcome.open .welcome-credit { opacity: 1; transform: none; transition-delay: 620ms; }
   .welcome-emoji {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    gap: 12px;
-    font-size: 44px;
+    gap: 4px;
     line-height: 1;
     margin: 0 0 40px;
+  }
+  .welcome-emoji img {
+    width: 92px;
+    height: 92px;
+    object-fit: contain;
+    display: block;
+  }
+  @media (max-width: 380px) {
+    .welcome-emoji img { width: 76px; height: 76px; }
   }
   .welcome h1 {
     font-family: var(--display);
@@ -972,6 +984,42 @@ TEMPLATE = r'''<!DOCTYPE html>
     box-shadow: var(--shadow);
   }
   .about-replay:active { transform: scale(0.985); }
+  .loc-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: min(240px, 100%);
+    margin-top: 22px;
+    gap: 4px;
+  }
+  .loc-screen .welcome-line { margin-bottom: 0; }
+  .loc-actions .welcome-enter { margin: 0; width: 100%; }
+  .welcome-enter[disabled] { opacity: 0.72; cursor: progress; }
+  .loc-secondary {
+    width: 100%;
+    min-height: 44px;
+    border: none;
+    background: transparent;
+    color: var(--ink-2);
+    font-family: var(--font);
+    font-size: 1.02rem;
+    font-weight: 500;
+    line-height: 1.55;
+    cursor: pointer;
+    border-radius: 999px;
+  }
+  .loc-secondary:active { opacity: 0.7; }
+  .loc-secondary:focus-visible {
+    outline: 2px solid var(--accent-dark);
+    outline-offset: 3px;
+  }
+  .loc-note {
+    margin: 6px 0 0;
+    max-width: 32ch;
+    color: var(--accent-dark);
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
 
 
   /* —— Bottom sheet (place detail) —— */
@@ -1297,7 +1345,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       </button>
       <button type="button" class="filter-chip" data-filter="near" role="option" aria-selected="false">
         <span class="dot"></span>
-        <span class="label">Near (~30 min)<span class="hint"><br>From __BASE_LABEL__</span></span>
+        <span class="label">Near (~30 min)<span class="hint" id="near-from"><br>From __BASE_LABEL__</span></span>
         <span class="check"></span>
       </button>
       <button type="button" class="filter-chip" data-filter="far" role="option" aria-selected="false">
@@ -1327,14 +1375,14 @@ TEMPLATE = r'''<!DOCTYPE html>
     </div>
     <div class="about-card">
       <h2>Base & audience</h2>
-      <p>Home base: <strong>__BASE_LABEL__</strong>. Aimed at a toddler ~20 months; prefer spots within ~30 minutes.</p>
+      <p id="about-home-line">Home base: <strong>__BASE_LABEL__</strong>. Aimed at a toddler ~20 months; prefer spots within ~30 minutes.</p>
       <p>Updated __UPDATED__ · __COUNT__ places · __EVENT_COUNT__ upcoming events</p>
     </div>
     <div class="about-card">
       <h2>Map legend</h2>
       <div class="legend-row"><i style="background:#C4536E"></i> Within ~30 min</div>
       <div class="legend-row"><i style="background:#4F6F86"></i> Farther</div>
-      <div class="legend-row"><i style="background:#B57A88"></i> Home (80004)</div>
+      <div class="legend-row"><i style="background:#B57A88"></i> <span id="legend-home">Home (80004)</span></div>
     </div>
     <div class="about-card">
       <h2>Sources</h2>
@@ -1344,6 +1392,7 @@ __SOURCES_HTML__
       <p>Why-notes paraphrased from those guides. Drive times are rough estimates — confirm in Maps.</p>
     </div>
     <button type="button" class="about-replay" id="welcome-replay">What is this</button>
+    <button type="button" class="about-replay" id="loc-edit">Edit location sharing</button>
     </div>
   </aside>
 
@@ -1379,12 +1428,24 @@ __SOURCES_HTML__
 
   <div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title" hidden>
     <div class="welcome-main">
-      <div class="welcome-emoji" aria-hidden="true"><span>👶</span><span>🛝</span><span>☀️</span></div>
+      <div class="welcome-emoji" aria-hidden="true"><img src="icons/clay-baby.png" alt="" width="92" height="92"/><img src="icons/clay-slide.png" alt="" width="92" height="92"/><img src="icons/clay-book.png" alt="" width="92" height="92"/></div>
       <h1 id="welcome-title">Welcome to Toddler Spots</h1>
       <p class="welcome-line">Locations and events for toddlers, sourced from local guides.</p>
       <button type="button" class="welcome-enter" id="welcome-enter">Enter</button>
     </div>
     <p class="welcome-credit">Created by Chanel and her bot</p>
+  </div>
+
+  <div class="welcome loc-screen" id="loc-screen" role="dialog" aria-modal="true" aria-labelledby="loc-title" hidden>
+    <div class="welcome-main">
+      <h1 id="loc-title">Share your location</h1>
+      <p class="welcome-line">The map can mark spots as near or far depending on your location.</p>
+      <div class="loc-actions">
+        <button type="button" class="welcome-enter" id="loc-enable">Enable location</button>
+        <button type="button" class="loc-secondary" id="loc-default">Use Chanel's default</button>
+        <p class="loc-note" id="loc-note" hidden></p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1442,8 +1503,164 @@ const EVENTS_DOC = __EVENTS_JSON__;
     if (persist) {
       try { localStorage.setItem(WELCOME_KEY, '1'); } catch (err) {}
     }
+    const needsLoc = persist && !readLocChoice();
     welcome.classList.remove('open');
-    setTimeout(() => { if (!welcome.classList.contains('open')) welcome.hidden = true; }, 320);
+    setTimeout(() => {
+      if (!welcome.classList.contains('open')) welcome.hidden = true;
+      if (needsLoc) openLoc();
+    }, 320);
+  }
+
+  const locScreen = document.getElementById('loc-screen');
+  const locEnable = document.getElementById('loc-enable');
+  const locNote = document.getElementById('loc-note');
+  const LOC_KEY = 'toddler-spots-location';
+  let home = { mode: 'default', lat: base ? base.lat : 39.812596, lng: base ? base.lng : -105.139898 };
+  let homeMarker = null;
+
+  function readLocChoice(){
+    try {
+      const raw = localStorage.getItem(LOC_KEY);
+      if (!raw) return null;
+      const v = JSON.parse(raw);
+      if (v && v.mode === 'default') return v;
+      if (v && v.mode === 'geo' && Number.isFinite(+v.lat) && Number.isFinite(+v.lng)) return v;
+    } catch (err) {}
+    return null;
+  }
+  function haversineMiles(lat1, lng1, lat2, lng2){
+    const R = 3958.8;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+    return 2 * R * Math.asin(Math.min(1, Math.sqrt(a)));
+  }
+  function estimateMinutes(miles){
+    if (miles < 0.35) return 3;
+    return Math.max(4, Math.round(miles * 2.15 + 1.5));
+  }
+  function isFar(p){
+    return home.mode === 'geo' ? !!p._liveFar : !!p.farther_than_30min;
+  }
+  function driveMinutes(p){
+    return home.mode === 'geo' ? (p._liveMinutes || 999) : (p.approx_drive_minutes || 999);
+  }
+  function effectiveDrive(p){
+    if (home.mode === 'geo') return p._liveDrive || '';
+    return p.drive_note || '';
+  }
+  function currentHomeLngLat(){
+    if (home.mode === 'geo') return [home.lng, home.lat];
+    return base ? [base.lng, base.lat] : null;
+  }
+  function moveHomePin(){
+    const ll = currentHomeLngLat();
+    if (!homeMarker || !ll) return;
+    homeMarker.setLngLat(ll);
+    const el = homeMarker.getElement();
+    if (el) el.textContent = home.mode === 'geo' ? 'YOU' : 'HOME';
+  }
+  function computeLive(lat, lng){
+    places.forEach(p => {
+      const mi = haversineMiles(lat, lng, p.lat, p.lng);
+      const mins = estimateMinutes(mi);
+      const miles = Math.round(mi * 10) / 10;
+      const far = mins > 30;
+      p._liveMiles = miles;
+      p._liveMinutes = mins;
+      p._liveFar = far;
+      p._liveDrive = '~' + mins + ' min from your location (~' + miles.toFixed(1) + ' mi straight-line)' + (far ? ' — FARTHER (>30 min)' : '');
+    });
+  }
+  function syncLocationCopy(){
+    const line = document.getElementById('about-home-line');
+    const hint = document.getElementById('near-from');
+    const legend = document.getElementById('legend-home');
+    const label = base && base.label ? base.label : 'W 64th Ave & Ward Rd, Arvada';
+    if (home.mode === 'geo') {
+      if (line) line.innerHTML = 'Home base: <strong>your location</strong>. Spots are marked near or far from where you are. Aimed at a toddler ~20 months; prefer spots within ~30 minutes.';
+      if (hint) hint.innerHTML = '<br>From your location';
+      if (legend) legend.textContent = 'You';
+    } else {
+      if (line) line.innerHTML = 'Home base: <strong>' + escapeHtml(label) + '</strong>. Aimed at a toddler ~20 months; prefer spots within ~30 minutes.';
+      if (hint) hint.innerHTML = '<br>From ' + escapeHtml(label);
+      if (legend) legend.textContent = 'Home (80004)';
+    }
+  }
+  function refreshNearFar(){
+    places.forEach(p => {
+      const m = markers[p.id];
+      if (!m) return;
+      const far = isFar(p);
+      m.el.classList.toggle('far', far);
+      m.el.classList.toggle('near', !far);
+    });
+    moveHomePin();
+    syncLocationCopy();
+    renderList();
+    if (activeId && sheet.classList.contains('open')) {
+      const p = places.find(x => x.id === activeId);
+      if (p) openSheet(p);
+    }
+  }
+  function setGeoHome(lat, lng){
+    home = { mode: 'geo', lat: lat, lng: lng };
+    computeLive(lat, lng);
+    refreshNearFar();
+  }
+  function setDefaultHome(){
+    home = { mode: 'default', lat: base ? base.lat : 39.812596, lng: base ? base.lng : -105.139898 };
+    refreshNearFar();
+  }
+  function openLoc(){
+    const bits = locScreen.querySelectorAll('h1, .welcome-line, .welcome-enter, .loc-secondary');
+    locScreen.classList.remove('open');
+    locScreen.hidden = false;
+    locNote.hidden = true;
+    locEnable.disabled = false;
+    locEnable.textContent = 'Enable location';
+    locScreen.style.transition = 'none';
+    bits.forEach((el) => { el.style.transition = 'none'; });
+    void locScreen.offsetWidth;
+    locScreen.style.removeProperty('transition');
+    bits.forEach((el) => { el.style.removeProperty('transition'); });
+    requestAnimationFrame(() => {
+      locScreen.classList.add('open');
+      setTimeout(() => { if (locScreen.classList.contains('open')) locEnable.focus({ preventScroll: true }); }, 700);
+    });
+  }
+  function closeLoc(){
+    locScreen.classList.remove('open');
+    setTimeout(() => { if (!locScreen.classList.contains('open')) locScreen.hidden = true; }, 320);
+  }
+  function enableLocation(){
+    if (!navigator.geolocation) {
+      locNote.hidden = false;
+      locNote.textContent = 'This browser can’t share location. You can use Chanel’s default.';
+      return;
+    }
+    locEnable.disabled = true;
+    locEnable.textContent = 'Finding you…';
+    locNote.hidden = true;
+    navigator.geolocation.getCurrentPosition(function(pos){
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      try { localStorage.setItem(LOC_KEY, JSON.stringify({ mode: 'geo', lat: lat, lng: lng })); } catch (err) {}
+      setGeoHome(lat, lng);
+      locEnable.disabled = false;
+      locEnable.textContent = 'Enable location';
+      closeLoc();
+    }, function(){
+      locEnable.disabled = false;
+      locEnable.textContent = 'Enable location';
+      locNote.hidden = false;
+      locNote.textContent = 'Location was blocked. Try again, or use Chanel’s default.';
+    }, { enableHighAccuracy: false, timeout: 12000, maximumAge: 600000 });
+  }
+  function useChanelDefault(){
+    try { localStorage.setItem(LOC_KEY, JSON.stringify({ mode: 'default' })); } catch (err) {}
+    setDefaultHome();
+    closeLoc();
   }
 
 
@@ -1487,7 +1704,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
 
   function badgesHtml(p){
     const badges = [];
-    badges.push(p.farther_than_30min ? '<span class="badge far">Farther</span>' : '<span class="badge near">Near</span>');
+    badges.push(isFar(p) ? '<span class="badge far">Farther</span>' : '<span class="badge near">Near</span>');
     if (isFree(p)) badges.push('<span class="badge free">Free</span>');
     if (isIndoor(p)) badges.push('<span class="badge indoor">Indoor</span>');
     return badges.join('');
@@ -1507,7 +1724,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
       <div class="sheet-section"><strong>Address</strong>${escapeHtml(p.address||'—')}</div>
       <div class="sheet-section"><strong>Why go</strong>${escapeHtml(p.why||'')}</div>
       <div class="sheet-section"><strong>Source</strong>${escapeHtml(p.source||'')}</div>
-      ${p.drive_note ? `<div class="sheet-section"><strong>Drive</strong>${escapeHtml(p.drive_note)}</div>` : ''}
+      ${effectiveDrive(p) ? `<div class="sheet-section"><strong>Drive</strong>${escapeHtml(effectiveDrive(p))}</div>` : ''}
       ${p.hours ? `<div class="sheet-section"><strong>Hours</strong>${escapeHtml(p.hours)}</div>` : ''}
       ${p.cost ? `<div class="sheet-section"><strong>Cost</strong>${escapeHtml(p.cost)}</div>` : ''}
       ${p.toddler_notes ? `<div class="sheet-section"><strong>Toddler tip</strong>${escapeHtml(p.toddler_notes)}</div>` : ''}
@@ -1548,7 +1765,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
 
     places.forEach(p => {
       const el = document.createElement('div');
-      el.className = 'pin ' + (p.farther_than_30min ? 'far' : 'near');
+      el.className = 'pin ' + (isFar(p) ? 'far' : 'near');
       el.title = p.name;
       el.setAttribute('role', 'button');
       el.setAttribute('aria-label', p.name);
@@ -1564,14 +1781,15 @@ const EVENTS_DOC = __EVENTS_JSON__;
       bounds.extend([p.lng, p.lat]);
     });
 
-    if (base) {
+    const homeLL = currentHomeLngLat();
+    if (homeLL) {
       const homeEl = document.createElement('div');
       homeEl.className = 'home-pin';
-      homeEl.textContent = 'HOME';
-      new maplibregl.Marker({ element: homeEl, anchor: 'center' })
-        .setLngLat([base.lng, base.lat])
+      homeEl.textContent = home.mode === 'geo' ? 'YOU' : 'HOME';
+      homeMarker = new maplibregl.Marker({ element: homeEl, anchor: 'center' })
+        .setLngLat(homeLL)
         .addTo(map);
-      bounds.extend([base.lng, base.lat]);
+      bounds.extend(homeLL);
     }
 
     if (!bounds.isEmpty()) {
@@ -1589,8 +1807,8 @@ const EVENTS_DOC = __EVENTS_JSON__;
     return blob.includes(q);
   }
   function passesFilter(p){
-    if (filter === 'near') return !p.farther_than_30min;
-    if (filter === 'far') return !!p.farther_than_30min;
+    if (filter === 'near') return !isFar(p);
+    if (filter === 'far') return isFar(p);
     if (filter === 'free') return isFree(p);
     if (filter === 'indoor') return isIndoor(p);
     return true;
@@ -1599,7 +1817,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
 
 
   function renderList(){
-    const sorted = places.slice().sort((a,b)=> (a.approx_drive_minutes||999)-(b.approx_drive_minutes||999));
+    const sorted = places.slice().sort((a,b)=> driveMinutes(a)-driveMinutes(b));
     const filtered = sorted.filter(p => passesFilter(p) && matchesQuery(p, query));
     if (!filtered.length) {
       listEl.innerHTML = '<div class="empty">No spots match.<br>Try another filter or clear search.</div>';
@@ -1658,8 +1876,10 @@ const EVENTS_DOC = __EVENTS_JSON__;
     return time && !/confirm/i.test(time) ? time : 'Time to be confirmed';
   }
   function placeKeyLine(p){
-    if (p.drive_note) return p.drive_note;
-    if (p.approx_drive_minutes) return '~' + p.approx_drive_minutes + ' min';
+    const note = effectiveDrive(p);
+    if (note) return note;
+    const mins = driveMinutes(p);
+    if (mins && mins < 900) return '~' + mins + ' min';
     return '';
   }
   function eventDateKeys(e){
@@ -1933,17 +2153,30 @@ const EVENTS_DOC = __EVENTS_JSON__;
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
     if (!welcome.hidden) closeWelcome(false);
+    else if (locScreen && !locScreen.hidden) { if (readLocChoice()) closeLoc(); }
     else if (aboutOpen) closeAbout();
     else if (filterOpen) closeFilterSheet();
   });
   welcomeEnter.addEventListener('click', () => closeWelcome(true));
   document.getElementById('welcome-replay').addEventListener('click', openWelcome);
+  document.getElementById('loc-edit').addEventListener('click', () => {
+    closeAbout();
+    setTimeout(openLoc, 180);
+  });
+  locEnable.addEventListener('click', enableLocation);
+  document.getElementById('loc-default').addEventListener('click', useChanelDefault);
   moveTabIndicator(currentTab, true);
   try {
     if (localStorage.getItem(WELCOME_KEY) !== '1') openWelcome();
+    else if (!readLocChoice()) openLoc();
   } catch (err) {
     openWelcome();
   }
+  (function restoreLocation(){
+    const stored = readLocChoice();
+    if (stored && stored.mode === 'geo') setGeoHome(+stored.lat, +stored.lng);
+    else syncLocationCopy();
+  })();
 
   function setFilter(f){
     filter = f;
@@ -2100,6 +2333,13 @@ def build():
         src = OUT_DIR / name
         if src.exists():
             shutil.copy2(src, DOCS_DIR / name)
+    icons_src = DOCS_DIR / "icons"
+    if icons_src.exists():
+        shutil.copytree(icons_src, OUT_DIR / "icons", dirs_exist_ok=True)
+    for name in ("favicon.png", "apple-touch-icon.png"):
+        src = DOCS_DIR / name
+        if src.exists():
+            shutil.copy2(src, OUT_DIR / name)
     if sources_backup is not None:
         sources.write_text(sources_backup)
 
