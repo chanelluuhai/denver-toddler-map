@@ -953,6 +953,9 @@ TEMPLATE = r'''<!DOCTYPE html>
     opacity: 0;
     transform: translateY(14px) scale(.96);
   }
+  @media (max-width: 600px) {
+    .welcome-wordmark { width: min(245px, 64.4vw); }
+  }
   .welcome h1 {
     font-family: var(--display);
     font-weight: 600;
