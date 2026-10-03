@@ -381,6 +381,9 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   /* The All spots lettering is optically smaller than Events at the same image height. */
   .panel-wordmark-all-spots { height: 46px; }
+  /* The Events asset has transparent padding on the left; align its visible
+     lettering with the day heading below it. */
+  .panel-wordmark-events { height: 37.8px; margin-left: -5px; }
   .panel-body {
     /* Leave the frosted sticky heading room to fade before content begins. */
     padding: 12px 18px calc(var(--tab-h) + 22px);
@@ -1318,6 +1321,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     .panel-header h1 { min-height: 36px; }
     .panel-wordmark { height: 36px; }
     .panel-wordmark-all-spots { height: 40px; }
+    .panel-wordmark-events { height: 32.4px; margin-left: -4px; }
     .panel-body {
       flex: 1 1 auto;
       min-height: 0;
@@ -1389,7 +1393,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   <section class="panel" id="panel-events" aria-label="Upcoming events">
     <div class="panel-header">
-      <h1><img class="panel-wordmark" src="icons/clay-events.png" alt="Events" width="930" height="222"/></h1>
+      <h1><img class="panel-wordmark panel-wordmark-events" src="icons/clay-events.png" alt="Events" width="930" height="222"/></h1>
     </div>
     <div class="panel-body" id="events"></div>
   </section>
