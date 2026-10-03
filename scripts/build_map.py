@@ -684,7 +684,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     overflow: hidden;
     transform-origin: center;
   }
-  /* Same curve as the show animation, played backwards on hide. */
+  /* The same animation runs in both directions; JS resets the class so it
+     can replay whenever the button changes tabs. */
   .filter-shell.is-shown {
     animation: filterShellIn 420ms cubic-bezier(.22, 1, .36, 1) both;
   }
@@ -1879,16 +1880,23 @@ const EVENTS_DOC = __EVENTS_JSON__;
     }, 520);
   }
 
+  function replayFilterShellAnimation(show){
+    filterShell.classList.remove('is-shown', 'is-away');
+    // Flush the collapsed/expanded state before adding the same animation
+    // class again, otherwise the browser may keep the one-shot animation at
+    // its finished state and skip the next transition.
+    void filterShell.offsetWidth;
+    filterShell.classList.add(show ? 'is-shown' : 'is-away');
+  }
+
   function setTab(name){
+    const wasEvents = currentTab === 'events';
     currentTab = name;
     app.dataset.view = name;
     const mapActive = name === 'map';
     const eventsActive = name === 'events';
     if (eventsActive && filterOpen) closeFilterSheet();
-    const filterMoved = filterShell.dataset.moved === '1';
-    filterShell.classList.toggle('is-away', eventsActive);
-    filterShell.classList.toggle('is-shown', filterMoved && !eventsActive);
-    if (eventsActive) filterShell.dataset.moved = '1';
+    if (eventsActive !== wasEvents) replayFilterShellAnimation(!eventsActive);
     filterShell.setAttribute('aria-hidden', eventsActive ? 'true' : 'false');
     filterBtn.tabIndex = eventsActive ? -1 : 0;
     topbar.hidden = !mapActive;
