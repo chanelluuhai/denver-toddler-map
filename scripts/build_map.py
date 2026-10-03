@@ -24,7 +24,9 @@ TEMPLATE = r'''<!DOCTYPE html>
 <meta name="theme-color" content="#E8E6E4"/>
 <link rel="icon" type="image/png" href="favicon.png"/>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+<link rel="manifest" href="site.webmanifest"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Toddler Spots"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="description" content="Toddler outing map near Arvada/Denver — parks, museums, indoor play, farms from local parent guides."/>
 <title>Toddler Spots · Denver / Arvada</title>
@@ -2342,7 +2344,7 @@ def build():
     icons_src = DOCS_DIR / "icons"
     if icons_src.exists():
         shutil.copytree(icons_src, OUT_DIR / "icons", dirs_exist_ok=True)
-    for name in ("favicon.png", "apple-touch-icon.png"):
+    for name in ("favicon.png", "apple-touch-icon.png", "site.webmanifest"):
         src = DOCS_DIR / name
         if src.exists():
             shutil.copy2(src, OUT_DIR / name)
