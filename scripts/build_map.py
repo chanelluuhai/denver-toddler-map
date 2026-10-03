@@ -151,8 +151,10 @@ TEMPLATE = r'''<!DOCTYPE html>
       max-width 460ms cubic-bezier(0.4, 0, 0.2, 1),
       padding 460ms cubic-bezier(0.4, 0, 0.2, 1),
       margin 460ms cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 280ms ease;
+      opacity 280ms ease,
+      width 320ms cubic-bezier(0.4, 0, 0.2, 1);
   }
+  .brand.showing-hint { max-width: calc(100% - 70px); }
   .brand-mark {
     width: 38px; height: 38px;
     border-radius: 0;
@@ -172,6 +174,14 @@ TEMPLATE = r'''<!DOCTYPE html>
     font-size: 1.08rem;
     letter-spacing: -0.015em;
     line-height: 1;
+    white-space: nowrap;
+    transition: opacity 180ms ease;
+  }
+  .brand-text.is-hint {
+    font-family: var(--font);
+    font-weight: 500;
+    font-size: 0.84rem;
+    letter-spacing: -0.012em;
   }
 
   .search-pill {
@@ -725,7 +735,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .tab:focus-visible, .dock-btn:focus-visible, .brand:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
   .tab:active, .dock-btn:active { opacity: 0.72; transform: scale(0.97); }
   @media (prefers-reduced-motion: reduce) {
-    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome h1, .welcome-line, .welcome-credit, .welcome-enter, .loc-secondary, .loc-note, .search-pill, .search-pill .ico, .search-pill input, .brand, .topbar { transition: none !important; animation: none !important; }
+    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome h1, .welcome-line, .welcome-credit, .welcome-enter, .loc-secondary, .loc-note, .search-pill, .search-pill .ico, .search-pill input, .brand, .brand-text, .topbar { transition: none !important; animation: none !important; }
     .filter-shell.is-away {
       opacity: 0;
       transform: scale(0.82);
@@ -1495,6 +1505,8 @@ const EVENTS_DOC = __EVENTS_JSON__;
   const welcomeEnter = document.getElementById('welcome-enter');
   const WELCOME_KEY = 'toddler-spots-welcome';
   function openWelcome(){
+    clearTimeout(hintWait);
+    if (hintBusy) cancelHeaderHint();
     const bits = welcome.querySelectorAll('.welcome-emoji, h1, .welcome-line, .welcome-enter, .welcome-credit');
     welcome.classList.remove('open');
     welcome.hidden = false;
@@ -1517,6 +1529,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
     setTimeout(() => {
       if (!welcome.classList.contains('open')) welcome.hidden = true;
       if (needsLoc) openLoc();
+      else noteMapReadyForHint();
     }, 320);
   }
 
@@ -1622,6 +1635,8 @@ const EVENTS_DOC = __EVENTS_JSON__;
     refreshNearFar();
   }
   function openLoc(){
+    clearTimeout(hintWait);
+    if (hintBusy) cancelHeaderHint();
     const bits = locScreen.querySelectorAll('h1, .welcome-line, .welcome-enter, .loc-secondary');
     locScreen.classList.remove('open');
     locScreen.hidden = false;
@@ -1640,7 +1655,10 @@ const EVENTS_DOC = __EVENTS_JSON__;
   }
   function closeLoc(){
     locScreen.classList.remove('open');
-    setTimeout(() => { if (!locScreen.classList.contains('open')) locScreen.hidden = true; }, 320);
+    setTimeout(() => {
+      if (!locScreen.classList.contains('open')) locScreen.hidden = true;
+      noteMapReadyForHint();
+    }, 320);
   }
   function enableLocation(){
     if (!navigator.geolocation) {
@@ -2130,6 +2148,11 @@ const EVENTS_DOC = __EVENTS_JSON__;
     filterBtn.tabIndex = eventsActive ? -1 : 0;
     topbar.hidden = !mapActive;
     topbar.setAttribute('aria-hidden', mapActive ? 'false' : 'true');
+    if (mapActive) noteMapReadyForHint();
+    else {
+      clearTimeout(hintWait);
+      if (hintBusy) cancelHeaderHint();
+    }
     const viewOn = name === 'map' || name === 'list';
     tabs.forEach(t => {
       const on = viewOn && t.dataset.tab === name;
@@ -2166,6 +2189,153 @@ const EVENTS_DOC = __EVENTS_JSON__;
     else if (aboutOpen) closeAbout();
     else if (filterOpen) closeFilterSheet();
   });
+
+  const HINT_KEY = 'toddler-spots-header-hint';
+  const HINT_LABEL = 'Click here for more info';
+  const BRAND_LABEL = 'Toddler Spots';
+  let hintWait = 0;
+  let hintPhase = 0;
+  let hintBusy = false;
+  let hintGen = 0;
+  function brandTextEl(){ return openAboutBtn.querySelector('.brand-text'); }
+  function hintSeen(){
+    try { return localStorage.getItem(HINT_KEY) === '1'; } catch (err) { return true; }
+  }
+  function markHintSeen(){
+    try { localStorage.setItem(HINT_KEY, '1'); } catch (err) {}
+  }
+  function mapReadyForHint(){
+    return !!(welcome.hidden && locScreen.hidden && !topbar.hidden && currentTab === 'map' && !topbar.classList.contains('search-focused'));
+  }
+  function restoreBrandTitle(){
+    const text = brandTextEl();
+    const pill = openAboutBtn;
+    text.classList.remove('is-hint');
+    text.textContent = BRAND_LABEL;
+    text.style.opacity = '';
+    pill.classList.remove('showing-hint');
+    pill.style.width = '';
+    pill.style.overflow = '';
+    pill.style.transition = '';
+  }
+  function cancelHeaderHint(){
+    hintGen++;
+    hintBusy = false;
+    clearTimeout(hintPhase);
+    restoreBrandTitle();
+  }
+  function noteMapReadyForHint(){
+    if (hintSeen() || hintBusy) return;
+    clearTimeout(hintWait);
+    hintWait = setTimeout(runHeaderHint, 1000);
+  }
+  function measureBrandWidth(mutate){
+    const pill = openAboutBtn;
+    const locked = pill.style.width;
+    const prevTransition = pill.style.transition;
+    pill.style.transition = 'none';
+    mutate();
+    const w = Math.ceil(pill.getBoundingClientRect().width);
+    pill.style.width = locked;
+    void pill.offsetWidth;
+    pill.style.transition = prevTransition;
+    return w;
+  }
+  function collapsedBrandWidth(){
+    const text = brandTextEl();
+    const pill = openAboutBtn;
+    const locked = pill.style.width;
+    const prevTransition = pill.style.transition;
+    pill.style.transition = 'none';
+    text.style.display = 'none';
+    pill.style.width = 'max-content';
+    const w = Math.ceil(pill.getBoundingClientRect().width);
+    text.style.display = '';
+    pill.style.width = locked;
+    void pill.offsetWidth;
+    pill.style.transition = prevTransition;
+    return w;
+  }
+  function naturalBrandWidth(){
+    return measureBrandWidth(() => {
+      openAboutBtn.style.width = 'max-content';
+    });
+  }
+  function runHeaderHint(){
+    if (hintSeen() || hintBusy) return;
+    if (!mapReadyForHint()) return;
+    const text = brandTextEl();
+    const pill = openAboutBtn;
+    const gen = ++hintGen;
+    hintBusy = true;
+    function alive(){ return gen === hintGen && mapReadyForHint(); }
+    function stop(){
+      if (gen !== hintGen) return;
+      cancelHeaderHint();
+      if (!hintSeen()) noteMapReadyForHint();
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      text.textContent = HINT_LABEL;
+      text.classList.add('is-hint');
+      markHintSeen();
+      hintPhase = setTimeout(() => {
+        if (!alive()) { stop(); return; }
+        hintBusy = false;
+        restoreBrandTitle();
+      }, 3000);
+      return;
+    }
+    const startW = Math.ceil(pill.getBoundingClientRect().width);
+    const small = collapsedBrandWidth();
+    pill.style.overflow = 'hidden';
+    pill.style.transition = 'none';
+    pill.style.width = startW + 'px';
+    text.style.opacity = '1';
+    void pill.offsetWidth;
+    pill.style.transition = '';
+    text.style.opacity = '0';
+    pill.style.width = small + 'px';
+    hintPhase = setTimeout(() => {
+      if (!alive()) { stop(); return; }
+      text.textContent = HINT_LABEL;
+      text.classList.add('is-hint');
+      pill.classList.add('showing-hint');
+      const target = naturalBrandWidth();
+      pill.style.transition = 'none';
+      pill.style.width = small + 'px';
+      void pill.offsetWidth;
+      pill.style.transition = '';
+      text.style.opacity = '1';
+      pill.style.width = target + 'px';
+      markHintSeen();
+      hintPhase = setTimeout(() => {
+        if (!alive()) { stop(); return; }
+        text.style.opacity = '0';
+        pill.style.width = small + 'px';
+        hintPhase = setTimeout(() => {
+          if (!alive()) { stop(); return; }
+          text.classList.remove('is-hint');
+          text.textContent = BRAND_LABEL;
+          pill.classList.remove('showing-hint');
+          const back = naturalBrandWidth();
+          pill.style.transition = 'none';
+          pill.style.width = small + 'px';
+          void pill.offsetWidth;
+          pill.style.transition = '';
+          text.style.opacity = '1';
+          pill.style.width = back + 'px';
+          hintPhase = setTimeout(() => {
+            if (gen !== hintGen) return;
+            hintBusy = false;
+            pill.style.width = '';
+            pill.style.overflow = '';
+            text.style.opacity = '';
+          }, 360);
+        }, 340);
+      }, 3320);
+    }, 340);
+  }
+
   welcomeEnter.addEventListener('click', () => closeWelcome(true));
   document.getElementById('welcome-replay').addEventListener('click', openWelcome);
   document.getElementById('loc-edit').addEventListener('click', () => {
@@ -2178,6 +2348,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
   try {
     if (localStorage.getItem(WELCOME_KEY) !== '1') openWelcome();
     else if (!readLocChoice()) openLoc();
+    else noteMapReadyForHint();
   } catch (err) {
     openWelcome();
   }
@@ -2205,6 +2376,8 @@ const EVENTS_DOC = __EVENTS_JSON__;
 
   let searchTimer;
   function openSearch(){
+    clearTimeout(hintWait);
+    if (hintBusy) cancelHeaderHint();
     searchToggle.classList.add('is-active');
     searchToggle.setAttribute('aria-expanded', 'true');
     searchToggle.setAttribute('aria-pressed', 'true');
@@ -2218,6 +2391,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
       searchToggle.classList.remove('is-active');
       searchToggle.setAttribute('aria-expanded', 'false');
       searchToggle.setAttribute('aria-pressed', 'false');
+      noteMapReadyForHint();
     }
   }
   searchToggle.addEventListener('pointerdown', () => {
