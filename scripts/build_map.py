@@ -735,7 +735,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .tab:focus-visible, .dock-btn:focus-visible, .brand:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
   .tab:active, .dock-btn:active { opacity: 0.72; transform: scale(0.97); }
   @media (prefers-reduced-motion: reduce) {
-    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome-emoji img, .welcome h1, .welcome-line, .welcome-credit, .welcome-enter, .loc-secondary, .loc-note, .search-pill, .search-pill .ico, .search-pill input, .brand, .brand-text, .topbar { transition: none !important; animation: none !important; }
+    .tab-indicator, .tab, .dock-btn, .filter-shell, .filter-sheet, .about-drawer, .drawer-backdrop, .filter-backdrop, .welcome, .welcome-emoji, .welcome-emoji img, .welcome-wordmark, .welcome h1, .welcome-line, .welcome-credit, .welcome-enter, .loc-secondary, .loc-note, .search-pill, .search-pill .ico, .search-pill input, .brand, .brand-text, .topbar { transition: none !important; animation: none !important; }
     .filter-shell.is-away {
       opacity: 0;
       transform: scale(0.82);
@@ -903,6 +903,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     width: min(420px, 100%);
   }
   .welcome-emoji,
+  .welcome-wordmark,
   .welcome h1,
   .welcome-line,
   .welcome-credit,
@@ -913,6 +914,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     transition: opacity 560ms cubic-bezier(.22, 1, .36, 1), transform 560ms cubic-bezier(.22, 1, .36, 1);
   }
   .welcome.open .welcome-emoji { opacity: 1; transform: none; transition-delay: 90ms; }
+  .welcome.open .welcome-wordmark { opacity: 1; transform: none; transition-delay: 220ms; }
   .welcome.open h1 { opacity: 1; transform: none; transition-delay: 220ms; }
   .welcome.open .welcome-line { opacity: 1; transform: none; transition-delay: 350ms; }
   .welcome.open .welcome-enter { opacity: 1; transform: none; transition-delay: 480ms; }
@@ -941,6 +943,15 @@ TEMPLATE = r'''<!DOCTYPE html>
   .welcome.open .welcome-emoji img:nth-child(3) { animation-delay: 220ms; }
   @media (max-width: 380px) {
     .welcome-emoji img { width: 76px; height: 76px; }
+  }
+  .welcome-wordmark {
+    width: min(350px, 92vw);
+    height: auto;
+    display: block;
+    object-fit: contain;
+    margin: 0 0 28px;
+    opacity: 0;
+    transform: translateY(14px) scale(.96);
   }
   .welcome h1 {
     font-family: var(--display);
@@ -1461,7 +1472,7 @@ __SOURCES_HTML__
   <div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title" hidden>
     <div class="welcome-main">
       <div class="welcome-emoji" aria-hidden="true"><img src="icons/clay-baby.png" alt="" width="92" height="92"/><img src="icons/clay-slide.png" alt="" width="92" height="92"/><img src="icons/clay-book.png" alt="" width="92" height="92"/></div>
-      <h1 id="welcome-title">Welcome to Toddler Spots</h1>
+      <img class="welcome-wordmark" id="welcome-title" src="icons/clay-wordmark.png" alt="Toddler Spots" width="770" height="354"/>
       <p class="welcome-line">Locations and events for toddlers, sourced from local guides.</p>
       <button type="button" class="welcome-enter" id="welcome-enter">Enter</button>
     </div>
@@ -1520,7 +1531,7 @@ const EVENTS_DOC = __EVENTS_JSON__;
   function openWelcome(){
     clearTimeout(hintWait);
     if (hintBusy) cancelHeaderHint();
-    const bits = welcome.querySelectorAll('.welcome-emoji, h1, .welcome-line, .welcome-enter, .welcome-credit');
+    const bits = welcome.querySelectorAll('.welcome-emoji, .welcome-wordmark, .welcome-line, .welcome-enter, .welcome-credit');
     welcome.classList.remove('open');
     welcome.hidden = false;
     welcome.style.transition = 'none';
