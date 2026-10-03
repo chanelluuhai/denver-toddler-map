@@ -943,9 +943,9 @@ TEMPLATE = r'''<!DOCTYPE html>
     letter-spacing: 0.01em;
   }
   .welcome-enter {
-    width: min(176px, 100%);
-    min-height: 46px;
-    margin: clamp(30px, 6vh, 54px) 0 0;
+    width: min(184px, 100%);
+    min-height: 50px;
+    margin: 18px 0 0;
     color: #fff;
     background: linear-gradient(120deg, #C98998 0%, #DFA9B5 44%, #B57A88 100%);
     background-size: 220% 100%;
