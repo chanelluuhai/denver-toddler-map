@@ -152,16 +152,17 @@ TEMPLATE = r'''<!DOCTYPE html>
       opacity 280ms ease;
   }
   .brand-mark {
-    width: auto; height: auto;
+    width: 38px; height: 38px;
     border-radius: 0;
     background: transparent;
     color: inherit;
     display: grid; place-items: center;
     flex-shrink: 0;
   }
-  .brand-mark .brand-emoji {
-    font-size: 22px;
-    line-height: 1;
+  .brand-logo {
+    width: 38px; height: 38px;
+    object-fit: contain;
+    display: block;
   }
   .brand-text {
     font-family: var(--display);
@@ -961,16 +962,22 @@ TEMPLATE = r'''<!DOCTYPE html>
     color: #fff;
     background: linear-gradient(120deg, #C98998 0%, #DFA9B5 44%, #B57A88 100%);
     background-size: 220% 100%;
-    border: 1px solid rgba(255, 255, 255, 0.42);
+    border: 0;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
     -webkit-backdrop-filter: blur(14px) saturate(1.2);
     backdrop-filter: blur(14px) saturate(1.2);
     box-shadow: none;
     animation: welcomeButtonGradient 8s ease-in-out infinite;
   }
   .welcome-enter:active { transform: scale(0.98); }
-  .welcome-enter:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.86);
-    outline-offset: 3px;
+  .welcome-enter:focus,
+  .welcome-enter:focus-visible,
+  .welcome-enter:hover,
+  .welcome-enter:active {
+    border: 0;
+    outline: none;
     box-shadow: none;
   }
   .about-replay:focus-visible {
@@ -1304,9 +1311,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   <header class="topbar">
     <button type="button" class="brand" id="open-about" aria-haspopup="dialog" aria-controls="about-drawer" aria-expanded="false">
       <span class="brand-mark">
-        <span class="brand-emoji" role="img" aria-label="Baby">👶</span>
+        <img class="brand-logo" src="icons/header-baby.png" alt="Toddler Spots"/>
       </span>
-      <span class="brand-text">Toddler Spots</span>
     </button>
     <div class="search-pill">
       <button type="button" class="search-toggle" id="search-toggle" aria-label="Search" aria-expanded="false" aria-pressed="false">
