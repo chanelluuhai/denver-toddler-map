@@ -1,7 +1,7 @@
 {
   "meta": {
-    "updated": "2026-10-02",
-    "as_of": "2026-10-02",
+    "updated": "2026-10-03",
+    "as_of": "2026-10-03",
     "timezone": "America/Denver",
     "notes": "Upcoming, dated family events kept separate from map pins. Confirm times, access, and weather with the linked organizer before heading out."
   },
@@ -33,6 +33,19 @@
       "source": "City of Lakewood / Days.in.denver Fall guide"
     },
     {
+      "id": "giggling-life-fall-festival-2026",
+      "title": "Fall Festival at Giggling Life Care Farm",
+      "date": "2026-10-10",
+      "end_date": "2026-10-10",
+      "time": "10:00 AM–12:00 PM or 4:00–6:00 PM",
+      "place_id": "giggling-life-care-farm",
+      "place": "Giggling Life Care Farm, Brighton",
+      "link": "https://www.thegigglinglife.com/copy-of-the-farm",
+      "note": "Ticketed farm festival with animals, hay ride, crafts, and pumpkin; code coloradokid5 was listed for $5 off per person.",
+      "drive_note": "~34 min from the 64th & Ward base",
+      "source": "Colorado Kids Explore / Giggling Life Care Farm"
+    },
+    {
       "id": "csu-spur-2nd-saturday-oct-2026",
       "title": "2nd Saturday at CSU Spur: Día de los Muertos",
       "date": "2026-10-10",
@@ -57,19 +70,6 @@
       "note": "Free museum admission for Fire Safety & Prevention Week; check the museum before going.",
       "drive_note": "~22 min from the 64th & Ward base",
       "source": "Denver Firefighters Museum"
-    },
-    {
-      "id": "giggling-life-fall-festival-2026",
-      "title": "Fall Festival at Giggling Life Care Farm",
-      "date": "2026-10-10",
-      "end_date": "2026-10-10",
-      "time": "10:00 AM–12:00 PM or 4:00–6:00 PM",
-      "place_id": "giggling-life-care-farm",
-      "place": "Giggling Life Care Farm, Brighton",
-      "link": "https://www.thegigglinglife.com/copy-of-the-farm",
-      "note": "Ticketed farm festival with animals, hay ride, crafts, and pumpkin; code coloradokid5 was listed for $5 off per person.",
-      "drive_note": "~34 min from the 64th & Ward base",
-      "source": "Colorado Kids Explore / Giggling Life Care Farm"
     },
     {
       "id": "infinity-park-trunk-or-treat-2026",
@@ -120,6 +120,18 @@
       "note": "Free indoor trick-or-treating with candy and non-candy treats plus activities on each floor; no registration listed.",
       "drive_note": "~26 min from the 64th & Ward base",
       "source": "Denver Public Library / Days.in.denver"
+    },
+    {
+      "id": "olde-town-trick-or-treat-2026",
+      "title": "Olde Town Trick or Treat Street",
+      "date": "2026-10-30",
+      "end_date": "2026-10-30",
+      "time": "5:00–7:00 PM",
+      "place": "Olde Town Arvada",
+      "link": "https://www.oldetownarvada.org/event-details/trick-or-treat-street-2026-1",
+      "note": "Family trick-or-treating along Olde Town; Friday before Halloween.",
+      "drive_note": "~7 min from the 64th & Ward base",
+      "source": "Olde Town Arvada"
     }
   ]
 }
