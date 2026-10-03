@@ -379,6 +379,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     object-fit: contain;
     object-position: left center;
   }
+  /* The All spots lettering is optically smaller than Events at the same image height. */
+  .panel-wordmark-all-spots { height: 46px; }
   .panel-body {
     /* Leave the frosted sticky heading room to fade before content begins. */
     padding: 12px 18px calc(var(--tab-h) + 22px);
@@ -1315,6 +1317,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     }
     .panel-header h1 { min-height: 36px; }
     .panel-wordmark { height: 36px; }
+    .panel-wordmark-all-spots { height: 40px; }
     .panel-body {
       flex: 1 1 auto;
       min-height: 0;
@@ -1379,7 +1382,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   <section class="panel" id="panel-list" aria-label="Place list">
     <div class="panel-header">
-      <h1><img class="panel-wordmark" src="icons/clay-all-spots.png" alt="All spots" width="1050" height="270"/></h1>
+      <h1><img class="panel-wordmark panel-wordmark-all-spots" src="icons/clay-all-spots.png" alt="All spots" width="1050" height="270"/></h1>
     </div>
     <div class="panel-body" id="list"></div>
   </section>
