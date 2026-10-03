@@ -32,7 +32,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 <title>Toddler Spots · Denver / Arvada</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Alice&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet"/>
 <style>
   :root {
@@ -67,7 +67,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
     --font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    --display: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --display: "Alice", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; margin: 0; overflow: hidden; }
@@ -365,6 +365,19 @@ TEMPLATE = r'''<!DOCTYPE html>
     letter-spacing: -0.02em;
     line-height: 1.2;
     color: var(--ink);
+  }
+  .panel-header h1 {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+  }
+  .panel-wordmark {
+    display: block;
+    width: auto;
+    height: 42px;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left center;
   }
   .panel-body {
     /* Leave the frosted sticky heading room to fade before content begins. */
@@ -1300,7 +1313,8 @@ TEMPLATE = r'''<!DOCTYPE html>
       flex: 0 0 auto;
       padding: 10px 22px 2px;
     }
-    .panel-header h1 { font-size: 1.65rem; }
+    .panel-header h1 { min-height: 36px; }
+    .panel-wordmark { height: 36px; }
     .panel-body {
       flex: 1 1 auto;
       min-height: 0;
@@ -1365,14 +1379,14 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   <section class="panel" id="panel-list" aria-label="Place list">
     <div class="panel-header">
-      <h1>All spots</h1>
+      <h1><img class="panel-wordmark" src="icons/clay-all-spots.png" alt="All spots" width="1050" height="270"/></h1>
     </div>
     <div class="panel-body" id="list"></div>
   </section>
 
   <section class="panel" id="panel-events" aria-label="Upcoming events">
     <div class="panel-header">
-      <h1>Upcoming events</h1>
+      <h1><img class="panel-wordmark" src="icons/clay-events.png" alt="Events" width="930" height="222"/></h1>
     </div>
     <div class="panel-body" id="events"></div>
   </section>
