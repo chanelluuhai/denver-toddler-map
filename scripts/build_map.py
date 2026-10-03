@@ -252,7 +252,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .topbar.search-focused .search-toggle { pointer-events: none; }
   .search-toggle.is-active { color: var(--accent-dark); }
   .search-pill:has(.search-toggle.is-active) {
-    background: linear-gradient(135deg, rgba(229, 184, 194, 0.94), rgba(255, 254, 252, 0.9));
+    background: rgba(255, 254, 252, 0.82);
     box-shadow: 0 8px 20px rgba(142, 90, 104, 0.16);
   }
   .search-pill:has(.search-toggle.is-active) .ico { color: var(--accent-dark); }
