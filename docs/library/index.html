@@ -48,7 +48,6 @@
         <div id="shelf-list" class="book-list"></div>
         <div id="shelf-empty" class="empty" hidden>
           <h2>A quiet shelf</h2>
-          <p>Scan a barcode, or add a book by hand. Vietnamese titles do not need an ISBN.</p>
           <div class="empty-actions">
             <button type="button" class="btn btn-primary btn-block" data-goto="scan">Scan a book</button>
             <button type="button" class="btn btn-secondary btn-block" id="empty-add-manual">Add without a barcode</button>
@@ -58,10 +57,7 @@
 
       <!-- Genres -->
       <section class="view" id="view-genres" data-view="genres" aria-label="Genres" hidden>
-        <div class="vi-callout">
-          <p class="lede">Vietnamese books often are not in US catalogs. Add them by hand. An ISBN is never required.</p>
-          <div class="vi-stat" id="vi-stat">0 Vietnamese or bilingual books so far</div>
-        </div>
+        <p class="vi-stat" id="vi-stat"></p>
         <div class="genre-grid" id="genre-grid"></div>
       </section>
 
@@ -69,24 +65,19 @@
       <section class="view" id="view-scan" data-view="scan" aria-label="Scan" hidden>
         <div class="scan-panel">
           <div class="viewfinder-wrap" id="viewfinder">
-            <video id="scan-video" playsinline muted></video>
+            <video id="scan-video" playsinline muted autoplay></video>
             <div id="qr-reader" hidden></div>
             <div class="viewfinder-frame" aria-hidden="true">
               <div class="scan-line"></div>
             </div>
           </div>
-          <p class="scan-status" id="scan-status">Point the camera at a barcode. ISBN is optional — Vietnamese books often will not look up, and that is fine.</p>
-          <div class="scan-actions">
-            <button type="button" class="btn btn-primary btn-block" id="scan-start">Start camera</button>
-            <button type="button" class="btn btn-secondary btn-block" id="scan-stop" hidden>Stop camera</button>
-            <button type="button" class="btn btn-secondary btn-block" id="add-manual">Add without a barcode</button>
-          </div>
+          <p class="scan-status" id="scan-status" hidden></p>
+          <button type="button" class="scan-manual" id="add-manual">Add without a barcode</button>
         </div>
       </section>
 
       <!-- For you -->
       <section class="view" id="view-foryou" data-view="foryou" aria-label="For you" hidden>
-        <div class="rec-intro" id="rec-intro"></div>
         <div id="rec-list"></div>
       </section>
     </main>
@@ -243,7 +234,7 @@
           <img src="icons/clay-open.png" alt="" width="92" height="92"/>
         </div>
         <img class="welcome-wordmark" id="welcome-title" src="icons/clay-wordmark.png" alt="Little Library" width="892" height="482"/>
-        <p class="welcome-line">A shelf for his books, including the Vietnamese ones.</p>
+        <p class="welcome-line">a little bookshelf for a growing mind</p>
         <button type="button" class="welcome-enter" id="welcome-enter">Enter</button>
       </div>
     </div>

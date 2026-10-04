@@ -26,8 +26,11 @@
   let editingId = null;
   let pendingDeleteId = null;
   let scanController = null;
+  let scanStarting = false;
+  let scanDenied = false;
   let lastScanned = "";
   let scanCooldownUntil = 0;
+  const coverCache = new Map();
 
   function load() {
     try {
@@ -101,9 +104,15 @@
     return (words[0][0] + words[1][0]).toUpperCase();
   }
 
-  function coverHtml(book, className = "cover") {
+  function coverHtml(book, className = "cover", fallback = "mono") {
     if (book.coverUrl) {
-      return `<div class="${className}"><img src="${escapeHtml(book.coverUrl)}" alt="" loading="lazy" onerror="this.remove();this.parentElement.innerHTML='<span class=cover-mono>${escapeHtml(monogram(book.title))}</span>'"/></div>`;
+      if (fallback === "clay") {
+        return `<div class="${className}"><img src="${escapeHtml(book.coverUrl)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='icons/clay-book.png';this.classList.add('is-clay')"></div>`;
+      }
+      return `<div class="${className}"><img src="${escapeHtml(book.coverUrl)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove();this.parentElement.innerHTML='<span class=cover-mono>${escapeHtml(monogram(book.title))}</span>'"/></div>`;
+    }
+    if (fallback === "clay") {
+      return `<div class="${className}"><img src="icons/clay-book.png" alt="" class="is-clay"></div>`;
     }
     return `<div class="${className}"><span class="cover-mono">${escapeHtml(monogram(book.title))}</span></div>`;
   }
@@ -125,6 +134,7 @@
 
   /* —— Sheets —— */
   function openSheet(id) {
+    if (currentView === "scan") stopScanner();
     closeSheets();
     const sheet = document.getElementById(id);
     const backdrop = $("#sheet-backdrop");
@@ -139,6 +149,10 @@
       s.setAttribute("aria-hidden", "true");
     });
     $("#sheet-backdrop").classList.remove("open");
+    queueMicrotask(() => {
+      if (document.querySelector(".sheet.open")) return;
+      if (currentView === "scan" && !scanController && !scanDenied && !scanStarting) startScanner();
+    });
   }
 
   /* —— Navigation —— */
@@ -157,8 +171,9 @@
     });
     updateTabIndicator();
     if (name !== "scan") stopScanner();
-    if (name === "scan") {
-      // wait for user to tap start — avoid auto-prompt on every visit
+    else if (!scanController && !scanStarting) {
+      scanDenied = false;
+      startScanner();
     }
     if (name === "shelf") renderShelf();
     if (name === "genres") renderGenres();
@@ -236,7 +251,7 @@
     }
     empty.hidden = true;
     if (!books.length) {
-      list.innerHTML = `<div class="empty"><h2>No matches</h2><p>Try clearing filters or searching a different word.</p></div>`;
+      list.innerHTML = `<div class="empty"><h2>No matches</h2></div>`;
       return;
     }
     list.innerHTML = books.map((b) => bookCardHtml(b)).join("");
@@ -285,12 +300,7 @@
   /* —— Genres —— */
   function renderGenres() {
     const viCount = state.books.filter((b) => b.language === "vi" || b.language === "bilingual").length;
-    $("#vi-stat").textContent =
-      viCount === 0
-        ? "0 Vietnamese or bilingual books so far"
-        : viCount === 1
-          ? "1 Vietnamese or bilingual book on the shelf"
-          : `${viCount} Vietnamese or bilingual books on the shelf`;
+    $("#vi-stat").textContent = viCount === 1 ? "1 Vietnamese" : `${viCount} Vietnamese`;
 
     const grid = $("#genre-grid");
     grid.innerHTML = GENRES.map((g, i) => {
@@ -386,40 +396,167 @@
     }
 
     scored.sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
-    return scored.slice(0, 10);
+    return scored.slice(0, 5);
   }
 
   function unique(arr) {
     return [...new Set(arr)];
   }
 
-  function renderRecs() {
-    const age = childAgeMonths();
-    const intro = $("#rec-intro");
-    const list = $("#rec-list");
-    if (state.books.length === 0) {
-      intro.textContent = `These are age-based starters for ${formatAge(age)}. They get more personal as you add books and heart favorites.`;
-    } else {
-      intro.textContent = `Picks shaped by ${state.profile.displayName || "Bé"}'s age (${formatAge(age)}), favorites, and genre coverage — including Vietnamese titles when the shelf is light.`;
+  function bestFor(min, max) {
+    const label = (months) => {
+      if (months <= 0) return "0";
+      const years = months / 12;
+      if (Number.isInteger(years)) return String(years);
+      return String(Math.round(years * 2) / 2);
+    };
+    if (min == null && max == null) return "";
+    const a = label(min ?? 0);
+    if (max == null) return `Best from ${a} years`;
+    return `Best for ${a}–${label(max)} years`;
+  }
+
+  function bookSearchLink(title, author) {
+    const q = encodeURIComponent(`${title || ""} ${author || ""}`.trim());
+    return `https://openlibrary.org/search?q=${q}`;
+  }
+
+  let recToken = 0;
+
+  async function findCover(book) {
+    const key = normalizeTitle(book.title);
+    if (coverCache.has(key)) return coverCache.get(key);
+    let url = "";
+    try {
+      const u = new URL("https://openlibrary.org/search.json");
+      u.searchParams.set("title", book.title);
+      u.searchParams.set("limit", "8");
+      u.searchParams.set("fields", "title,author_name,cover_i");
+      const r = await fetch(u);
+      if (r.ok) {
+        const data = await r.json();
+        const want = normalizeTitle(book.title);
+        const exact = (data.docs || []).filter((d) => d.cover_i && normalizeTitle(d.title) === want);
+        const authorBit = normalizeTitle(String(book.author || "").split(" and ")[0].split(",")[0]);
+        const preferred = exact.find((d) =>
+          (d.author_name || []).some((a) => {
+            const n = normalizeTitle(a);
+            return authorBit && (n.includes(authorBit) || authorBit.includes(n));
+          })
+        ) || exact[0];
+        if (preferred) url = `https://covers.openlibrary.org/b/id/${preferred.cover_i}-L.jpg`;
+      }
+    } catch { /* ignore */ }
+    if (!url) {
+      try {
+        const q = `intitle:${book.title}`;
+        const r = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(q)}&maxResults=5&printType=books`);
+        if (r.ok) {
+          const data = await r.json();
+          const want = normalizeTitle(book.title);
+          const items = data.items || [];
+          const hit = items.find((it) => {
+            const info = it.volumeInfo || {};
+            return info.imageLinks && normalizeTitle(info.title) === want;
+          });
+          const link = hit && hit.volumeInfo && hit.volumeInfo.imageLinks;
+          if (link) {
+            url = (link.thumbnail || link.smallThumbnail || "").replace(/^http:/, "https:");
+          }
+        }
+      } catch { /* ignore */ }
     }
+    coverCache.set(key, url);
+    return url;
+  }
+
+  function paintCover(img, url) {
+    if (!img || !url) return;
+    img.onerror = () => {
+      img.onerror = null;
+      img.src = "icons/clay-book.png";
+      img.classList.add("is-clay");
+    };
+    img.classList.remove("is-clay");
+    img.src = url;
+  }
+
+  function renderRecs() {
+    const list = $("#rec-list");
     const recs = scoreCatalog();
+    const token = ++recToken;
     if (!recs.length) {
-      list.innerHTML = `<div class="empty"><h2>All caught up</h2><p>Everything age-fitting in the starter catalog is already on the shelf, or the age window is tight. Add more books or nudge the birthday in Profile.</p></div>`;
+      list.innerHTML = `<div class="empty"><h2>Nothing new</h2></div>`;
+      list._recs = [];
       return;
     }
     list.innerHTML = recs.map((r, i) => `
       <button type="button" class="rec-card" data-rec="${i}" style="animation-delay:${i * 40}ms">
-        ${coverHtml(r)}
+        ${coverHtml(r, "cover", "clay")}
         <div class="book-meta">
           <h3>${escapeHtml(r.title)}</h3>
           <p class="author">${escapeHtml(r.author || "")}</p>
-          <div class="rec-reason">${escapeHtml(r.reasons[0] || "")}</div>
-          ${r.reasons[1] ? `<div class="rec-reason">${escapeHtml(r.reasons[1])}</div>` : ""}
-          <div class="book-tags">${(r.genres || []).slice(0, 3).map((g) => `<span class="tag">${escapeHtml(g)}</span>`).join("")}</div>
         </div>
       </button>
     `).join("");
     list._recs = recs;
+    recs.forEach((r, i) => {
+      if (r.coverUrl) return;
+      findCover(r).then((url) => {
+        if (token !== recToken || !url) return;
+        r.coverUrl = url;
+        const img = list.querySelector(`[data-rec="${i}"] img`);
+        paintCover(img, url);
+      });
+    });
+  }
+
+  function openRecDetail(r) {
+    const genres = (r.genres || []).join(" · ");
+    const age = bestFor(r.ageMinMonths, r.ageMaxMonths);
+    const body = $("#detail-body");
+    body._rec = r;
+    body.innerHTML = `
+      ${coverHtml(r, "detail-cover", "clay")}
+      <h3 class="detail-title">${escapeHtml(r.title)}</h3>
+      <p class="detail-author">${escapeHtml(r.author || "")}</p>
+      ${r.blurb ? `<p class="detail-blurb">${escapeHtml(r.blurb)}</p>` : ""}
+      ${genres ? `<p class="detail-line">${escapeHtml(genres)}</p>` : ""}
+      ${age ? `<p class="detail-line">${escapeHtml(age)}</p>` : ""}
+      <a class="detail-link" href="${bookSearchLink(r.title, r.author)}" target="_blank" rel="noopener noreferrer">View on Open Library</a>
+      <div class="detail-actions">
+        <button type="button" class="btn btn-primary btn-block" id="rec-add">Add to shelf</button>
+      </div>
+    `;
+    if (!r.coverUrl) {
+      findCover(r).then((url) => {
+        if (body._rec !== r || !url) return;
+        r.coverUrl = url;
+        paintCover(body.querySelector("img"), url);
+      });
+    }
+    openSheet("sheet-detail");
+  }
+
+  function addRecToShelf(r) {
+    state.books.push({
+      id: uid(),
+      title: r.title,
+      author: r.author || "",
+      language: r.language || "en",
+      genres: r.genres || [],
+      ageMinMonths: r.ageMinMonths ?? null,
+      ageMaxMonths: r.ageMaxMonths ?? null,
+      isbn: null,
+      notes: "",
+      favorite: false,
+      coverUrl: r.coverUrl || null,
+      addedAt: new Date().toISOString()
+    });
+    save();
+    toast("Added to the shelf");
+    closeSheets();
+    renderRecs();
   }
 
   /* —— Detail —— */
@@ -436,8 +573,8 @@
         <span class="tag">${escapeHtml(langLabel)}</span>
         ${(b.genres || []).map((g) => `<span class="tag">${escapeHtml(g)}</span>`).join("")}
       </div>
-      ${b.isbn ? `<p class="helper" style="text-align:center">ISBN ${escapeHtml(b.isbn)}</p>` : `<p class="helper" style="text-align:center">No ISBN — that's perfectly fine.</p>`}
-      ${b.notes ? `<p class="helper">${escapeHtml(b.notes)}</p>` : ""}
+      ${b.isbn ? `<p class="detail-line">ISBN ${escapeHtml(b.isbn)}</p>` : ""}
+      ${b.notes ? `<p class="detail-blurb">${escapeHtml(b.notes)}</p>` : ""}
       <div class="detail-actions">
         <button type="button" class="btn btn-secondary btn-block" data-detail-fav="${escapeHtml(b.id)}">${b.favorite ? "♥ Favorited" : "♡ Mark favorite"}</button>
         <button type="button" class="btn btn-secondary btn-block" data-detail-edit="${escapeHtml(b.id)}">Edit</button>
@@ -476,13 +613,7 @@
     const banner = $("#lookup-banner");
     if (opts.lookupFailed) {
       banner.hidden = false;
-      banner.textContent = "A lot of Vietnamese books are not in US databases, and that is fine. Type the title and save — ISBN is never required.";
-    } else if (opts.lookupOk) {
-      banner.hidden = false;
-      banner.textContent = "Found a match — review everything before saving. You can still change any field.";
-    } else if (opts.manual) {
-      banner.hidden = false;
-      banner.textContent = "Add by hand. Vietnamese and other books without a US ISBN are welcome here.";
+      banner.textContent = "Couldn't look that up.";
     } else {
       banner.hidden = true;
     }
@@ -630,8 +761,10 @@
     lastScanned = code;
     scanCooldownUntil = now + 3500;
     stopScanner();
-    $("#scan-status").textContent = "Looking up that code…";
-    $("#scan-status").classList.remove("error");
+    const status = $("#scan-status");
+    status.hidden = false;
+    status.classList.remove("error");
+    status.textContent = "Looking up…";
     toast("Code captured");
     let lookup;
     try {
@@ -644,31 +777,62 @@
     } else {
       openAddForm({ isbn: String(code).replace(/[^0-9Xx]/g, ""), language: "en" }, { lookupFailed: true });
     }
-    $("#scan-status").textContent = "Point the camera at a barcode. ISBN is optional — Vietnamese books often will not look up, and that is fine.";
+    $("#scan-status").hidden = true;
+    $("#scan-status").textContent = "";
   }
 
   /* —— Scanner —— */
+  function showScanOff() {
+    scanDenied = true;
+    scanStarting = false;
+    const status = $("#scan-status");
+    status.hidden = false;
+    status.classList.add("error");
+    status.textContent = "Camera is off.";
+  }
+
+  function permissionDenied(err) {
+    const name = err && err.name;
+    return name === "NotAllowedError" || name === "PermissionDeniedError" || name === "SecurityError";
+  }
+
   async function startScanner() {
-    $("#scan-status").classList.remove("error");
-    $("#scan-status").textContent = "Starting camera…";
-    $("#scan-start").hidden = true;
-    $("#scan-stop").hidden = false;
+    if (scanController || scanStarting) return;
+    if (currentView !== "scan") return;
+    scanStarting = true;
+    scanDenied = false;
+    const status = $("#scan-status");
+    status.hidden = true;
+    status.classList.remove("error");
+    status.textContent = "";
 
     const hasDetector = typeof window.BarcodeDetector === "function";
     if (hasDetector) {
       try {
         const supported = await BarcodeDetector.getSupportedFormats();
+        if (currentView !== "scan") { scanStarting = false; return; }
         const formats = ["ean_13", "ean_8", "upc_a", "upc_e"].filter((f) => supported.includes(f));
         if (!formats.length) throw new Error("No barcode formats");
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: { ideal: "environment" } },
           audio: false
         });
+        if (currentView !== "scan") {
+          stream.getTracks().forEach((t) => t.stop());
+          scanStarting = false;
+          return;
+        }
         const video = $("#scan-video");
         video.hidden = false;
         $("#qr-reader").hidden = true;
         video.srcObject = stream;
         await video.play();
+        if (currentView !== "scan") {
+          stream.getTracks().forEach((tr) => tr.stop());
+          video.srcObject = null;
+          scanStarting = false;
+          return;
+        }
         const detector = new BarcodeDetector({ formats });
         let alive = true;
         scanController = {
@@ -678,7 +842,7 @@
             video.srcObject = null;
           }
         };
-        $("#scan-status").textContent = "Scanning… hold steady on the barcode.";
+        scanStarting = false;
         const tick = async () => {
           if (!alive) return;
           try {
@@ -696,12 +860,21 @@
         return;
       } catch (err) {
         console.warn("BarcodeDetector path failed", err);
+        const video = $("#scan-video");
+        if (video && video.srcObject) {
+          video.srcObject.getTracks().forEach((tr) => tr.stop());
+          video.srcObject = null;
+        }
+        if (permissionDenied(err)) {
+          showScanOff();
+          return;
+        }
       }
     }
 
-    // Fallback: html5-qrcode from CDN
     try {
       await loadHtml5Qrcode();
+      if (currentView !== "scan") { scanStarting = false; return; }
       $("#scan-video").hidden = true;
       const reader = $("#qr-reader");
       reader.hidden = false;
@@ -713,29 +886,30 @@
         (decoded) => handleScannedCode(decoded),
         () => {}
       );
+      if (currentView !== "scan") {
+        html5QrCode.stop().catch(() => {});
+        scanStarting = false;
+        return;
+      }
       scanController = {
         stop() {
           html5QrCode.stop().catch(() => {});
           html5QrCode.clear();
         }
       };
-      $("#scan-status").textContent = "Scanning with fallback reader… hold steady.";
+      scanStarting = false;
     } catch (err) {
       console.warn(err);
-      $("#scan-start").hidden = false;
-      $("#scan-stop").hidden = true;
-      $("#scan-status").classList.add("error");
-      $("#scan-status").textContent = "Camera permission is needed to scan, or the browser blocked access. You can still add books without a barcode.";
+      showScanOff();
     }
   }
 
   function stopScanner() {
+    scanStarting = false;
     if (scanController) {
       try { scanController.stop(); } catch { /* ignore */ }
       scanController = null;
     }
-    $("#scan-start").hidden = false;
-    $("#scan-stop").hidden = true;
   }
 
   function loadHtml5Qrcode() {
@@ -892,19 +1066,15 @@
       if (!card) return;
       const recs = $("#rec-list")._recs || [];
       const r = recs[Number(card.dataset.rec)];
-      if (!r) return;
-      openAddForm({
-        title: r.title,
-        author: r.author,
-        language: r.language,
-        genres: r.genres,
-        ageMinMonths: r.ageMinMonths,
-        ageMaxMonths: r.ageMaxMonths,
-        isbn: null
-      }, { manual: true });
+      if (r) openRecDetail(r);
     });
 
     $("#detail-body").addEventListener("click", (e) => {
+      if (e.target.closest("#rec-add")) {
+        const r = $("#detail-body")._rec;
+        if (r) addRecToShelf(r);
+        return;
+      }
       const fav = e.target.closest("[data-detail-fav]");
       if (fav) { toggleFavorite(fav.dataset.detailFav); return; }
       const edit = e.target.closest("[data-detail-edit]");
@@ -935,10 +1105,10 @@
       renderRecs();
     });
 
-    $("#scan-start").addEventListener("click", startScanner);
-    $("#scan-stop").addEventListener("click", () => {
-      stopScanner();
-      $("#scan-status").textContent = "Camera stopped. Start again when you are ready, or add without a barcode.";
+    $("#scan-status").addEventListener("click", () => {
+      if (!$("#scan-status").classList.contains("error")) return;
+      scanDenied = false;
+      startScanner();
     });
 
     window.addEventListener("resize", updateTabIndicator);
