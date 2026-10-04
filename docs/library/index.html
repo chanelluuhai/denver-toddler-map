@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Alice&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="styles.css?v=20261004c"/>
 </head>
 <body>
   <div id="app">
@@ -29,7 +29,6 @@
     <main class="views">
       <!-- Shelf -->
       <section class="view active" id="view-shelf" data-view="shelf" aria-label="Shelf">
-        <div class="age-chip" id="shelf-age-chip">Growing · <strong id="shelf-age-text">—</strong></div>
         <div class="shelf-toolbar">
           <div class="search-row">
             <label class="search-pill" for="shelf-search">
@@ -61,16 +60,18 @@
 
     <nav class="dock" aria-label="Main">
       <div class="seg" id="dock-seg">
-        <div class="tab-indicator" id="tab-indicator" aria-hidden="true"></div>
         <button type="button" class="tab active" data-view="shelf" aria-current="page" aria-label="Shelf">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 4.5v15M19 4.5v15M5 8.5h14M5 16h14" stroke-linecap="round"/><path d="M8.5 8.5V16M12 8.5v4.5M15.5 8.5V16" stroke-linecap="round"/></svg>
+          <!-- Phosphor books -->
+          <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M231.65,194.55,198.46,36.75a16,16,0,0,0-19-12.39L132.65,34.42a16.08,16.08,0,0,0-12.3,19l33.19,157.8A16,16,0,0,0,169.16,224a16.25,16.25,0,0,0,3.38-.36l46.81-10.06A16.09,16.09,0,0,0,231.65,194.55ZM136,50.15c0-.06,0-.09,0-.09l46.8-10,3.33,15.87L139.33,66Zm6.62,31.47,46.82-10.05,3.34,15.9L146,97.53Zm6.64,31.57,46.82-10.06,13.3,63.24-46.82,10.06ZM216,197.94l-46.8,10-3.33-15.87L212.67,182,216,197.85C216,197.91,216,197.94,216,197.94ZM104,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V48A16,16,0,0,0,104,32ZM56,48h48V64H56Zm0,32h48v96H56Zm48,128H56V192h48v16Z"/></svg>
           <span class="tab-label">Shelf</span>
         </button>
         <button type="button" class="dock-plus" id="dock-plus" aria-label="Add a book">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <!-- Phosphor plus -->
+          <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>
         </button>
         <button type="button" class="tab" data-view="foryou" aria-label="For you">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 19.2s-6.2-3.9-6.2-8A3.5 3.5 0 0 1 12 8.4a3.5 3.5 0 0 1 6.2 2.8c0 4.1-6.2 8-6.2 8z" stroke-linejoin="round"/></svg>
+          <!-- Phosphor sparkle -->
+          <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z"/></svg>
           <span class="tab-label">For you</span>
         </button>
       </div>
@@ -258,6 +259,6 @@
   </div>
 
   <script src="catalog.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261004c"></script>
 </body>
 </html>

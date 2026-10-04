@@ -175,25 +175,9 @@
       if (on) t.setAttribute("aria-current", "page");
       else t.removeAttribute("aria-current");
     });
-    updateTabIndicator();
     stopScanner();
     if (name === "shelf") renderShelf();
     if (name === "foryou") renderRecs();
-  }
-
-  function updateTabIndicator() {
-    const seg = $("#dock-seg");
-    const tab = $(`.tab[data-view="${currentView}"]`);
-    const ind = $("#tab-indicator");
-    if (!seg || !tab || !ind) return;
-    const sRect = seg.getBoundingClientRect();
-    const tRect = tab.getBoundingClientRect();
-    const pad = 6;
-    ind.style.setProperty("--tab-left", `${tRect.left - sRect.left}px`);
-    ind.style.setProperty("--tab-width", `${tRect.width}px`);
-    // also set left via transform using CSS vars already used
-    ind.style.width = `${tRect.width}px`;
-    ind.style.transform = `translateX(${tRect.left - sRect.left}px)`;
   }
 
   /* —— Shelf —— */
@@ -237,8 +221,6 @@
   }
 
   function renderShelf() {
-    const age = childAgeMonths();
-    $("#shelf-age-text").textContent = formatAge(age);
     renderShelfFilters();
     renderGenreSheet();
     const list = $("#shelf-list");
@@ -432,55 +414,77 @@
     return `Best for ${a}–${label(max)} years`;
   }
 
-  function bookSearchLink(title, author) {
-    const q = encodeURIComponent(`${title || ""} ${author || ""}`.trim());
-    return `https://openlibrary.org/search?q=${q}`;
+  function isVietnameseTitle(book) {
+    return book && book.language === "vi";
+  }
+
+  function bookSearchLink(book) {
+    const q = encodeURIComponent(`${book.title || ""} ${book.author || ""}`.trim());
+    if (isVietnameseTitle(book)) {
+      return `https://www.fahasa.com/catalogsearch/result/?q=${q}`;
+    }
+    return `https://www.amazon.com/s?k=${q}`;
+  }
+
+  function bookSearchLabel(book) {
+    return isVietnameseTitle(book) ? "Find on Fahasa" : "Find on Amazon";
   }
 
   let recToken = 0;
 
-  async function findCover(book) {
-    const key = normalizeTitle(book.title);
-    if (coverCache.has(key)) return coverCache.get(key);
-    let url = "";
+  async function coverFromOpenLibrary(book) {
     try {
       const u = new URL("https://openlibrary.org/search.json");
       u.searchParams.set("title", book.title);
       u.searchParams.set("limit", "8");
       u.searchParams.set("fields", "title,author_name,cover_i");
       const r = await fetch(u);
-      if (r.ok) {
-        const data = await r.json();
-        const want = normalizeTitle(book.title);
-        const exact = (data.docs || []).filter((d) => d.cover_i && normalizeTitle(d.title) === want);
-        const authorBit = normalizeTitle(String(book.author || "").split(" and ")[0].split(",")[0]);
-        const preferred = exact.find((d) =>
-          (d.author_name || []).some((a) => {
-            const n = normalizeTitle(a);
-            return authorBit && (n.includes(authorBit) || authorBit.includes(n));
-          })
-        ) || exact[0];
-        if (preferred) url = `https://covers.openlibrary.org/b/id/${preferred.cover_i}-L.jpg`;
-      }
-    } catch { /* ignore */ }
-    if (!url) {
-      try {
-        const q = `intitle:${book.title}`;
-        const r = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(q)}&maxResults=5&printType=books`);
-        if (r.ok) {
-          const data = await r.json();
-          const want = normalizeTitle(book.title);
-          const items = data.items || [];
-          const hit = items.find((it) => {
-            const info = it.volumeInfo || {};
-            return info.imageLinks && normalizeTitle(info.title) === want;
-          });
-          const link = hit && hit.volumeInfo && hit.volumeInfo.imageLinks;
-          if (link) {
-            url = (link.thumbnail || link.smallThumbnail || "").replace(/^http:/, "https:");
-          }
-        }
-      } catch { /* ignore */ }
+      if (!r.ok) return "";
+      const data = await r.json();
+      const want = normalizeTitle(book.title);
+      const exact = (data.docs || []).filter((d) => d.cover_i && normalizeTitle(d.title) === want);
+      const authorBit = normalizeTitle(String(book.author || "").split(" and ")[0].split(",")[0]);
+      const preferred = exact.find((d) =>
+        (d.author_name || []).some((a) => {
+          const n = normalizeTitle(a);
+          return authorBit && (n.includes(authorBit) || authorBit.includes(n));
+        })
+      ) || exact[0];
+      return preferred ? `https://covers.openlibrary.org/b/id/${preferred.cover_i}-L.jpg` : "";
+    } catch {
+      return "";
+    }
+  }
+
+  async function coverFromGoogle(book) {
+    try {
+      const q = `intitle:${book.title}`;
+      const r = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(q)}&maxResults=5&printType=books`);
+      if (!r.ok) return "";
+      const data = await r.json();
+      const want = normalizeTitle(book.title);
+      const hit = (data.items || []).find((it) => {
+        const info = it.volumeInfo || {};
+        return info.imageLinks && normalizeTitle(info.title) === want;
+      });
+      const link = hit && hit.volumeInfo && hit.volumeInfo.imageLinks;
+      if (!link) return "";
+      return (link.thumbnail || link.smallThumbnail || "").replace(/^http:/, "https:");
+    } catch {
+      return "";
+    }
+  }
+
+  async function findCover(book) {
+    const key = normalizeTitle(book.title) + "|" + (book.language || "");
+    if (coverCache.has(key)) return coverCache.get(key);
+    const sources = isVietnameseTitle(book)
+      ? [coverFromGoogle, coverFromOpenLibrary]
+      : [coverFromOpenLibrary, coverFromGoogle];
+    let url = "";
+    for (const source of sources) {
+      url = await source(book);
+      if (url) break;
     }
     coverCache.set(key, url);
     return url;
@@ -507,13 +511,16 @@
       return;
     }
     list.innerHTML = recs.map((r, i) => `
-      <button type="button" class="rec-card" data-rec="${i}" style="animation-delay:${i * 40}ms">
-        ${coverHtml(r, "cover", "clay")}
-        <div class="book-meta">
-          <h3>${escapeHtml(r.title)}</h3>
-          <p class="author">${escapeHtml(r.author || "")}</p>
-        </div>
-      </button>
+      <article class="rec-card" style="animation-delay:${i * 40}ms">
+        <button type="button" class="rec-open" data-rec="${i}">
+          ${coverHtml(r, "cover", "clay")}
+          <div class="book-meta">
+            <h3>${escapeHtml(r.title)}</h3>
+            <p class="author">${escapeHtml(r.author || "")}</p>
+          </div>
+        </button>
+        <a class="rec-out" href="${bookSearchLink(r)}" target="_blank" rel="noopener noreferrer">${bookSearchLabel(r)}</a>
+      </article>
     `).join("");
     list._recs = recs;
     recs.forEach((r, i) => {
@@ -539,7 +546,7 @@
       ${r.blurb ? `<p class="detail-blurb">${escapeHtml(r.blurb)}</p>` : ""}
       ${genres ? `<p class="detail-line">${escapeHtml(genres)}</p>` : ""}
       ${age ? `<p class="detail-line">${escapeHtml(age)}</p>` : ""}
-      <a class="detail-link" href="${bookSearchLink(r.title, r.author)}" target="_blank" rel="noopener noreferrer">View on Open Library</a>
+      <a class="detail-link" href="${bookSearchLink(r)}" target="_blank" rel="noopener noreferrer">${bookSearchLabel(r)}</a>
       <div class="detail-actions">
         <button type="button" class="btn btn-primary btn-block" id="rec-add">Add to shelf</button>
       </div>
@@ -1229,8 +1236,6 @@
       beginScan();
     });
 
-    window.addEventListener("resize", updateTabIndicator);
-    window.addEventListener("orientationchange", () => setTimeout(updateTabIndicator, 200));
   }
 
 
@@ -1278,7 +1283,6 @@
     fillGenrePicks([]);
     setView("shelf");
     renderShelf();
-    requestAnimationFrame(updateTabIndicator);
     maybeWelcome();
   }
 

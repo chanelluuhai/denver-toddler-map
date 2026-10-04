@@ -104,6 +104,8 @@
     background: transparent;
     border-radius: 0;
     box-shadow: none;
+    /* Book artwork is a tight crop; the baby face has ~31% vertical padding. 0.71 matches those heights. */
+    transform: scale(0.71);
   }
   .app span {
     font-weight: 600;
