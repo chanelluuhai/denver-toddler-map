@@ -10,9 +10,9 @@ Self-contained MapLibre map of toddler-friendly spots near **W 64th Ave & Ward R
 
 One site, separate apps. Design system: [`design.md`](design.md).
 
-- Hub: **https://chanelluuhai.github.io/denver-toddler-map/**
-- Toddler Spots: **https://chanelluuhai.github.io/denver-toddler-map/spots/**
-- Little Library: **https://chanelluuhai.github.io/denver-toddler-map/library/**
+- Hub: **https://chanelluuhai.github.io/personal-apps/**
+- Toddler Spots: **https://chanelluuhai.github.io/personal-apps/spots/**
+- Little Library: **https://chanelluuhai.github.io/personal-apps/library/**
 
 Toddler Spots is a mobile-app shell with bottom tabs (**Map · List · Filters · About**), bottom-sheet place details, search, and filters (near / farther / free / indoor). Soft light basemap via **MapLibre GL + OpenFreeMap Positron** (no Mapbox token). Dusty-purple pins ≈ within 30 min of 80004; warm clay = farther.
 

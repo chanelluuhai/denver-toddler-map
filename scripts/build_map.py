@@ -1535,7 +1535,7 @@ __SOURCES_HTML__
     </div>
     <button type="button" class="about-replay" id="welcome-replay">What is this</button>
     <button type="button" class="about-replay" id="loc-edit">Edit location sharing</button>
-    <a class="about-replay" href="https://chanelluuhai.github.io/denver-toddler-map/">More apps</a>
+    <a class="about-replay" href="https://chanelluuhai.github.io/personal-apps/">More apps</a>
     </div>
   </aside>
 
