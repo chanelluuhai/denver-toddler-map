@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Alice&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="styles.css?v=20261004e"/>
+  <link rel="stylesheet" href="styles.css?v=20261004f"/>
 </head>
 <body>
   <div id="app">
@@ -91,16 +91,6 @@
         <div id="add-menu-choices" class="add-choices">
           <button type="button" class="btn btn-primary btn-block" id="menu-scan">Scan with a barcode</button>
           <button type="button" class="btn btn-secondary btn-block" id="menu-manual">Add without a barcode</button>
-        </div>
-        <div id="add-menu-scan" hidden>
-          <div class="viewfinder-wrap" id="viewfinder">
-            <video id="scan-video" playsinline muted autoplay></video>
-            <div id="qr-reader" hidden></div>
-            <div class="viewfinder-frame" aria-hidden="true">
-              <div class="scan-line"></div>
-            </div>
-          </div>
-          <p class="scan-status" id="scan-status" hidden></p>
         </div>
       </div>
     </div>
@@ -258,7 +248,17 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </div>
 
+
+    <div id="scan-screen" class="scan-screen" hidden>
+      <video id="scan-video" playsinline webkit-playsinline muted autoplay></video>
+      <div id="qr-reader"></div>
+      <button type="button" class="scan-close" id="scan-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>
+      </button>
+      <p class="scan-status" id="scan-status" hidden></p>
+    </div>
+
   <script src="catalog.js?v=20261004e"></script>
-  <script src="app.js?v=20261004e"></script>
+  <script src="app.js?v=20261004f"></script>
 </body>
 </html>

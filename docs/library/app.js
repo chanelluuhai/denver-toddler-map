@@ -27,7 +27,7 @@
   let pendingDeleteId = null;
   let scanController = null;
   let scanStarting = false;
-  let scanDenied = false;
+  let scanGeneration = 0;
   let lastScanned = "";
   let scanCooldownUntil = 0;
   const coverCache = new Map();
@@ -811,16 +811,9 @@
   /* —— Scanner —— */
   function resetAddMenu() {
     const choices = $("#add-menu-choices");
-    const stage = $("#add-menu-scan");
     const title = $("#add-menu-title");
     if (choices) choices.hidden = false;
-    if (stage) stage.hidden = true;
     if (title) title.textContent = "Add a book";
-    const status = $("#scan-status");
-    if (!status) return;
-    status.hidden = true;
-    status.textContent = "";
-    status.classList.remove("error");
   }
 
   function permissionDenied(err) {
@@ -831,6 +824,7 @@
   function showCameraError(err) {
     scanStarting = false;
     const status = $("#scan-status");
+    if (!status) return;
     status.hidden = false;
     status.classList.add("error");
     status.textContent = permissionDenied(err)
@@ -838,103 +832,135 @@
       : "Camera isn't available.";
   }
 
-  function showScanStage() {
-    $("#add-menu-choices").hidden = true;
-    $("#add-menu-scan").hidden = false;
-    $("#add-menu-title").textContent = "Scan";
+  function hideScanScreen() {
+    const screen = $("#scan-screen");
+    if (screen) screen.hidden = true;
     const video = $("#scan-video");
-    video.playsInline = true;
-    video.muted = true;
-    video.autoplay = true;
-    video.setAttribute("playsinline", "");
-    video.setAttribute("muted", "");
-    video.setAttribute("autoplay", "");
+    if (video) video.style.visibility = "";
+    const status = $("#scan-status");
+    if (!status) return;
+    status.hidden = true;
+    status.textContent = "";
+    status.classList.remove("error");
+  }
+
+  function showScanScreen() {
+    const screen = $("#scan-screen");
+    const video = $("#scan-video");
+    screen.hidden = false;
+    video.style.visibility = "";
     const status = $("#scan-status");
     status.hidden = true;
     status.classList.remove("error");
     status.textContent = "";
-    if (!$("#sheet-add-menu").classList.contains("open")) openSheet("sheet-add-menu");
+    const sheet = $("#sheet-add-menu");
+    if (sheet) {
+      sheet.classList.remove("open");
+      sheet.setAttribute("aria-hidden", "true");
+    }
+    const backdrop = $("#sheet-backdrop");
+    if (backdrop) backdrop.classList.remove("open");
+    resetAddMenu();
   }
 
-  function cameraConstraints() {
-    return { video: { facingMode: { ideal: "environment" } }, audio: false };
+  function prepareScanVideo(video) {
+    video.playsInline = true;
+    video.muted = true;
+    video.autoplay = true;
+    video.controls = false;
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
+    video.setAttribute("muted", "");
+    video.setAttribute("autoplay", "");
   }
 
+  // Tap handler. getUserMedia runs in this turn, before any await, so iOS
+  // still treats it as the button gesture.
   function beginScan() {
     stopScanner();
+    const generation = scanGeneration;
+    const video = $("#scan-video");
+    prepareScanVideo(video);
+    showScanScreen();
+    if (!navigator.mediaDevices || typeof navigator.mediaDevices.getUserMedia !== "function") {
+      showCameraError(new Error("Camera isn't available."));
+      return;
+    }
     let streamPromise;
     try {
-      streamPromise = navigator.mediaDevices.getUserMedia(cameraConstraints());
+      streamPromise = navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
     } catch (err) {
-      showScanStage();
       showCameraError(err);
       return;
     }
-    showScanStage();
-    continueScan(streamPromise);
+    const unlock = video.play();
+    if (unlock && typeof unlock.catch === "function") unlock.catch(() => {});
+    continueScan(streamPromise, generation);
   }
 
-  async function continueScan(streamPromise) {
+  async function continueScan(streamPromise, generation) {
     scanStarting = true;
-    scanDenied = false;
     let stream;
     try {
       stream = await streamPromise;
     } catch (err) {
+      scanStarting = false;
+      if (generation !== scanGeneration) return;
       showCameraError(err);
       return;
     }
-    if (!$("#sheet-add-menu").classList.contains("open") || $("#add-menu-scan").hidden) {
+    if (generation !== scanGeneration || $("#scan-screen").hidden) {
       stream.getTracks().forEach((t) => t.stop());
       scanStarting = false;
       return;
     }
+    const video = $("#scan-video");
+    video.srcObject = stream;
+    try { await video.play(); } catch (err) { /* muted inline video can still show frames */ }
+    const alive = () => generation === scanGeneration && !$("#scan-screen").hidden;
+    scanController = {
+      stop() {
+        stream.getTracks().forEach((t) => t.stop());
+        if (video.srcObject) video.srcObject = null;
+      }
+    };
+    scanStarting = false;
     if (typeof window.BarcodeDetector === "function") {
       try {
-        await scanWithDetector(stream);
+        await scanWithDetector(video, alive);
         return;
       } catch (err) {
         console.warn("BarcodeDetector path failed", err);
-        if (permissionDenied(err)) {
-          stream.getTracks().forEach((t) => t.stop());
-          showCameraError(err);
-          return;
-        }
       }
     }
+    if (!alive()) {
+      stream.getTracks().forEach((t) => t.stop());
+      return;
+    }
     try {
-      await scanWithHtml5(stream);
+      await scanWithHtml5(stream, video, alive);
     } catch (err) {
       console.warn(err);
-      try { stream.getTracks().forEach((t) => t.stop()); } catch (e) { /* ignore */ }
-      showCameraError(err);
+      if (!alive()) return;
+      if (stream.getTracks().some((t) => t.readyState === "live")) {
+        try { await scanFramesWithHtml5(video, alive); } catch (e) { console.warn(e); }
+      } else {
+        showCameraError(err);
+      }
     }
   }
 
-  async function scanWithDetector(stream) {
+  async function scanWithDetector(video, alive) {
     let formats = ["ean_13", "ean_8", "upc_a", "upc_e", "code_128"];
     try {
       const supported = await BarcodeDetector.getSupportedFormats();
       const filtered = formats.filter((f) => supported.includes(f));
       if (filtered.length) formats = filtered;
     } catch (err) { /* keep the ISBN formats */ }
-    const video = $("#scan-video");
-    video.hidden = false;
-    $("#qr-reader").hidden = true;
-    video.srcObject = stream;
-    await video.play();
+    if (!alive()) return;
     const detector = new BarcodeDetector({ formats });
-    let alive = true;
-    scanController = {
-      stop() {
-        alive = false;
-        stream.getTracks().forEach((t) => t.stop());
-        video.srcObject = null;
-      }
-    };
-    scanStarting = false;
     const tick = async () => {
-      if (!alive) return;
+      if (!alive()) return;
       try {
         if (video.readyState >= 2) {
           const codes = await detector.detect(video);
@@ -944,23 +970,15 @@
           }
         }
       } catch (err) { /* keep going */ }
-      if (alive) requestAnimationFrame(tick);
+      if (alive()) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
   }
 
-  async function scanWithHtml5(stream) {
+  async function scanWithHtml5(stream, video, alive) {
     await loadHtml5Qrcode();
-    if (!$("#sheet-add-menu").classList.contains("open") || $("#add-menu-scan").hidden) {
-      stream.getTracks().forEach((t) => t.stop());
-      scanStarting = false;
-      return;
-    }
-    const video = $("#scan-video");
-    video.hidden = true;
-    video.srcObject = null;
+    if (!alive()) return;
     const reader = $("#qr-reader");
-    reader.hidden = false;
     reader.innerHTML = "";
     const formats = [
       Html5QrcodeSupportedFormats.EAN_13,
@@ -972,41 +990,98 @@
     const html5QrCode = new Html5Qrcode("qr-reader", { formatsToSupport: formats, verbose: false });
     const orig = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
     navigator.mediaDevices.getUserMedia = () => Promise.resolve(stream);
+    let started = false;
     try {
       await html5QrCode.start(
         { facingMode: "environment" },
-        { fps: 8, qrbox: { width: 240, height: 140 }, aspectRatio: 0.75 },
-        (decoded) => handleScannedCode(decoded),
+        { fps: 8, qrbox: { width: 240, height: 140 } },
+        (decoded) => { handleScannedCode(decoded); },
         () => {}
       );
+      started = true;
+    } catch (err) {
+      console.warn("html5-qrcode start failed", err);
+      try { html5QrCode.clear(); } catch (e) { /* ignore */ }
+      await scanFramesWithHtml5(video, alive);
+      return;
     } finally {
       navigator.mediaDevices.getUserMedia = orig;
     }
+    if (!alive()) {
+      try { html5QrCode.stop().catch(() => {}); } catch (err) { /* ignore */ }
+      return;
+    }
     const vid = reader.querySelector("video");
     if (vid) {
-      vid.setAttribute("playsinline", "");
-      vid.setAttribute("muted", "");
-      vid.setAttribute("autoplay", "");
       vid.playsInline = true;
       vid.muted = true;
       vid.autoplay = true;
+      vid.setAttribute("playsinline", "");
+      vid.setAttribute("webkit-playsinline", "");
+      vid.setAttribute("muted", "");
+      vid.setAttribute("autoplay", "");
+      const reveal = () => { if (alive()) video.style.visibility = "hidden"; };
+      if (vid.readyState >= 2 && !vid.paused) reveal();
+      else vid.addEventListener("playing", reveal, { once: true });
     }
     scanController = {
       stop() {
-        html5QrCode.stop().catch(() => {});
-        try { html5QrCode.clear(); } catch (err) { /* ignore */ }
+        video.style.visibility = "";
+        if (started) {
+          html5QrCode.stop().catch(() => {});
+          try { html5QrCode.clear(); } catch (err) { /* ignore */ }
+        }
         stream.getTracks().forEach((t) => t.stop());
+        if (video.srcObject) video.srcObject = null;
       }
     };
-    scanStarting = false;
+  }
+
+  async function scanFramesWithHtml5(video, alive) {
+    await loadHtml5Qrcode();
+    if (!alive()) return;
+    const formats = [
+      Html5QrcodeSupportedFormats.EAN_13,
+      Html5QrcodeSupportedFormats.EAN_8,
+      Html5QrcodeSupportedFormats.UPC_A,
+      Html5QrcodeSupportedFormats.UPC_E,
+      Html5QrcodeSupportedFormats.CODE_128
+    ].filter((v) => v !== undefined);
+    const html5QrCode = new Html5Qrcode("qr-reader", { formatsToSupport: formats, verbose: false });
+    const canvas = document.createElement("canvas");
+    const tick = () => {
+      if (!alive()) return;
+      if (video.readyState < 2 || !video.videoWidth) {
+        setTimeout(tick, 200);
+        return;
+      }
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext("2d").drawImage(video, 0, 0);
+      canvas.toBlob((blob) => {
+        if (!alive()) return;
+        if (!blob) { setTimeout(tick, 280); return; }
+        const file = new File([blob], "frame.jpg", { type: "image/jpeg" });
+        html5QrCode.scanFile(file, false).then((text) => {
+          if (!alive()) return;
+          if (text) handleScannedCode(text);
+          else setTimeout(tick, 280);
+        }).catch(() => {
+          if (alive()) setTimeout(tick, 280);
+        });
+      }, "image/jpeg", 0.7);
+    };
+    tick();
   }
 
   function stopScanner() {
     scanStarting = false;
+    scanGeneration += 1;
     if (scanController) {
       try { scanController.stop(); } catch (err) { /* ignore */ }
       scanController = null;
     }
+    hideScanScreen();
   }
 
   function loadHtml5Qrcode() {
@@ -1235,6 +1310,7 @@
       renderRecs();
     });
 
+    $("#scan-close").addEventListener("click", () => stopScanner());
     $("#scan-status").addEventListener("click", () => {
       if (!$("#scan-status").classList.contains("error")) return;
       beginScan();

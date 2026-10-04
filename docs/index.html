@@ -119,10 +119,8 @@
     border-radius: 0;
     box-shadow: none;
     background: transparent;
-    /* Baby face is 420x351 inside a 512 tile (68.6% tall, 82.0% wide).
-       This portrait book is 524x678. At 86% of the tile, object-fit contain
-       draws it 84.0% tall and 64.9% wide: about the same area as the face,
-       not just the same tile. */
+    /* 10% smaller than the 86% box, tile size unchanged. */
+    transform: scale(0.9);
   }
   .app span {
     font-weight: 600;

@@ -504,6 +504,62 @@ button.brand {
 }
 
 /* —— Scan view —— */
+
+/* Full-screen camera. Not inside a transformed sheet, so iOS can paint the preview. */
+.scan-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 85;
+  background: #111;
+  overflow: hidden;
+}
+.scan-screen[hidden] { display: none !important; }
+.scan-screen #scan-video,
+.scan-screen #qr-reader,
+.scan-screen #qr-reader video {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  background: #000;
+  border-radius: 0 !important;
+}
+.scan-screen #scan-video { z-index: 1; }
+.scan-screen #qr-reader {
+  z-index: 0;
+  border: none !important;
+}
+.scan-screen #qr-reader:empty { display: none; }
+.scan-close {
+  position: absolute;
+  top: calc(12px + var(--safe-top));
+  right: 14px;
+  z-index: 4;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 254, 252, 0.92);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+}
+.scan-close svg { width: 18px; height: 18px; }
+.scan-screen .scan-status {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: calc(28px + var(--safe-bottom));
+  z-index: 4;
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+.scan-screen .scan-status.error { color: #ffe1e1; }
+
+
 .scan-panel {
   display: flex;
   flex-direction: column;
