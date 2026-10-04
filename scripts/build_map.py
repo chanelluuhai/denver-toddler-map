@@ -1049,6 +1049,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     box-shadow: var(--shadow);
   }
   .about-replay:active { transform: scale(0.985); }
+  a.about-replay {
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; box-sizing: border-box;
+  }
   .loc-actions {
     display: flex;
     flex-direction: column;
@@ -1531,6 +1535,7 @@ __SOURCES_HTML__
     </div>
     <button type="button" class="about-replay" id="welcome-replay">What is this</button>
     <button type="button" class="about-replay" id="loc-edit">Edit location sharing</button>
+    <a class="about-replay" href="https://chanelluuhai.github.io/denver-toddler-map/">More apps</a>
     </div>
   </aside>
 

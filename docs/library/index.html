@@ -20,15 +20,9 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand">
+      <button type="button" class="brand" id="open-about" aria-haspopup="dialog" aria-controls="about-drawer" aria-expanded="false">
         <img class="brand-icon" src="icons/clay-book.png" alt="" width="28" height="32" aria-hidden="true"/>
         <span class="brand-text">Little Library</span>
-      </div>
-      <button type="button" class="profile-btn" id="open-profile" aria-label="Child profile and settings">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="8" r="3.5"/>
-          <path d="M5.5 19.2c1.6-3 4-4.5 6.5-4.5s4.9 1.5 6.5 4.5"/>
-        </svg>
       </button>
     </header>
 
@@ -42,6 +36,10 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16.5 16.5L20 20"/></svg>
               <input id="shelf-search" type="search" placeholder="Search title or author" autocomplete="off"/>
             </label>
+            <button type="button" class="filter-btn" id="open-genre-filter" aria-label="Filter by genre" aria-pressed="false" aria-expanded="false" aria-controls="sheet-genres">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+              <span class="filter-btn-label" id="genre-filter-label" hidden></span>
+            </button>
           </div>
           <div class="filter-chip-row" id="shelf-filters" role="toolbar" aria-label="Shelf filters"></div>
         </div>
@@ -49,30 +47,9 @@
         <div id="shelf-empty" class="empty" hidden>
           <h2>A quiet shelf</h2>
           <div class="empty-actions">
-            <button type="button" class="btn btn-primary btn-block" data-goto="scan">Scan a book</button>
+            <button type="button" class="btn btn-primary btn-block" id="empty-scan">Scan with a barcode</button>
             <button type="button" class="btn btn-secondary btn-block" id="empty-add-manual">Add without a barcode</button>
           </div>
-        </div>
-      </section>
-
-      <!-- Genres -->
-      <section class="view" id="view-genres" data-view="genres" aria-label="Genres" hidden>
-        <p class="vi-stat" id="vi-stat"></p>
-        <div class="genre-grid" id="genre-grid"></div>
-      </section>
-
-      <!-- Scan -->
-      <section class="view" id="view-scan" data-view="scan" aria-label="Scan" hidden>
-        <div class="scan-panel">
-          <div class="viewfinder-wrap" id="viewfinder">
-            <video id="scan-video" playsinline muted autoplay></video>
-            <div id="qr-reader" hidden></div>
-            <div class="viewfinder-frame" aria-hidden="true">
-              <div class="scan-line"></div>
-            </div>
-          </div>
-          <p class="scan-status" id="scan-status" hidden></p>
-          <button type="button" class="scan-manual" id="add-manual">Add without a barcode</button>
         </div>
       </section>
 
@@ -89,13 +66,8 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 4.5v15M19 4.5v15M5 8.5h14M5 16h14" stroke-linecap="round"/><path d="M8.5 8.5V16M12 8.5v4.5M15.5 8.5V16" stroke-linecap="round"/></svg>
           <span class="tab-label">Shelf</span>
         </button>
-        <button type="button" class="tab" data-view="genres" aria-label="Genres">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg>
-          <span class="tab-label">Genres</span>
-        </button>
-        <button type="button" class="tab" data-view="scan" aria-label="Scan">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M7 4H5.2A1.2 1.2 0 0 0 4 5.2V7M17 4h1.8A1.2 1.2 0 0 1 20 5.2V7M7 20H5.2A1.2 1.2 0 0 1 4 18.8V17M17 20h1.8A1.2 1.2 0 0 0 20 18.8V17" stroke-linecap="round"/><path d="M8 9v6M11 9v6M14 9v6M17 9v6" stroke-linecap="round"/></svg>
-          <span class="tab-label">Scan</span>
+        <button type="button" class="dock-plus" id="dock-plus" aria-label="Add a book">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         </button>
         <button type="button" class="tab" data-view="foryou" aria-label="For you">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 19.2s-6.2-3.9-6.2-8A3.5 3.5 0 0 1 12 8.4a3.5 3.5 0 0 1 6.2 2.8c0 4.1-6.2 8-6.2 8z" stroke-linejoin="round"/></svg>
@@ -106,36 +78,45 @@
 
     <div class="sheet-backdrop" id="sheet-backdrop"></div>
 
-    <!-- Profile sheet -->
-    <div class="sheet" id="sheet-profile" role="dialog" aria-labelledby="profile-title" aria-hidden="true">
+    <div class="sheet" id="sheet-add-menu" role="dialog" aria-labelledby="add-menu-title" aria-hidden="true">
       <div class="sheet-handle"></div>
       <div class="sheet-bar">
-        <h2 id="profile-title">Profile</h2>
+        <h2 id="add-menu-title">Add a book</h2>
         <button type="button" class="sheet-close" data-close-sheet aria-label="Close">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>
         </button>
       </div>
       <div class="sheet-scroll">
-        <div class="profile-age" id="profile-age">—</div>
-        <p class="helper">Born in January 2025 — about 1 year and 9 months now. Change the exact day if needed. Age-appropriate picks update from this birthday.</p>
-        <div class="form-group">
-          <label for="profile-name">Display name</label>
-          <input id="profile-name" type="text" maxlength="40" autocomplete="nickname"/>
+        <div id="add-menu-choices" class="add-choices">
+          <button type="button" class="btn btn-primary btn-block" id="menu-scan">Scan with a barcode</button>
+          <button type="button" class="btn btn-secondary btn-block" id="menu-manual">Add without a barcode</button>
         </div>
-        <div class="form-group">
-          <label for="profile-birthday">Birthday</label>
-          <input id="profile-birthday" type="date"/>
-        </div>
-        <p class="helper">Library data lives in this browser (localStorage). Export a JSON backup, or import one on another device.</p>
-        <div class="detail-actions">
-          <button type="button" class="btn btn-primary btn-block" id="profile-save">Save profile</button>
-          <button type="button" class="btn btn-secondary btn-block" id="export-json">Export library JSON</button>
-          <button type="button" class="btn btn-secondary btn-block" id="import-json">Import library JSON</button>
-          <input type="file" id="import-file" accept="application/json,.json" hidden/>
-          <button type="button" class="about-replay" id="welcome-replay">What is this</button>
+        <div id="add-menu-scan" hidden>
+          <div class="viewfinder-wrap" id="viewfinder">
+            <video id="scan-video" playsinline muted autoplay></video>
+            <div id="qr-reader" hidden></div>
+            <div class="viewfinder-frame" aria-hidden="true">
+              <div class="scan-line"></div>
+            </div>
+          </div>
+          <p class="scan-status" id="scan-status" hidden></p>
         </div>
       </div>
     </div>
+
+    <div class="sheet" id="sheet-genres" role="dialog" aria-labelledby="genre-filter-title" aria-hidden="true">
+      <div class="sheet-handle"></div>
+      <div class="sheet-bar">
+        <h2 id="genre-filter-title">Genres</h2>
+        <button type="button" class="sheet-close" data-close-sheet aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>
+        </button>
+      </div>
+      <div class="sheet-scroll">
+        <div class="genre-sheet-list" id="genre-sheet-list"></div>
+      </div>
+    </div>
+
 
     <!-- Add / edit book sheet -->
     <div class="sheet" id="sheet-add" role="dialog" aria-labelledby="add-title" aria-hidden="true">
@@ -226,6 +207,40 @@
     </div>
 
 
+
+    <div class="drawer-backdrop" id="about-backdrop" hidden></div>
+    <aside class="about-drawer" id="about-drawer" role="dialog" aria-modal="true" aria-labelledby="about-title" hidden>
+      <div class="drawer-scroll">
+        <div class="drawer-top">
+          <h1 id="about-title">About</h1>
+          <button type="button" class="icon-x" id="about-close" aria-label="Close">&times;</button>
+        </div>
+        <div class="about-card">
+          <h2>Child</h2>
+          <div class="profile-age" id="profile-age">—</div>
+          <p>Born in January 2025 — about 1 year and 9 months now. Change the exact day if needed. Age-appropriate picks update from this birthday.</p>
+          <div class="form-group">
+            <label for="profile-name">Display name</label>
+            <input id="profile-name" type="text" maxlength="40" autocomplete="nickname"/>
+          </div>
+          <div class="form-group">
+            <label for="profile-birthday">Birthday</label>
+            <input id="profile-birthday" type="date"/>
+          </div>
+          <button type="button" class="btn btn-primary btn-block" id="profile-save">Save profile</button>
+        </div>
+        <div class="about-card">
+          <h2>Library</h2>
+          <p>Library data lives in this browser. Export a JSON backup, or import one on another device.</p>
+          <button type="button" class="btn btn-secondary btn-block" id="export-json">Export library JSON</button>
+          <button type="button" class="btn btn-secondary btn-block" id="import-json">Import library JSON</button>
+          <input type="file" id="import-file" accept="application/json,.json" hidden/>
+        </div>
+        <button type="button" class="about-replay" id="welcome-replay">What is this</button>
+        <a class="about-replay" href="https://chanelluuhai.github.io/denver-toddler-map/">More apps</a>
+      </div>
+    </aside>
+
     <div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title" hidden>
       <div class="welcome-main">
         <div class="welcome-emoji" aria-hidden="true">
@@ -234,7 +249,7 @@
           <img src="icons/clay-open.png" alt="" width="92" height="92"/>
         </div>
         <img class="welcome-wordmark" id="welcome-title" src="icons/clay-wordmark.png" alt="Little Library" width="892" height="482"/>
-        <p class="welcome-line">a little bookshelf for a growing mind</p>
+        <p class="welcome-line">A little bookshelf for a growing mind</p>
         <button type="button" class="welcome-enter" id="welcome-enter">Enter</button>
       </div>
     </div>

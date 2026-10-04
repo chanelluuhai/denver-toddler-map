@@ -134,25 +134,31 @@
 
   /* —— Sheets —— */
   function openSheet(id) {
-    if (currentView === "scan") stopScanner();
-    closeSheets();
+    $$(".sheet.open").forEach((el) => {
+      if (el.id === id) return;
+      el.classList.remove("open");
+      el.setAttribute("aria-hidden", "true");
+    });
+    if (id !== "sheet-add-menu") {
+      stopScanner();
+      resetAddMenu();
+    }
     const sheet = document.getElementById(id);
     const backdrop = $("#sheet-backdrop");
     sheet.classList.add("open");
     sheet.setAttribute("aria-hidden", "false");
     backdrop.classList.add("open");
+    if (id === "sheet-genres") renderGenreSheet();
   }
 
   function closeSheets() {
-    $$(".sheet.open").forEach((s) => {
-      s.classList.remove("open");
-      s.setAttribute("aria-hidden", "true");
+    $$(".sheet.open").forEach((el) => {
+      el.classList.remove("open");
+      el.setAttribute("aria-hidden", "true");
     });
     $("#sheet-backdrop").classList.remove("open");
-    queueMicrotask(() => {
-      if (document.querySelector(".sheet.open")) return;
-      if (currentView === "scan" && !scanController && !scanDenied && !scanStarting) startScanner();
-    });
+    stopScanner();
+    resetAddMenu();
   }
 
   /* —— Navigation —— */
@@ -170,13 +176,8 @@
       else t.removeAttribute("aria-current");
     });
     updateTabIndicator();
-    if (name !== "scan") stopScanner();
-    else if (!scanController && !scanStarting) {
-      scanDenied = false;
-      startScanner();
-    }
+    stopScanner();
     if (name === "shelf") renderShelf();
-    if (name === "genres") renderGenres();
     if (name === "foryou") renderRecs();
   }
 
@@ -239,6 +240,7 @@
     const age = childAgeMonths();
     $("#shelf-age-text").textContent = formatAge(age);
     renderShelfFilters();
+    renderGenreSheet();
     const list = $("#shelf-list");
     const empty = $("#shelf-empty");
     const books = filteredBooks();
@@ -297,20 +299,34 @@
     if ($("#sheet-detail").classList.contains("open")) openDetail(id);
   }
 
-  /* —— Genres —— */
-  function renderGenres() {
-    const viCount = state.books.filter((b) => b.language === "vi" || b.language === "bilingual").length;
-    $("#vi-stat").textContent = viCount === 1 ? "1 Vietnamese" : `${viCount} Vietnamese`;
-
-    const grid = $("#genre-grid");
-    grid.innerHTML = GENRES.map((g, i) => {
-      const count = state.books.filter((b) => (b.genres || []).includes(g)).length;
-      const thin = count <= 1 ? " thin" : "";
-      return `<button type="button" class="genre-card${thin}" data-genre="${escapeHtml(g)}" style="animation-delay:${i * 25}ms">
-        <h3>${escapeHtml(g)}</h3>
-        <div class="genre-count">${count} book${count === 1 ? "" : "s"}</div>
-      </button>`;
+  function renderGenreSheet() {
+    const list = $("#genre-sheet-list");
+    if (!list) return;
+    const items = [{ key: "all", label: "All", count: state.books.length }].concat(
+      GENRES.map((g) => ({
+        key: g,
+        label: g,
+        count: state.books.filter((b) => (b.genres || []).includes(g)).length
+      }))
+    );
+    list.innerHTML = items.map((item) => {
+      const on = item.key === "all" ? shelfFilter.genre === "all" : shelfFilter.genre === item.key;
+      return `<button type="button" class="${on ? "on" : ""}" data-genre-filter="${escapeHtml(item.key)}"><span>${escapeHtml(item.label)}</span><span class="count">${item.count}</span></button>`;
     }).join("");
+    const label = $("#genre-filter-label");
+    const btn = $("#open-genre-filter");
+    if (!label || !btn) return;
+    if (shelfFilter.genre === "all") {
+      label.hidden = true;
+      label.textContent = "";
+      btn.classList.remove("on");
+      btn.setAttribute("aria-pressed", "false");
+    } else {
+      label.hidden = false;
+      label.textContent = shelfFilter.genre;
+      btn.classList.add("on");
+      btn.setAttribute("aria-pressed", "true");
+    }
   }
 
   /* —— Recommendations —— */
@@ -782,13 +798,18 @@
   }
 
   /* —— Scanner —— */
-  function showScanOff() {
-    scanDenied = true;
-    scanStarting = false;
+  function resetAddMenu() {
+    const choices = $("#add-menu-choices");
+    const stage = $("#add-menu-scan");
+    const title = $("#add-menu-title");
+    if (choices) choices.hidden = false;
+    if (stage) stage.hidden = true;
+    if (title) title.textContent = "Add a book";
     const status = $("#scan-status");
-    status.hidden = false;
-    status.classList.add("error");
-    status.textContent = "Camera is off.";
+    if (!status) return;
+    status.hidden = true;
+    status.textContent = "";
+    status.classList.remove("error");
   }
 
   function permissionDenied(err) {
@@ -796,118 +817,183 @@
     return name === "NotAllowedError" || name === "PermissionDeniedError" || name === "SecurityError";
   }
 
-  async function startScanner() {
-    if (scanController || scanStarting) return;
-    if (currentView !== "scan") return;
-    scanStarting = true;
-    scanDenied = false;
+  function showCameraError(err) {
+    scanStarting = false;
+    const status = $("#scan-status");
+    status.hidden = false;
+    status.classList.add("error");
+    status.textContent = permissionDenied(err)
+      ? "Camera is blocked. On iPhone, allow camera for this site in Settings."
+      : "Camera isn't available.";
+  }
+
+  function showScanStage() {
+    $("#add-menu-choices").hidden = true;
+    $("#add-menu-scan").hidden = false;
+    $("#add-menu-title").textContent = "Scan";
+    const video = $("#scan-video");
+    video.playsInline = true;
+    video.muted = true;
+    video.autoplay = true;
+    video.setAttribute("playsinline", "");
+    video.setAttribute("muted", "");
+    video.setAttribute("autoplay", "");
     const status = $("#scan-status");
     status.hidden = true;
     status.classList.remove("error");
     status.textContent = "";
+    if (!$("#sheet-add-menu").classList.contains("open")) openSheet("sheet-add-menu");
+  }
 
-    const hasDetector = typeof window.BarcodeDetector === "function";
-    if (hasDetector) {
+  function cameraConstraints() {
+    return { video: { facingMode: { ideal: "environment" } }, audio: false };
+  }
+
+  function beginScan() {
+    stopScanner();
+    let streamPromise;
+    try {
+      streamPromise = navigator.mediaDevices.getUserMedia(cameraConstraints());
+    } catch (err) {
+      showScanStage();
+      showCameraError(err);
+      return;
+    }
+    showScanStage();
+    continueScan(streamPromise);
+  }
+
+  async function continueScan(streamPromise) {
+    scanStarting = true;
+    scanDenied = false;
+    let stream;
+    try {
+      stream = await streamPromise;
+    } catch (err) {
+      showCameraError(err);
+      return;
+    }
+    if (!$("#sheet-add-menu").classList.contains("open") || $("#add-menu-scan").hidden) {
+      stream.getTracks().forEach((t) => t.stop());
+      scanStarting = false;
+      return;
+    }
+    if (typeof window.BarcodeDetector === "function") {
       try {
-        const supported = await BarcodeDetector.getSupportedFormats();
-        if (currentView !== "scan") { scanStarting = false; return; }
-        const formats = ["ean_13", "ean_8", "upc_a", "upc_e"].filter((f) => supported.includes(f));
-        if (!formats.length) throw new Error("No barcode formats");
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: { ideal: "environment" } },
-          audio: false
-        });
-        if (currentView !== "scan") {
-          stream.getTracks().forEach((t) => t.stop());
-          scanStarting = false;
-          return;
-        }
-        const video = $("#scan-video");
-        video.hidden = false;
-        $("#qr-reader").hidden = true;
-        video.srcObject = stream;
-        await video.play();
-        if (currentView !== "scan") {
-          stream.getTracks().forEach((tr) => tr.stop());
-          video.srcObject = null;
-          scanStarting = false;
-          return;
-        }
-        const detector = new BarcodeDetector({ formats });
-        let alive = true;
-        scanController = {
-          stop() {
-            alive = false;
-            stream.getTracks().forEach((t) => t.stop());
-            video.srcObject = null;
-          }
-        };
-        scanStarting = false;
-        const tick = async () => {
-          if (!alive) return;
-          try {
-            if (video.readyState >= 2) {
-              const codes = await detector.detect(video);
-              if (codes && codes[0] && codes[0].rawValue) {
-                await handleScannedCode(codes[0].rawValue);
-                return;
-              }
-            }
-          } catch { /* keep going */ }
-          requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
+        await scanWithDetector(stream);
         return;
       } catch (err) {
         console.warn("BarcodeDetector path failed", err);
-        const video = $("#scan-video");
-        if (video && video.srcObject) {
-          video.srcObject.getTracks().forEach((tr) => tr.stop());
-          video.srcObject = null;
-        }
         if (permissionDenied(err)) {
-          showScanOff();
+          stream.getTracks().forEach((t) => t.stop());
+          showCameraError(err);
           return;
         }
       }
     }
-
     try {
-      await loadHtml5Qrcode();
-      if (currentView !== "scan") { scanStarting = false; return; }
-      $("#scan-video").hidden = true;
-      const reader = $("#qr-reader");
-      reader.hidden = false;
-      reader.innerHTML = "";
-      const html5QrCode = new Html5Qrcode("qr-reader");
+      await scanWithHtml5(stream);
+    } catch (err) {
+      console.warn(err);
+      try { stream.getTracks().forEach((t) => t.stop()); } catch (e) { /* ignore */ }
+      showCameraError(err);
+    }
+  }
+
+  async function scanWithDetector(stream) {
+    let formats = ["ean_13", "ean_8", "upc_a", "upc_e", "code_128"];
+    try {
+      const supported = await BarcodeDetector.getSupportedFormats();
+      const filtered = formats.filter((f) => supported.includes(f));
+      if (filtered.length) formats = filtered;
+    } catch (err) { /* keep the ISBN formats */ }
+    const video = $("#scan-video");
+    video.hidden = false;
+    $("#qr-reader").hidden = true;
+    video.srcObject = stream;
+    await video.play();
+    const detector = new BarcodeDetector({ formats });
+    let alive = true;
+    scanController = {
+      stop() {
+        alive = false;
+        stream.getTracks().forEach((t) => t.stop());
+        video.srcObject = null;
+      }
+    };
+    scanStarting = false;
+    const tick = async () => {
+      if (!alive) return;
+      try {
+        if (video.readyState >= 2) {
+          const codes = await detector.detect(video);
+          if (codes && codes[0] && codes[0].rawValue) {
+            await handleScannedCode(codes[0].rawValue);
+            return;
+          }
+        }
+      } catch (err) { /* keep going */ }
+      if (alive) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  async function scanWithHtml5(stream) {
+    await loadHtml5Qrcode();
+    if (!$("#sheet-add-menu").classList.contains("open") || $("#add-menu-scan").hidden) {
+      stream.getTracks().forEach((t) => t.stop());
+      scanStarting = false;
+      return;
+    }
+    const video = $("#scan-video");
+    video.hidden = true;
+    video.srcObject = null;
+    const reader = $("#qr-reader");
+    reader.hidden = false;
+    reader.innerHTML = "";
+    const formats = [
+      Html5QrcodeSupportedFormats.EAN_13,
+      Html5QrcodeSupportedFormats.EAN_8,
+      Html5QrcodeSupportedFormats.UPC_A,
+      Html5QrcodeSupportedFormats.UPC_E,
+      Html5QrcodeSupportedFormats.CODE_128
+    ].filter((v) => v !== undefined);
+    const html5QrCode = new Html5Qrcode("qr-reader", { formatsToSupport: formats, verbose: false });
+    const orig = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+    navigator.mediaDevices.getUserMedia = () => Promise.resolve(stream);
+    try {
       await html5QrCode.start(
         { facingMode: "environment" },
         { fps: 8, qrbox: { width: 240, height: 140 }, aspectRatio: 0.75 },
         (decoded) => handleScannedCode(decoded),
         () => {}
       );
-      if (currentView !== "scan") {
-        html5QrCode.stop().catch(() => {});
-        scanStarting = false;
-        return;
-      }
-      scanController = {
-        stop() {
-          html5QrCode.stop().catch(() => {});
-          html5QrCode.clear();
-        }
-      };
-      scanStarting = false;
-    } catch (err) {
-      console.warn(err);
-      showScanOff();
+    } finally {
+      navigator.mediaDevices.getUserMedia = orig;
     }
+    const vid = reader.querySelector("video");
+    if (vid) {
+      vid.setAttribute("playsinline", "");
+      vid.setAttribute("muted", "");
+      vid.setAttribute("autoplay", "");
+      vid.playsInline = true;
+      vid.muted = true;
+      vid.autoplay = true;
+    }
+    scanController = {
+      stop() {
+        html5QrCode.stop().catch(() => {});
+        try { html5QrCode.clear(); } catch (err) { /* ignore */ }
+        stream.getTracks().forEach((t) => t.stop());
+      }
+    };
+    scanStarting = false;
   }
 
   function stopScanner() {
     scanStarting = false;
     if (scanController) {
-      try { scanController.stop(); } catch { /* ignore */ }
+      try { scanController.stop(); } catch (err) { /* ignore */ }
       scanController = null;
     }
   }
@@ -915,20 +1001,50 @@
   function loadHtml5Qrcode() {
     if (window.Html5Qrcode) return Promise.resolve();
     return new Promise((resolve, reject) => {
-      const s = document.createElement("script");
-      s.src = "https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js";
-      s.onload = () => resolve();
-      s.onerror = () => reject(new Error("Failed to load html5-qrcode"));
-      document.head.appendChild(s);
+      const el = document.createElement("script");
+      el.src = "https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js";
+      el.onload = () => resolve();
+      el.onerror = () => reject(new Error("Failed to load html5-qrcode"));
+      document.head.appendChild(el);
     });
   }
 
   /* —— Profile / export —— */
-  function openProfile() {
+  let aboutOpen = false;
+  let aboutTimer = 0;
+  function openAbout() {
     $("#profile-name").value = state.profile.displayName || "Bé";
     $("#profile-birthday").value = state.profile.birthday || "2025-01-15";
     $("#profile-age").textContent = formatAge(childAgeMonths());
-    openSheet("sheet-profile");
+    closeSheets();
+    aboutOpen = true;
+    clearTimeout(aboutTimer);
+    const drawer = $("#about-drawer");
+    const backdrop = $("#about-backdrop");
+    drawer.hidden = false;
+    backdrop.hidden = false;
+    drawer.classList.remove("open");
+    backdrop.classList.remove("open");
+    $("#open-about").setAttribute("aria-expanded", "true");
+    void drawer.offsetWidth;
+    drawer.classList.add("open");
+    backdrop.classList.add("open");
+  }
+
+  function closeAbout() {
+    const drawer = $("#about-drawer");
+    if (!aboutOpen && !drawer.classList.contains("open")) return;
+    aboutOpen = false;
+    drawer.classList.remove("open");
+    $("#about-backdrop").classList.remove("open");
+    $("#open-about").setAttribute("aria-expanded", "false");
+    clearTimeout(aboutTimer);
+    aboutTimer = setTimeout(() => {
+      if (!aboutOpen) {
+        drawer.hidden = true;
+        $("#about-backdrop").hidden = true;
+      }
+    }, 520);
   }
 
   function saveProfile() {
@@ -936,7 +1052,7 @@
     state.profile.birthday = $("#profile-birthday").value || "2025-01-15";
     save();
     toast("Profile saved");
-    closeSheets();
+    closeAbout();
     renderShelf();
     if (currentView === "foryou") renderRecs();
   }
@@ -966,7 +1082,6 @@
         toast("Library imported");
         closeSheets();
         renderShelf();
-        renderGenres();
         renderRecs();
       } catch {
         toast("Could not read that JSON file");
@@ -978,12 +1093,29 @@
   /* —— Events —— */
   function bind() {
     $$(".tab").forEach((t) => t.addEventListener("click", () => setView(t.dataset.view)));
-    $$("[data-goto]").forEach((b) => b.addEventListener("click", () => setView(b.dataset.goto)));
+    $("#dock-plus").addEventListener("click", () => {
+      stopScanner();
+      resetAddMenu();
+      openSheet("sheet-add-menu");
+    });
+    $("#menu-scan").addEventListener("click", beginScan);
+    $("#empty-scan").addEventListener("click", beginScan);
+    $("#menu-manual").addEventListener("click", () => openAddForm({ language: "vi" }, { manual: true }));
     $("#empty-add-manual").addEventListener("click", () => openAddForm({ language: "vi" }, { manual: true }));
-    $("#add-manual").addEventListener("click", () => openAddForm({ language: "vi" }, { manual: true }));
-    $("#open-profile").addEventListener("click", openProfile);
+    $("#open-about").addEventListener("click", openAbout);
+    $("#about-close").addEventListener("click", closeAbout);
+    $("#about-backdrop").addEventListener("click", closeAbout);
+    $("#open-genre-filter").addEventListener("click", () => openSheet("sheet-genres"));
+    $("#genre-sheet-list").addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-genre-filter]");
+      if (!btn) return;
+      shelfFilter.genre = btn.dataset.genreFilter;
+      closeSheets();
+      renderShelf();
+    });
     $("#welcome-enter").addEventListener("click", () => closeWelcome(true));
     $("#welcome-replay").addEventListener("click", () => {
+      closeAbout();
       closeSheets();
       openWelcome();
     });
@@ -1042,18 +1174,6 @@
       const card = e.target.closest(".book-card");
       if (card) { e.preventDefault(); openDetail(card.dataset.id); }
     });
-    $("#genre-grid").addEventListener("click", (e) => {
-      const card = e.target.closest("[data-genre]");
-      if (!card) return;
-      shelfFilter.genre = card.dataset.genre;
-      shelfFilter.favorites = false;
-      shelfFilter.language = "all";
-      setView("shelf");
-      // show a temporary chip note via search placeholder
-      toast(`Showing ${card.dataset.genre}`);
-      renderShelf();
-      // add genre clear via resetting when All is tapped — also inject genre chip state visually by filtering list
-    });
     // Clear genre filter when choosing All
     const origShelfFilters = $("#shelf-filters");
     origShelfFilters.addEventListener("click", (e) => {
@@ -1101,14 +1221,12 @@
       closeSheets();
       toast("Removed");
       renderShelf();
-      renderGenres();
       renderRecs();
     });
 
     $("#scan-status").addEventListener("click", () => {
       if (!$("#scan-status").classList.contains("error")) return;
-      scanDenied = false;
-      startScanner();
+      beginScan();
     });
 
     window.addEventListener("resize", updateTabIndicator);
