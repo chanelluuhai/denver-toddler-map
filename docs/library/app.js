@@ -107,12 +107,12 @@
   function coverHtml(book, className = "cover", fallback = "mono") {
     if (book.coverUrl) {
       if (fallback === "clay") {
-        return `<div class="${className}"><img src="${escapeHtml(book.coverUrl)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='icons/clay-book.png';this.classList.add('is-clay')"></div>`;
+        return `<div class="${className}"><img src="${escapeHtml(book.coverUrl)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='icons/clay-book.png?v=20261004e';this.classList.add('is-clay')"></div>`;
       }
       return `<div class="${className}"><img src="${escapeHtml(book.coverUrl)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove();this.parentElement.innerHTML='<span class=cover-mono>${escapeHtml(monogram(book.title))}</span>'"/></div>`;
     }
     if (fallback === "clay") {
-      return `<div class="${className}"><img src="icons/clay-book.png" alt="" class="is-clay"></div>`;
+      return `<div class="${className}"><img src="icons/clay-book.png?v=20261004e" alt="" class="is-clay"></div>`;
     }
     return `<div class="${className}"><span class="cover-mono">${escapeHtml(monogram(book.title))}</span></div>`;
   }
@@ -339,6 +339,7 @@
 
     const scored = [];
     for (const c of catalog) {
+      if (!c.buyUrl || !c.coverUrl) continue;
       if (owned.has(normalizeTitle(c.title))) continue;
       const overlap =
         age + 6 >= (c.ageMinMonths ?? 0) && age - 6 <= (c.ageMaxMonths ?? 999);
@@ -419,14 +420,17 @@
   }
 
   function bookSearchLink(book) {
+    if (book && book.buyUrl) return book.buyUrl;
     const q = encodeURIComponent(`${book.title || ""} ${book.author || ""}`.trim());
-    if (isVietnameseTitle(book)) {
+    if (isVietnameseTitle(book) || (book && book.store === "fahasa")) {
       return `https://www.fahasa.com/catalogsearch/result/?q=${q}`;
     }
     return `https://www.amazon.com/s?k=${q}`;
   }
 
   function bookSearchLabel(book) {
+    if (book && book.store === "fahasa") return "View on Fahasa";
+    if (book && book.store === "amazon") return "View on Amazon";
     return isVietnameseTitle(book) ? "Find on Fahasa" : "Find on Amazon";
   }
 
@@ -494,7 +498,7 @@
     if (!img || !url) return;
     img.onerror = () => {
       img.onerror = null;
-      img.src = "icons/clay-book.png";
+      img.src = "icons/clay-book.png?v=20261004e";
       img.classList.add("is-clay");
     };
     img.classList.remove("is-clay");

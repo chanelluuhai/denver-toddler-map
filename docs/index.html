@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<meta name="theme-color" content="#E8E6E4"/>
+<meta name="theme-color" content="#DEDCDA"/>
 <title>Ours</title>
 <link rel="icon" href="spots/favicon.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -24,7 +24,7 @@
   body {
     font-family: var(--font);
     color: var(--ink);
-    background: #E8E6E4;
+    background: #DEDCDA;
     -webkit-font-smoothing: antialiased;
   }
   #app {
@@ -47,7 +47,7 @@
     left: 0; right: 0; top: 0;
     height: calc(120px + var(--safe-top));
     pointer-events: none;
-    background: linear-gradient(to bottom, rgba(232, 230, 228, 0.82) 0%, rgba(232, 230, 228, 0.35) 55%, transparent 100%);
+    background: linear-gradient(to bottom, rgba(222, 220, 218, 0.82) 0%, rgba(222, 220, 218, 0.35) 55%, transparent 100%);
     backdrop-filter: blur(16px) saturate(1.1);
     -webkit-backdrop-filter: blur(16px) saturate(1.1);
     -webkit-mask-image: linear-gradient(to bottom, #000 25%, transparent 100%);
@@ -99,13 +99,30 @@
     box-shadow: 0 10px 32px rgba(70, 50, 48, 0.06);
     background: #fff;
   }
-  .app img.app-clay {
+  /* Little Library sits on the same rounded tile as Toddler Spots.
+     The baby icon's ground is #E8E6E4, so this tile uses that off-white. */
+  .app-tile {
+    width: min(132px, 36vw);
+    height: min(132px, 36vw);
+    border-radius: 34px;
+    background: #E8E6E4;
+    box-shadow: 0 10px 32px rgba(70, 50, 48, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .app .app-tile img {
+    width: 86%;
+    height: 86%;
     object-fit: contain;
-    background: transparent;
     border-radius: 0;
     box-shadow: none;
-    /* Book artwork is a tight crop; the baby face has ~31% vertical padding. 0.71 matches those heights. */
-    transform: scale(0.71);
+    background: transparent;
+    /* Baby face is 420x351 inside a 512 tile (68.6% tall, 82.0% wide).
+       This portrait book is 524x678. At 86% of the tile, object-fit contain
+       draws it 84.0% tall and 64.9% wide: about the same area as the face,
+       not just the same tile. */
   }
   .app span {
     font-weight: 600;
@@ -137,7 +154,9 @@
         <span>Toddler Spots</span>
       </a>
       <a class="app" href="library/">
-        <img class="app-clay" src="library/icons/clay-book.png" alt="" width="239" height="275"/>
+        <span class="app-tile">
+          <img src="library/icons/clay-book.png?v=20261004e" alt="" width="541" height="694"/>
+        </span>
         <span>Little Library</span>
       </a>
     </main>
