@@ -1,6 +1,6 @@
 {
   "name": "Little Library",
-  "short_name": "Library",
+  "short_name": "Little Library",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
