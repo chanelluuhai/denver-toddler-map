@@ -1112,15 +1112,27 @@
     drawer.classList.remove("open");
     backdrop.classList.remove("open");
     $("#open-about").setAttribute("aria-expanded", "true");
+    drawer.classList.remove("settled");
     void drawer.offsetWidth;
     drawer.classList.add("open");
     backdrop.classList.add("open");
+    const settle = (e) => {
+      if (e.target !== drawer || e.propertyName !== "transform") return;
+      drawer.removeEventListener("transitionend", settle);
+      if (aboutOpen) drawer.classList.add("settled");
+    };
+    drawer.addEventListener("transitionend", settle);
+    setTimeout(() => {
+      if (aboutOpen) drawer.classList.add("settled");
+    }, 520);
   }
 
   function closeAbout() {
     const drawer = $("#about-drawer");
     if (!aboutOpen && !drawer.classList.contains("open")) return;
     aboutOpen = false;
+    drawer.classList.remove("settled");
+    void drawer.offsetWidth;
     drawer.classList.remove("open");
     $("#about-backdrop").classList.remove("open");
     $("#open-about").setAttribute("aria-expanded", "false");
@@ -1135,7 +1147,10 @@
 
   function saveProfile() {
     state.profile.displayName = $("#profile-name").value.trim() || "Bé";
-    state.profile.birthday = $("#profile-birthday").value || "2025-01-15";
+    const nextBirthday = $("#profile-birthday").value;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(nextBirthday)) {
+      state.profile.birthday = nextBirthday;
+    }
     save();
     toast("Profile saved");
     closeAbout();
