@@ -2,6 +2,9 @@
   "use strict";
 
   const STORAGE_KEY = "littleShelf.v1";
+  const SEED_KEY = "littleShelf.sharedSeeded";
+  // Public list. No account and no secret. Every phone reads and writes this same document.
+  const SHARED_SHELF_URL = "https://api.npoint.io/251111f67ba434bad0bb";
   const GENRES = [
     "Board book", "Picture book", "Vietnamese", "Bilingual", "Animals",
     "Bedtime", "Family", "Feelings", "Nature", "Food", "Vehicles",
@@ -50,7 +53,115 @@
   }
 
   function save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (err) {}
+  }
+
+  function shelfFileUrl() {
+    return new URL("shelf.json", document.baseURI).href.split("?")[0] + "?t=" + Date.now();
+  }
+
+  function normalizeBooks(list) {
+    if (!Array.isArray(list)) return null;
+    return list.filter((b) => b && typeof b === "object" && String(b.title || "").trim()).map((b) => ({
+      id: b.id || uid(),
+      title: String(b.title).trim(),
+      author: b.author || "",
+      language: b.language || "en",
+      genres: Array.isArray(b.genres) ? b.genres.filter((g) => typeof g === "string") : [],
+      ageMinMonths: b.ageMinMonths ?? null,
+      ageMaxMonths: b.ageMaxMonths ?? null,
+      isbn: b.isbn || null,
+      notes: b.notes || "",
+      favorite: !!b.favorite,
+      coverUrl: b.coverUrl || null,
+      addedAt: b.addedAt || null
+    }));
+  }
+
+  function copyBooks(books) {
+    return books.map((b) => Object.assign({}, b, { genres: (b.genres || []).slice() }));
+  }
+
+  let shelfRevision = 0;
+  let publishTail = Promise.resolve();
+
+  async function readShelfDocument(url) {
+    const res = await fetch(url, {
+      cache: "no-store",
+      headers: { Accept: "application/json" }
+    });
+    if (!res.ok) throw new Error(String(res.status));
+    const data = await res.json();
+    const books = normalizeBooks(data && data.books);
+    if (!books) throw new Error("bad shelf");
+    return books;
+  }
+
+  async function pushSharedShelf(books) {
+    const res = await fetch(SHARED_SHELF_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({ books }),
+      cache: "no-store"
+    });
+    if (!res.ok) throw new Error(String(res.status));
+  }
+
+  function saveBooks() {
+    save();
+    const revision = ++shelfRevision;
+    const books = copyBooks(state.books);
+    publishTail = publishTail.then(async () => {
+      if (revision !== shelfRevision) return;
+      try {
+        await pushSharedShelf(books);
+      } catch (err) {
+        toast("Saved on this phone only. The shared shelf did not update.");
+      }
+    }).catch(() => {});
+  }
+
+  function showShelfFromState() {
+    if (currentView === "shelf") renderShelf();
+    if (currentView === "foryou") renderRecs();
+  }
+
+  async function refreshSharedShelf() {
+    const revisionAtStart = shelfRevision;
+    let live = null;
+    try {
+      live = await readShelfDocument(SHARED_SHELF_URL + "?t=" + Date.now());
+    } catch (err) {
+      live = null;
+    }
+    if (revisionAtStart !== shelfRevision) return;
+    if (live) {
+      let seeded = false;
+      try { seeded = localStorage.getItem(SEED_KEY) === "1"; } catch (err) {}
+      if (!seeded && live.length === 0 && state.books.length) {
+        try { localStorage.setItem(SEED_KEY, "1"); } catch (err) {}
+        saveBooks();
+        return;
+      }
+      state.books = live;
+      try { localStorage.setItem(SEED_KEY, "1"); } catch (err) {}
+      save();
+      showShelfFromState();
+      return;
+    }
+    if (state.books.length) return;
+    try {
+      const fileBooks = await readShelfDocument(shelfFileUrl());
+      if (revisionAtStart !== shelfRevision) return;
+      state.books = fileBooks;
+      save();
+      showShelfFromState();
+    } catch (err) {}
   }
 
   function uid() {
@@ -266,7 +377,7 @@
     const book = state.books.find((b) => b.id === id);
     if (!book) return;
     book.favorite = !book.favorite;
-    save();
+    saveBooks();
     if (btn) {
       btn.classList.toggle("on", book.favorite);
       btn.classList.remove("pop");
@@ -580,7 +691,7 @@
       coverUrl: r.coverUrl || null,
       addedAt: new Date().toISOString()
     });
-    save();
+    saveBooks();
     toast("Added to the shelf");
     closeSheets();
     renderRecs();
@@ -685,7 +796,7 @@
       });
       toast("Added to the shelf");
     }
-    save();
+    saveBooks();
     closeSheets();
     setView("shelf");
     renderShelf();
@@ -1174,12 +1285,12 @@
       try {
         const data = JSON.parse(reader.result);
         if (!data || !Array.isArray(data.books)) throw new Error("bad");
-        state.books = data.books;
+        state.books = normalizeBooks(data.books) || [];
         if (data.profile) {
           state.profile.displayName = data.profile.displayName || state.profile.displayName;
           state.profile.birthday = data.profile.birthday || state.profile.birthday;
         }
-        save();
+        saveBooks();
         toast("Library imported");
         closeSheets();
         renderShelf();
@@ -1309,8 +1420,8 @@
         pendingDeleteId = del.dataset.detailDelete;
         const b = state.books.find((x) => x.id === pendingDeleteId);
         $("#confirm-text").textContent = b
-          ? `Remove “${b.title}” from the shelf on this device?`
-          : "Remove this book from the shelf on this device?";
+          ? `Remove “${b.title}” from the shelf?`
+          : "Remove this book from the shelf?";
         openSheet("sheet-confirm");
       }
     });
@@ -1318,7 +1429,7 @@
       if (!pendingDeleteId) return;
       state.books = state.books.filter((b) => b.id !== pendingDeleteId);
       pendingDeleteId = null;
-      save();
+      saveBooks();
       closeSheets();
       toast("Removed");
       renderShelf();
@@ -1378,6 +1489,7 @@
     fillGenrePicks([]);
     setView("shelf");
     renderShelf();
+    refreshSharedShelf();
     maybeWelcome();
   }
 
