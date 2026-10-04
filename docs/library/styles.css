@@ -14,7 +14,7 @@
   --radius: 34px;
   --radius-sm: 26px;
   --tap: 48px;
-  --tab-h: calc(88px + env(safe-area-inset-bottom, 0px));
+  --tab-h: calc(96px + env(safe-area-inset-bottom, 0px));
   --top-h: 56px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -86,6 +86,13 @@ img { max-width: 100%; display: block; }
   padding: 0 18px;
   box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
   overflow: hidden;
+}
+.brand-icon {
+  width: 28px;
+  height: 32px;
+  object-fit: contain;
+  flex: 0 0 auto;
+  margin-right: 7px;
 }
 .brand-text {
   font-family: var(--display);
@@ -589,7 +596,7 @@ img { max-width: 100%; display: block; }
   position: relative;
   display: flex;
   align-items: stretch;
-  height: 64px;
+  height: 72px;
   padding: var(--tab-pad);
   border-radius: 999px;
   background: rgba(255, 254, 252, 0.32);
@@ -622,12 +629,13 @@ img { max-width: 100%; display: block; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0;
+  gap: 2px;
   border: none;
   background: transparent;
   color: var(--muted);
   border-radius: 999px;
-  font-size: 0;
+  font-size: 0.68rem;
+  line-height: 1.1;
   font-weight: 600;
   letter-spacing: 0.01em;
   min-height: 48px;
@@ -635,11 +643,15 @@ img { max-width: 100%; display: block; }
   transition: color 220ms ease, transform 180ms ease, opacity 160ms ease;
 }
 .tab svg {
-  width: 26px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
   stroke-width: 1.75;
   display: block;
   pointer-events: none;
+}
+.tab-label {
+  display: block;
+  white-space: nowrap;
 }
 .tab.active { color: var(--accent-dark); }
 .tab:active { opacity: 0.75; transform: scale(0.97); }

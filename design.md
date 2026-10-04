@@ -146,7 +146,7 @@ That welcome is a full-screen dialog, once per browser, remembered in localStora
 3. One short line in Nunito.
 4. An Enter button whose fill drifts with `welcomeButtonGradient`.
 
-The dock is icon-only stroke SVGs, the same glass bar as the rest of the chrome. Do not put clay words, clay letters, or text labels in the tab bar.
+The dock uses small stroke SVG icons with a short text label beneath each icon, inside the same glass bar as the rest of the chrome. Do not put clay words or clay letters in the tab bar.
 
 The blurred header overlay stays shared. The glass pill in that header uses Alice, not the clay wordmark. An app may keep a small clay object beside that serif title (Toddler Spots does). It may not put the clay wordmark there.
 
