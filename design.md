@@ -137,6 +137,8 @@ New UI (the hub, Little Library, anything after) respects `prefers-reduced-motio
 
 Clay photos are cut out to transparent PNGs before they ship. Never show the original rectangular photo, and never leave a white or cream halo around the clay.
 
+Little Library's welcome is the exception. Those three clay books keep the soft contact shadow from the photo, and the welcome ground is the photo's floor (`#E7E9E4`) so the shadow fades into the page instead of ending on a hard crop. The header icon stays a clean cutout, with no shadow plate. The clay wordmark stays on that welcome only.
+
 The clay wordmark image appears only on the first-visit welcome. Everywhere else, titles are set in Alice (`--display`), not the clay wordmark.
 
 That welcome is a full-screen dialog, once per browser, remembered in localStorage, with a replay control (Toddler Spots uses "What is this"):

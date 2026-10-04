@@ -1052,7 +1052,7 @@ button.brand {
   justify-content: flex-start;
   text-align: center;
   padding: calc(28px + var(--safe-top)) 28px calc(28px + var(--safe-bottom));
-  background: #E7EBE4;
+  background: #E7E9E4;
   opacity: 0;
   transition: opacity .36s ease;
 }
