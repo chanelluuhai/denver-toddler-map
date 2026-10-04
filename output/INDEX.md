@@ -1,6 +1,6 @@
 # Denver/Arvada Toddler Outing Spots
 
-Updated: 2026-10-02  
+Updated: 2026-10-03  
 Base: W 64th Ave & Ward Rd, Arvada, CO 80004  
 Audience: Toddler ~20 months; prefer ~30 min drive  
 Places: 66

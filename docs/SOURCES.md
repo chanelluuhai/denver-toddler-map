@@ -8,10 +8,16 @@
 | Colorado Kids Explore | https://www.instagram.com/colorado.kids.explore/ | https://www.facebook.com/profile.php?id=61575843462964 (Colorado Kids Explore - Adventure Guide) | https://www.tiktok.com/@colorado.kids.explore |
 | Colorado Kids Are Rad | https://www.instagram.com/coloradokidsarerad/ | Colorado Kids Are Rad | |
 | Colorado Mama Life (Angelica) | https://www.instagram.com/coloradomamalife/ | https://www.facebook.com/profile.php?id=61577651781310 | https://www.tiktok.com/@coloradomamalife |
+| Little Rad Adventure | https://www.instagram.com/littleradadventure/ | https://www.facebook.com/LittleRadAdventure | https://littleradadventure.com/ |
 
 ## Chanel share (2026-10-02)
 
 - Facebook reel https://www.facebook.com/share/r/1F3TqSRV9P/ → https://www.facebook.com/reel/1015401847940077/ — Angelica Quintanilla / Colorado Mama Life (existing account): **Boulder Canyon Trail**, start at Eben G. Fine Park, 101 Arapahoe Ave, Boulder. Stroller-friendly creek walk; mountain bikers kept a toddler entertained. Pin `boulder-canyon-trail` (~35 min, farther). No dated event.
+
+
+## Chanel share (2026-10-03)
+
+- Facebook reel https://www.facebook.com/share/r/1cXJech3u1/ → https://www.facebook.com/reel/1738726840765924/ — Little Rad Adventure / Must Do In Colorado (new account): **Tiny Town & Railroad**, 6249 S Turkey Creek Rd, Morrison. Miniature village and train. Seasonal: open Memorial Day weekend through Labor Day, plus weekends in May and September. Closed as of Oct 2026, so no map pin until it reopens. Kids under 2 are free with a paying adult; train rides are extra.
 
 ## Scrub window (2026-10-02 Mon/Wed/Fri pass)
 
@@ -70,7 +76,7 @@ Cheyenne-Arapaho, Bates-Logan, Washington Park, City View, La Raza, Paco Sanchez
 
 ## Weekly update notes
 
-1. Scrub **all** accounts listed in this SOURCES.md Accounts table (IG/FB/TikTok/newsletter as linked) — currently Days.in.denver, Colorado Kids Explore, Colorado Kids Are Rad, Colorado Mama Life — plus Days.in.denver beehiiv.
+1. Scrub **all** accounts listed in this SOURCES.md Accounts table (IG/FB/TikTok/newsletter as linked) — currently Days.in.denver, Colorado Kids Explore, Colorado Kids Are Rad, Colorado Mama Life, Little Rad Adventure — plus Days.in.denver beehiiv.
 2. Add/edit rows in `data/places.json` (keep `source` + `links`).
 3. `python3 scripts/build_map.py` (writes `output/` and syncs `docs/` for Pages).
 4. Commit & push `main` — GitHub Pages serves from `/docs`.
