@@ -808,6 +808,11 @@
     $("#empty-add-manual").addEventListener("click", () => openAddForm({ language: "vi" }, { manual: true }));
     $("#add-manual").addEventListener("click", () => openAddForm({ language: "vi" }, { manual: true }));
     $("#open-profile").addEventListener("click", openProfile);
+    $("#welcome-enter").addEventListener("click", () => closeWelcome(true));
+    $("#welcome-replay").addEventListener("click", () => {
+      closeSheets();
+      openWelcome();
+    });
     $("#sheet-backdrop").addEventListener("click", closeSheets);
     $$("[data-close-sheet]").forEach((b) => b.addEventListener("click", closeSheets));
     $("#profile-save").addEventListener("click", saveProfile);
@@ -940,6 +945,45 @@
     window.addEventListener("orientationchange", () => setTimeout(updateTabIndicator, 200));
   }
 
+
+  /* —— First-visit welcome —— */
+  const WELCOME_KEY = "little-library-welcome";
+  function openWelcome() {
+    const welcome = $("#welcome");
+    const enter = $("#welcome-enter");
+    if (!welcome) return;
+    const bits = welcome.querySelectorAll(".welcome-emoji, .welcome-wordmark, .welcome-line, .welcome-enter");
+    welcome.classList.remove("open");
+    welcome.hidden = false;
+    welcome.style.transition = "none";
+    bits.forEach((el) => { el.style.transition = "none"; });
+    void welcome.offsetWidth;
+    welcome.style.removeProperty("transition");
+    bits.forEach((el) => { el.style.removeProperty("transition"); });
+    requestAnimationFrame(() => {
+      welcome.classList.add("open");
+      setTimeout(() => {
+        if (welcome.classList.contains("open")) enter.focus({ preventScroll: true });
+      }, 820);
+    });
+  }
+  function closeWelcome(persist) {
+    const welcome = $("#welcome");
+    if (!welcome) return;
+    if (persist) {
+      try { localStorage.setItem(WELCOME_KEY, "1"); } catch (err) {}
+    }
+    welcome.classList.remove("open");
+    setTimeout(() => {
+      if (!welcome.classList.contains("open")) welcome.hidden = true;
+    }, 320);
+  }
+  function maybeWelcome() {
+    let seen = false;
+    try { seen = localStorage.getItem(WELCOME_KEY) === "1"; } catch (err) {}
+    if (!seen) openWelcome();
+  }
+
   /* —— Boot —— */
   function boot() {
     bind();
@@ -947,6 +991,7 @@
     setView("shelf");
     renderShelf();
     requestAnimationFrame(updateTabIndicator);
+    maybeWelcome();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);

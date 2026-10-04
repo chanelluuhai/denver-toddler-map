@@ -19,7 +19,7 @@ Google fonts link, used on every app:
 | UI | Nunito | 400, 500, 600, 700 | `--font: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;` |
 | Display (wordmarks, sheet titles) | Alice | 400 (the face is a single roman) | `--display: "Alice", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;` |
 
-Wordmarks use `--display` at weight 600. Buttons, tabs, and body copy use `--font`.
+In-app titles use `--display` at weight 600. Buttons, tabs, and body copy use `--font`. A clay wordmark image is only for the welcome screen (see Clay).
 
 ## Shared tokens
 
@@ -131,6 +131,26 @@ New UI (the hub, Little Library, anything after) respects `prefers-reduced-motio
 **Sheets.** Slide up from the bottom over a dim backdrop (`rgba(55, 42, 40, 0.22)`). Sheet fill `rgba(255, 254, 252, 0.96)`, `blur(28px) saturate(1.15)`, radius `36px 36px 0 0`, shadow `--shadow-lg`. A 40×4px handle, radius 999px, tinted with the accent at about 0.35 alpha. Transform eases with `cubic-bezier(.32, .72, 0, 1)`.
 
 **Shell.** Mobile, full viewport, safe areas, 48px targets, focus ring `2px solid var(--accent-dark)`.
+
+
+## Clay
+
+Clay photos are cut out to transparent PNGs before they ship. Never show the original rectangular photo, and never leave a white or cream halo around the clay.
+
+The clay wordmark image appears only on the first-visit welcome. Everywhere else, titles are set in Alice (`--display`), not the clay wordmark.
+
+That welcome is a full-screen dialog, once per browser, remembered in localStorage, with a replay control (Toddler Spots uses "What is this"):
+
+1. A row of small transparent clay object icons that bounce in (`welcomeIconBounce`, staggered).
+2. The clay wordmark image.
+3. One short line in Nunito.
+4. An Enter button whose fill drifts with `welcomeButtonGradient`.
+
+The dock is icon-only stroke SVGs, the same glass bar as the rest of the chrome. Do not put clay words, clay letters, or text labels in the tab bar.
+
+The blurred header overlay stays shared. The glass pill in that header uses Alice, not the clay wordmark. An app may keep a small clay object beside that serif title (Toddler Spots does). It may not put the clay wordmark there.
+
+Each app brings its own clay objects and its own color theme. The welcome shape, the serif titles, the icon dock, and the blurred header do not change.
 
 ## Rule
 

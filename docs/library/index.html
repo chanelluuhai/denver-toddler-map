@@ -21,7 +21,7 @@
   <div id="app">
     <header class="topbar">
       <div class="brand">
-        <img class="brand-wordmark" src="icons/clay-wordmark.png" alt="Little Library" width="918" height="508"/>
+        <span class="brand-text">Little Library</span>
       </div>
       <button type="button" class="profile-btn" id="open-profile" aria-label="Child profile and settings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -46,7 +46,6 @@
         </div>
         <div id="shelf-list" class="book-list"></div>
         <div id="shelf-empty" class="empty" hidden>
-          <img class="empty-art" src="icons/clay-books.png" alt="" width="1073" height="318"/>
           <h2>A quiet shelf</h2>
           <p>Scan a barcode, or add a book by hand. Vietnamese titles do not need an ISBN.</p>
           <div class="empty-actions">
@@ -95,16 +94,16 @@
       <div class="seg" id="dock-seg">
         <div class="tab-indicator" id="tab-indicator" aria-hidden="true"></div>
         <button type="button" class="tab active" data-view="shelf" aria-current="page" aria-label="Shelf">
-          <img src="icons/nav-shelf.png" alt="" width="614" height="210"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 4.5v15M19 4.5v15M5 8.5h14M5 16h14" stroke-linecap="round"/><path d="M8.5 8.5V16M12 8.5v4.5M15.5 8.5V16" stroke-linecap="round"/></svg>
         </button>
         <button type="button" class="tab" data-view="genres" aria-label="Genres">
-          <img src="icons/nav-genres.png" alt="" width="828" height="208"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg>
         </button>
         <button type="button" class="tab" data-view="scan" aria-label="Scan">
-          <img src="icons/nav-scan.png" alt="" width="570" height="208"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M7 4H5.2A1.2 1.2 0 0 0 4 5.2V7M17 4h1.8A1.2 1.2 0 0 1 20 5.2V7M7 20H5.2A1.2 1.2 0 0 1 4 18.8V17M17 20h1.8A1.2 1.2 0 0 0 20 18.8V17" stroke-linecap="round"/><path d="M8 9v6M11 9v6M14 9v6M17 9v6" stroke-linecap="round"/></svg>
         </button>
         <button type="button" class="tab" data-view="foryou" aria-label="For you">
-          <img src="icons/nav-foryou.png" alt="" width="842" height="208"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 19.2s-6.2-3.9-6.2-8A3.5 3.5 0 0 1 12 8.4a3.5 3.5 0 0 1 6.2 2.8c0 4.1-6.2 8-6.2 8z" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </nav>
@@ -137,6 +136,7 @@
           <button type="button" class="btn btn-secondary btn-block" id="export-json">Export library JSON</button>
           <button type="button" class="btn btn-secondary btn-block" id="import-json">Import library JSON</button>
           <input type="file" id="import-file" accept="application/json,.json" hidden/>
+          <button type="button" class="about-replay" id="welcome-replay">What is this</button>
         </div>
       </div>
     </div>
@@ -226,6 +226,20 @@
           <button type="button" class="btn btn-danger btn-block" id="confirm-delete">Remove</button>
           <button type="button" class="btn btn-secondary btn-block" data-close-sheet>Keep it</button>
         </div>
+      </div>
+    </div>
+
+
+    <div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title" hidden>
+      <div class="welcome-main">
+        <div class="welcome-emoji" aria-hidden="true">
+          <img src="icons/clay-book.png" alt="" width="92" height="92"/>
+          <img src="icons/clay-stack.png" alt="" width="92" height="92"/>
+          <img src="icons/clay-open.png" alt="" width="92" height="92"/>
+        </div>
+        <img class="welcome-wordmark" id="welcome-title" src="icons/clay-wordmark.png" alt="Little Library" width="892" height="482"/>
+        <p class="welcome-line">A shelf for his books, including the Vietnamese ones.</p>
+        <button type="button" class="welcome-enter" id="welcome-enter">Enter</button>
       </div>
     </div>
 
