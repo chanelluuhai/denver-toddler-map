@@ -10,154 +10,164 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Alice&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-  :root {
-    --ink: #2F2A27;
-    --muted: #9A9088;
-    --font: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    --display: "Alice", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-    --ease: cubic-bezier(0.4, 0, 0.2, 1);
-    --safe-top: env(safe-area-inset-top, 0px);
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
-  }
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { height: 100%; margin: 0; }
-  body {
-    font-family: var(--font);
-    color: var(--ink);
-    background: #DEDCDA;
-    -webkit-font-smoothing: antialiased;
-  }
-  #app {
-    min-height: 100%;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .topbar {
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: calc(28px + var(--safe-top)) 20px 8px;
-  }
-  .topbar::before {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; top: 0;
-    height: calc(120px + var(--safe-top));
-    pointer-events: none;
-    background: linear-gradient(to bottom, rgba(222, 220, 218, 0.82) 0%, rgba(222, 220, 218, 0.35) 55%, transparent 100%);
-    backdrop-filter: blur(16px) saturate(1.1);
-    -webkit-backdrop-filter: blur(16px) saturate(1.1);
-    -webkit-mask-image: linear-gradient(to bottom, #000 25%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 25%, transparent 100%);
-  }
-  .wordmark {
-    position: relative;
-    margin: 0;
-    padding: 10px 22px;
-    border-radius: 999px;
-    background: rgba(255, 254, 252, 0.78);
-    backdrop-filter: blur(24px) saturate(1.2);
-    -webkit-backdrop-filter: blur(24px) saturate(1.2);
-    box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 1.35rem;
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-  .apps {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 28px;
-    width: min(420px, 100%);
-    padding: 24px 20px calc(32px + var(--safe-bottom));
-  }
-  .app {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    min-width: 48px;
-    min-height: 48px;
-    text-decoration: none;
-    color: var(--ink);
-    opacity: 0;
-    transform: translateY(14px);
-    animation: welcomeIconBounce 500ms cubic-bezier(.22, 1, .36, 1) both;
-  }
-  .app:nth-child(2) { animation-delay: 110ms; }
-  .app img {
-    width: min(132px, 36vw);
-    height: min(132px, 36vw);
-    border-radius: 34px;
-    object-fit: cover;
-    box-shadow: 0 10px 32px rgba(70, 50, 48, 0.06);
-    background: #fff;
-  }
-  /* Little Library sits on the same rounded tile as Toddler Spots.
-     The baby icon's ground is #E8E6E4, so this tile uses that off-white. */
-  .app-tile {
-    width: min(132px, 36vw);
-    height: min(132px, 36vw);
-    border-radius: 34px;
-    background: #E8E6E4;
-    box-shadow: 0 10px 32px rgba(70, 50, 48, 0.06);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .app .app-tile img {
-    width: 86%;
-    height: 86%;
-    object-fit: contain;
-    border-radius: 0;
-    box-shadow: none;
-    background: transparent;
-    /* 10% smaller than the 86% box, tile size unchanged. */
-    transform: scale(0.9);
-  }
-  .app span {
-    font-weight: 600;
-    font-size: 0.95rem;
-    letter-spacing: -0.01em;
-    text-align: center;
-  }
-  .app:active { transform: scale(0.97); }
-  .app:focus-visible { outline: 2px solid #8E5A68; outline-offset: 4px; border-radius: 34px; }
-  @keyframes welcomeIconBounce {
-    0% { opacity: 0; transform: translateY(12px) scale(.88); }
-    55% { opacity: 1; transform: translateY(-5px) scale(1.03); }
-    78% { transform: translateY(2px) scale(.98); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .app { animation: none; opacity: 1; transform: none; }
-  }
+:root {
+  --ink: #2F2A27;
+  --muted: #9A9088;
+  --font: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --display: "Alice", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background: #DEDCDA;
+  -webkit-font-smoothing: antialiased;
+}
+#app {
+  min-height: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.topbar {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: calc(28px + var(--safe-top)) 20px 8px;
+}
+.topbar::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: calc(120px + var(--safe-top));
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(222, 220, 218, 0.82) 0%, rgba(222, 220, 218, 0.35) 55%, transparent 100%);
+  backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-mask-image: linear-gradient(to bottom, #000 25%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 25%, transparent 100%);
+}
+.wordmark {
+  position: relative;
+  margin: 0;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: rgba(255, 254, 252, 0.78);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.apps {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  width: min(560px, 100%);
+  padding: 24px 20px calc(32px + var(--safe-bottom));
+  flex-wrap: wrap;
+}
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 48px;
+  min-height: 48px;
+  text-decoration: none;
+  color: var(--ink);
+  opacity: 0;
+  transform: translateY(14px);
+  animation: welcomeIconBounce 500ms cubic-bezier(.22, 1, .36, 1) both;
+}
+.app:nth-child(2) { animation-delay: 110ms; }
+.app:nth-child(3) { animation-delay: 220ms; }
+.app img {
+  width: min(132px, 36vw);
+  height: min(132px, 36vw);
+  border-radius: 34px;
+  object-fit: cover;
+  box-shadow: 0 10px 32px rgba(70, 50, 48, 0.06);
+  background: #fff;
+}
+/* Little Library sits on the same rounded tile as Toddler Spots.
+   The baby icon's ground is #E8E6E4, so this tile uses that off-white. */
+.app-tile {
+  width: min(132px, 36vw);
+  height: min(132px, 36vw);
+  border-radius: 34px;
+  background: #E8E6E4;
+  box-shadow: 0 10px 32px rgba(70, 50, 48, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.app .app-tile img {
+  width: 86%;
+  height: 86%;
+  object-fit: contain;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  /* 10% smaller than the 86% box, tile size unchanged. */
+  transform: scale(0.9);
+}
+/* Nibble & Sip keeps the same rounded tile on a terracotta wash. */
+.app-tile.terra { background: #F2E4D3; }
+.app span {
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+.app:active { transform: scale(0.97); }
+.app:focus-visible { outline: 2px solid #8E5A68; outline-offset: 4px; border-radius: 34px; }
+@keyframes welcomeIconBounce {
+  0% { opacity: 0; transform: translateY(12px) scale(.88); }
+  55% { opacity: 1; transform: translateY(-5px) scale(1.03); }
+  78% { transform: translateY(2px) scale(.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app { animation: none; opacity: 1; transform: none; }
+}
 </style>
 </head>
 <body>
-  <div id="app">
-    <header class="topbar">
-      <h1 class="wordmark">Ours</h1>
-    </header>
-    <main class="apps">
-      <a class="app" href="spots/">
-        <img src="spots/icons/icon-512.png" alt="" width="512" height="512"/>
-        <span>Toddler Spots</span>
-      </a>
-      <a class="app" href="library/">
-        <span class="app-tile">
-          <img src="library/icons/clay-book.png?v=20261004e" alt="" width="541" height="694"/>
-        </span>
-        <span>Little Library</span>
-      </a>
-    </main>
-  </div>
+<div id="app">
+<header class="topbar">
+<h1 class="wordmark">Ours</h1>
+</header>
+<main class="apps">
+<a class="app" href="spots/">
+<img src="spots/icons/icon-512.png" alt="" width="512" height="512"/>
+<span>Toddler Spots</span>
+</a>
+<a class="app" href="library/">
+<span class="app-tile">
+<img src="library/icons/clay-book.png?v=20261004e" alt="" width="541" height="694"/>
+</span>
+<span>Little Library</span>
+</a>
+<a class="app" href="nibble-sip/">
+<span class="app-tile terra">
+<img src="nibble-sip/icons/icon.svg" alt="" width="128" height="128"/>
+</span>
+<span>Nibble &amp; Sip</span>
+</a>
+</main>
+</div>
 </body>
 </html>

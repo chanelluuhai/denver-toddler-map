@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="theme-color" content="#EEE8E2"/>
+  <meta name="description" content="Nibble & Sip — tiny meal ideas, a weekly planner, and picks based on what your toddler loves."/>
+  <title>Nibble &amp; Sip</title>
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-title" content="Nibble &amp; Sip"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Alice&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  /* Nibble & Sip theme (muted terracotta). Everything else stays on the shared tokens. */
+  --accent: #C4744E;
+  --accent-soft: #F7ECE4;
+  --accent-dark: #9A5636;
+  --terra: #D99C73;
+  --terra-deep: #B06A42;
+  --ink: #2F2A27;
+  --ink-2: #5A524C;
+  --muted: #9A9088;
+  --line: rgba(80, 60, 58, 0.08);
+  --card: #FFFEFC;
+  --shadow: 0 10px 32px rgba(70, 50, 48, 0.06);
+  --shadow-lg: 0 18px 48px rgba(60, 40, 42, 0.10);
+  --radius: 34px;
+  --radius-sm: 26px;
+  --tap: 48px;
+  --tab-h: calc(96px + env(safe-area-inset-bottom, 0px));
+  --top-h: 56px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --font: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --display: "Alice", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --app-max: 480px;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background: linear-gradient(180deg, #E9E6E2 0%, #EEE8E2 42%, #EFDBC8 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+button, input, select, textarea { font-family: inherit; }
+button { cursor: pointer; }
+img { max-width: 100%; display: block; }
+
+#app {
+  position: relative;
+  height: 100%;
+  height: 100dvh;
+  width: min(100%, var(--app-max));
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* —— Topbar —— */
+.topbar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: calc(10px + var(--safe-top)) 14px 8px;
+  pointer-events: none;
+  transition: gap 460ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.topbar > * { pointer-events: auto; }
+.topbar::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: calc(120px + var(--safe-top));
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(238, 232, 226, 0.82) 0%, rgba(238, 232, 226, 0.35) 55%, transparent 100%);
+  backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-mask-image: linear-gradient(to bottom, #000 25%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 25%, transparent 100%);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  min-width: 0;
+  max-width: 100%;
+  background: rgba(255, 254, 252, 0.78);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border-radius: 999px;
+  padding: 0 18px;
+  box-shadow: 0 8px 24px rgba(70, 50, 48, 0.07);
+  overflow: hidden;
+}
+.brand-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  flex: 0 0 auto;
+  margin-right: 8px;
+}
+.brand-text {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.08rem;
+  letter-spacing: -0.015em;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--ink);
+}
+
+/* —— Views —— */
+.views { position: absolute; inset: 0; overflow: hidden; }
+.view {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: calc(84px + var(--safe-top)) 20px calc(var(--tab-h) + 20px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 460ms var(--ease), transform 460ms var(--ease);
+}
+.view.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+.lede { margin: 0 0 10px; font-size: 0.95rem; line-height: 1.45; color: var(--ink-2); }
+.view-title {
+  margin: 2px 0 10px;
+  font-family: var(--display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* —— Search + chips —— */
+.feed-toolbar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.search-row { display: flex; gap: 8px; align-items: center; }
+.search-pill {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--tap);
+  padding: 0 16px 0 14px;
+  border-radius: 999px;
+  background: rgba(255, 254, 252, 0.82);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  box-shadow: 0 8px 24px rgba(154, 86, 54, 0.07);
+}
+.search-pill svg { width: 18px; height: 18px; color: var(--muted); flex-shrink: 0; }
+.search-pill input {
+  flex: 1; border: none; background: transparent; outline: none;
+  font-size: 16px; color: var(--ink); min-width: 0;
+}
+.search-pill input::placeholder { color: var(--muted); }
+.chip-row {
+  display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px;
+  scrollbar-width: none;
+}
+.chip-row::-webkit-scrollbar { display: none; }
+.chip {
+  flex-shrink: 0;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 254, 252, 0.65);
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: background 220ms ease, color 220ms ease, border-color 220ms ease;
+}
+.chip.active {
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  border-color: rgba(196, 116, 78, 0.28);
+}
+.chip:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+
+/* —— Meal cards —— */
+.meal-list { display: flex; flex-direction: column; gap: 12px; }
+.meal-card {
+  display: flex;
+  gap: 14px;
+  align-items: stretch;
+  padding: 14px 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 254, 252, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 8px 22px rgba(70, 50, 48, 0.05);
+  border: none;
+  text-align: left;
+  width: 100%;
+  color: inherit;
+  animation: cardIn 440ms var(--ease) both;
+  transition: transform 180ms var(--ease), box-shadow 220ms ease;
+}
+.meal-card:active { transform: scale(0.985); }
+.meal-card:nth-child(1) { animation-delay: 20ms; }
+.meal-card:nth-child(2) { animation-delay: 50ms; }
+.meal-card:nth-child(3) { animation-delay: 80ms; }
+.meal-card:nth-child(4) { animation-delay: 110ms; }
+.meal-card:nth-child(5) { animation-delay: 140ms; }
+.meal-card:nth-child(n+6) { animation-delay: 160ms; }
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.meal-icon {
+  width: 64px; height: 64px;
+  border-radius: 20px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(160deg, var(--accent-soft), #F3DCC8 55%, var(--terra));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 4px 12px rgba(154,86,54,0.10);
+}
+.meal-icon svg { width: 38px; height: 38px; }
+.meal-meta { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding: 2px 0; }
+.meal-meta h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.meal-meta .ings {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--ink-2);
+  font-weight: 500;
+  line-height: 1.4;
+}
+.meal-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; padding-top: 6px; }
+.tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--terra-deep);
+}
+.vote-col { display: flex; flex-direction: column; gap: 6px; justify-content: center; flex-shrink: 0; }
+.vote-btn {
+  width: 40px; height: 40px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  display: grid; place-items: center;
+  transition: color 180ms ease, transform 280ms cubic-bezier(.34, 1.56, .64, 1), background 180ms ease;
+}
+.vote-btn svg { width: 21px; height: 21px; }
+.vote-btn.up.on { color: var(--terra-deep); background: var(--accent-soft); }
+.vote-btn.down.on { color: #8a8a8a; background: rgba(0,0,0,0.05); }
+.vote-btn.pop { animation: votePop 420ms cubic-bezier(.34, 1.56, .64, 1); }
+@keyframes votePop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* —— Made-for-him strip —— */
+.rec-block { margin-bottom: 16px; }
+.rec-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin: 2px 2px 10px;
+}
+.rec-head h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.rec-head p { margin: 0; font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+.rec-strip {
+  display: flex; gap: 10px;
+  overflow-x: auto;
+  padding: 2px 2px 8px;
+  margin: 0 -2px;
+  scrollbar-width: none;
+}
+.rec-strip::-webkit-scrollbar { display: none; }
+.rec-card {
+  flex: 0 0 168px;
+  border: none;
+  border-radius: 22px;
+  background: rgba(255, 254, 252, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 8px 22px rgba(70, 50, 48, 0.06);
+  padding: 14px;
+  text-align: left;
+  color: inherit;
+  display: flex; flex-direction: column; gap: 6px;
+  animation: cardIn 440ms var(--ease) both;
+}
+.rec-card:active { transform: scale(0.97); }
+.rec-card h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.rec-card .why { margin: 0; font-size: 0.74rem; color: var(--ink-2); line-height: 1.4; }
+.rec-card .why strong { color: var(--accent-dark); }
+.rec-empty {
+  border-radius: var(--radius-sm);
+  background: rgba(255, 254, 252, 0.6);
+  padding: 16px;
+  font-size: 0.88rem;
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.rec-empty strong { color: var(--accent-dark); }
+
+/* —— Planner —— */
+.week-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.week-nav h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+.week-arrow {
+  width: var(--tap); height: var(--tap);
+  border: none; border-radius: 999px;
+  background: rgba(255, 254, 252, 0.82);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  box-shadow: 0 8px 24px rgba(154, 86, 54, 0.07);
+  color: var(--accent-dark);
+  display: grid; place-items: center;
+  font-size: 1.2rem; font-weight: 700;
+}
+.week-arrow:active { transform: scale(0.94); }
+.day-block {
+  border-radius: var(--radius-sm);
+  background: rgba(255, 254, 252, 0.6);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 8px 22px rgba(70, 50, 48, 0.05);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.day-block.today { outline: 2px solid rgba(196, 116, 78, 0.35); outline-offset: -2px; }
+.day-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.day-head h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+.day-head span { font-size: 0.78rem; color: var(--muted); font-weight: 600; }
+.slot-row { display: flex; flex-direction: column; gap: 6px; }
+.slot {
+  display: flex; align-items: center; gap: 10px;
+  min-height: var(--tap);
+  width: 100%;
+  border: 1px dashed rgba(196, 116, 78, 0.35);
+  border-radius: 18px;
+  background: transparent;
+  padding: 8px 12px;
+  color: inherit;
+  text-align: left;
+  font-size: 0.88rem;
+}
+.slot.filled { border-style: solid; border-color: var(--line); background: rgba(255,254,252,0.7); }
+.slot:active { transform: scale(0.98); }
+.slot-label {
+  flex: 0 0 74px;
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.slot-meal { flex: 1; font-weight: 600; color: var(--ink); }
+.slot-add { color: var(--accent-dark); font-weight: 600; font-size: 0.85rem; }
+
+/* —— Likes view —— */
+.like-group { margin-bottom: 18px; }
+.like-group h2 {
+  margin: 0 2px 10px;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+.like-row {
+  display: flex; align-items: center; gap: 10px;
+  border-radius: 18px;
+  background: rgba(255, 254, 252, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 6px 18px rgba(70, 50, 48, 0.05);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+.like-row .nm { flex: 1; font-weight: 600; font-size: 0.92rem; }
+.like-row .unvote {
+  width: 36px; height: 36px;
+  border: none; border-radius: 999px;
+  background: transparent; color: var(--muted);
+  display: grid; place-items: center;
+  font-size: 1.05rem; line-height: 1;
+}
+
+/* —— About —— */
+.about-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 24px 24px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.about-card h2 {
+  font-family: var(--display);
+  font-size: 1.18rem;
+  margin: 0 0 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.about-card p {
+  font-size: 0.92rem;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+.about-card .btn { margin-bottom: 8px; }
+
+/* —— Buttons —— */
+.btn {
+  min-height: var(--tap);
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 180ms var(--ease), opacity 160ms ease, background 220ms ease;
+}
+.btn:active { transform: scale(0.97); opacity: 0.85; }
+.btn:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--terra-deep));
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(154, 86, 54, 0.22), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+.btn-secondary {
+  background: rgba(255, 254, 252, 0.85);
+  color: var(--accent-dark);
+  box-shadow: 0 6px 18px rgba(154, 86, 54, 0.07);
+  border: 1px solid var(--line);
+}
+.btn-block { width: 100%; }
+
+/* —— Dock —— */
+.dock {
+  position: absolute;
+  left: 12px; right: 12px;
+  bottom: calc(10px + var(--safe-bottom));
+  z-index: 40;
+  pointer-events: none;
+}
+.dock::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -12px; right: -12px;
+  bottom: calc(-10px - var(--safe-bottom));
+  height: 140px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 0%, rgba(238, 232, 226, 0.12) 25%, rgba(239, 219, 200, 0.78) 100%);
+  backdrop-filter: blur(16px) saturate(1.08);
+  -webkit-backdrop-filter: blur(16px) saturate(1.08);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 48%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 48%, #000 100%);
+}
+.seg {
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  height: 72px;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(255, 254, 252, 0.32);
+  backdrop-filter: blur(22px) saturate(1.45);
+  -webkit-backdrop-filter: blur(22px) saturate(1.45);
+  border: 1px solid rgba(255, 254, 252, 0.5);
+  box-shadow: 0 10px 28px rgba(154, 86, 54, 0.10);
+}
+.tab {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 0;
+  width: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  min-height: 48px;
+  padding: 0 2px;
+  transition: color 220ms ease, background 220ms ease, transform 180ms ease, opacity 160ms ease;
+}
+.tab svg {
+  width: 22px; height: 22px;
+  display: block;
+  pointer-events: none;
+  flex: 0 0 auto;
+}
+.tab.active { color: var(--accent-dark); background: var(--accent-soft); }
+.tab:active { opacity: 0.75; transform: scale(0.97); }
+.tab:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+
+/* —— Sheets —— */
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  background: rgba(55, 42, 40, 0.22);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 380ms var(--ease);
+}
+.sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+.sheet {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 70;
+  max-height: min(92dvh, 920px);
+  background: rgba(255, 254, 252, 0.96);
+  backdrop-filter: blur(28px) saturate(1.15);
+  -webkit-backdrop-filter: blur(28px) saturate(1.15);
+  border-radius: 36px 36px 0 0;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(110%);
+  transition: transform .32s cubic-bezier(.32, .72, 0, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.sheet.open { transform: translateY(0); }
+.sheet-handle {
+  width: 40px; height: 4px;
+  border-radius: 999px;
+  background: rgba(196, 116, 78, 0.35);
+  margin: 12px auto 8px;
+  flex-shrink: 0;
+}
+.sheet-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px;
+  padding: 4px 16px 10px;
+  flex-shrink: 0;
+}
+.sheet-bar h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.28rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.sheet-close {
+  width: 40px; height: 40px;
+  border: none; border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  display: grid; place-items: center;
+}
+.sheet-close svg { width: 18px; height: 18px; }
+.sheet-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 18px calc(24px + var(--safe-bottom));
+  -webkit-overflow-scrolling: touch;
+}
+.detail-ings { margin: 0 0 12px; padding: 0; list-style: none; }
+.detail-ings li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.92rem;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.detail-ings li:last-child { border-bottom: none; }
+.detail-prep { font-size: 0.94rem; line-height: 1.6; color: var(--ink-2); margin: 0 0 14px; }
+.detail-actions { display: flex; gap: 10px; margin: 14px 0; }
+.detail-actions .btn { flex: 1; }
+.vote-toggle {
+  flex: 1;
+  min-height: var(--tap);
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,254,252,0.7);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+}
+.vote-toggle svg { width: 19px; height: 19px; }
+.vote-toggle.up.on { background: var(--accent-soft); color: var(--accent-dark); border-color: rgba(196,116,78,0.35); }
+.vote-toggle.down.on { background: rgba(0,0,0,0.05); color: #777; }
+.pick-list { display: flex; flex-direction: column; gap: 8px; }
+.pick-item {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 18px;
+  background: rgba(255, 254, 252, 0.72);
+  padding: 12px 14px;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+}
+.pick-item:active { transform: scale(0.98); }
+.pick-item .nm { flex: 1; font-weight: 600; font-size: 0.92rem; }
+.pick-item .sub { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+
+/* —— Welcome —— */
+@keyframes welcomeButtonGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes welcomeIconBounce {
+  0% { opacity: 0; transform: translateY(12px) scale(.88); }
+  55% { opacity: 1; transform: translateY(-5px) scale(1.03); }
+  78% { transform: translateY(2px) scale(.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.welcome {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: calc(28px + var(--safe-top)) 28px calc(28px + var(--safe-bottom));
+  background: #EEE8E2;
+  opacity: 0;
+  transition: opacity .36s ease;
+}
+.welcome[hidden] { display: none; animation: none; }
+.welcome.open { opacity: 1; }
+.welcome-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: min(420px, 100%);
+}
+.welcome-icons,
+.welcome-wordmark,
+.welcome-line,
+.welcome-enter {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 560ms cubic-bezier(.22, 1, .36, 1), transform 560ms cubic-bezier(.22, 1, .36, 1);
+}
+.welcome.open .welcome-icons { opacity: 1; transform: none; transition-delay: 90ms; }
+.welcome.open .welcome-wordmark { opacity: 1; transform: none; transition-delay: 220ms; }
+.welcome.open .welcome-line { opacity: 1; transform: none; transition-delay: 350ms; }
+.welcome.open .welcome-enter { opacity: 1; transform: none; transition-delay: 480ms; }
+.welcome-icons {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 40px;
+}
+.welcome-icons svg {
+  width: 84px; height: 84px;
+  opacity: 0;
+  transform: translateY(12px) scale(.88);
+}
+.welcome.open .welcome-icons svg { animation: welcomeIconBounce 500ms cubic-bezier(.22, 1, .36, 1) both; }
+.welcome.open .welcome-icons svg:nth-child(2) { animation-delay: 110ms; }
+.welcome.open .welcome-icons svg:nth-child(3) { animation-delay: 220ms; }
+@media (max-width: 380px) {
+  .welcome-icons svg { width: 68px; height: 68px; }
+}
+.welcome-wordmark {
+  margin: 0 0 26px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 2.5rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.welcome-wordmark em { font-style: normal; color: var(--accent-dark); }
+.welcome-line {
+  margin: 0 0 22px;
+  max-width: 32ch;
+  color: var(--ink-2);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+.welcome-enter {
+  width: min(184px, 100%);
+  min-height: 50px;
+  margin: 18px 0 0;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  color: #fff;
+  background: linear-gradient(120deg, #B06A42 0%, #D99C73 44%, #C4744E 100%);
+  background-size: 220% 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  animation: welcomeButtonGradient 8s ease-in-out infinite;
+}
+.welcome-enter:active { transform: scale(0.98); }
+.welcome-enter:focus { outline: none; }
+
+/* —— Toast —— */
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--tab-h) + 12px);
+  transform: translateX(-50%) translateY(12px);
+  z-index: 90;
+  background: rgba(47, 42, 39, 0.92);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms var(--ease), transform 280ms var(--ease);
+  white-space: nowrap;
+  max-width: calc(100% - 40px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.empty {
+  text-align: center;
+  padding: 24px 8px;
+  color: var(--ink-2);
+}
+.empty h2 {
+  margin: 0 0 8px;
+  font-family: var(--display);
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+.empty p { margin: 0; font-size: 0.92rem; line-height: 1.5; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .view { transform: none; }
+  .sheet { transition: none; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <span class="brand">
+      <img class="brand-icon" src="icons/icon.svg" alt=""/>
+      <span class="brand-text">Nibble &amp; Sip</span>
+    </span>
+  </header>
+
+  <main class="views">
+    <!-- Feed -->
+    <section class="view active" id="view-feed" data-view="feed" aria-label="Feed">
+      <h1 class="view-title">What&apos;s cooking</h1>
+      <div class="feed-toolbar">
+        <div class="search-row">
+          <label class="search-pill" for="feed-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16.5 16.5L20 20"/></svg>
+            <input id="feed-search" type="search" placeholder="Search meals or ingredients" autocomplete="off"/>
+          </label>
+        </div>
+        <div class="chip-row" id="feed-chips" role="toolbar" aria-label="Meal filters"></div>
+      </div>
+      <div class="rec-block" id="rec-block" hidden>
+        <div class="rec-head">
+          <h2>Made for him</h2>
+          <p>based on his likes</p>
+        </div>
+        <div class="rec-strip" id="rec-strip"></div>
+      </div>
+      <div class="rec-empty" id="rec-empty">
+        <strong>Tip:</strong> tap the thumbs up on meals he loves and I&apos;ll start suggesting similar ones here.
+      </div>
+      <div class="meal-list" id="meal-list"></div>
+      <div class="empty" id="feed-empty" hidden>
+        <h2>No matches</h2>
+        <p>Try a different search or filter.</p>
+      </div>
+    </section>
+
+    <!-- Plan -->
+    <section class="view" id="view-plan" data-view="plan" aria-label="Plan" hidden>
+      <h1 class="view-title">This week&apos;s plan</h1>
+      <div class="week-nav">
+        <button type="button" class="week-arrow" id="week-prev" aria-label="Previous week">&#8249;</button>
+        <h2 id="week-label">Week of</h2>
+        <button type="button" class="week-arrow" id="week-next" aria-label="Next week">&#8250;</button>
+      </div>
+      <div id="plan-days"></div>
+    </section>
+
+    <!-- Likes -->
+    <section class="view" id="view-likes" data-view="likes" aria-label="Likes" hidden>
+      <h1 class="view-title">His verdicts</h1>
+      <div class="like-group">
+        <h2>Loved</h2>
+        <div id="likes-loved"></div>
+      </div>
+      <div class="like-group">
+        <h2>Not for him</h2>
+        <div id="likes-nope"></div>
+      </div>
+      <div class="empty" id="likes-empty" hidden>
+        <h2>Nothing rated yet</h2>
+        <p>Tap the thumbs up or down on any meal in the feed.</p>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="view" id="view-about" data-view="about" aria-label="About" hidden>
+      <h1 class="view-title">About</h1>
+      <div class="about-card">
+        <h2>Nibble &amp; Sip</h2>
+        <p>A tiny meal companion for your toddler. Browse ideas, plan the week, tap thumbs up or down after each meal, and get new picks based on what he loves. Everything is saved in this browser only.</p>
+      </div>
+      <div class="about-card">
+        <h2>Your data</h2>
+        <p>Likes and your meal plan live on this device. Back them up or move them to another device with a JSON file.</p>
+        <button type="button" class="btn btn-secondary btn-block" id="export-json">Export data JSON</button>
+        <button type="button" class="btn btn-secondary btn-block" id="import-json">Import data JSON</button>
+        <input type="file" id="import-file" accept="application/json,.json" hidden/>
+      </div>
+      <div class="about-card">
+        <h2>Welcome</h2>
+        <p>Replay the little intro any time.</p>
+        <button type="button" class="btn btn-secondary btn-block" id="welcome-replay">What is this</button>
+      </div>
+      <div class="about-card">
+        <h2>More apps</h2>
+        <p>Back to the family hub.</p>
+        <a class="btn btn-secondary btn-block" style="text-decoration:none" href="../">All our apps</a>
+      </div>
+    </section>
+  </main>
+
+  <nav class="dock" aria-label="Main">
+    <div class="seg" id="dock-seg">
+      <button type="button" class="tab active" data-view="feed" aria-current="page" aria-label="Feed">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13h16c0 4.2-3.6 7-8 7s-8-2.8-8-7z"/><path d="M9 9.5c-1-1.8 1-2.6 0-4.5"/><path d="M15 9.5c-1-1.8 1-2.6 0-4.5"/></svg>
+        <span class="tab-label">Feed</span>
+      </button>
+      <button type="button" class="tab" data-view="plan" aria-label="Plan">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="6" width="16" height="14" rx="3"/><path d="M4 10.5h16"/><path d="M8.5 3.5v4M15.5 3.5v4"/></svg>
+        <span class="tab-label">Plan</span>
+      </button>
+      <button type="button" class="tab" data-view="likes" aria-label="Likes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.8 3.5 7.2 5.5 5.5 8 5.5c1.6 0 3.1.8 4 2.1.9-1.3 2.4-2.1 4-2.1 2.5 0 4.5 1.7 4.5 4.3 0 3.5-3.5 6.7-8.5 10.7z"/></svg>
+        <span class="tab-label">Likes</span>
+      </button>
+      <button type="button" class="tab" data-view="about" aria-label="About">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5"/><path d="M12 7.8h.01"/></svg>
+        <span class="tab-label">About</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="sheet-backdrop" id="sheet-backdrop"></div>
+
+  <!-- Meal detail sheet -->
+  <div class="sheet" id="sheet-detail" role="dialog" aria-labelledby="detail-title" aria-hidden="true">
+    <div class="sheet-handle"></div>
+    <div class="sheet-bar">
+      <h2 id="detail-title">Meal</h2>
+      <button type="button" class="sheet-close" data-close-sheet aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>
+      </button>
+    </div>
+    <div class="sheet-scroll" id="detail-body"></div>
+  </div>
+
+  <!-- Picker sheet (assign a meal to a plan slot, or pick a slot for a meal) -->
+  <div class="sheet" id="sheet-pick" role="dialog" aria-labelledby="pick-title" aria-hidden="true">
+    <div class="sheet-handle"></div>
+    <div class="sheet-bar">
+      <h2 id="pick-title">Pick a meal</h2>
+      <button type="button" class="sheet-close" data-close-sheet aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>
+      </button>
+    </div>
+    <div class="sheet-scroll">
+      <div class="search-row" id="pick-search-row" style="margin-bottom:10px">
+        <label class="search-pill" for="pick-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16.5 16.5L20 20"/></svg>
+          <input id="pick-search" type="search" placeholder="Search meals" autocomplete="off"/>
+        </label>
+      </div>
+      <div class="pick-list" id="pick-list"></div>
+    </div>
+  </div>
+
+  <div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title" hidden>
+    <div class="welcome-main">
+      <div class="welcome-icons" aria-hidden="true">
+        <svg viewBox="0 0 128 128"><path d="M50 54c-4-8 4-10 0-18" stroke="#D99C73" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M64 54c-4-8 4-10 0-18" stroke="#C4744E" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M78 54c-4-8 4-10 0-18" stroke="#D99C73" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M28 68h72c0 16-16 28-36 28S28 84 28 68z" fill="#C4744E"/><ellipse cx="64" cy="68" rx="36" ry="8" fill="#9A5636"/><ellipse cx="64" cy="68" rx="27" ry="5.5" fill="#B06A42"/></svg>
+        <svg viewBox="0 0 128 128"><circle cx="64" cy="70" r="34" fill="#D99C73"/><path d="M64 36c2-8 8-12 14-14" stroke="#9A5636" stroke-width="6" stroke-linecap="round" fill="none"/><ellipse cx="84" cy="30" rx="12" ry="7" fill="#B06A42" transform="rotate(-24 84 30)"/></svg>
+        <svg viewBox="0 0 128 128"><path d="M44 34h40v12c0 4-2 6-5 8v44a12 12 0 0 1-12 12H61a12 12 0 0 1-12-12V54c-3-2-5-4-5-8z" fill="#C4744E"/><rect x="58" y="18" width="12" height="16" rx="4" fill="#9A5636"/><path d="M52 74h24" stroke="#F7ECE4" stroke-width="6" stroke-linecap="round"/></svg>
+      </div>
+      <h1 class="welcome-wordmark" id="welcome-title">Nibble <em>&amp;</em> Sip</h1>
+      <p class="welcome-line">Tiny meals and sips for tiny appetites — planned, tasted, and loved.</p>
+      <button type="button" class="welcome-enter" id="welcome-enter">Enter</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+<script>
+"use strict";
+/* ============================================================
+   MEALS — edit me! Add, remove, or change meals here.
+   tags: free-form; used for filters + recommendations.
+   slots: which planner slots a meal fits ("breakfast","lunch","dinner","snack")
+   ============================================================ */
+const MEALS = [
+  {id:"m01", name:"Sweet potato & red lentil mash", ingredients:["sweet potato","red lentils","coconut milk","mild curry powder"], prep:"Simmer lentils and sweet potato until very soft, then blend with coconut milk.", tags:["iron-rich","freezer-friendly","dairy-free"], slots:["lunch","dinner"]},
+  {id:"m02", name:"Mini spinach egg muffins", ingredients:["eggs","spinach","cheddar","whole wheat flour"], prep:"Whisk everything, pour into a mini muffin tin, bake 12 min at 375°F.", tags:["15-min","freezer-friendly"], slots:["breakfast","snack"]},
+  {id:"m03", name:"Salmon rice balls", ingredients:["salmon","sushi rice","nori","sesame oil"], prep:"Flake cooked salmon, mix with warm rice, roll small balls and wrap with nori strips.", tags:["iron-rich"], slots:["lunch","dinner"]},
+  {id:"m04", name:"Banana oat pancakes", ingredients:["banana","oats","egg","cinnamon"], prep:"Blend into a batter and cook small pancakes, about 2 min per side.", tags:["15-min"], slots:["breakfast"]},
+  {id:"m05", name:"Avocado toast fingers", ingredients:["whole grain bread","avocado","lemon juice"], prep:"Toast, smash avocado with lemon juice, cut into fingers.", tags:["15-min","dairy-free"], slots:["breakfast","snack"]},
+  {id:"m06", name:"Chicken & veggie meatballs", ingredients:["ground chicken","zucchini","carrot","breadcrumbs"], prep:"Grate the veg, mix, roll into small balls, bake 18 min at 400°F.", tags:["iron-rich","freezer-friendly"], slots:["lunch","dinner"]},
+  {id:"m07", name:"Lentil bolognese with tiny pasta", ingredients:["red lentils","tomato","carrot","orzo"], prep:"Simmer lentils with tomato and grated carrot; toss with cooked orzo.", tags:["iron-rich","dairy-free","freezer-friendly"], slots:["lunch","dinner"]},
+  {id:"m08", name:"Blueberry yogurt bowl", ingredients:["greek yogurt","blueberries","chia seeds"], prep:"Stir together and serve; mash the berries for younger toddlers.", tags:["15-min"], slots:["breakfast","snack"]},
+  {id:"m09", name:"Peanut butter banana toast", ingredients:["whole grain bread","peanut butter","banana"], prep:"Toast, spread peanut butter thin, top with banana slices.", tags:["15-min"], slots:["breakfast","snack"]},
+  {id:"m10", name:"Veggie fried rice", ingredients:["rice","peas","corn","carrot","egg","sesame oil"], prep:"Stir-fry the veg, scramble in the egg, toss with rice and sesame oil.", tags:["15-min","dairy-free"], slots:["lunch","dinner"]},
+  {id:"m11", name:"Butternut squash mac", ingredients:["butternut squash","macaroni","cheddar"], prep:"Roast the squash, blend into a cheese sauce, toss with macaroni.", tags:["freezer-friendly"], slots:["lunch","dinner"]},
+  {id:"m12", name:"Turkey & sweet potato patties", ingredients:["ground turkey","sweet potato","oat flour"], prep:"Mix with mashed sweet potato, form small patties, pan-fry.", tags:["iron-rich","freezer-friendly","dairy-free"], slots:["lunch","dinner"]},
+  {id:"m13", name:"Hummus veggie pinwheels", ingredients:["tortilla","hummus","cucumber","bell pepper"], prep:"Spread hummus, layer thin veggie strips, roll up and slice.", tags:["15-min","dairy-free"], slots:["lunch","snack"]},
+  {id:"m14", name:"Apple cinnamon oatmeal", ingredients:["oats","apple","cinnamon","milk"], prep:"Cook oats with grated apple and cinnamon; finish with a splash of milk.", tags:["15-min"], slots:["breakfast"]},
+  {id:"m15", name:"Tuna pasta salad", ingredients:["tuna","small pasta","peas","yogurt"], prep:"Mix flaked tuna with pasta, peas, and a spoon of yogurt.", tags:["15-min","iron-rich"], slots:["lunch"]},
+  {id:"m16", name:"Black bean & corn quesadilla", ingredients:["tortilla","black beans","corn","cheese"], prep:"Fill a tortilla, toast in a dry pan until the cheese melts, cut into wedges.", tags:["15-min","iron-rich"], slots:["lunch","dinner"]},
+  {id:"m17", name:"Zucchini fritters", ingredients:["zucchini","egg","flour","parmesan"], prep:"Grate and squeeze the zucchini, mix, and pan-fry small fritters.", tags:["freezer-friendly"], slots:["lunch","dinner","snack"]},
+  {id:"m18", name:"Mango sticky rice bites", ingredients:["mango","sushi rice","coconut milk"], prep:"Cook rice with coconut milk, cool, and top with mango cubes.", tags:["dairy-free"], slots:["breakfast","snack"]},
+  {id:"m19", name:"Broccoli cheddar bites", ingredients:["broccoli","cheddar","egg","breadcrumbs"], prep:"Steam broccoli, chop fine, mix and bake 15 min at 375°F.", tags:["freezer-friendly"], slots:["lunch","snack"]},
+  {id:"m20", name:"Gentle chicken noodle soup", ingredients:["chicken","carrot","celery","small noodles","low-sodium broth"], prep:"Simmer everything until tender; shred the chicken.", tags:["freezer-friendly","dairy-free"], slots:["lunch","dinner"]},
+  {id:"m21", name:"Cottage cheese & peach bowl", ingredients:["cottage cheese","peach"], prep:"Dice a ripe peach over cottage cheese.", tags:["15-min"], slots:["breakfast","snack"]},
+  {id:"m22", name:"Pumpkin oat pancakes", ingredients:["pumpkin puree","oats","egg","cinnamon"], prep:"Blend into a batter and cook small pancakes, about 2 min per side.", tags:["15-min","freezer-friendly","dairy-free"], slots:["breakfast"]},
+  {id:"m23", name:"Beef & veggie stew", ingredients:["beef","potato","carrot","peas"], prep:"Slow-simmer until the beef is spoon-tender.", tags:["iron-rich","freezer-friendly","dairy-free"], slots:["lunch","dinner"]},
+  {id:"m24", name:"Strawberry banana smoothie", ingredients:["strawberry","banana","yogurt","milk"], prep:"Blend until smooth; serve in a straw cup.", tags:["15-min"], slots:["breakfast","snack"]}
+];
+const MEAL_BY_ID = Object.fromEntries(MEALS.map(m => [m.id, m]));
+const SLOTS = ["breakfast","lunch","dinner","snack"];
+const SLOT_LABEL = {breakfast:"Breakfast", lunch:"Lunch", dinner:"Dinner", snack:"Snack"};
+const FILTERS = ["All","15-min","iron-rich","freezer-friendly","dairy-free","breakfast","lunch","dinner","snack"];
+
+/* —— Store (localStorage) —— */
+const LS = {
+  get likes(){ try { return JSON.parse(localStorage.getItem("ns.likes")||"{}"); } catch(e){ return {}; } },
+  set likes(v){ localStorage.setItem("ns.likes", JSON.stringify(v)); },
+  get plan(){ try { return JSON.parse(localStorage.getItem("ns.plan")||"{}"); } catch(e){ return {}; } },
+  set plan(v){ localStorage.setItem("ns.plan", JSON.stringify(v)); }
+};
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+let toastTimer = null;
+function toast(msg){
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove("show"), 2200);
+}
+
+/* —— Sheets —— */
+let openSheetEl = null;
+function openSheet(el){
+  closeSheet();
+  openSheetEl = el;
+  el.setAttribute("aria-hidden","false");
+  $("sheet-backdrop").classList.add("open");
+  requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add("open")));
+}
+function closeSheet(){
+  $("sheet-backdrop").classList.remove("open");
+  document.querySelectorAll(".sheet.open").forEach(s=>{
+    s.classList.remove("open");
+    s.setAttribute("aria-hidden","true");
+  });
+  openSheetEl = null;
+}
+$("sheet-backdrop").addEventListener("click", closeSheet);
+document.querySelectorAll("[data-close-sheet]").forEach(b=>b.addEventListener("click", closeSheet));
+
+/* —— Dock tabs —— */
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab").forEach(t=>{ t.classList.remove("active"); t.removeAttribute("aria-current"); });
+    tab.classList.add("active");
+    tab.setAttribute("aria-current","page");
+    const v = tab.dataset.view;
+    document.querySelectorAll(".view").forEach(s=>{
+      const on = s.dataset.view === v;
+      s.classList.toggle("active", on);
+      if (on) { s.hidden = false; } else { s.hidden = true; }
+    });
+    if (v === "plan") renderPlan();
+    if (v === "likes") renderLikes();
+    document.querySelector(".views").scrollTop = 0;
+  });
+});
+
+/* —— Feed —— */
+let feedQuery = "", feedFilter = "All";
+const thumbUp = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v10H4.5A1.5 1.5 0 0 1 3 18.5v-7A1.5 1.5 0 0 1 4.5 10H7zm2 10h8.6a2 2 0 0 0 2-1.6l1.1-4.7a2 2 0 0 0-2-2.4H13l.7-3.6a1.6 1.6 0 0 0-3.1-.7L9 10z"/></svg>';
+const thumbDown = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 14V4h2.5A1.5 1.5 0 0 1 21 5.5v7a1.5 1.5 0 0 1-1.5 1.5H17zM15 4H6.4a2 2 0 0 0-2 1.6l-1.1 4.7a2 2 0 0 0 2 2.4H11l-.7 3.6a1.6 1.6 0 0 0 3.1.7L15 14z"/></svg>';
+const bowlMini = '<svg viewBox="0 0 128 128"><path d="M50 54c-4-8 4-10 0-18" stroke="#D99C73" stroke-width="9" stroke-linecap="round" fill="none"/><path d="M64 54c-4-8 4-10 0-18" stroke="#C4744E" stroke-width="9" stroke-linecap="round" fill="none"/><path d="M78 54c-4-8 4-10 0-18" stroke="#D99C73" stroke-width="9" stroke-linecap="round" fill="none"/><path d="M28 68h72c0 16-16 28-36 28S28 84 28 68z" fill="#C4744E"/><ellipse cx="64" cy="68" rx="36" ry="8" fill="#9A5636"/></svg>';
+
+function setVote(id, val, btn){
+  const likes = LS.likes;
+  if (likes[id] === val) delete likes[id]; else likes[id] = val;
+  LS.likes = likes;
+  if (btn){ btn.classList.remove("pop"); void btn.offsetWidth; btn.classList.add("pop"); }
+  renderFeed(); renderLikes();
+}
+window.setVote = setVote;
+
+function mealMatches(m){
+  if (feedFilter !== "All"){
+    const f = feedFilter;
+    const inTags = m.tags.includes(f);
+    const inSlots = m.slots.includes(f);
+    if (!inTags && !inSlots) return false;
+  }
+  if (feedQuery){
+    const q = feedQuery.toLowerCase();
+    const hay = (m.name + " " + m.ingredients.join(" ")).toLowerCase();
+    if (!hay.includes(q)) return false;
+  }
+  return true;
+}
+
+function cardHTML(m){
+  const likes = LS.likes;
+  const up = likes[m.id] === 1 ? " on" : "";
+  const down = likes[m.id] === -1 ? " on" : "";
+  return '<button type="button" class="meal-card" data-meal="'+m.id+'">'
+    + '<span class="meal-icon" aria-hidden="true">'+bowlMini+'</span>'
+    + '<span class="meal-meta"><h3>'+esc(m.name)+'</h3>'
+    + '<p class="ings">'+esc(m.ingredients.join(", "))+'</p>'
+    + '<span class="meal-tags">'+m.tags.map(t=>'<span class="tag">'+esc(t)+'</span>').join("")+'</span></span>'
+    + '<span class="vote-col">'
+    + '<span class="vote-btn up'+up+'" data-vote="1" data-meal="'+m.id+'" role="button" aria-label="He liked it" tabindex="0">'+thumbUp+'</span>'
+    + '<span class="vote-btn down'+down+'" data-vote="-1" data-meal="'+m.id+'" role="button" aria-label="Not for him" tabindex="0">'+thumbDown+'</span>'
+    + '</span></button>';
+}
+
+function renderChips(){
+  $("feed-chips").innerHTML = FILTERS.map(f=>
+    '<button type="button" class="chip'+(f===feedFilter?" active":"")+'" data-filter="'+f+'">'+esc(f)+'</button>'
+  ).join("");
+  document.querySelectorAll("#feed-chips .chip").forEach(c=>
+    c.addEventListener("click", ()=>{ feedFilter = c.dataset.filter; renderFeed(); })
+  );
+}
+
+function recommendations(){
+  const likes = LS.likes;
+  const liked = MEALS.filter(m=>likes[m.id]===1);
+  if (!liked.length) return [];
+  return MEALS
+    .filter(m=>!likes[m.id])
+    .map(m=>{
+      let best=null, bestScore=0;
+      for (const l of liked){
+        const ing = m.ingredients.filter(i=>l.ingredients.includes(i)).length;
+        const tag = m.tags.filter(t=>l.tags.includes(t)).length;
+        const sc = ing*2 + tag;
+        if (sc > bestScore){ bestScore = sc; best = l; }
+      }
+      return {meal:m, score:bestScore, because:best};
+    })
+    .filter(x=>x.score>0)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,6);
+}
+
+function renderFeed(){
+  renderChips();
+  const likes = LS.likes;
+  const recs = recommendations();
+  const hasLikes = MEALS.some(m=>likes[m.id]===1);
+  $("rec-block").hidden = !recs.length;
+  $("rec-empty").hidden = hasLikes;
+  $("rec-strip").innerHTML = recs.map(r=>
+    '<button type="button" class="rec-card" data-meal="'+r.meal.id+'">'
+    + '<h3>'+esc(r.meal.name)+'</h3>'
+    + '<p class="why">Because he liked <strong>'+esc(r.because.name)+'</strong></p>'
+    + '</button>'
+  ).join("");
+  const list = MEALS.filter(mealMatches);
+  $("meal-list").innerHTML = list.map(cardHTML).join("");
+  $("feed-empty").hidden = list.length > 0;
+  bindMealCards($("meal-list"));
+  document.querySelectorAll("#rec-strip .rec-card").forEach(c=>
+    c.addEventListener("click", ()=>openDetail(c.dataset.meal))
+  );
+}
+
+function bindMealCards(root){
+  root.querySelectorAll(".meal-card").forEach(card=>{
+    card.addEventListener("click", e=>{
+      const v = e.target.closest("[data-vote]");
+      if (v){
+        e.stopPropagation();
+        setVote(v.dataset.meal, parseInt(v.dataset.vote,10), v);
+        return;
+      }
+      openDetail(card.dataset.meal);
+    });
+  });
+  root.querySelectorAll("[data-vote]").forEach(v=>{
+    v.addEventListener("keydown", e=>{
+      if (e.key==="Enter"||e.key===" "){ e.preventDefault(); setVote(v.dataset.meal, parseInt(v.dataset.vote,10), v); }
+    });
+  });
+}
+
+$("feed-search").addEventListener("input", e=>{ feedQuery = e.target.value.trim(); renderFeed(); });
+
+/* —— Detail sheet —— */
+function openDetail(id){
+  const m = MEAL_BY_ID[id];
+  if (!m) return;
+  const likes = LS.likes;
+  $("detail-title").textContent = m.name;
+  $("detail-body").innerHTML =
+    '<div class="meal-tags" style="margin-bottom:12px">'+m.tags.map(t=>'<span class="tag">'+esc(t)+'</span>').join("")+'</div>'
+    + '<ul class="detail-ings">'+m.ingredients.map(i=>'<li>'+esc(i)+'</li>').join("")+'</ul>'
+    + '<p class="detail-prep">'+esc(m.prep)+'</p>'
+    + '<p class="detail-prep" style="font-size:0.85rem"><strong>Good for:</strong> '+m.slots.map(s=>SLOT_LABEL[s]).join(", ")+'</p>'
+    + '<div class="detail-actions">'
+    + '<button type="button" class="vote-toggle up'+(likes[id]===1?" on":"")+'" data-dvote="1">'+thumbUp+' Loved it</button>'
+    + '<button type="button" class="vote-toggle down'+(likes[id]===-1?" on":"")+'" data-dvote="-1">'+thumbDown+' Not for him</button>'
+    + '</div>'
+    + '<button type="button" class="btn btn-primary btn-block" id="detail-plan">Add to plan</button>';
+  $("detail-body").querySelectorAll("[data-dvote]").forEach(b=>
+    b.addEventListener("click", ()=>{ setVote(id, parseInt(b.dataset.dvote,10), b); openDetail(id); })
+  );
+  $("detail-plan").addEventListener("click", ()=>openPicker({mode:"slot", mealId:id}));
+  openSheet($("sheet-detail"));
+}
+
+/* —— Picker sheet —— */
+let pickerCtx = null; // {mode:"meal", date, slot} | {mode:"slot", mealId}
+function openPicker(ctx){
+  pickerCtx = ctx;
+  $("pick-search").value = "";
+  if (ctx.mode === "meal"){
+    $("pick-title").textContent = "Pick a meal";
+    $("pick-search-row").style.display = "";
+    renderPickMeals("");
+  } else {
+    $("pick-title").textContent = "Add to plan";
+    $("pick-search-row").style.display = "none";
+    renderPickSlots();
+  }
+  openSheet($("sheet-pick"));
+}
+$("pick-search").addEventListener("input", e=>renderPickMeals(e.target.value.trim().toLowerCase()));
+
+function renderPickMeals(q){
+  const list = MEALS.filter(m=>{
+    if (!q) return true;
+    return (m.name+" "+m.ingredients.join(" ")).toLowerCase().includes(q);
+  });
+  $("pick-list").innerHTML = list.map(m=>
+    '<button type="button" class="pick-item" data-pick-meal="'+m.id+'">'
+    + '<span class="nm">'+esc(m.name)+'</span>'
+    + '<span class="sub">'+esc(m.tags.slice(0,2).join(" · "))+'</span></button>'
+  ).join("") || '<div class="empty"><p>No meals match.</p></div>';
+  document.querySelectorAll("[data-pick-meal]").forEach(b=>
+    b.addEventListener("click", ()=>{
+      if (pickerCtx.mode === "meal"){
+        assignMeal(pickerCtx.date, pickerCtx.slot, b.dataset.pickMeal);
+      } else {
+        // shouldn't happen in slot mode
+      }
+    })
+  );
+}
+
+function renderPickSlots(){
+  // choose a day+slot in the current plan week for pickerCtx.mealId
+  let html = "";
+  planWeekDates().forEach(d=>{
+    const key = isoDate(d);
+    html += '<div style="font-weight:700;font-size:0.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin:10px 2px 6px">'
+      + esc(dayName(d)) + ' · ' + esc(fmtDate(d)) + '</div>';
+    SLOTS.forEach(s=>{
+      const cur = (LS.plan[key]||{})[s];
+      html += '<button type="button" class="pick-item" data-pick-slot="'+key+'|'+s+'">'
+        + '<span class="nm">'+SLOT_LABEL[s]+'</span>'
+        + '<span class="sub">'+(cur ? esc(MEAL_BY_ID[cur]?MEAL_BY_ID[cur].name:"—") : "Empty")+'</span></button>';
+    });
+  });
+  $("pick-list").innerHTML = html;
+  document.querySelectorAll("[data-pick-slot]").forEach(b=>
+    b.addEventListener("click", ()=>{
+      const [date, slot] = b.dataset.pickSlot.split("|");
+      assignMeal(date, slot, pickerCtx.mealId);
+    })
+  );
+}
+
+function assignMeal(date, slot, mealId){
+  const plan = LS.plan;
+  plan[date] = plan[date] || {};
+  plan[date][slot] = mealId;
+  LS.plan = plan;
+  closeSheet();
+  renderPlan();
+  const d = new Date(date+"T12:00:00");
+  toast("Added to "+dayName(d)+" · "+SLOT_LABEL[slot]);
+  switchTab("plan");
+}
+
+/* —— Plan —— */
+let weekOffset = 0;
+function mondayOf(offset){
+  const now = new Date();
+  const dow = (now.getDay()+6)%7; // Monday=0
+  const m = new Date(now.getFullYear(), now.getMonth(), now.getDate()-dow+offset*7);
+  return m;
+}
+function planWeekDates(){
+  const m = mondayOf(weekOffset);
+  return Array.from({length:7},(_,i)=>new Date(m.getFullYear(), m.getMonth(), m.getDate()+i));
+}
+function isoDate(d){
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+function dayName(d){ return ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"][(d.getDay()+6)%7]; }
+function fmtDate(d){ return d.toLocaleDateString(undefined,{month:"short",day:"numeric"}); }
+
+$("week-prev").addEventListener("click", ()=>{ weekOffset--; renderPlan(); });
+$("week-next").addEventListener("click", ()=>{ weekOffset++; renderPlan(); });
+
+function renderPlan(){
+  const dates = planWeekDates();
+  $("week-label").textContent = "Week of "+fmtDate(dates[0]);
+  const todayKey = isoDate(new Date());
+  const plan = LS.plan;
+  $("plan-days").innerHTML = dates.map(d=>{
+    const key = isoDate(d);
+    const dayPlan = plan[key] || {};
+    const slots = SLOTS.map(s=>{
+      const mid = dayPlan[s];
+      const m = mid && MEAL_BY_ID[mid];
+      return '<button type="button" class="slot'+(m?" filled":"")+'" data-slot-date="'+key+'" data-slot-name="'+s+'">'
+        + '<span class="slot-label">'+SLOT_LABEL[s]+'</span>'
+        + (m ? '<span class="slot-meal">'+esc(m.name)+'</span>'
+             : '<span class="slot-add">+ Add</span>')
+        + '</button>';
+    }).join("");
+    return '<div class="day-block'+(key===todayKey?" today":"")+'">'
+      + '<div class="day-head"><h3>'+dayName(d)+'</h3><span>'+fmtDate(d)+'</span></div>'
+      + '<div class="slot-row">'+slots+'</div></div>';
+  }).join("");
+  document.querySelectorAll("[data-slot-date]").forEach(b=>
+    b.addEventListener("click", ()=>openPicker({mode:"meal", date:b.dataset.slotDate, slot:b.dataset.slotName}))
+  );
+}
+
+function switchTab(v){
+  document.querySelector('.tab[data-view="'+v+'"]').click();
+}
+
+/* —— Likes —— */
+function renderLikes(){
+  const likes = LS.likes;
+  const loved = MEALS.filter(m=>likes[m.id]===1);
+  const nope = MEALS.filter(m=>likes[m.id]===-1);
+  $("likes-empty").hidden = loved.length + nope.length > 0;
+  $("likes-loved").innerHTML = loved.map(m=>likeRow(m,"loved")).join("");
+  $("likes-nope").innerHTML = nope.map(m=>likeRow(m,"nope")).join("");
+  document.querySelectorAll("[data-unvote]").forEach(b=>
+    b.addEventListener("click", ()=>{
+      const l = LS.likes;
+      delete l[b.dataset.unvote];
+      LS.likes = l;
+      renderLikes(); renderFeed();
+    })
+  );
+}
+function likeRow(m){
+  return '<div class="like-row"><span class="nm">'+esc(m.name)+'</span>'
+    + '<button type="button" class="unvote" data-unvote="'+m.id+'" aria-label="Remove rating">×</button></div>';
+}
+
+/* —— About: export / import —— */
+$("export-json").addEventListener("click", ()=>{
+  const data = {app:"nibble-sip", exported:new Date().toISOString(), likes:LS.likes, plan:LS.plan};
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "nibble-sip-data.json";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+  toast("Data exported");
+});
+$("import-json").addEventListener("click", ()=>$("import-file").click());
+$("import-file").addEventListener("change", e=>{
+  const f = e.target.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{
+    try {
+      const d = JSON.parse(r.result);
+      if (d.likes) LS.likes = d.likes;
+      if (d.plan) LS.plan = d.plan;
+      renderFeed(); renderLikes(); renderPlan();
+      toast("Data imported");
+    } catch(err){ toast("That file didn't work"); }
+  };
+  r.readAsText(f);
+  e.target.value = "";
+});
+
+/* —— Welcome —— */
+function maybeWelcome(){
+  let seen = false;
+  try { seen = localStorage.getItem("ns.welcomeSeen")==="1"; } catch(e){}
+  if (!seen){
+    const w = $("welcome");
+    w.hidden = false;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>w.classList.add("open")));
+  }
+}
+function dismissWelcome(){
+  const w = $("welcome");
+  w.classList.remove("open");
+  try { localStorage.setItem("ns.welcomeSeen","1"); } catch(e){}
+  setTimeout(()=>{ w.hidden = true; }, 400);
+}
+$("welcome-enter").addEventListener("click", dismissWelcome);
+$("welcome-replay").addEventListener("click", ()=>{
+  try { localStorage.removeItem("ns.welcomeSeen"); } catch(e){}
+  const w = $("welcome");
+  w.hidden = false;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>w.classList.add("open")));
+});
+
+/* —— Init —— */
+renderFeed();
+renderPlan();
+renderLikes();
+maybeWelcome();
+</script>
+</body>
+</html>

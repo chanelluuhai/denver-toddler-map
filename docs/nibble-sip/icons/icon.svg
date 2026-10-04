@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Nibble and Sip bowl icon">
+  <path d="M50 54c-4-8 4-10 0-18" stroke="#D99C73" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M64 54c-4-8 4-10 0-18" stroke="#C4744E" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M78 54c-4-8 4-10 0-18" stroke="#D99C73" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M28 68h72c0 16-16 28-36 28S28 84 28 68z" fill="#C4744E"/>
+  <ellipse cx="64" cy="68" rx="36" ry="8" fill="#9A5636"/>
+  <ellipse cx="64" cy="68" rx="27" ry="5.5" fill="#B06A42"/>
+</svg>
