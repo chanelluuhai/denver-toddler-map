@@ -2,6 +2,7 @@
   "name": "Toddler Spots",
   "short_name": "Toddler Spots",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#E8E6E4",
   "theme_color": "#E8E6E4",
