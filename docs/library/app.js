@@ -33,6 +33,7 @@
   let scanGeneration = 0;
   let lastScanned = "";
   let scanCooldownUntil = 0;
+  let scanApplyToken = 0;
   const coverCache = new Map();
 
   function load() {
@@ -733,6 +734,7 @@
 
   function openAddForm(prefill = {}, opts = {}) {
     editingId = opts.editingId || null;
+    openAddForm._scanToken = 0;
     $("#add-title").textContent = editingId ? "Edit book" : "Add a book";
     $("#book-title").value = prefill.title || "";
     $("#book-author").value = prefill.author || "";
@@ -752,8 +754,12 @@
     if (opts.lookupFailed) {
       banner.hidden = false;
       banner.textContent = "Couldn't look that up.";
+    } else if (opts.lookupPending) {
+      banner.hidden = false;
+      banner.textContent = "Looking up this barcode…";
     } else {
       banner.hidden = true;
+      banner.textContent = "";
     }
     openSheet("sheet-add");
     setTimeout(() => $("#book-title").focus(), 420);
@@ -831,13 +837,19 @@
     return [...found].filter((g) => GENRES.includes(g));
   }
 
+  function fetchTimeout(url, ms) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), ms || 4000);
+    return fetch(url, { signal: ctrl.signal }).finally(() => clearTimeout(timer));
+  }
+
   async function lookupIsbn(isbn) {
     const clean = String(isbn).replace(/[^0-9Xx]/g, "");
     let result = { title: "", author: "", isbn: clean, coverUrl: null, genres: [], language: "en" };
 
     // Open Library
     try {
-      const r = await fetch(`https://openlibrary.org/isbn/${encodeURIComponent(clean)}.json`);
+      const r = await fetchTimeout(`https://openlibrary.org/isbn/${encodeURIComponent(clean)}.json`);
       if (r.ok) {
         const data = await r.json();
         result.title = data.title || "";
@@ -852,7 +864,7 @@
     } catch { /* ignore */ }
 
     try {
-      const r2 = await fetch(`https://openlibrary.org/search.json?isbn=${encodeURIComponent(clean)}`);
+      const r2 = await fetchTimeout(`https://openlibrary.org/search.json?isbn=${encodeURIComponent(clean)}`);
       if (r2.ok) {
         const data = await r2.json();
         const doc = (data.docs || [])[0];
@@ -872,7 +884,7 @@
 
     if (!result.title) {
       try {
-        const r3 = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(clean)}`);
+        const r3 = await fetchTimeout(`https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(clean)}`);
         if (r3.ok) {
           const data = await r3.json();
           const info = data.items && data.items[0] && data.items[0].volumeInfo;
@@ -894,29 +906,57 @@
   }
 
   async function handleScannedCode(code) {
+    let clean = String(code || "").replace(/[^0-9Xx]/g, "");
+    if (/^97[89]\d{10}/.test(clean)) clean = clean.slice(0, 13);
+    if (clean.length < 8) return;
     const now = Date.now();
-    if (code === lastScanned && now < scanCooldownUntil) return;
-    lastScanned = code;
+    if (clean === lastScanned && now < scanCooldownUntil) return;
+    lastScanned = clean;
     scanCooldownUntil = now + 3500;
+    const token = ++scanApplyToken;
     stopScanner();
-    const status = $("#scan-status");
-    status.hidden = false;
-    status.classList.remove("error");
-    status.textContent = "Looking up…";
-    toast("Code captured");
+    openAddForm({ isbn: clean, language: "en" }, { lookupPending: true });
+    openAddForm._scanToken = token;
     let lookup;
     try {
-      lookup = await lookupIsbn(code);
+      lookup = await lookupIsbn(clean);
     } catch {
-      lookup = { useful: false, book: { isbn: code, title: "", author: "", genres: [], language: "en", coverUrl: null } };
+      lookup = { useful: false, book: { isbn: clean, title: "", author: "", genres: [], language: "en", coverUrl: null } };
     }
-    if (lookup.useful) {
-      openAddForm(lookup.book, { lookupOk: true });
-    } else {
-      openAddForm({ isbn: String(code).replace(/[^0-9Xx]/g, ""), language: "en" }, { lookupFailed: true });
+    applyScanLookup(token, clean, lookup);
+  }
+
+  function applyScanLookup(token, clean, lookup) {
+    if (token !== openAddForm._scanToken) return;
+    if (editingId) return;
+    const sheet = $("#sheet-add");
+    if (!sheet || !sheet.classList.contains("open")) return;
+    const isbnNow = String($("#book-isbn").value || "").replace(/[^0-9Xx]/g, "");
+    if (isbnNow !== clean) return;
+    const banner = $("#lookup-banner");
+    const book = lookup && lookup.book;
+    if (lookup && lookup.useful && book) {
+      const titleEl = $("#book-title");
+      if (!titleEl.value.trim() && book.title) titleEl.value = book.title;
+      const authorEl = $("#book-author");
+      if (!authorEl.value.trim() && book.author) authorEl.value = book.author;
+      if (book.language && $("#book-language").value === "en" && book.language !== "en") {
+        $("#book-language").value = book.language;
+      }
+      if (book.genres && book.genres.length && !$$("#genre-picks .genre-pick.on").length) {
+        fillGenrePicks(book.genres);
+      }
+      if (book.coverUrl) openAddForm._coverUrl = book.coverUrl;
+      if (banner) {
+        banner.hidden = true;
+        banner.textContent = "";
+      }
+      return;
     }
-    $("#scan-status").hidden = true;
-    $("#scan-status").textContent = "";
+    if (banner) {
+      banner.hidden = false;
+      banner.textContent = "Couldn't look that up.";
+    }
   }
 
   /* —— Scanner —— */
@@ -989,6 +1029,7 @@
   // still treats it as the button gesture.
   function beginScan() {
     stopScanner();
+    loadZxing().catch(() => {});
     const generation = scanGeneration;
     const video = $("#scan-video");
     prepareScanVideo(video);
@@ -1036,153 +1077,178 @@
       }
     };
     scanStarting = false;
-    if (typeof window.BarcodeDetector === "function") {
-      try {
-        await scanWithDetector(video, alive);
-        return;
-      } catch (err) {
-        console.warn("BarcodeDetector path failed", err);
-      }
-    }
     if (!alive()) {
       stream.getTracks().forEach((t) => t.stop());
       return;
     }
-    try {
-      await scanWithHtml5(stream, video, alive);
-    } catch (err) {
-      console.warn(err);
-      if (!alive()) return;
-      if (stream.getTracks().some((t) => t.readyState === "live")) {
-        try { await scanFramesWithHtml5(video, alive); } catch (e) { console.warn(e); }
-      } else {
-        showCameraError(err);
-      }
-    }
+    startLiveDetection(video, stream, alive);
   }
 
-  async function scanWithDetector(video, alive) {
-    let formats = ["ean_13", "ean_8", "upc_a", "upc_e", "code_128"];
+  function withTimeout(promise, ms) {
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error("timeout")), ms);
+      promise.then(
+        (value) => { clearTimeout(timer); resolve(value); },
+        (err) => { clearTimeout(timer); reject(err); }
+      );
+    });
+  }
+
+  let zxingPromise = null;
+  function loadZxing() {
+    if (window.ZXing && window.ZXing.MultiFormatReader) return Promise.resolve();
+    if (zxingPromise) return zxingPromise;
+    zxingPromise = new Promise((resolve, reject) => {
+      const el = document.createElement("script");
+      el.src = "zxing-0.21.3.min.js";
+      el.onload = () => resolve();
+      el.onerror = () => {
+        zxingPromise = null;
+        reject(new Error("Failed to load barcode decoder"));
+      };
+      document.head.appendChild(el);
+    });
+    return zxingPromise;
+  }
+
+  function makeZxingReader() {
+    const Z = window.ZXing;
+    const hints = new Map();
+    hints.set(Z.DecodeHintType.POSSIBLE_FORMATS, [
+      Z.BarcodeFormat.EAN_13,
+      Z.BarcodeFormat.EAN_8,
+      Z.BarcodeFormat.UPC_A,
+      Z.BarcodeFormat.UPC_E,
+      Z.BarcodeFormat.CODE_128,
+      Z.BarcodeFormat.CODE_39,
+      Z.BarcodeFormat.ITF,
+      Z.BarcodeFormat.QR_CODE
+    ]);
+    hints.set(Z.DecodeHintType.TRY_HARDER, true);
+    const reader = new Z.MultiFormatReader();
+    reader.setHints(hints);
+    return reader;
+  }
+
+  function decodeWithZxing(reader, canvas) {
+    const Z = window.ZXing;
+    const biners = [Z.HybridBinarizer, Z.GlobalHistogramBinarizer];
+    for (const Biner of biners) {
+      try {
+        const src = new Z.HTMLCanvasElementLuminanceSource(canvas);
+        const bitmap = new Z.BinaryBitmap(new Biner(src));
+        const result = reader.decode(bitmap);
+        reader.reset();
+        const text = result && result.getText ? result.getText() : "";
+        if (text) return text;
+      } catch (err) {
+        try { reader.reset(); } catch (e) { /* ignore */ }
+      }
+    }
+    return "";
+  }
+
+  function drawScanFrame(video, canvas, ctx) {
+    const vw = video.videoWidth;
+    const vh = video.videoHeight;
+    if (!vw || !vh) return false;
+    const bandH = Math.max(80, Math.round(vh * 0.62));
+    const sy = Math.max(0, Math.round((vh - bandH) / 2));
+    const scale = Math.min(1, 960 / vw);
+    const dw = Math.max(1, Math.round(vw * scale));
+    const dh = Math.max(1, Math.round(bandH * scale));
+    if (canvas.width !== dw) canvas.width = dw;
+    if (canvas.height !== dh) canvas.height = dh;
+    ctx.drawImage(video, 0, sy, vw, bandH, 0, 0, dw, dh);
+    return true;
+  }
+
+  async function makeBarcodeDetector() {
+    if (typeof window.BarcodeDetector !== "function") return null;
+    let formats = ["ean_13", "ean_8", "upc_a", "upc_e", "code_128", "code_39", "itf", "qr_code"];
     try {
       const supported = await BarcodeDetector.getSupportedFormats();
       const filtered = formats.filter((f) => supported.includes(f));
       if (filtered.length) formats = filtered;
     } catch (err) { /* keep the ISBN formats */ }
-    if (!alive()) return;
-    const detector = new BarcodeDetector({ formats });
-    const tick = async () => {
-      if (!alive()) return;
-      try {
-        if (video.readyState >= 2) {
-          const codes = await detector.detect(video);
-          if (codes && codes[0] && codes[0].rawValue) {
-            await handleScannedCode(codes[0].rawValue);
-            return;
-          }
-        }
-      } catch (err) { /* keep going */ }
-      if (alive()) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }
-
-  async function scanWithHtml5(stream, video, alive) {
-    await loadHtml5Qrcode();
-    if (!alive()) return;
-    const reader = $("#qr-reader");
-    reader.innerHTML = "";
-    const formats = [
-      Html5QrcodeSupportedFormats.EAN_13,
-      Html5QrcodeSupportedFormats.EAN_8,
-      Html5QrcodeSupportedFormats.UPC_A,
-      Html5QrcodeSupportedFormats.UPC_E,
-      Html5QrcodeSupportedFormats.CODE_128
-    ].filter((v) => v !== undefined);
-    const html5QrCode = new Html5Qrcode("qr-reader", { formatsToSupport: formats, verbose: false });
-    const orig = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
-    navigator.mediaDevices.getUserMedia = () => Promise.resolve(stream);
-    let started = false;
     try {
-      await html5QrCode.start(
-        { facingMode: "environment" },
-        { fps: 8, qrbox: { width: 240, height: 140 } },
-        (decoded) => { handleScannedCode(decoded); },
-        () => {}
-      );
-      started = true;
+      return new BarcodeDetector({ formats });
     } catch (err) {
-      console.warn("html5-qrcode start failed", err);
-      try { html5QrCode.clear(); } catch (e) { /* ignore */ }
-      await scanFramesWithHtml5(video, alive);
-      return;
-    } finally {
-      navigator.mediaDevices.getUserMedia = orig;
+      return null;
     }
-    if (!alive()) {
-      try { html5QrCode.stop().catch(() => {}); } catch (err) { /* ignore */ }
-      return;
-    }
-    const vid = reader.querySelector("video");
-    if (vid) {
-      vid.playsInline = true;
-      vid.muted = true;
-      vid.autoplay = true;
-      vid.setAttribute("playsinline", "");
-      vid.setAttribute("webkit-playsinline", "");
-      vid.setAttribute("muted", "");
-      vid.setAttribute("autoplay", "");
-      const reveal = () => { if (alive()) video.style.visibility = "hidden"; };
-      if (vid.readyState >= 2 && !vid.paused) reveal();
-      else vid.addEventListener("playing", reveal, { once: true });
-    }
-    scanController = {
-      stop() {
-        video.style.visibility = "";
-        if (started) {
-          html5QrCode.stop().catch(() => {});
-          try { html5QrCode.clear(); } catch (err) { /* ignore */ }
-        }
-        stream.getTracks().forEach((t) => t.stop());
-        if (video.srcObject) video.srcObject = null;
-      }
-    };
   }
 
-  async function scanFramesWithHtml5(video, alive) {
-    await loadHtml5Qrcode();
-    if (!alive()) return;
-    const formats = [
-      Html5QrcodeSupportedFormats.EAN_13,
-      Html5QrcodeSupportedFormats.EAN_8,
-      Html5QrcodeSupportedFormats.UPC_A,
-      Html5QrcodeSupportedFormats.UPC_E,
-      Html5QrcodeSupportedFormats.CODE_128
-    ].filter((v) => v !== undefined);
-    const html5QrCode = new Html5Qrcode("qr-reader", { formatsToSupport: formats, verbose: false });
+  function startLiveDetection(video, stream, alive) {
     const canvas = document.createElement("canvas");
-    const tick = () => {
-      if (!alive()) return;
-      if (video.readyState < 2 || !video.videoWidth) {
-        setTimeout(tick, 200);
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    let detector = null;
+    let nativeFailed = 0;
+    let reader = null;
+    let busy = false;
+    let timer = 0;
+    let stopped = false;
+
+    const stopTracks = () => {
+      stopped = true;
+      if (timer) clearTimeout(timer);
+      timer = 0;
+      stream.getTracks().forEach((t) => t.stop());
+      if (video.srcObject) video.srcObject = null;
+    };
+    scanController = { stop: stopTracks };
+
+    const schedule = (ms) => {
+      if (stopped || !alive()) return;
+      timer = setTimeout(tick, ms);
+    };
+
+    makeBarcodeDetector().then((det) => {
+      if (!stopped && alive()) detector = det;
+    }).catch(() => {});
+
+    loadZxing().then(() => {
+      if (stopped || !alive() || !window.ZXing) return;
+      try { reader = makeZxingReader(); } catch (err) { reader = null; }
+    }).catch(() => {});
+
+    async function tick() {
+      timer = 0;
+      if (stopped || !alive()) return;
+      if (busy || video.readyState < 2 || !video.videoWidth) {
+        schedule(100);
         return;
       }
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      canvas.getContext("2d").drawImage(video, 0, 0);
-      canvas.toBlob((blob) => {
-        if (!alive()) return;
-        if (!blob) { setTimeout(tick, 280); return; }
-        const file = new File([blob], "frame.jpg", { type: "image/jpeg" });
-        html5QrCode.scanFile(file, false).then((text) => {
-          if (!alive()) return;
-          if (text) handleScannedCode(text);
-          else setTimeout(tick, 280);
-        }).catch(() => {
-          if (alive()) setTimeout(tick, 280);
-        });
-      }, "image/jpeg", 0.7);
-    };
-    tick();
+      if (!drawScanFrame(video, canvas, ctx)) {
+        schedule(100);
+        return;
+      }
+      busy = true;
+      let code = "";
+      try {
+        // ZXing reads the pixels directly. Native detect() on iOS often never
+        // settles for a camera frame, so don't wait on it before decoding.
+        if (reader) {
+          code = decodeWithZxing(reader, canvas) || "";
+        } else if (detector && nativeFailed < 8) {
+          try {
+            const codes = await withTimeout(detector.detect(canvas), 350);
+            if (codes && codes[0] && codes[0].rawValue) code = String(codes[0].rawValue);
+          } catch (err) {
+            nativeFailed += 1;
+          }
+        }
+      } finally {
+        busy = false;
+      }
+      if (stopped || !alive()) return;
+      if (code) {
+        handleScannedCode(code);
+        return;
+      }
+      schedule(70);
+    }
+
+    schedule(160);
   }
 
   function stopScanner() {
@@ -1193,17 +1259,6 @@
       scanController = null;
     }
     hideScanScreen();
-  }
-
-  function loadHtml5Qrcode() {
-    if (window.Html5Qrcode) return Promise.resolve();
-    return new Promise((resolve, reject) => {
-      const el = document.createElement("script");
-      el.src = "https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js";
-      el.onload = () => resolve();
-      el.onerror = () => reject(new Error("Failed to load html5-qrcode"));
-      document.head.appendChild(el);
-    });
   }
 
   /* —— Profile / export —— */
