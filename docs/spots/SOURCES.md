@@ -10,6 +10,44 @@
 | Colorado Mama Life (Angelica) | https://www.instagram.com/coloradomamalife/ | https://www.facebook.com/profile.php?id=61577651781310 | https://www.tiktok.com/@coloradomamalife |
 | Little Rad Adventure | https://www.instagram.com/littleradadventure/ | https://www.facebook.com/LittleRadAdventure | https://littleradadventure.com/ |
 
+## Scrub window (2026-10-05 Mon/Wed/Fri pass)
+
+**Checked**
+- Days.in.denver beehiiv: no issue newer than the October newsletter (already scrubbed).
+- Little Rad Adventure site (littleradadventure.com feed): newest post is Chief Mountain Trail (2026-06-12); nothing new.
+- Instagram, read post by post after closing the sign-up popup (posts ~Sep 30 to Oct 5):
+  - @days.in.denver: Oct 5 Nick's Fall Fest reel, Oct 4 playground bucket list reel, Oct 2 free fall festivals post (list is in images, not readable), Oct 1 October free museum days reel.
+  - @coloradokidsarerad: Oct 4 costume reel (no venue), Oct 3 "pick your chaos level" park post, Oct 2 solo hike reel (no venue), Oct 1 Cinema Toast House film fest at Writer Square (Oct 2 to 4, now past), Sep 30 Children's Museum reel.
+  - @colorado.kids.explore: Oct 4 Mile High Farms reel.
+  - @coloradomamalife and @littleradadventure Instagram not opened this pass.
+- Facebook without login shows only one post per page; permalinks, photos, and search are login-walled.
+  - Colorado Kids Explore FB: Oct 4 Mile High Farms reel (same as IG).
+  - Colorado Mama Life FB: Oct 4 "SAVE these dates" Colorado Halloween post; the dates are in 10 text images, which are login-walled and not read. No captions guessed.
+  - Little Rad Adventure FB: Oct 4 reel captioned "LVE" with no venue.
+  - Days.in.denver and Colorado Kids Are Rad FB: search 404s without login; facebook.com/days.in.denver redirects to an unrelated profile, and facebook.com/coloradokidsarerad is login-walled.
+- TikTok @colorado.kids.explore and @coloradomamalife: profile meta only (no captions).
+
+**New pins (4)**
+- Inspiration Point Park, Denver: Days.in.denver playground bucket list (~12 min)
+- Carpio-Sanguinette Park, Denver: CKAR pump track and playground (~18 min)
+- Lions Park + Clear Creek, Golden: CKAR creek and playground (~14 min)
+- Forney Museum of Transportation, Denver: Days.in.denver free museum days; SCFD free day Oct 9 confirmed on the Forney calendar (~18 min)
+
+**Updated**
+- Nick's Garden Center: address corrected to 2001 S Chambers Rd, Aurora (was S Havana St), pin moved, drive time now ~37 min (farther). Fall Fest is free entry daily through Oct 31.
+- Stanley Marketplace: noted Lu Bird's Light Playground behind it (Days.in.denver playground reel).
+- Children's Museum of Denver: added CKAR Sep 30 reel link.
+
+**New events (3)**
+- Oct 9 Forney Museum SCFD Free Day, 10am to 5pm
+- Oct 11 DMNS SCFD Free Day (OUT! at the Museum), 9am to 5pm (confirmed on dmns.org)
+- Oct 23 Four Mile Historic Park SCFD Free Admission Day (confirmed on fourmilepark.org)
+
+**Tips not pinned**
+- Mile High Farms, 11 Cavanaugh Rd, Bennett (CKE): weekends 10am to 6pm through Nov 1, ages 3 and under free. About 50 min or more from Arvada, so not pinned.
+- Also on the Days.in.denver playground list (farther or not geocoded): Westlands Park (Greenwood Village), James A. Bible Park, High Prairie Park (Aurora), Lu Bird's Light Playground (folded into Stanley). Chicken Park (Lafayette) from CKAR not pinned because its location wasn't verified. West Magnolia (Nederland) and Golden Gate Canyon State Park are too far for this map.
+- Free museum days not added as events: Colorado Railroad Museum (10/1), Molly Brown, Museo de las Americas, Clyfford Still, MCA (all past or not toddler-focused), and Denver Art Museum (10/13).
+
 ## Chanel share (2026-10-02)
 
 - Facebook reel https://www.facebook.com/share/r/1F3TqSRV9P/ → https://www.facebook.com/reel/1015401847940077/ — Angelica Quintanilla / Colorado Mama Life (existing account): **Boulder Canyon Trail**, start at Eben G. Fine Park, 101 Arapahoe Ave, Boulder. Stroller-friendly creek walk; mountain bikers kept a toddler entertained. Pin `boulder-canyon-trail` (~35 min, farther). No dated event.

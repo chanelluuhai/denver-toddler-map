@@ -41,8 +41,8 @@
         "note": "Facebook page Littleradadventure, also posted as Must Do In Colorado. Added from Chanel FB share 2026-10-03 (reel 1738726840765924 → Tiny Town & Railroad, Morrison). Park is seasonal and closed after Labor Day, so no pin until it reopens."
       }
     ],
-    "updated": "2026-10-03",
-    "scrub_window": "2026-10-03: added Little Rad Adventure (FB LittleRadAdventure, IG @littleradadventure) from Chanel share. Reel was Tiny Town & Railroad in Morrison, closed for the season (Memorial Day–Labor Day, plus May/September weekends), so not pinned. Prior 2026-10-02 scrub retained.",
+    "updated": "2026-10-05",
+    "scrub_window": "2026-10-05 Mon/Wed/Fri pass: Instagram @days.in.denver, @coloradokidsarerad, @colorado.kids.explore readable post-by-post (captions visible after closing the sign-up popup); Facebook pages showed one post each without login. Added Inspiration Point Park, Carpio-Sanguinette Park, Lions Park + Clear Creek (Golden), Forney Museum; corrected Nick's Garden Center to 2001 S Chambers Rd and updated Fall Fest details. Prior scrubs retained.",
     "notes": "Why-notes paraphrased/quoted from source captions and newsletters. Drive times are rough estimates from Arvada 80004; verify in Google Maps. Do not invent venues — every pin cites a named source. Seasonal spots kept if still relevant for fall 2026 or evergreen otherwise. Home base updated to W 64th Ave & Ward Rd; drive times refreshed via public OSRM routing on 2026-10-02."
   },
   "places": [
@@ -592,6 +592,10 @@
         {
           "label": "Children's Museum",
           "url": "https://www.mychildsmuseum.org/"
+        },
+        {
+          "label": "CKAR Children’s Museum reel (Sep 30)",
+          "url": "https://www.instagram.com/coloradokidsarerad/reel/Dd7ty-TxZhs/"
         }
       ],
       "hours": "Typically 9am–4pm daily (verify)",
@@ -1946,16 +1950,20 @@
     {
       "id": "nicks-garden",
       "name": "Nick's Garden Center",
-      "lat": 39.6575,
-      "lng": -104.7805,
-      "address": "2001 S Havana St, Aurora, CO 80014",
-      "why": "Days.in.denver Fall guide & Oct: thousands of pumpkins, free straw maze/photo ops, breakfast burritos; pay wristband for tractor rides etc. Pair with Aurora Mission Viejo Library (~2 mi).",
+      "lat": 39.6793836,
+      "lng": -104.8111866,
+      "address": "2001 S Chambers Rd, Aurora, CO 80014",
+      "why": "Days.in.denver Fall guide, Oct newsletter, and Oct 5 reel: Fall Fest with free entry every day through Oct 31 — free straw maze, wall ball, kiddie play area, games, and storytime with Professor Pumpkin. Paid extras ($6 each): train, tractor ride through the Tunnel of Terror, pedal karts, inflatable obstacle course, 9-hole putt-putt; $22 wristband covers train, tractor, karts, and inflatable once each.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
         "Facebook: Days.in.denver"
       ],
       "links": [
+        {
+          "label": "Days.in.denver Fall Fest reel (Oct 5)",
+          "url": "https://www.instagram.com/days.in.denver/reel/DeHOU7bBVWL/"
+        },
         {
           "label": "Instagram @days.in.denver",
           "url": "https://www.instagram.com/days.in.denver/"
@@ -1969,8 +1977,8 @@
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter"
         }
       ],
-      "hours": "Fall Mon–Sat ~8–6, Sun ~9–5",
-      "cost": "Free admission; pay per activity / ~$20 wristband",
+      "hours": "Fall Fest daily through Oct 31: Mon–Sat 8am–6pm, Sun 9am–5pm",
+      "cost": "Free entry; paid activities $6 each or $22 wristband",
       "toddler_notes": "Go early for fewer crowds; free maze works for littles.",
       "tags": [
         "seasonal",
@@ -1978,10 +1986,10 @@
         "aurora",
         "free-entry"
       ],
-      "drive_note": "~43 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~21.9 mi straight-line) — FARTHER (>30 min; flag)",
+      "drive_note": "~37 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~19.7 mi straight-line) — FARTHER (>30 min; flag)",
       "farther_than_30min": true,
-      "approx_drive_minutes": 43,
-      "straight_line_miles": 21.9
+      "approx_drive_minutes": 37,
+      "straight_line_miles": 19.7
     },
     {
       "id": "bad-dog-farm",
@@ -2104,7 +2112,7 @@
       "lat": 39.7530014,
       "lng": -104.8779448,
       "address": "2501 Dallas St, Aurora, CO 80010",
-      "why": "Days.in.denver May: Tattered Cover story time Wed 11am & Sun 12pm at Stanley Marketplace — grab Logan House coffee and let kids play out back.",
+      "why": "Days.in.denver May: Tattered Cover story time Wed 11am & Sun 12pm at Stanley Marketplace — grab Logan House coffee and let kids play out back. Days.in.denver’s Oct 4 playground reel also lists Lu Bird’s Light Playground right behind Stanley (coffee and Tattered Cover inside).",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
@@ -2118,6 +2126,10 @@
         {
           "label": "Days in Denver May newsletter",
           "url": "https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee"
+        },
+        {
+          "label": "Days.in.denver playground reel",
+          "url": "https://www.instagram.com/days.in.denver/reel/DeExVgtB1UU/"
         }
       ],
       "hours": "Marketplace hours; story times Wed/Sun",
@@ -2685,6 +2697,161 @@
       "farther_than_30min": true,
       "approx_drive_minutes": 35,
       "straight_line_miles": 16.1
+    },
+    {
+      "id": "inspiration-point-park",
+      "name": "Inspiration Point Park",
+      "lat": 39.7865623,
+      "lng": -105.0562068,
+      "address": "4901 Sheridan Blvd, Denver, CO 80212 (W 49th Ave & Sheridan)",
+      "why": "On Days.in.denver’s Oct 4 “Denver playground bucket list” reel — one of ten playgrounds to check off while fall weather is nice.",
+      "source": "Days.in.denver (@days.in.denver) — Instagram reel 2026-10-04",
+      "source_accounts": [
+        "@days.in.denver"
+      ],
+      "links": [
+        {
+          "label": "Days.in.denver playground reel",
+          "url": "https://www.instagram.com/days.in.denver/reel/DeExVgtB1UU/"
+        },
+        {
+          "label": "Instagram @days.in.denver",
+          "url": "https://www.instagram.com/days.in.denver/"
+        },
+        {
+          "label": "Denver Parks — Inspiration Point",
+          "url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Parks-Recreation"
+        }
+      ],
+      "hours": "Dawn–dusk (city park)",
+      "cost": "Free",
+      "toddler_notes": "Close to home and quick for a pre- or post-nap stop; bluff-top open lawn with views — keep hands-on near edges.",
+      "tags": [
+        "park",
+        "playground",
+        "free",
+        "outdoor"
+      ],
+      "drive_note": "~12 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~4.8 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 12,
+      "straight_line_miles": 4.8
+    },
+    {
+      "id": "carpio-sanguinette-park",
+      "name": "Carpio-Sanguinette Park",
+      "lat": 39.7917446,
+      "lng": -104.9741049,
+      "address": "Heron Pond / Heller / Carpio-Sanguinette Park, Globeville, Denver, CO 80216",
+      "why": "Colorado Kids Are Rad Oct 3 “pick your chaos level” post: pump track for bikes and scooters plus a playground.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — Instagram post 2026-10-03",
+      "source_accounts": [
+        "@coloradokidsarerad"
+      ],
+      "links": [
+        {
+          "label": "CKAR fall weekend post",
+          "url": "https://www.instagram.com/coloradokidsarerad/p/DeCOrLrEbgl/"
+        },
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        }
+      ],
+      "hours": "Dawn–dusk (city park)",
+      "cost": "Free",
+      "toddler_notes": "Playground is the toddler part; the pump track is busy with bigger kids on wheels, so watch the edges.",
+      "tags": [
+        "park",
+        "playground",
+        "pump-track",
+        "free",
+        "outdoor"
+      ],
+      "drive_note": "~18 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~8.9 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 18,
+      "straight_line_miles": 8.9
+    },
+    {
+      "id": "lions-park-golden",
+      "name": "Lions Park + Clear Creek (Golden)",
+      "lat": 39.7549101,
+      "lng": -105.2293095,
+      "address": "Lions Park, 10th St & Illinois St, Golden, CO 80401 (along Clear Creek)",
+      "why": "Colorado Kids Are Rad Oct 3 post: creek time plus a playground at Lions Park in Golden.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — Instagram post 2026-10-03",
+      "source_accounts": [
+        "@coloradokidsarerad"
+      ],
+      "links": [
+        {
+          "label": "CKAR fall weekend post",
+          "url": "https://www.instagram.com/coloradokidsarerad/p/DeCOrLrEbgl/"
+        },
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        },
+        {
+          "label": "City of Golden parks",
+          "url": "https://www.cityofgolden.net/play/recreation-attractions/parks-trails/"
+        }
+      ],
+      "hours": "Dawn–dusk",
+      "cost": "Free",
+      "toddler_notes": "Creek water is cold and fast in spots — shallow edges only, and pack a change of clothes.",
+      "tags": [
+        "park",
+        "playground",
+        "creek",
+        "free",
+        "outdoor",
+        "golden"
+      ],
+      "drive_note": "~14 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~6.2 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 14,
+      "straight_line_miles": 6.2
+    },
+    {
+      "id": "forney-museum",
+      "name": "Forney Museum of Transportation",
+      "lat": 39.7778012,
+      "lng": -104.9707842,
+      "address": "4303 Brighton Blvd, Denver, CO 80216",
+      "why": "Days.in.denver Oct 1 free-museum-days reel lists Forney on 10/9; the museum’s own calendar confirms an SCFD Free Day Oct 9, 10am–5pm. Trains, cars, and big vehicles to look at.",
+      "source": "Days.in.denver (@days.in.denver) — Instagram reel 2026-10-01; Forney Museum calendar",
+      "source_accounts": [
+        "@days.in.denver"
+      ],
+      "links": [
+        {
+          "label": "Days.in.denver free museum days reel",
+          "url": "https://www.instagram.com/days.in.denver/reel/Dd9LXmEBPdn/"
+        },
+        {
+          "label": "Forney Museum",
+          "url": "https://www.forneymuseum.org/"
+        },
+        {
+          "label": "Instagram @days.in.denver",
+          "url": "https://www.instagram.com/days.in.denver/"
+        }
+      ],
+      "hours": "Check museum site; SCFD Free Day Oct 9, 10am–5pm",
+      "cost": "Paid admission; free on SCFD free days",
+      "toddler_notes": "Mostly look-don’t-touch exhibits, so best for a vehicle-obsessed toddler on a free day; keep it short.",
+      "tags": [
+        "museum",
+        "indoor",
+        "vehicles",
+        "trains"
+      ],
+      "drive_note": "~18 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~9.3 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 18,
+      "straight_line_miles": 9.3
     }
   ]
 }

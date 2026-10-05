@@ -1,9 +1,9 @@
 # Denver/Arvada Toddler Outing Spots
 
-Updated: 2026-10-03  
+Updated: 2026-10-05  
 Base: W 64th Ave & Ward Rd, Arvada, CO 80004  
 Audience: Toddler ~20 months; prefer ~30 min drive  
-Places: 66
+Places: 70
 
 Each pin has a why-note from a named social/newsletter source. Drive times are rough estimates.
 
@@ -117,6 +117,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - **Toddler tip:** Nearby outdoor option; check current amenities and conditions before visiting.
 - [Google Maps shared by Chanel](https://maps.app.goo.gl/WLPcX74tqMqfAyVN7?g_st=ic)
 
+## Inspiration Point Park (near)
+
+- **Address:** 4901 Sheridan Blvd, Denver, CO 80212 (W 49th Ave & Sheridan)
+- **Drive:** ~12 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~4.8 mi straight-line)
+- **Why:** On Days.in.denver’s Oct 4 “Denver playground bucket list” reel — one of ten playgrounds to check off while fall weather is nice.
+- **Source:** Days.in.denver (@days.in.denver) — Instagram reel 2026-10-04
+- **Hours:** Dawn–dusk (city park)
+- **Cost:** Free
+- **Toddler tip:** Close to home and quick for a pre- or post-nap stop; bluff-top open lawn with views — keep hands-on near edges.
+- [Days.in.denver playground reel](https://www.instagram.com/days.in.denver/reel/DeExVgtB1UU/)
+- [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
+- [Denver Parks — Inspiration Point](https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Parks-Recreation)
+
 ## Vital Root (Tennyson) (near)
 
 - **Address:** 3915 Tennyson St, Denver, CO 80212
@@ -129,6 +142,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Days in Denver Oct newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter)
 - [Vital Root (Edible Beats)](https://ediblebeats.com/restaurants/vital-root/)
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
+
+## Lions Park + Clear Creek (Golden) (near)
+
+- **Address:** Lions Park, 10th St & Illinois St, Golden, CO 80401 (along Clear Creek)
+- **Drive:** ~14 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~6.2 mi straight-line)
+- **Why:** Colorado Kids Are Rad Oct 3 post: creek time plus a playground at Lions Park in Golden.
+- **Source:** Colorado Kids Are Rad (@coloradokidsarerad) — Instagram post 2026-10-03
+- **Hours:** Dawn–dusk
+- **Cost:** Free
+- **Toddler tip:** Creek water is cold and fast in spots — shallow edges only, and pack a change of clothes.
+- [CKAR fall weekend post](https://www.instagram.com/coloradokidsarerad/p/DeCOrLrEbgl/)
+- [Instagram @coloradokidsarerad](https://www.instagram.com/coloradokidsarerad/)
+- [City of Golden parks](https://www.cityofgolden.net/play/recreation-attractions/parks-trails/)
 
 ## Mines Museum (Golden) (near)
 
@@ -196,6 +222,7 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Days in Denver July newsletter](https://days-in-denver.beehiiv.com/p/july-newsletter)
 - [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
 - [Children's Museum](https://www.mychildsmuseum.org/)
+- [CKAR Children’s Museum reel (Sep 30)](https://www.instagram.com/coloradokidsarerad/reel/Dd7ty-TxZhs/)
 
 ## Tumble Haus (Highlands) (near)
 
@@ -222,6 +249,31 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Instagram @coloradokidsarerad](https://www.instagram.com/coloradokidsarerad/)
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 - [Days in Denver April newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-april-newsletter-c7d0)
+
+## Carpio-Sanguinette Park (near)
+
+- **Address:** Heron Pond / Heller / Carpio-Sanguinette Park, Globeville, Denver, CO 80216
+- **Drive:** ~18 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~8.9 mi straight-line)
+- **Why:** Colorado Kids Are Rad Oct 3 “pick your chaos level” post: pump track for bikes and scooters plus a playground.
+- **Source:** Colorado Kids Are Rad (@coloradokidsarerad) — Instagram post 2026-10-03
+- **Hours:** Dawn–dusk (city park)
+- **Cost:** Free
+- **Toddler tip:** Playground is the toddler part; the pump track is busy with bigger kids on wheels, so watch the edges.
+- [CKAR fall weekend post](https://www.instagram.com/coloradokidsarerad/p/DeCOrLrEbgl/)
+- [Instagram @coloradokidsarerad](https://www.instagram.com/coloradokidsarerad/)
+
+## Forney Museum of Transportation (near)
+
+- **Address:** 4303 Brighton Blvd, Denver, CO 80216
+- **Drive:** ~18 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~9.3 mi straight-line)
+- **Why:** Days.in.denver Oct 1 free-museum-days reel lists Forney on 10/9; the museum’s own calendar confirms an SCFD Free Day Oct 9, 10am–5pm. Trains, cars, and big vehicles to look at.
+- **Source:** Days.in.denver (@days.in.denver) — Instagram reel 2026-10-01; Forney Museum calendar
+- **Hours:** Check museum site; SCFD Free Day Oct 9, 10am–5pm
+- **Cost:** Paid admission; free on SCFD free days
+- **Toddler tip:** Mostly look-don’t-touch exhibits, so best for a vehicle-obsessed toddler on a free day; keep it short.
+- [Days.in.denver free museum days reel](https://www.instagram.com/days.in.denver/reel/Dd9LXmEBPdn/)
+- [Forney Museum](https://www.forneymuseum.org/)
+- [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 
 ## CSU Spur (near)
 
@@ -577,13 +629,14 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 
 - **Address:** 2501 Dallas St, Aurora, CO 80010
 - **Drive:** ~30 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~14.5 mi straight-line)
-- **Why:** Days.in.denver May: Tattered Cover story time Wed 11am & Sun 12pm at Stanley Marketplace — grab Logan House coffee and let kids play out back.
+- **Why:** Days.in.denver May: Tattered Cover story time Wed 11am & Sun 12pm at Stanley Marketplace — grab Logan House coffee and let kids play out back. Days.in.denver’s Oct 4 playground reel also lists Lu Bird’s Light Playground right behind Stanley (coffee and Tattered Cover inside).
 - **Source:** Days.in.denver (@days.in.denver)
 - **Hours:** Marketplace hours; story times Wed/Sun
 - **Cost:** Free story time
 - **Toddler tip:** Indoor/outdoor marketplace outing with play space.
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 - [Days in Denver May newsletter](https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee)
+- [Days.in.denver playground reel](https://www.instagram.com/days.in.denver/reel/DeExVgtB1UU/)
 
 ## The Bookies Bookstore (FARTHER)
 
@@ -782,6 +835,20 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 - [Days in Denver June newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-june-newsletter-6e6b3c54ee90a522)
 
+## Nick's Garden Center (FARTHER)
+
+- **Address:** 2001 S Chambers Rd, Aurora, CO 80014
+- **Drive:** ~37 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~19.7 mi straight-line) — FARTHER (>30 min; flag)
+- **Why:** Days.in.denver Fall guide, Oct newsletter, and Oct 5 reel: Fall Fest with free entry every day through Oct 31 — free straw maze, wall ball, kiddie play area, games, and storytime with Professor Pumpkin. Paid extras ($6 each): train, tractor ride through the Tunnel of Terror, pedal karts, inflatable obstacle course, 9-hole putt-putt; $22 wristband covers train, tractor, karts, and inflatable once each.
+- **Source:** Days.in.denver (@days.in.denver)
+- **Hours:** Fall Fest daily through Oct 31: Mon–Sat 8am–6pm, Sun 9am–5pm
+- **Cost:** Free entry; paid activities $6 each or $22 wristband
+- **Toddler tip:** Go early for fewer crowds; free maze works for littles.
+- [Days.in.denver Fall Fest reel (Oct 5)](https://www.instagram.com/days.in.denver/reel/DeHOU7bBVWL/)
+- [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
+- [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
+- [Days in Denver Oct newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter)
+
 ## Tagawa Gardens (FARTHER)
 
 - **Address:** 7711 S Parker Rd, Centennial, CO 80016
@@ -820,19 +887,6 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - **Toddler tip:** Playground usable year-round; splash is summer-only.
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 - [Days in Denver June newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-june-newsletter-6e6b3c54ee90a522)
-
-## Nick's Garden Center (FARTHER)
-
-- **Address:** 2001 S Havana St, Aurora, CO 80014
-- **Drive:** ~43 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~21.9 mi straight-line) — FARTHER (>30 min; flag)
-- **Why:** Days.in.denver Fall guide & Oct: thousands of pumpkins, free straw maze/photo ops, breakfast burritos; pay wristband for tractor rides etc. Pair with Aurora Mission Viejo Library (~2 mi).
-- **Source:** Days.in.denver (@days.in.denver)
-- **Hours:** Fall Mon–Sat ~8–6, Sun ~9–5
-- **Cost:** Free admission; pay per activity / ~$20 wristband
-- **Toddler tip:** Go early for fewer crowds; free maze works for littles.
-- [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
-- [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
-- [Days in Denver Oct newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter)
 
 ## Cherry Creek Valley Ecological Park (FARTHER)
 

@@ -1,7 +1,7 @@
 {
   "meta": {
-    "updated": "2026-10-03",
-    "as_of": "2026-10-03",
+    "updated": "2026-10-05",
+    "as_of": "2026-10-05",
     "timezone": "America/Denver",
     "notes": "Upcoming, dated family events kept separate from map pins. Confirm times, access, and weather with the linked organizer before heading out."
   },
@@ -31,6 +31,19 @@
       "note": "Cider pressing, vintage tractors, wagon rides, and family activities; verify tickets and pricing.",
       "drive_note": "~19 min from the 64th & Ward base",
       "source": "City of Lakewood / Days.in.denver Fall guide"
+    },
+    {
+      "id": "forney-free-day-2026-10-09",
+      "title": "SCFD Free Day at the Forney Museum",
+      "date": "2026-10-09",
+      "end_date": "2026-10-09",
+      "time": "10:00 AM–5:00 PM",
+      "place_id": "forney-museum",
+      "place": "Forney Museum of Transportation",
+      "link": "https://www.forneymuseum.org/",
+      "note": "Free admission day; trains, cars, and big vehicles. Listed in Days.in.denver’s October free museum days reel.",
+      "source": "Forney Museum / Days.in.denver",
+      "drive_note": "~18 min from the 64th & Ward base"
     },
     {
       "id": "giggling-life-fall-festival-2026",
@@ -72,6 +85,19 @@
       "source": "Denver Firefighters Museum"
     },
     {
+      "id": "dmns-free-day-2026-10-11",
+      "title": "SCFD Free Day: OUT! at the Museum",
+      "date": "2026-10-11",
+      "end_date": "2026-10-11",
+      "time": "9:00 AM–5:00 PM",
+      "place_id": "dmns-nature-play",
+      "place": "Denver Museum of Nature & Science",
+      "link": "https://www.dmns.org/programs-and-events/freedays/",
+      "note": "Free general admission, no tickets needed; walk up. Planetarium and special exhibits cost extra. Nature Play Park out back is free anyway. Expect crowds; go at opening.",
+      "source": "Denver Museum of Nature & Science / Days.in.denver",
+      "drive_note": "~24 min from the 64th & Ward base"
+    },
+    {
       "id": "infinity-park-trunk-or-treat-2026",
       "title": "Trunk-or-Treat + Outdoor Movie: Monsters vs. Aliens",
       "date": "2026-10-12",
@@ -107,6 +133,19 @@
       "note": "Free teal-pumpkin trick-or-treat with STEM activities, prizes, face painting, and spooky exhibits.",
       "drive_note": "~15 min from the 64th & Ward base",
       "source": "Mines Museum / Visit Golden"
+    },
+    {
+      "id": "four-mile-free-day-2026-10-23",
+      "title": "SCFD Free Admission Day at Four Mile",
+      "date": "2026-10-23",
+      "end_date": "2026-10-23",
+      "time": "Daytime hours (check site)",
+      "place_id": "four-mile-historic",
+      "place": "Four Mile Historic Park",
+      "link": "https://www.fourmilepark.org/",
+      "note": "Free admission to the historic farm park. Days.in.denver flagged that the date in her reel was wrong; the caption and Four Mile’s calendar both say Oct 23.",
+      "source": "Four Mile Historic Park / Days.in.denver",
+      "drive_note": "~29 min from the 64th & Ward base"
     },
     {
       "id": "central-library-trick-or-treat-2026",
