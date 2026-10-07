@@ -41,8 +41,8 @@
     "note": "Facebook page Littleradadventure, also posted as Must Do In Colorado. Added from Chanel FB share 2026-10-03 (reel 1738726840765924 → Tiny Town & Railroad, Morrison). Park is seasonal and closed after Labor Day, so no pin until it reopens."
    }
   ],
-  "updated": "2026-10-05",
-  "scrub_window": "2026-10-05 Mon/Wed/Fri pass: Instagram @days.in.denver, @coloradokidsarerad, @colorado.kids.explore readable post-by-post (captions visible after closing the sign-up popup); Facebook pages showed one post each without login. Added Inspiration Point Park, Carpio-Sanguinette Park, Lions Park + Clear Creek (Golden), Forney Museum; corrected Nick's Garden Center to 2001 S Chambers Rd and updated Fall Fest details. Prior scrubs retained.",
+  "updated": "2026-10-07",
+  "scrub_window": "2026-10-07 Mon/Wed/Fri pass: Instagram read post by post for all five accounts (Oct 5–7; Mama Life and Little Rad back to ~Sep 30); Facebook shows only the top post without login. Added Butterfly Pavilion, Carson Nature Center, Spectra Art Space (Spookadelia), The Golden Mill; four Halloween events. Prior scrubs retained.",
   "notes": "Why-notes paraphrased/quoted from source captions and newsletters. Drive times are rough estimates from Arvada 80004; verify in Google Maps. Do not invent venues — every pin cites a named source. Seasonal spots kept if still relevant for fall 2026 or evergreen otherwise. Home base updated to W 64th Ave & Ward Rd; drive times refreshed via public OSRM routing on 2026-10-02."
  },
  "places": [
@@ -2450,7 +2450,7 @@
    "lat": 39.704383,
    "lng": -105.088167,
    "address": "801 S Reed St, Lakewood, CO 80226",
-   "why": "Days.in.denver Fall guide: Lakewood Cider Days (cider pressing, vintage power, family activities — Oct 3–4 2026). Belmar Park itself is a solid year-round Lakewood outing with trails, ponds, and room to run near the cultural center.",
+   "why": "Days.in.denver Fall guide: Lakewood Cider Days (cider pressing, vintage power, family activities — Oct 3–4 2026). Belmar Park itself is a solid year-round Lakewood outing with trails, ponds, and room to run near the cultural center. BOOmar Halloween at the Plaza at Belmar (439 S Upham St) is Sat Oct 24, noon–3pm (Colorado Mama Life Oct 4 list; confirmed on belmarcolorado.com).",
    "source": "Days.in.denver (@days.in.denver) Fall 2026 guide",
    "source_accounts": [
     "@days.in.denver",
@@ -2743,10 +2743,11 @@
    "lat": 39.7917446,
    "lng": -104.9741049,
    "address": "Heron Pond / Heller / Carpio-Sanguinette Park, Globeville, Denver, CO 80216",
-   "why": "Colorado Kids Are Rad Oct 3 “pick your chaos level” post: pump track for bikes and scooters plus a playground.",
+   "why": "Colorado Kids Are Rad Oct 3 “pick your chaos level” post: pump track for bikes and scooters plus a playground. Colorado Kids Explore (Oct 5) pairs it with CSU Spur next door for a free all-day playdate: the pump track is toddler-friendly, park parking is free, and there's a cafe in Spur's Hydro building. At E 51st Ave & Emerson St.",
    "source": "Colorado Kids Are Rad (@coloradokidsarerad) — Instagram post 2026-10-03",
    "source_accounts": [
-    "@coloradokidsarerad"
+    "@coloradokidsarerad",
+    "@colorado.kids.explore"
    ],
    "links": [
     {
@@ -2756,6 +2757,10 @@
     {
      "label": "Instagram @coloradokidsarerad",
      "url": "https://www.instagram.com/coloradokidsarerad/"
+    },
+    {
+     "label": "CKE Carpio-Sanguinette + CSU Spur reel (Oct 5)",
+     "url": "https://www.instagram.com/colorado.kids.explore/reel/DeIclj4x1yq/"
     }
    ],
    "hours": "Dawn–dusk (city park)",
@@ -2779,10 +2784,12 @@
    "lat": 39.7549101,
    "lng": -105.2293095,
    "address": "Lions Park, 10th St & Illinois St, Golden, CO 80401 (along Clear Creek)",
-   "why": "Colorado Kids Are Rad Oct 3 post: creek time plus a playground at Lions Park in Golden.",
+   "why": "Colorado Kids Are Rad Oct 3 post: creek time plus a playground at Lions Park in Golden. Colorado Mama Life (Oct 5) called the Clear Creek Trail in Golden a stroller-friendly fall walk, and Little Rad Adventure (Oct 4) listed Clear Creek Path as popping with fall color.",
    "source": "Colorado Kids Are Rad (@coloradokidsarerad) — Instagram post 2026-10-03",
    "source_accounts": [
-    "@coloradokidsarerad"
+    "@coloradokidsarerad",
+    "@coloradomamalife",
+    "@littleradadventure"
    ],
    "links": [
     {
@@ -2796,6 +2803,14 @@
     {
      "label": "City of Golden parks",
      "url": "https://www.cityofgolden.net/play/recreation-attractions/parks-trails/"
+    },
+    {
+     "label": "Colorado Mama Life Clear Creek reel (Oct 5)",
+     "url": "https://www.instagram.com/coloradomamalife/reel/DeId3xTTYpu/"
+    },
+    {
+     "label": "Little Rad Adventure fall colors post (Oct 4)",
+     "url": "https://www.instagram.com/littleradadventure/p/DeE2WL8lhQ2/"
     }
    ],
    "hours": "Dawn–dusk",
@@ -2852,6 +2867,165 @@
    "farther_than_30min": false,
    "approx_drive_minutes": 18,
    "straight_line_miles": 9.3
+  },
+  {
+   "id": "butterfly-pavilion",
+   "name": "Butterfly Pavilion",
+   "address": "6252 W 104th Ave, Westminster, CO 80020",
+   "why": "Colorado Kids Explore Oct 6 reel (also on their Facebook page): October at Butterfly Pavilion brings the Spider Zone and Toxic Terrors exhibits (Oct 1–31) plus Crawl-O-Ween costume trick-or-treating Oct 24, 25 and 31. Days.in.denver also posted a Butterfly Pavilion spider reel Oct 7. Indoor butterfly conservatory and bug exhibits year-round.",
+   "source": "Colorado Kids Explore (@colorado.kids.explore) — Instagram reel 2026-10-06; Days.in.denver reel 2026-10-07; butterflies.org",
+   "source_accounts": [
+    "@colorado.kids.explore",
+    "@days.in.denver"
+   ],
+   "links": [
+    {
+     "label": "CKE Butterfly Pavilion reel (Oct 6)",
+     "url": "https://www.instagram.com/colorado.kids.explore/reel/DeLPLpTRr8R/"
+    },
+    {
+     "label": "Days.in.denver spider reel (Oct 7)",
+     "url": "https://www.instagram.com/days.in.denver/reel/DeMXxxxhM0G/"
+    },
+    {
+     "label": "Butterfly Pavilion Crawl-O-Ween",
+     "url": "https://butterflies.org/event/crawl-o-ween/"
+    },
+    {
+     "label": "Instagram @colorado.kids.explore",
+     "url": "https://www.instagram.com/colorado.kids.explore/"
+    }
+   ],
+   "hours": "Check butterflies.org; Crawl-O-Ween Oct 24, 25 & 31, 9am–5pm (timed entry)",
+   "cost": "Paid admission; Crawl-O-Ween adults $25, kids 2–12 $19, under 2 free (ticket page)",
+   "toddler_notes": "Indoor and stroller-friendly; the butterfly room is a big hit with toddlers. Under 2 is free for Crawl-O-Ween.",
+   "tags": [
+    "indoor",
+    "animals",
+    "museum",
+    "halloween"
+   ],
+   "lat": 39.887069,
+   "lng": -105.066431,
+   "drive_note": "~17 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~6.5 mi straight-line)",
+   "farther_than_30min": false,
+   "approx_drive_minutes": 17,
+   "straight_line_miles": 6.5
+  },
+  {
+   "id": "carson-nature-center",
+   "name": "Carson Nature Center (South Platte Park)",
+   "address": "3000 W Carson Dr, Littleton, CO 80120",
+   "why": "Colorado Mama Life Oct 5 reel: a playdate inside the nature center and out on the trail. The center has live animals and an interactive water table model of the 1965 flood; South Platte Park trails and lakes are right outside.",
+   "source": "Colorado Mama Life (@coloradomamalife) — Instagram reel 2026-10-05; ssprd.org",
+   "source_accounts": [
+    "@coloradomamalife"
+   ],
+   "links": [
+    {
+     "label": "Colorado Mama Life Carson reel (Oct 5)",
+     "url": "https://www.instagram.com/coloradomamalife/reel/DeHjDTgzPBY/"
+    },
+    {
+     "label": "South Suburban — Carson Nature Center",
+     "url": "https://www.ssprd.org/nature"
+    },
+    {
+     "label": "Instagram @coloradomamalife",
+     "url": "https://www.instagram.com/coloradomamalife/"
+    }
+   ],
+   "hours": "Nature center Tue–Fri 12–4:30pm, Sat–Sun 9:30am–4:30pm, closed Mon; trails sunrise–sunset",
+   "cost": "Free",
+   "toddler_notes": "Small indoor stop with animals to look at, then an easy flat stroll outside. A bit of a drive, so pair with lunch nearby.",
+   "tags": [
+    "nature",
+    "indoor",
+    "trail",
+    "animals"
+   ],
+   "lat": 39.5831695,
+   "lng": -105.0289705,
+   "drive_note": "~36 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~16.9 mi straight-line) — farther",
+   "farther_than_30min": true,
+   "approx_drive_minutes": 36,
+   "straight_line_miles": 16.9
+  },
+  {
+   "id": "spectra-art-space",
+   "name": "Spectra Art Space — Spookadelia",
+   "address": "1836 S Broadway, Denver, CO 80210",
+   "why": "Colorado Kids Are Rad Oct 6 reel: Spookadelia is an interactive art experience where kids are encouraged to touch things; they went during the day with little kids. Temporary exhibit, open Oct 3 through Dec 2026.",
+   "source": "Colorado Kids Are Rad (@coloradokidsarerad) — Instagram reel 2026-10-06; spectraartspace.com",
+   "source_accounts": [
+    "@coloradokidsarerad"
+   ],
+   "links": [
+    {
+     "label": "CKAR Spookadelia reel (Oct 6)",
+     "url": "https://www.instagram.com/coloradokidsarerad/reel/DeLIP4fxqkn/"
+    },
+    {
+     "label": "Spectra Art Space — Spookadelia",
+     "url": "https://spectraartspace.com/spookadelia/"
+    },
+    {
+     "label": "Instagram @coloradokidsarerad",
+     "url": "https://www.instagram.com/coloradokidsarerad/"
+    }
+   ],
+   "hours": "Temporary: Oct 3–Dec 2026. Mon, Wed, Thu, Sun 11am–10pm; Fri–Sat 11am–11pm; closed Tue",
+   "cost": "Ticketed, timed entry (book ahead on Spectra's site)",
+   "toddler_notes": "All-ages but spooky-themed; go in daytime like CKAR did, and bring a charged phone (the site says one per group is needed).",
+   "tags": [
+    "indoor",
+    "art",
+    "halloween",
+    "temporary"
+   ],
+   "lat": 39.6832639,
+   "lng": -104.9874463,
+   "drive_note": "~26 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~12.1 mi straight-line)",
+   "farther_than_30min": false,
+   "approx_drive_minutes": 26,
+   "straight_line_miles": 12.1
+  },
+  {
+   "id": "golden-mill",
+   "name": "The Golden Mill",
+   "address": "1012 Ford St, Golden, CO 80401",
+   "why": "Colorado Mama Life Oct 6 reel: kid-friendly food hall with five food spots, self-pour drinks, a rooftop patio, and ice cream.",
+   "source": "Colorado Mama Life (@coloradomamalife) — Instagram reel 2026-10-06",
+   "source_accounts": [
+    "@coloradomamalife"
+   ],
+   "links": [
+    {
+     "label": "Colorado Mama Life Golden Mill reel (Oct 6)",
+     "url": "https://www.instagram.com/coloradomamalife/reel/DeKTs2WTVpf/"
+    },
+    {
+     "label": "The Golden Mill",
+     "url": "https://www.thegoldenmill.com/location-and-hours"
+    },
+    {
+     "label": "Instagram @coloradomamalife",
+     "url": "https://www.instagram.com/coloradomamalife/"
+    }
+   ],
+   "hours": "Check thegoldenmill.com",
+   "cost": "Pay per vendor",
+   "toddler_notes": "Easy everyone-eats-something lunch; pair with Lions Park and Clear Creek a few blocks away.",
+   "tags": [
+    "food",
+    "kid-friendly eats"
+   ],
+   "lat": 39.7578121,
+   "lng": -105.220846,
+   "drive_note": "~13 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~5.7 mi straight-line)",
+   "farther_than_30min": false,
+   "approx_drive_minutes": 13,
+   "straight_line_miles": 5.7
   }
  ]
 }

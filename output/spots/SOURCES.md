@@ -10,6 +10,44 @@
 | Colorado Mama Life (Angelica) | https://www.instagram.com/coloradomamalife/ | https://www.facebook.com/profile.php?id=61577651781310 | https://www.tiktok.com/@coloradomamalife |
 | Little Rad Adventure | https://www.instagram.com/littleradadventure/ | https://www.facebook.com/LittleRadAdventure | https://littleradadventure.com/ |
 
+## Scrub window (2026-10-07 Mon/Wed/Fri pass)
+
+**Checked**
+- Days.in.denver beehiiv: no issue newer than the October newsletter.
+- Little Rad Adventure site feed: newest post still Chief Mountain Trail (2026-06-12).
+- Instagram, read post by post after closing the sign-up popup:
+  - @days.in.denver (Oct 5–7): Oct 7 Butterfly Pavilion spider reel, Oct 6 Día de Muertos art display outside the Denver Performing Arts Complex (free, daily 7am–10pm through Nov 4), Oct 5 Nick's Fall Fest reel (already in).
+  - @coloradokidsarerad (Oct 5–6): Oct 6 Spookadelia at Spectra Art Space, Oct 5 Anne U. White Trail (Boulder).
+  - @colorado.kids.explore (Oct 5–6): Oct 6 Butterfly Pavilion October events, Oct 5 Carpio-Sanguinette Park + CSU Spur playdate.
+  - @coloradomamalife (Oct 1–6, first full IG read): Golden Mill, Carson Nature Center, Clear Creek Trail, Colorado Railbike Halloween rides (Erie), free Halloween events list (caption cut off mid Oct 31; more may be in images, not read), Town Center at Aurora character meet-and-greets, Ouray KOA, Elitch BooVille giveaway.
+  - @littleradadventure (Sep 29–Oct 6, first full IG read): fall-color drives and hikes (Rollins Pass, Winter Park, Golden Gate Canyon SP, Mueller, Roxborough, Staunton, Clear Creek Path), Phoenix Gold Mine (Idaho Springs), Leadville Railroad, Snowmass Ditch Trail, RMNP.
+- Facebook without login shows only the top post: Little Rad Adventure "Colorado Winter Bucket List" (rest behind login); Colorado Kids Explore Butterfly Pavilion video (same as IG); Colorado Mama Life "FREE Halloween plans: NORTH edition" (details behind "See more" and login, not read, no captions guessed).
+- TikTok not readable beyond profile meta (unchanged).
+
+**New pins (4)**
+- Butterfly Pavilion, Westminster: CKE Oct 6 reel + Days.in.denver Oct 7 (~17 min)
+- Carson Nature Center / South Platte Park, Littleton: Colorado Mama Life Oct 5 (~36 min, farther)
+- Spectra Art Space (Spookadelia, temporary Oct 3–Dec 2026), Denver: CKAR Oct 6 (~26 min)
+- The Golden Mill food hall, Golden: Colorado Mama Life Oct 6 (~13 min)
+
+**Updated**
+- Lions Park + Clear Creek (Golden): added Mama Life Clear Creek Trail reel and Little Rad Adventure fall-colors post.
+- Carpio-Sanguinette Park: added CKE Oct 5 reel (pair with CSU Spur, free parking, cafe in Hydro).
+- Belmar Park: noted BOOmar Oct 24.
+
+**New events (5)**
+- Oct 24–25 and Oct 31 Crawl-O-Ween at Butterfly Pavilion, 9am–5pm timed entry, under 2 free (confirmed on butterflies.org)
+- Oct 24 BOOmar at Belmar, noon–3pm, free (confirmed on belmarcolorado.com)
+- Oct 29 BOOnion Station at Union Station, 4–7pm, free (confirmed on denverunionstation.com)
+- Oct 31 Monster Mash at Golden History Museum & Park, free; Mama Life lists 2–4pm, museum page time not readable, so marked "confirm time"
+
+**Tips not pinned**
+- Anne U. White Trail (Boulder, 3.2 mi out and back): CKAR calls it toddler-friendly, but it's ~40 min away and the trailhead wasn't verified.
+- Día de Muertos Barriletes (kite) workshop, Oct 10 2–5pm at the Arts Complex Galleria: kid-and-adult craft, too old for a ~20-month-old.
+- Colorado Railbike Halloween rides (Erie, Oct 8–31 evenings), Town Center at Aurora character visits (Oct 11), Carve a Pumpkin with a Cop (Broomfield Walmart, Oct 24), Spooktacular (Castle Rock) and Trunk or Treat (Parker): evening, farther, or not toddler-focused.
+- Golden Gate Canyon SP, Phoenix Gold Mine, Leadville, Rollins Pass, Winter Park, Snowmass, RMNP: outside the ~30-minute radius.
+- Westy Fest (Oct 17) already listed.
+
 ## Scrub window (2026-10-05 Mon/Wed/Fri pass)
 
 **Checked**

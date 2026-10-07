@@ -1,9 +1,9 @@
 # Denver/Arvada Toddler Outing Spots
 
-Updated: 2026-10-05  
+Updated: 2026-10-07  
 Base: W 64th Ave & Ward Rd, Arvada, CO 80004  
 Audience: Toddler ~20 months; prefer ~30 min drive  
-Places: 70
+Places: 74
 
 Each pin has a why-note from a named social/newsletter source. Drive times are rough estimates.
 
@@ -130,6 +130,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 - [Denver Parks — Inspiration Point](https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Parks-Recreation)
 
+## The Golden Mill (near)
+
+- **Address:** 1012 Ford St, Golden, CO 80401
+- **Drive:** ~13 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~5.7 mi straight-line)
+- **Why:** Colorado Mama Life Oct 6 reel: kid-friendly food hall with five food spots, self-pour drinks, a rooftop patio, and ice cream.
+- **Source:** Colorado Mama Life (@coloradomamalife) — Instagram reel 2026-10-06
+- **Hours:** Check thegoldenmill.com
+- **Cost:** Pay per vendor
+- **Toddler tip:** Easy everyone-eats-something lunch; pair with Lions Park and Clear Creek a few blocks away.
+- [Colorado Mama Life Golden Mill reel (Oct 6)](https://www.instagram.com/coloradomamalife/reel/DeKTs2WTVpf/)
+- [The Golden Mill](https://www.thegoldenmill.com/location-and-hours)
+- [Instagram @coloradomamalife](https://www.instagram.com/coloradomamalife/)
+
 ## Vital Root (Tennyson) (near)
 
 - **Address:** 3915 Tennyson St, Denver, CO 80212
@@ -147,7 +160,7 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 
 - **Address:** Lions Park, 10th St & Illinois St, Golden, CO 80401 (along Clear Creek)
 - **Drive:** ~14 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~6.2 mi straight-line)
-- **Why:** Colorado Kids Are Rad Oct 3 post: creek time plus a playground at Lions Park in Golden.
+- **Why:** Colorado Kids Are Rad Oct 3 post: creek time plus a playground at Lions Park in Golden. Colorado Mama Life (Oct 5) called the Clear Creek Trail in Golden a stroller-friendly fall walk, and Little Rad Adventure (Oct 4) listed Clear Creek Path as popping with fall color.
 - **Source:** Colorado Kids Are Rad (@coloradokidsarerad) — Instagram post 2026-10-03
 - **Hours:** Dawn–dusk
 - **Cost:** Free
@@ -155,6 +168,8 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [CKAR fall weekend post](https://www.instagram.com/coloradokidsarerad/p/DeCOrLrEbgl/)
 - [Instagram @coloradokidsarerad](https://www.instagram.com/coloradokidsarerad/)
 - [City of Golden parks](https://www.cityofgolden.net/play/recreation-attractions/parks-trails/)
+- [Colorado Mama Life Clear Creek reel (Oct 5)](https://www.instagram.com/coloradomamalife/reel/DeId3xTTYpu/)
+- [Little Rad Adventure fall colors post (Oct 4)](https://www.instagram.com/littleradadventure/p/DeE2WL8lhQ2/)
 
 ## Mines Museum (Golden) (near)
 
@@ -237,6 +252,20 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Days in Denver March newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter)
 - [Days in Denver Sept newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter)
 
+## Butterfly Pavilion (near)
+
+- **Address:** 6252 W 104th Ave, Westminster, CO 80020
+- **Drive:** ~17 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~6.5 mi straight-line)
+- **Why:** Colorado Kids Explore Oct 6 reel (also on their Facebook page): October at Butterfly Pavilion brings the Spider Zone and Toxic Terrors exhibits (Oct 1–31) plus Crawl-O-Ween costume trick-or-treating Oct 24, 25 and 31. Days.in.denver also posted a Butterfly Pavilion spider reel Oct 7. Indoor butterfly conservatory and bug exhibits year-round.
+- **Source:** Colorado Kids Explore (@colorado.kids.explore) — Instagram reel 2026-10-06; Days.in.denver reel 2026-10-07; butterflies.org
+- **Hours:** Check butterflies.org; Crawl-O-Ween Oct 24, 25 & 31, 9am–5pm (timed entry)
+- **Cost:** Paid admission; Crawl-O-Ween adults $25, kids 2–12 $19, under 2 free (ticket page)
+- **Toddler tip:** Indoor and stroller-friendly; the butterfly room is a big hit with toddlers. Under 2 is free for Crawl-O-Ween.
+- [CKE Butterfly Pavilion reel (Oct 6)](https://www.instagram.com/colorado.kids.explore/reel/DeLPLpTRr8R/)
+- [Days.in.denver spider reel (Oct 7)](https://www.instagram.com/days.in.denver/reel/DeMXxxxhM0G/)
+- [Butterfly Pavilion Crawl-O-Ween](https://butterflies.org/event/crawl-o-ween/)
+- [Instagram @colorado.kids.explore](https://www.instagram.com/colorado.kids.explore/)
+
 ## Sloan's Lake Park (near)
 
 - **Address:** 1700 N Sheridan Blvd, Denver, CO 80214
@@ -254,13 +283,14 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 
 - **Address:** Heron Pond / Heller / Carpio-Sanguinette Park, Globeville, Denver, CO 80216
 - **Drive:** ~18 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~8.9 mi straight-line)
-- **Why:** Colorado Kids Are Rad Oct 3 “pick your chaos level” post: pump track for bikes and scooters plus a playground.
+- **Why:** Colorado Kids Are Rad Oct 3 “pick your chaos level” post: pump track for bikes and scooters plus a playground. Colorado Kids Explore (Oct 5) pairs it with CSU Spur next door for a free all-day playdate: the pump track is toddler-friendly, park parking is free, and there's a cafe in Spur's Hydro building. At E 51st Ave & Emerson St.
 - **Source:** Colorado Kids Are Rad (@coloradokidsarerad) — Instagram post 2026-10-03
 - **Hours:** Dawn–dusk (city park)
 - **Cost:** Free
 - **Toddler tip:** Playground is the toddler part; the pump track is busy with bigger kids on wheels, so watch the edges.
 - [CKAR fall weekend post](https://www.instagram.com/coloradokidsarerad/p/DeCOrLrEbgl/)
 - [Instagram @coloradokidsarerad](https://www.instagram.com/coloradokidsarerad/)
+- [CKE Carpio-Sanguinette + CSU Spur reel (Oct 5)](https://www.instagram.com/colorado.kids.explore/reel/DeIclj4x1yq/)
 
 ## Forney Museum of Transportation (near)
 
@@ -305,7 +335,7 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 
 - **Address:** 801 S Reed St, Lakewood, CO 80226
 - **Drive:** ~19 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~8.0 mi straight-line)
-- **Why:** Days.in.denver Fall guide: Lakewood Cider Days (cider pressing, vintage power, family activities — Oct 3–4 2026). Belmar Park itself is a solid year-round Lakewood outing with trails, ponds, and room to run near the cultural center.
+- **Why:** Days.in.denver Fall guide: Lakewood Cider Days (cider pressing, vintage power, family activities — Oct 3–4 2026). Belmar Park itself is a solid year-round Lakewood outing with trails, ponds, and room to run near the cultural center. BOOmar Halloween at the Plaza at Belmar (439 S Upham St) is Sat Oct 24, noon–3pm (Colorado Mama Life Oct 4 list; confirmed on belmarcolorado.com).
 - **Source:** Days.in.denver (@days.in.denver) Fall 2026 guide
 - **Hours:** Park roughly dawn–dusk. Cider Days 2026: Sat Oct 3 10am–5pm, Sun Oct 4 10am–4pm (verify tickets/pricing).
 - **Cost:** Park free. Cider Days: adults ~$12–17, kids 1–12 ~$10, under 1 free (Fall guide — confirm current pricing).
@@ -547,6 +577,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Days in Denver May newsletter](https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee)
 - [Days in Denver July newsletter](https://days-in-denver.beehiiv.com/p/july-newsletter)
 - [Days in Denver Oct newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter)
+
+## Spectra Art Space — Spookadelia (near)
+
+- **Address:** 1836 S Broadway, Denver, CO 80210
+- **Drive:** ~26 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~12.1 mi straight-line)
+- **Why:** Colorado Kids Are Rad Oct 6 reel: Spookadelia is an interactive art experience where kids are encouraged to touch things; they went during the day with little kids. Temporary exhibit, open Oct 3 through Dec 2026.
+- **Source:** Colorado Kids Are Rad (@coloradokidsarerad) — Instagram reel 2026-10-06; spectraartspace.com
+- **Hours:** Temporary: Oct 3–Dec 2026. Mon, Wed, Thu, Sun 11am–10pm; Fri–Sat 11am–11pm; closed Tue
+- **Cost:** Ticketed, timed entry (book ahead on Spectra's site)
+- **Toddler tip:** All-ages but spooky-themed; go in daytime like CKAR did, and bring a charged phone (the site says one per group is needed).
+- [CKAR Spookadelia reel (Oct 6)](https://www.instagram.com/coloradokidsarerad/reel/DeLIP4fxqkn/)
+- [Spectra Art Space — Spookadelia](https://spectraartspace.com/spookadelia/)
+- [Instagram @coloradokidsarerad](https://www.instagram.com/coloradokidsarerad/)
 
 ## Sweet Play (Toddler Tuesday) (near)
 
@@ -822,6 +865,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - **Toddler tip:** Stay-awhile creek day; farther mountain drive.
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 - [Days in Denver May newsletter](https://days-in-denver.beehiiv.com/p/may-newsletter-7ae4c6d9c4e11cee)
+
+## Carson Nature Center (South Platte Park) (FARTHER)
+
+- **Address:** 3000 W Carson Dr, Littleton, CO 80120
+- **Drive:** ~36 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~16.9 mi straight-line) — farther
+- **Why:** Colorado Mama Life Oct 5 reel: a playdate inside the nature center and out on the trail. The center has live animals and an interactive water table model of the 1965 flood; South Platte Park trails and lakes are right outside.
+- **Source:** Colorado Mama Life (@coloradomamalife) — Instagram reel 2026-10-05; ssprd.org
+- **Hours:** Nature center Tue–Fri 12–4:30pm, Sat–Sun 9:30am–4:30pm, closed Mon; trails sunrise–sunset
+- **Cost:** Free
+- **Toddler tip:** Small indoor stop with animals to look at, then an easy flat stroll outside. A bit of a drive, so pair with lunch nearby.
+- [Colorado Mama Life Carson reel (Oct 5)](https://www.instagram.com/coloradomamalife/reel/DeHjDTgzPBY/)
+- [South Suburban — Carson Nature Center](https://www.ssprd.org/nature)
+- [Instagram @coloradomamalife](https://www.instagram.com/coloradomamalife/)
 
 ## Civic Green Park Splash Pad (FARTHER)
 
