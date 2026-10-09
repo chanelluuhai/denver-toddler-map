@@ -38,11 +38,11 @@
         "instagram": "https://www.instagram.com/littleradadventure/",
         "facebook": "https://www.facebook.com/LittleRadAdventure",
         "site": "https://littleradadventure.com/",
-        "note": "Facebook page Littleradadventure, also posted as Must Do In Colorado. Added from Chanel FB share 2026-10-03 (reel 1738726840765924 → Tiny Town & Railroad, Morrison). Park is seasonal and closed after Labor Day, so no pin until it reopens."
+        "note": "Facebook page Littleradadventure, also posted as Must Do In Colorado. Added from Chanel FB share 2026-10-03 (reel 1738726840765924 → Tiny Town & Railroad, Morrison). Park is seasonal and closed after Labor Day, so no pin until it reopens. IG scrubbed through 2026-10-09 (Boo at the Zoo reel)."
       }
     ],
-    "updated": "2026-10-07",
-    "scrub_window": "2026-10-07 Mon/Wed/Fri pass: Instagram read post by post for all five accounts (Oct 5–7; Mama Life and Little Rad back to ~Sep 30); Facebook shows only the top post without login. Added Butterfly Pavilion, Carson Nature Center, Spectra Art Space (Spookadelia), The Golden Mill; four Halloween events. Prior scrubs retained.",
+    "updated": "2026-10-09",
+    "scrub_window": "2026-10-09 Mon/Wed/Fri pass: Instagram read post by post for all five accounts (Oct 7–9); Facebook shows only the top post without login. Added four playgrounds from CKAR's Oct 8 list (Beverly Heights, Westfield Village, Thornton Sports Complex, Woodglen/Brookshire) and nine October Halloween events. Prior scrubs retained.",
     "notes": "Why-notes paraphrased/quoted from source captions and newsletters. Drive times are rough estimates from Arvada 80004; verify in Google Maps. Do not invent venues — every pin cites a named source. Seasonal spots kept if still relevant for fall 2026 or evergreen otherwise. Home base updated to W 64th Ave & Ward Rd; drive times refreshed via public OSRM routing on 2026-10-02."
   },
   "places": [
@@ -566,7 +566,8 @@
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
-        "Facebook: Days.in.denver"
+        "Facebook: Days.in.denver",
+        "@coloradomamalife"
       ],
       "links": [
         {
@@ -596,6 +597,10 @@
         {
           "label": "CKAR Children’s Museum reel (Sep 30)",
           "url": "https://www.instagram.com/coloradokidsarerad/reel/Dd7ty-TxZhs/"
+        },
+        {
+          "label": "Harvest Hoot (Colorado Kids guide listing)",
+          "url": "https://www.coloradokids.com/event/136665/Harvest-Hoot-at--the-Childrens-Museum-of-Denver-at-Marsico-Campus"
         }
       ],
       "hours": "Typically 9am–4pm daily (verify)",
@@ -1058,7 +1063,8 @@
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
-        "Facebook: Days.in.denver"
+        "Facebook: Days.in.denver",
+        "@coloradomamalife"
       ],
       "links": [
         {
@@ -1072,6 +1078,10 @@
         {
           "label": "Days in Denver Sept newsletter",
           "url": "https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter"
+        },
+        {
+          "label": "tumble HAUS special events",
+          "url": "https://tumblehaus.com/special-events"
         }
       ],
       "hours": "Check schedule; Happy Hour 4–6pm select days",
@@ -1204,11 +1214,14 @@
       "lat": 39.7502,
       "lng": -104.949,
       "address": "2300 Steele St, Denver, CO 80205",
-      "why": "Days.in.denver June feature (130th anniversary programming) and fall Boo at the Zoo — classic toddler outing with stroller paths and animal viewing.",
+      "why": "Days.in.denver June feature (130th anniversary programming) and fall Boo at the Zoo — classic toddler outing with stroller paths and animal viewing. Oct 8–9: Days.in.denver, Colorado Mama Life, and Little Rad Adventure all posted Boo at the Zoo (nine candy stations, friendly cryptid characters, new Wild Fall Market). CKAR's Oct 8 playground list also names Wild Village at the zoo.",
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
-        "Facebook: Days.in.denver"
+        "Facebook: Days.in.denver",
+        "@coloradomamalife",
+        "@littleradadventure",
+        "@coloradokidsarerad"
       ],
       "links": [
         {
@@ -1226,6 +1239,22 @@
         {
           "label": "Denver Zoo",
           "url": "https://denverzoo.org/"
+        },
+        {
+          "label": "Boo at the Zoo (denverzoo.org)",
+          "url": "https://denverzoo.org/events/boo-at-the-zoo/"
+        },
+        {
+          "label": "Days.in.denver Boo at the Zoo post (Oct 9)",
+          "url": "https://www.instagram.com/days.in.denver/p/DeRwlK1HMZa/"
+        },
+        {
+          "label": "Colorado Mama Life Boo at the Zoo reel (Oct 8)",
+          "url": "https://www.instagram.com/coloradomamalife/reel/DeNnhjZzCaB/"
+        },
+        {
+          "label": "Little Rad Adventure Boo at the Zoo reel (Oct 8)",
+          "url": "https://www.instagram.com/littleradadventure/reel/DeQDLeIpGj-/"
         }
       ],
       "hours": "Typically 9am–4pm (seasonal)",
@@ -1757,7 +1786,8 @@
       "source": "Days.in.denver (@days.in.denver)",
       "source_accounts": [
         "@days.in.denver",
-        "Facebook: Days.in.denver"
+        "Facebook: Days.in.denver",
+        "@coloradomamalife"
       ],
       "links": [
         {
@@ -1771,6 +1801,10 @@
         {
           "label": "Colorado Railroad Museum",
           "url": "https://coloradorailroadmuseum.org/"
+        },
+        {
+          "label": "Railroad Museum events (Harvest Haunt Express)",
+          "url": "https://coloradorailroadmuseum.org/events/"
         }
       ],
       "hours": "Typically daily; Thomas events seasonal weekends",
@@ -3026,6 +3060,162 @@
       "farther_than_30min": false,
       "approx_drive_minutes": 13,
       "straight_line_miles": 5.7
+    },
+    {
+      "id": "beverly-heights-park",
+      "name": "Beverly Heights Park (Golden)",
+      "address": "Beverly Heights Park, Golden, CO 80401",
+      "why": "Colorado Kids Are Rad Oct 8 reel lists Beverly Heights Park in Golden among 11 playgrounds they visited recently.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — Instagram reel 2026-10-08 (11 playgrounds list)",
+      "source_accounts": [
+        "@coloradokidsarerad"
+      ],
+      "links": [
+        {
+          "label": "CKAR 11 playgrounds reel (Oct 8)",
+          "url": "https://www.instagram.com/coloradokidsarerad/reel/DeNuRClxb_F/"
+        },
+        {
+          "label": "Map (OpenStreetMap)",
+          "url": "https://www.openstreetmap.org/?mlat=39.74087&mlon=-105.22741#map=17/39.74087/-105.22741"
+        },
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        }
+      ],
+      "hours": "Dawn to dusk (city park)",
+      "cost": "Free",
+      "toddler_notes": "Playground pick from a local toddler mom; pair with Lions Park, Clear Creek, or the Golden Mill. Location from OpenStreetMap; check the park's play equipment before going.",
+      "tags": [
+        "playground",
+        "outdoor",
+        "golden",
+        "free"
+      ],
+      "lat": 39.7408717,
+      "lng": -105.2274115,
+      "drive_note": "~15 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~6.8 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 15,
+      "straight_line_miles": 6.8
+    },
+    {
+      "id": "westfield-village-park",
+      "name": "Westfield Village Park (Westminster)",
+      "address": "Westfield Village Park, Westminster, CO 80020",
+      "why": "Colorado Kids Are Rad Oct 8 reel lists Westfield Village Park in Westminster among 11 playgrounds they visited recently.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — Instagram reel 2026-10-08 (11 playgrounds list)",
+      "source_accounts": [
+        "@coloradokidsarerad"
+      ],
+      "links": [
+        {
+          "label": "CKAR 11 playgrounds reel (Oct 8)",
+          "url": "https://www.instagram.com/coloradokidsarerad/reel/DeNuRClxb_F/"
+        },
+        {
+          "label": "Map (OpenStreetMap)",
+          "url": "https://www.openstreetmap.org/?mlat=39.90456&mlon=-105.04638#map=17/39.90456/-105.04638"
+        },
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        }
+      ],
+      "hours": "Dawn to dusk (city park)",
+      "cost": "Free",
+      "toddler_notes": "Playground pick from a local toddler mom, close to Butterfly Pavilion for a combo morning. Location from OpenStreetMap.",
+      "tags": [
+        "playground",
+        "outdoor",
+        "westminster",
+        "free"
+      ],
+      "lat": 39.9045575,
+      "lng": -105.0463837,
+      "drive_note": "~20 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~8.1 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 20,
+      "straight_line_miles": 8.1
+    },
+    {
+      "id": "thornton-sports-complex",
+      "name": "Thornton Sports Complex playground",
+      "address": "Thornton Sports Complex, Thornton, CO 80024",
+      "why": "Colorado Kids Are Rad Oct 8 reel lists the Thornton Sports Complex playground first in its 11 playgrounds roundup.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — Instagram reel 2026-10-08 (11 playgrounds list)",
+      "source_accounts": [
+        "@coloradokidsarerad"
+      ],
+      "links": [
+        {
+          "label": "CKAR 11 playgrounds reel (Oct 8)",
+          "url": "https://www.instagram.com/coloradokidsarerad/reel/DeNuRClxb_F/"
+        },
+        {
+          "label": "Map (OpenStreetMap)",
+          "url": "https://www.openstreetmap.org/?mlat=39.88161&mlon=-104.92081#map=17/39.88161/-104.92081"
+        },
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        }
+      ],
+      "hours": "Dawn to dusk (city park)",
+      "cost": "Free",
+      "toddler_notes": "Playground pick from a local toddler mom. Location from OpenStreetMap; it's a sports complex, so expect busy weekend parking during games.",
+      "tags": [
+        "playground",
+        "outdoor",
+        "thornton",
+        "free"
+      ],
+      "lat": 39.8816077,
+      "lng": -104.9208106,
+      "drive_note": "~26 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~12.6 mi straight-line)",
+      "farther_than_30min": false,
+      "approx_drive_minutes": 26,
+      "straight_line_miles": 12.6
+    },
+    {
+      "id": "woodglen-brookshire-park",
+      "name": "Woodglen / Brookshire Park (Thornton)",
+      "address": "Woodglen / Brookshire Park, Thornton, CO",
+      "why": "Colorado Kids Are Rad Oct 8 reel lists Woodglen / Brookshire Park in Thornton among 11 playgrounds they visited recently.",
+      "source": "Colorado Kids Are Rad (@coloradokidsarerad) — Instagram reel 2026-10-08 (11 playgrounds list)",
+      "source_accounts": [
+        "@coloradokidsarerad"
+      ],
+      "links": [
+        {
+          "label": "CKAR 11 playgrounds reel (Oct 8)",
+          "url": "https://www.instagram.com/coloradokidsarerad/reel/DeNuRClxb_F/"
+        },
+        {
+          "label": "Map (OpenStreetMap)",
+          "url": "https://www.openstreetmap.org/?mlat=39.90683&mlon=-104.94856#map=17/39.90683/-104.94856"
+        },
+        {
+          "label": "Instagram @coloradokidsarerad",
+          "url": "https://www.instagram.com/coloradokidsarerad/"
+        }
+      ],
+      "hours": "Dawn to dusk (city park)",
+      "cost": "Free",
+      "toddler_notes": "Playground pick from a local toddler mom; right around the 30-minute edge. Location from OpenStreetMap.",
+      "tags": [
+        "playground",
+        "outdoor",
+        "thornton",
+        "free"
+      ],
+      "lat": 39.9068315,
+      "lng": -104.9485594,
+      "drive_note": "~31 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~12.0 mi straight-line) — a bit past 30 min",
+      "farther_than_30min": true,
+      "approx_drive_minutes": 31,
+      "straight_line_miles": 12.0
     }
   ]
 }

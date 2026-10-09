@@ -10,6 +10,47 @@
 | Colorado Mama Life (Angelica) | https://www.instagram.com/coloradomamalife/ | https://www.facebook.com/profile.php?id=61577651781310 | https://www.tiktok.com/@coloradomamalife |
 | Little Rad Adventure | https://www.instagram.com/littleradadventure/ | https://www.facebook.com/LittleRadAdventure | https://littleradadventure.com/ |
 
+## Scrub window (2026-10-09 Mon/Wed/Fri pass)
+
+**Checked**
+- Days.in.denver beehiiv: no issue newer than the October newsletter.
+- Little Rad Adventure site feed: newest post still Chief Mountain Trail (2026-06-12).
+- Instagram, read post by post after closing the sign-up popup (posts Oct 7–9):
+  - @days.in.denver: Oct 9 Boo at the Zoo post (no date or price in caption; confirmed on denverzoo.org).
+  - @coloradokidsarerad: Oct 8 "11 playgrounds" reel (Thornton Sports Complex, Wild Village at DZCA, Woodglen/Brookshire Park, Beverly Heights Park, Central Park, Westfield Village Park, Central Park at Fox Run, Sherwood Park, Trailside Park, Broomfield Town Center, Pirate Park in Erie); Oct 8 "no plan, just vibes" reel (no venue); Spookadelia reel (already in).
+  - @colorado.kids.explore: Oct 9 Jellystone Larkspur Halloween weekends; Oct 8 "Fall-Nomenal toddler events" list (Giggling Life Care Farm Oct 10, Trinity Acres in Byers, Scr3am n Sugar coffee shop, Rocky Mountain Pumpkin Ranch in Longmont, Lone Creek Farms with no address in caption); Butterfly Pavilion reel (already in).
+  - @coloradomamalife: Oct 7 "FREE Halloween plans: NORTH edition", Oct 8 "PART 4 · WEST", Oct 8 Colorado-wide Halloween list by area, Oct 8 Boo at the Zoo.
+  - @littleradadventure: Oct 8 Boo at the Zoo reel; Oct 8 personal post (no venue).
+- Facebook without login: Little Rad Adventure and Colorado Mama Life pages show only a top post with the caption cut off (likely the same Boo at the Zoo and Halloween-list posts); Colorado Kids Explore showed no readable post. Rest login-walled, no captions guessed.
+- TikTok not readable beyond profile meta (unchanged).
+
+**New pins (4)**, all from CKAR's Oct 8 playground list, located via OpenStreetMap:
+- Beverly Heights Park, Golden (~15 min)
+- Westfield Village Park, Westminster (~20 min)
+- Thornton Sports Complex playground (~26 min)
+- Woodglen / Brookshire Park, Thornton (~31 min, just past 30)
+
+**Updated**
+- Denver Zoo: added Boo at the Zoo links (Days.in.denver, Colorado Mama Life, Little Rad Adventure, denverzoo.org) and CKAR's Wild Village mention.
+- Children's Museum, tumble HAUS, Colorado Railroad Museum: linked their October event pages.
+
+**New events (9)**, each confirmed on the organizer's page unless noted:
+- Oct 9–31 Boo at the Zoo (select nights 4:30–9pm, ticketed, under 2 free; Oct 31 sensory-friendly)
+- Oct 11 Spooky Sweets Stroll, Orchard Town Center, 11am–2pm, free
+- Oct 17 Safe Street Halloween, Northglenn, 4–7pm, free
+- Oct 17–18 Harvest Haunt Express, Colorado Railroad Museum, 10am–3pm
+- Oct 17 Puppies & Pumpkins, Steinbaugh Pavilion, Louisville, 10am–2pm (web listing only; marked "confirm")
+- Oct 23–25 Harvest Hoot, Children's Museum, 9am–4pm (with admission, no trick-or-treating)
+- Oct 24 Trick or Treat Street, Larimer Square, 2–6pm, free
+- Oct 25 Halloween Boo and Bounce, tumble HAUS, 10am–noon
+- Oct 30 Hyland Hills Halloween Spooktacular, Adventure Golf & Raceway, 5–7:30pm, free
+
+**Tips not pinned**
+- Sherwood Park, Trailside Park, Central Park at Fox Run, and Broomfield Town Center (CKAR list): couldn't verify exact locations, so no pins. Pirate Park (Erie) is outside the radius.
+- Downtown Westminster Halloween Spooktacular at Kokopelli (Mama Life lists Oct 24 noon–2): only the 2025 listing was found, so not added.
+- Jellystone Larkspur, Trinity Acres (Byers), Rocky Mountain Pumpkin Ranch (Longmont), Lone Creek Farms, and the mountain and Fort Collins Halloween events: outside the ~30-minute radius or missing an address.
+- Scr3am n Sugar (Halloween coffee shop, S Acoma St), Little Monkey Bizness, Wheat Ridge SPACE Paint + Potions, Golden Church of Christ Trunk or Treat, Munchkin Masquerade (Boulder): not verified or less toddler-focused; maybe later.
+
 ## Scrub window (2026-10-07 Mon/Wed/Fri pass)
 
 **Checked**

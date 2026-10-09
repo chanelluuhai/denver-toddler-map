@@ -1,7 +1,7 @@
 {
   "meta": {
-    "updated": "2026-10-07",
-    "as_of": "2026-10-07",
+    "updated": "2026-10-09",
+    "as_of": "2026-10-09",
     "timezone": "America/Denver",
     "notes": "Upcoming, dated family events kept separate from map pins. Confirm times, access, and weather with the linked organizer before heading out."
   },
@@ -31,6 +31,19 @@
       "note": "Free pancakes, games, live music, and fall fun; no reservation listed.",
       "drive_note": "~18 min from the 64th & Ward base",
       "source": "Prospect Recreation / Days.in.denver"
+    },
+    {
+      "id": "boo-at-the-zoo-2026",
+      "title": "Boo at the Zoo",
+      "place_id": "denver-zoo",
+      "date": "2026-10-09",
+      "end_date": "2026-10-31",
+      "time": "4:30–9:00 PM (timed, ticketed)",
+      "place": "Denver Zoo, 2300 Steele St, Denver",
+      "link": "https://denverzoo.org/events/boo-at-the-zoo/",
+      "note": "Remaining nights Oct 9–11, 16–18, 23–25, 30; Oct 31 is the sensory-friendly night. Nine candy stations, friendly cryptid characters, Wild Fall Market. Kids 2 and under free ($5 optional Lil' Boo Bag); adult $25.95 value nights (Oct 9–11), $27.95 later. Popular nights sell out. Early arrival suits nap/bedtime.",
+      "drive_note": "~24 min from the 64th & Ward base",
+      "source": "Days.in.denver, Colorado Mama Life, Little Rad Adventure (IG Oct 8–9); denverzoo.org"
     },
     {
       "id": "forney-free-day-2026-10-09",
@@ -98,6 +111,19 @@
       "drive_note": "~24 min from the 64th & Ward base"
     },
     {
+      "id": "spooky-sweets-stroll-2026",
+      "title": "Spooky Sweets Stroll",
+      "place_id": null,
+      "date": "2026-10-11",
+      "end_date": "2026-10-11",
+      "time": "11:00 AM–2:00 PM",
+      "place": "Orchard Town Center, 14697 Delaware St, Westminster",
+      "link": "https://theorchardtowncenter.com/event/spooky-sweets-stroll/",
+      "note": "Free, no RSVP. Trick-or-treat at 50+ shops, free face painting and games, live DJ; pumpkin decorating for a $5–$10 donation (Food for Hope).",
+      "drive_note": "~31 min from the 64th & Ward base",
+      "source": "Colorado Mama Life (IG Oct 7, NORTH edition); theorchardtowncenter.com"
+    },
+    {
       "id": "infinity-park-trunk-or-treat-2026",
       "title": "Trunk-or-Treat + Outdoor Movie: Monsters vs. Aliens",
       "date": "2026-10-12",
@@ -108,6 +134,19 @@
       "note": "Free family evening; bring blankets or lawn chairs. Trunk-or-treat starts at gate opening.",
       "drive_note": "Drive time not calculated",
       "source": "Infinity Park at Glendale"
+    },
+    {
+      "id": "harvest-haunt-express-2026",
+      "title": "Harvest Haunt Express",
+      "place_id": "colorado-railroad-museum",
+      "date": "2026-10-17",
+      "end_date": "2026-10-18",
+      "time": "10:00 AM–3:00 PM",
+      "place": "Colorado Railroad Museum, Golden",
+      "link": "https://coloradorailroadmuseum.org/events/",
+      "note": "Halloween weekend at the train museum. Check the museum site for tickets and train times.",
+      "drive_note": "~11 min from the 64th & Ward base",
+      "source": "Colorado Mama Life (IG Oct 8 Halloween list); coloradorailroadmuseum.org"
     },
     {
       "id": "mines-spooktacular-2026",
@@ -123,6 +162,32 @@
       "source": "Mines Museum / Visit Golden"
     },
     {
+      "id": "puppies-pumpkins-louisville-2026",
+      "title": "Puppies & Pumpkins",
+      "place_id": null,
+      "date": "2026-10-17",
+      "end_date": "2026-10-17",
+      "time": "10:00 AM–2:00 PM",
+      "place": "Steinbaugh Pavilion, 824 Front St, Louisville",
+      "link": "https://www.louisvilleco.gov/departments/arts-culture/facilities/steinbaugh-pavilion/",
+      "note": "Family fall puppy-adoption event with pumpkins and activities (Soul Dog Rescue). Confirm details with the organizer.",
+      "drive_note": "~27 min from the 64th & Ward base",
+      "source": "Colorado Mama Life (IG Oct 8 Halloween list); web listing"
+    },
+    {
+      "id": "northglenn-safe-street-halloween-2026",
+      "title": "Safe Street Halloween",
+      "place_id": null,
+      "date": "2026-10-17",
+      "end_date": "2026-10-17",
+      "time": "4:00–7:00 PM",
+      "place": "E.M. Wyatt Centennial Park, 301 Kennedy Dr, Northglenn",
+      "link": "https://northglenn.org/public_safety/police/police_events/safe_street_halloween.php",
+      "note": "Free Northglenn Police event: trick-or-treat street on Kennedy Dr with inflatables, music, and trunk-or-treat cars; Haunted Mansion theme. Outdoors and busy (about 5,000 kids), so plan time to park at Northglenn Marketplace.",
+      "drive_note": "~25 min from the 64th & Ward base",
+      "source": "Colorado Mama Life (IG Oct 7, NORTH edition); northglenn.org"
+    },
+    {
       "id": "westy-fest-2026",
       "title": "Westy Fest",
       "date": "2026-10-17",
@@ -133,6 +198,19 @@
       "note": "Free fall festival with carnival games, trick-or-treating, live music, pumpkin patch, and hot-air-balloon glow; parking is limited, so use a shuttle if possible.",
       "drive_note": "Drive time not calculated",
       "source": "City of Westminster"
+    },
+    {
+      "id": "harvest-hoot-2026",
+      "title": "Harvest Hoot",
+      "place_id": "childrens-museum-denver",
+      "date": "2026-10-23",
+      "end_date": "2026-10-25",
+      "time": "9:00 AM–4:00 PM",
+      "place": "Children's Museum of Denver, 2121 Children's Museum Dr",
+      "link": "https://www.coloradokids.com/event/136665/Harvest-Hoot-at--the-Childrens-Museum-of-Denver-at-Marsico-Campus",
+      "note": "Costumes welcome; Monster Mash Circus, sensory sand potions, carnival games, cranberry bog. Included with admission (members free); tickets day-of only. No trick-or-treating.",
+      "drive_note": "~17 min from the 64th & Ward base",
+      "source": "Colorado Mama Life (IG Oct 8 Halloween list); Colorado Parent / museum listing"
     },
     {
       "id": "four-mile-free-day-2026-10-23",
@@ -174,6 +252,32 @@
       "source": "Colorado Kids Explore; butterflies.org"
     },
     {
+      "id": "larimer-square-trick-or-treat-2026",
+      "title": "Trick or Treat Street at Larimer Square",
+      "place_id": null,
+      "date": "2026-10-24",
+      "end_date": "2026-10-24",
+      "time": "2:00–6:00 PM",
+      "place": "Larimer Square, Denver",
+      "link": "https://www.larimersquare.com/events/trick-or-treat-street-1",
+      "note": "Free; candy from participating businesses, costume contest, fall activities, photo booth.",
+      "drive_note": "~21 min from the 64th & Ward base",
+      "source": "Colorado Mama Life (IG Oct 8 Halloween list); larimersquare.com"
+    },
+    {
+      "id": "tumble-haus-boo-bounce-2026",
+      "title": "Halloween Boo and Bounce",
+      "place_id": "tumble-haus",
+      "date": "2026-10-25",
+      "end_date": "2026-10-25",
+      "time": "10:00 AM–12:00 PM",
+      "place": "tumble HAUS, 1330 W 38th Ave, Denver",
+      "link": "https://tumblehaus.com/special-events",
+      "note": "Halloween party at the Highlands indoor play space for babies and toddlers; book through the site.",
+      "drive_note": "~17 min from the 64th & Ward base",
+      "source": "Colorado Mama Life (IG Oct 8 Halloween list, as 'Tumble HAUS Halloween Bash'); tumblehaus.com"
+    },
+    {
       "id": "boonion-station-2026",
       "title": "BOOnion Station",
       "date": "2026-10-29",
@@ -197,6 +301,19 @@
       "note": "Free indoor trick-or-treating with candy and non-candy treats plus activities on each floor; no registration listed.",
       "drive_note": "~26 min from the 64th & Ward base",
       "source": "Denver Public Library / Days.in.denver"
+    },
+    {
+      "id": "hyland-hills-spooktacular-2026",
+      "title": "Hyland Hills Halloween Spooktacular",
+      "place_id": null,
+      "date": "2026-10-30",
+      "end_date": "2026-10-30",
+      "time": "5:00–7:30 PM",
+      "place": "Adventure Golf & Raceway, 9650 Sheridan Blvd, Westminster",
+      "link": "https://www.hylandhills.org/",
+      "note": "Free, ages 12 and under: trick-or-treat stations along three mini-golf courses. Evening, so best right after dinner.",
+      "drive_note": "~16 min from the 64th & Ward base",
+      "source": "Colorado Mama Life (IG Oct 7, NORTH edition); hylandhills.org"
     },
     {
       "id": "olde-town-trick-or-treat-2026",

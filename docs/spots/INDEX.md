@@ -1,9 +1,9 @@
 # Denver/Arvada Toddler Outing Spots
 
-Updated: 2026-10-07  
+Updated: 2026-10-09  
 Base: W 64th Ave & Ward Rd, Arvada, CO 80004  
 Audience: Toddler ~20 months; prefer ~30 min drive  
-Places: 74
+Places: 78
 
 Each pin has a why-note from a named social/newsletter source. Drive times are rough estimates.
 
@@ -105,6 +105,7 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 - [Days in Denver Sept newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter)
 - [Colorado Railroad Museum](https://coloradorailroadmuseum.org/)
+- [Railroad Museum events (Harvest Haunt Express)](https://coloradorailroadmuseum.org/events/)
 
 ## The Green at 38th (near)
 
@@ -199,6 +200,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [TikTok @colorado.kids.explore](https://www.tiktok.com/@colorado.kids.explore)
 - [City of Westminster — McFall Park](https://www.westminsterco.gov/facilities/facility/details/mcfallpark-33)
 
+## Beverly Heights Park (Golden) (near)
+
+- **Address:** Beverly Heights Park, Golden, CO 80401
+- **Drive:** ~15 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~6.8 mi straight-line)
+- **Why:** Colorado Kids Are Rad Oct 8 reel lists Beverly Heights Park in Golden among 11 playgrounds they visited recently.
+- **Source:** Colorado Kids Are Rad (@coloradokidsarerad) — Instagram reel 2026-10-08 (11 playgrounds list)
+- **Hours:** Dawn to dusk (city park)
+- **Cost:** Free
+- **Toddler tip:** Playground pick from a local toddler mom; pair with Lions Park, Clear Creek, or the Golden Mill. Location from OpenStreetMap; check the park's play equipment before going.
+- [CKAR 11 playgrounds reel (Oct 8)](https://www.instagram.com/coloradokidsarerad/reel/DeNuRClxb_F/)
+- [Map (OpenStreetMap)](https://www.openstreetmap.org/?mlat=39.74087&mlon=-105.22741#map=17/39.74087/-105.22741)
+- [Instagram @coloradokidsarerad](https://www.instagram.com/coloradokidsarerad/)
+
 ## La Raza Park (near)
 
 - **Address:** 1501 W 38th Ave, Denver, CO 80211
@@ -238,6 +252,7 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
 - [Children's Museum](https://www.mychildsmuseum.org/)
 - [CKAR Children’s Museum reel (Sep 30)](https://www.instagram.com/coloradokidsarerad/reel/Dd7ty-TxZhs/)
+- [Harvest Hoot (Colorado Kids guide listing)](https://www.coloradokids.com/event/136665/Harvest-Hoot-at--the-Childrens-Museum-of-Denver-at-Marsico-Campus)
 
 ## Tumble Haus (Highlands) (near)
 
@@ -251,6 +266,7 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
 - [Days in Denver March newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-march-newsletter)
 - [Days in Denver Sept newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter)
+- [tumble HAUS special events](https://tumblehaus.com/special-events)
 
 ## Butterfly Pavilion (near)
 
@@ -368,6 +384,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Days in Denver Sept newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-september-newsletter)
 - [Days in Denver Oct newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-october-newsletter)
 - [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
+
+## Westfield Village Park (Westminster) (near)
+
+- **Address:** Westfield Village Park, Westminster, CO 80020
+- **Drive:** ~20 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~8.1 mi straight-line)
+- **Why:** Colorado Kids Are Rad Oct 8 reel lists Westfield Village Park in Westminster among 11 playgrounds they visited recently.
+- **Source:** Colorado Kids Are Rad (@coloradokidsarerad) — Instagram reel 2026-10-08 (11 playgrounds list)
+- **Hours:** Dawn to dusk (city park)
+- **Cost:** Free
+- **Toddler tip:** Playground pick from a local toddler mom, close to Butterfly Pavilion for a combo morning. Location from OpenStreetMap.
+- [CKAR 11 playgrounds reel (Oct 8)](https://www.instagram.com/coloradokidsarerad/reel/DeNuRClxb_F/)
+- [Map (OpenStreetMap)](https://www.openstreetmap.org/?mlat=39.90456&mlon=-105.04638#map=17/39.90456/-105.04638)
+- [Instagram @coloradokidsarerad](https://www.instagram.com/coloradokidsarerad/)
 
 ## Paco Sanchez Park (near)
 
@@ -513,7 +542,7 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 
 - **Address:** 2300 Steele St, Denver, CO 80205
 - **Drive:** ~24 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~11.0 mi straight-line)
-- **Why:** Days.in.denver June feature (130th anniversary programming) and fall Boo at the Zoo — classic toddler outing with stroller paths and animal viewing.
+- **Why:** Days.in.denver June feature (130th anniversary programming) and fall Boo at the Zoo — classic toddler outing with stroller paths and animal viewing. Oct 8–9: Days.in.denver, Colorado Mama Life, and Little Rad Adventure all posted Boo at the Zoo (nine candy stations, friendly cryptid characters, new Wild Fall Market). CKAR's Oct 8 playground list also names Wild Village at the zoo.
 - **Source:** Days.in.denver (@days.in.denver)
 - **Hours:** Typically 9am–4pm (seasonal)
 - **Cost:** Paid (library free zoo day prizes / SCFD free days when offered)
@@ -522,6 +551,10 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Days in Denver June newsletter](https://days-in-denver.beehiiv.com/p/days-in-denver-june-newsletter-6e6b3c54ee90a522)
 - [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
 - [Denver Zoo](https://denverzoo.org/)
+- [Boo at the Zoo (denverzoo.org)](https://denverzoo.org/events/boo-at-the-zoo/)
+- [Days.in.denver Boo at the Zoo post (Oct 9)](https://www.instagram.com/days.in.denver/p/DeRwlK1HMZa/)
+- [Colorado Mama Life Boo at the Zoo reel (Oct 8)](https://www.instagram.com/coloradomamalife/reel/DeNnhjZzCaB/)
+- [Little Rad Adventure Boo at the Zoo reel (Oct 8)](https://www.instagram.com/littleradadventure/reel/DeQDLeIpGj-/)
 
 ## Central Park (playground) (near)
 
@@ -589,6 +622,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - **Toddler tip:** All-ages but spooky-themed; go in daytime like CKAR did, and bring a charged phone (the site says one per group is needed).
 - [CKAR Spookadelia reel (Oct 6)](https://www.instagram.com/coloradokidsarerad/reel/DeLIP4fxqkn/)
 - [Spectra Art Space — Spookadelia](https://spectraartspace.com/spookadelia/)
+- [Instagram @coloradokidsarerad](https://www.instagram.com/coloradokidsarerad/)
+
+## Thornton Sports Complex playground (near)
+
+- **Address:** Thornton Sports Complex, Thornton, CO 80024
+- **Drive:** ~26 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~12.6 mi straight-line)
+- **Why:** Colorado Kids Are Rad Oct 8 reel lists the Thornton Sports Complex playground first in its 11 playgrounds roundup.
+- **Source:** Colorado Kids Are Rad (@coloradokidsarerad) — Instagram reel 2026-10-08 (11 playgrounds list)
+- **Hours:** Dawn to dusk (city park)
+- **Cost:** Free
+- **Toddler tip:** Playground pick from a local toddler mom. Location from OpenStreetMap; it's a sports complex, so expect busy weekend parking during games.
+- [CKAR 11 playgrounds reel (Oct 8)](https://www.instagram.com/coloradokidsarerad/reel/DeNuRClxb_F/)
+- [Map (OpenStreetMap)](https://www.openstreetmap.org/?mlat=39.88161&mlon=-104.92081#map=17/39.88161/-104.92081)
 - [Instagram @coloradokidsarerad](https://www.instagram.com/coloradokidsarerad/)
 
 ## Sweet Play (Toddler Tuesday) (near)
@@ -720,6 +766,19 @@ Each pin has a why-note from a named social/newsletter source. Drive times are r
 - [Days in Denver Fall guide](https://days-in-denver.beehiiv.com/p/days-in-denver-the-best-of-fall-b1520ba52a91735b)
 - [Cottonwood Farms pumpkin patch](https://cottonwoodfarms.com/halloween-pumpkin-patch-fall-festival-boulder-co/)
 - [Instagram @days.in.denver](https://www.instagram.com/days.in.denver/)
+
+## Woodglen / Brookshire Park (Thornton) (FARTHER)
+
+- **Address:** Woodglen / Brookshire Park, Thornton, CO
+- **Drive:** ~31 min drive from W 64th Ave & Ward Rd, Arvada, CO 80004 (~12.0 mi straight-line) — a bit past 30 min
+- **Why:** Colorado Kids Are Rad Oct 8 reel lists Woodglen / Brookshire Park in Thornton among 11 playgrounds they visited recently.
+- **Source:** Colorado Kids Are Rad (@coloradokidsarerad) — Instagram reel 2026-10-08 (11 playgrounds list)
+- **Hours:** Dawn to dusk (city park)
+- **Cost:** Free
+- **Toddler tip:** Playground pick from a local toddler mom; right around the 30-minute edge. Location from OpenStreetMap.
+- [CKAR 11 playgrounds reel (Oct 8)](https://www.instagram.com/coloradokidsarerad/reel/DeNuRClxb_F/)
+- [Map (OpenStreetMap)](https://www.openstreetmap.org/?mlat=39.90683&mlon=-104.94856#map=17/39.90683/-104.94856)
+- [Instagram @coloradokidsarerad](https://www.instagram.com/coloradokidsarerad/)
 
 ## Clement Park (+ Columbine Library) (FARTHER)
 
