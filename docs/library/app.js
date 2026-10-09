@@ -85,6 +85,8 @@
       isbn: b.isbn || null,
       notes: b.notes || "",
       favorite: !!b.favorite,
+      checked: !!b.checked, // TEMP inventory
+      checkedAt: b.checkedAt || null, // TEMP inventory
       coverUrl: b.coverUrl || null,
       link: b.link || null,
       addedAt: b.addedAt || null
@@ -342,6 +344,7 @@
 
   function renderShelf() {
     renderShelfFilters();
+    renderInventoryCount(); // TEMP inventory
     renderGenreSheet();
     const list = $("#shelf-list");
     const empty = $("#shelf-empty");
@@ -358,10 +361,41 @@
       list.innerHTML = `<div class="empty"><h2>No matches</h2></div>`;
       return;
     }
-    list.innerHTML = books.map((b) => bookCardHtml(b)).join("");
+    list.innerHTML = books.map((b) => bookCardHtml(b, { inventory: true })).join(""); // TEMP inventory
   }
 
-  function bookCardHtml(b) {
+  /* —— TEMP inventory: check off physical books. Remove this block, the check button in
+     bookCardHtml, #inventory-count, the [data-check] handler, and .check-btn/.inventory-count CSS. —— */
+  const CHECK_OFF_SVG = `<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></svg>`;
+  const CHECK_ON_SVG = `<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"/></svg>`;
+
+  function checkBtnHtml(b) {
+    return `<button type="button" class="check-btn${b.checked ? " on" : ""}" data-check="${escapeHtml(b.id)}" aria-label="${b.checked ? "Checked" : "Not checked"}" aria-pressed="${b.checked ? "true" : "false"}">${b.checked ? CHECK_ON_SVG : CHECK_OFF_SVG}</button>`;
+  }
+
+  function renderInventoryCount() {
+    const el = $("#inventory-count");
+    if (!el) return;
+    const total = state.books.length;
+    el.hidden = !total;
+    el.textContent = `${state.books.filter((b) => b.checked).length} / ${total} checked`;
+  }
+
+  function toggleChecked(id, btn) {
+    const book = state.books.find((b) => b.id === id);
+    if (!book) return;
+    book.checked = !book.checked;
+    book.checkedAt = book.checked ? new Date().toISOString() : null;
+    saveBooks(); // whole in-memory list, queued; only the newest revision is sent
+    btn.classList.toggle("on", book.checked);
+    btn.setAttribute("aria-pressed", book.checked ? "true" : "false");
+    btn.setAttribute("aria-label", book.checked ? "Checked" : "Not checked");
+    btn.innerHTML = book.checked ? CHECK_ON_SVG : CHECK_OFF_SVG;
+    renderInventoryCount();
+  }
+  /* —— end TEMP inventory —— */
+
+  function bookCardHtml(b, opts = {}) {
     const tags = [];
     if (b.language === "vi") tags.push(`<span class="tag lang-vi">Vietnamese</span>`);
     if (b.language === "bilingual") tags.push(`<span class="tag lang-bilingual">Bilingual</span>`);
@@ -376,9 +410,12 @@
           <p class="author">${escapeHtml(b.author || "Unknown author")}</p>
           <div class="book-tags">${tags.join("")}</div>
         </div>
-        <button type="button" class="heart-btn${b.favorite ? " on" : ""}" data-heart="${escapeHtml(b.id)}" aria-label="${b.favorite ? "Unfavorite" : "Favorite"}" aria-pressed="${b.favorite ? "true" : "false"}">
-          ${heartSvg(!!b.favorite)}
-        </button>
+        <div class="card-actions">
+          ${opts.inventory ? checkBtnHtml(b) : ""}
+          <button type="button" class="heart-btn${b.favorite ? " on" : ""}" data-heart="${escapeHtml(b.id)}" aria-label="${b.favorite ? "Unfavorite" : "Favorite"}" aria-pressed="${b.favorite ? "true" : "false"}">
+            ${heartSvg(!!b.favorite)}
+          </button>
+        </div>
       </article>`;
   }
 
@@ -1165,6 +1202,12 @@
     });
     ["#shelf-list", "#fav-list"].forEach((sel) => {
       $(sel).addEventListener("click", (e) => {
+        const check = e.target.closest("[data-check]"); // TEMP inventory
+        if (check) {
+          e.stopPropagation();
+          toggleChecked(check.dataset.check, check);
+          return;
+        }
         const heart = e.target.closest("[data-heart]");
         if (heart) {
           e.stopPropagation();
@@ -1176,7 +1219,7 @@
       });
       $(sel).addEventListener("keydown", (e) => {
         if (e.key !== "Enter" && e.key !== " ") return;
-        if (e.target.closest("[data-heart]")) return;
+        if (e.target.closest("[data-heart], [data-check]")) return;
         const card = e.target.closest(".book-card");
         if (card) { e.preventDefault(); openDetail(card.dataset.id); }
       });

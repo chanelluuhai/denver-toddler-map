@@ -28,7 +28,7 @@ SHELF_JSON = ROOT / "docs" / "library" / "shelf.json"
 COVERS_DIR = ROOT / "docs" / "library" / "covers"
 SHARED_URL = "https://api.npoint.io/251111f67ba434bad0bb"
 
-COLUMNS = ["id", "title", "author", "language", "genres", "favorite", "isbn", "cover", "link", "notes", "added_at"]
+COLUMNS = ["id", "title", "author", "language", "genres", "favorite", "isbn", "cover", "link", "notes", "added_at", "checked", "checked_at"]  # checked/checked_at: TEMP inventory
 LANGUAGES = {
     "english": "en", "en": "en",
     "vietnamese": "vi", "vi": "vi",
@@ -164,6 +164,8 @@ def import_xlsx(path):
             "link": link,
             "notes": cell(row, "notes"),
             "added_at": prev.get("added_at") or now,
+            "checked": prev.get("checked", ""),  # TEMP inventory
+            "checked_at": prev.get("checked_at", ""),  # TEMP inventory
         })
     dropped = [r["title"] for k, r in existing.items() if k not in seen]
     if dropped:
@@ -187,6 +189,8 @@ def row_to_book(r):
         "coverUrl": (r.get("cover") or "").strip() or None,
         "link": (r.get("link") or "").strip() or None,
         "addedAt": (r.get("added_at") or "").strip() or None,
+        "checked": (r.get("checked") or "").strip().lower() in {"1", "yes", "true", "y", "x"},  # TEMP inventory
+        "checkedAt": (r.get("checked_at") or "").strip() or None,  # TEMP inventory
     }
 
 
@@ -203,6 +207,8 @@ def book_to_row(b):
         "link": b.get("link") or "",
         "notes": b.get("notes") or "",
         "added_at": b.get("addedAt") or "",
+        "checked": "yes" if b.get("checked") else "",  # TEMP inventory
+        "checked_at": b.get("checkedAt") or "",  # TEMP inventory
     }
 
 
@@ -248,8 +254,14 @@ def main():
     write_csv(rows)
     books = [row_to_book(r) for r in rows]
 
+    live = fetch_shared() if args.push else []
+    # TEMP inventory: checks are made on phones, so a stale books.csv must never clear one on --push.
+    live_by_id = {b.get("id"): b for b in live}
+    for b in books:
+        lb = live_by_id.get(b["id"])
+        if lb and lb.get("checked") and not b.get("checked"):
+            b["checked"], b["checkedAt"] = True, lb.get("checkedAt")
     if args.push and not args.replace:
-        live = fetch_shared()
         extra = [b for b in live if b.get("id") not in ids]
         if extra:
             print("Kept books that were only in the shared store:", "; ".join(b.get("title", "?") for b in extra))
