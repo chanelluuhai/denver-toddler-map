@@ -2,7 +2,6 @@
   "use strict";
 
   const STORAGE_KEY = "littleShelf.v1";
-  const SEED_KEY = "littleShelf.sharedSeeded";
   // Public list. No account and no secret. Every phone reads and writes this same document.
   const SHARED_SHELF_URL = "https://api.npoint.io/251111f67ba434bad0bb";
   // Same categories as the Categories sheet in the book spreadsheet (data/library/books.csv).
@@ -85,8 +84,6 @@
       isbn: b.isbn || null,
       notes: b.notes || "",
       favorite: !!b.favorite,
-      checked: !!b.checked, // TEMP inventory
-      checkedAt: b.checkedAt || null, // TEMP inventory
       coverUrl: b.coverUrl || null,
       link: b.link || null,
       addedAt: b.addedAt || null
@@ -97,8 +94,65 @@
     return books.map((b) => Object.assign({}, b, { genres: (b.genres || []).slice() }));
   }
 
-  let shelfRevision = 0;
-  let publishTail = Promise.resolve();
+  /* —— Shared shelf sync ——
+     BASE_KEY holds the last shared list this phone saw. Local changes are the difference
+     between state.books and that base (added, deleted, and changed fields). Every save and
+     every refresh re-reads the shared list and replays only those changes on top of it, so a
+     phone with an old copy never drops books someone else added. All syncs run one at a time. */
+  const BASE_KEY = "littleShelf.sharedBase";
+  let syncTail = Promise.resolve();
+  let syncQueued = false;
+
+  function loadBase() {
+    try {
+      const raw = localStorage.getItem(BASE_KEY);
+      return raw ? normalizeBooks(JSON.parse(raw)) : null;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function storeBase(books) {
+    try { localStorage.setItem(BASE_KEY, JSON.stringify(books)); } catch (err) {}
+  }
+
+  const BOOK_FIELDS = ["title", "author", "language", "genres", "ageMinMonths", "ageMaxMonths",
+    "isbn", "notes", "favorite", "coverUrl", "link", "addedAt"];
+
+  function localChanges(base) {
+    const changes = { added: [], deleted: new Set(), edits: new Map() };
+    if (!base) return changes;
+    const baseById = new Map(base.map((b) => [b.id, b]));
+    const localIds = new Set();
+    normalizeBooks(state.books).forEach((b) => {
+      localIds.add(b.id);
+      const before = baseById.get(b.id);
+      if (!before) { changes.added.push(b); return; }
+      const fields = {};
+      BOOK_FIELDS.forEach((f) => {
+        if (JSON.stringify(b[f] ?? null) !== JSON.stringify(before[f] ?? null)) fields[f] = b[f];
+      });
+      if (Object.keys(fields).length) changes.edits.set(b.id, fields);
+    });
+    base.forEach((b) => { if (!localIds.has(b.id)) changes.deleted.add(b.id); });
+    return changes;
+  }
+
+  function hasChanges(c) {
+    return c.added.length > 0 || c.deleted.size > 0 || c.edits.size > 0;
+  }
+
+  function applyChanges(remote, c) {
+    const out = [];
+    const seen = new Set();
+    remote.forEach((b) => {
+      if (c.deleted.has(b.id) || seen.has(b.id)) return;
+      seen.add(b.id);
+      out.push(Object.assign({}, b, c.edits.get(b.id) || {}));
+    });
+    c.added.forEach((b) => { if (!seen.has(b.id)) { seen.add(b.id); out.push(Object.assign({}, b)); } });
+    return out;
+  }
 
   async function readShelfDocument(url) {
     const res = await fetch(url, {
@@ -110,6 +164,10 @@
     const books = normalizeBooks(data && data.books);
     if (!books) throw new Error("bad shelf");
     return books;
+  }
+
+  function readSharedShelf() {
+    return readShelfDocument(SHARED_SHELF_URL + "?t=" + Date.now());
   }
 
   async function pushSharedShelf(books) {
@@ -125,18 +183,65 @@
     if (!res.ok) throw new Error(String(res.status));
   }
 
-  function saveBooks() {
-    save();
-    const revision = ++shelfRevision;
-    const books = copyBooks(state.books);
-    publishTail = publishTail.then(async () => {
-      if (revision !== shelfRevision) return;
+  function sameBooks(a, b) {
+    return JSON.stringify(a) === JSON.stringify(b);
+  }
+
+  // Re-read the shared list, replay this phone's changes on top, and write back if needed.
+  function ensureBase() {
+    let base = loadBase();
+    if (!base) {
+      // First run of this version: what this phone already has counts as unchanged, so an old
+      // copy can never delete anything; the shared list wins.
+      base = normalizeBooks(state.books) || [];
+      storeBase(base);
+    }
+    return base;
+  }
+
+  async function syncShared(opts = {}) {
+    const base = ensureBase();
+    let remote;
+    try {
+      remote = await readSharedShelf();
+    } catch (err) {
+      if (opts.fromSave) toast("Saved on this phone only. The shared shelf did not update.");
+      return false;
+    }
+    const changes = localChanges(base);
+    const merged = applyChanges(remote, changes);
+    if (hasChanges(changes) && !sameBooks(merged, remote)) {
       try {
-        await pushSharedShelf(books);
+        await pushSharedShelf(merged);
       } catch (err) {
         toast("Saved on this phone only. The shared shelf did not update.");
+        return false;
       }
-    }).catch(() => {});
+    }
+    // Keep anything tapped while we were waiting on the network.
+    const latest = applyChanges(merged, localChanges(base));
+    storeBase(merged);
+    const changed = !sameBooks(latest, state.books);
+    state.books = latest;
+    save();
+    if (changed) showShelfFromState();
+    if (!sameBooks(latest, merged)) saveBooks();
+    return true;
+  }
+
+  function queueSync(opts) {
+    syncTail = syncTail.then(() => syncShared(opts)).catch(() => false);
+    return syncTail;
+  }
+
+  function saveBooks() {
+    save();
+    if (syncQueued) return; // a save is already waiting and will pick up this change
+    syncQueued = true;
+    syncTail = syncTail.then(() => {
+      syncQueued = false;
+      return syncShared({ fromSave: true });
+    }).catch(() => false);
   }
 
   function showShelfFromState() {
@@ -145,36 +250,25 @@
   }
 
   async function refreshSharedShelf() {
-    const revisionAtStart = shelfRevision;
-    let live = null;
-    try {
-      live = await readShelfDocument(SHARED_SHELF_URL + "?t=" + Date.now());
-    } catch (err) {
-      live = null;
-    }
-    if (revisionAtStart !== shelfRevision) return;
-    if (live) {
-      let seeded = false;
-      try { seeded = localStorage.getItem(SEED_KEY) === "1"; } catch (err) {}
-      if (!seeded && live.length === 0 && state.books.length) {
-        try { localStorage.setItem(SEED_KEY, "1"); } catch (err) {}
-        saveBooks();
-        return;
-      }
-      state.books = live;
-      try { localStorage.setItem(SEED_KEY, "1"); } catch (err) {}
-      save();
-      showShelfFromState();
-      return;
-    }
-    if (state.books.length) return;
+    const ok = await queueSync();
+    if (ok || state.books.length) return;
     try {
       const fileBooks = await readShelfDocument(shelfFileUrl());
-      if (revisionAtStart !== shelfRevision) return;
+      if (state.books.length) return;
       state.books = fileBooks;
+      storeBase(fileBooks);
       save();
       showShelfFromState();
     } catch (err) {}
+  }
+
+  let lastRefreshAt = 0;
+  function refreshWhenVisible() {
+    if (document.visibilityState === "hidden") return;
+    const now = Date.now();
+    if (now - lastRefreshAt < 3000) return;
+    lastRefreshAt = now;
+    refreshSharedShelf();
   }
 
   function uid() {
@@ -344,7 +438,6 @@
 
   function renderShelf() {
     renderShelfFilters();
-    renderInventoryCount(); // TEMP inventory
     renderGenreSheet();
     const list = $("#shelf-list");
     const empty = $("#shelf-empty");
@@ -361,39 +454,8 @@
       list.innerHTML = `<div class="empty"><h2>No matches</h2></div>`;
       return;
     }
-    list.innerHTML = books.map((b) => bookCardHtml(b, { inventory: true })).join(""); // TEMP inventory
+    list.innerHTML = books.map((b) => bookCardHtml(b)).join("");
   }
-
-  /* —— TEMP inventory: check off physical books. Remove this block, the check button in
-     bookCardHtml, #inventory-count, the [data-check] handler, and .check-btn/.inventory-count CSS. —— */
-  const CHECK_OFF_SVG = `<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></svg>`;
-  const CHECK_ON_SVG = `<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"/></svg>`;
-
-  function checkBtnHtml(b) {
-    return `<button type="button" class="check-btn${b.checked ? " on" : ""}" data-check="${escapeHtml(b.id)}" aria-label="${b.checked ? "Checked" : "Not checked"}" aria-pressed="${b.checked ? "true" : "false"}">${b.checked ? CHECK_ON_SVG : CHECK_OFF_SVG}</button>`;
-  }
-
-  function renderInventoryCount() {
-    const el = $("#inventory-count");
-    if (!el) return;
-    const total = state.books.length;
-    el.hidden = !total;
-    el.textContent = `${state.books.filter((b) => b.checked).length} / ${total} checked`;
-  }
-
-  function toggleChecked(id, btn) {
-    const book = state.books.find((b) => b.id === id);
-    if (!book) return;
-    book.checked = !book.checked;
-    book.checkedAt = book.checked ? new Date().toISOString() : null;
-    saveBooks(); // whole in-memory list, queued; only the newest revision is sent
-    btn.classList.toggle("on", book.checked);
-    btn.setAttribute("aria-pressed", book.checked ? "true" : "false");
-    btn.setAttribute("aria-label", book.checked ? "Checked" : "Not checked");
-    btn.innerHTML = book.checked ? CHECK_ON_SVG : CHECK_OFF_SVG;
-    renderInventoryCount();
-  }
-  /* —— end TEMP inventory —— */
 
   function bookCardHtml(b, opts = {}) {
     const tags = [];
@@ -410,12 +472,9 @@
           <p class="author">${escapeHtml(b.author || "Unknown author")}</p>
           <div class="book-tags">${tags.join("")}</div>
         </div>
-        <div class="card-actions">
-          ${opts.inventory ? checkBtnHtml(b) : ""}
-          <button type="button" class="heart-btn${b.favorite ? " on" : ""}" data-heart="${escapeHtml(b.id)}" aria-label="${b.favorite ? "Unfavorite" : "Favorite"}" aria-pressed="${b.favorite ? "true" : "false"}">
-            ${heartSvg(!!b.favorite)}
-          </button>
-        </div>
+        <button type="button" class="heart-btn${b.favorite ? " on" : ""}" data-heart="${escapeHtml(b.id)}" aria-label="${b.favorite ? "Unfavorite" : "Favorite"}" aria-pressed="${b.favorite ? "true" : "false"}">
+          ${heartSvg(!!b.favorite)}
+        </button>
       </article>`;
   }
 
@@ -1202,12 +1261,6 @@
     });
     ["#shelf-list", "#fav-list"].forEach((sel) => {
       $(sel).addEventListener("click", (e) => {
-        const check = e.target.closest("[data-check]"); // TEMP inventory
-        if (check) {
-          e.stopPropagation();
-          toggleChecked(check.dataset.check, check);
-          return;
-        }
         const heart = e.target.closest("[data-heart]");
         if (heart) {
           e.stopPropagation();
@@ -1219,7 +1272,7 @@
       });
       $(sel).addEventListener("keydown", (e) => {
         if (e.key !== "Enter" && e.key !== " ") return;
-        if (e.target.closest("[data-heart], [data-check]")) return;
+        if (e.target.closest("[data-heart]")) return;
         const card = e.target.closest(".book-card");
         if (card) { e.preventDefault(); openDetail(card.dataset.id); }
       });
@@ -1314,7 +1367,12 @@
     fillGenrePicks([]);
     setView("shelf");
     renderShelf();
+    ensureBase();
+    lastRefreshAt = Date.now();
     refreshSharedShelf();
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    window.addEventListener("pageshow", (e) => { if (e.persisted) refreshWhenVisible(); });
+    window.addEventListener("focus", refreshWhenVisible);
     maybeWelcome();
   }
 

@@ -388,35 +388,6 @@ button.brand {
   100% { transform: scale(1); }
 }
 
-.card-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-shrink: 0;
-  align-self: flex-start;
-}
-.card-actions .heart-btn { margin-top: 0; }
-
-/* —— TEMP inventory (remove with the inventory code in app.js) —— */
-.check-btn {
-  width: 40px; height: 40px;
-  margin: -6px 0 0;
-  border: none;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--muted);
-  display: grid; place-items: center;
-  -webkit-tap-highlight-color: transparent;
-}
-.check-btn svg { width: 24px; height: 24px; }
-.check-btn.on { color: var(--sage-deep); }
-.inventory-count {
-  margin: 2px 4px 0;
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-/* —— end TEMP inventory —— */
-
 /* —— Empty state —— */
 .empty {
   text-align: center;
