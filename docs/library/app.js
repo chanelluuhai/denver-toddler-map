@@ -35,7 +35,7 @@
 
   let state = load();
   let currentView = "shelf";
-  let shelfFilter = { q: "", language: "all", genre: "all", favorites: false };
+  let shelfFilter = { q: "", language: "all", genre: "all" };
   let editingId = null;
   let pendingDeleteId = null;
   let scanController = null;
@@ -44,7 +44,6 @@
   let lastScanned = "";
   let scanCooldownUntil = 0;
   let scanApplyToken = 0;
-  const coverCache = new Map();
 
   function load() {
     try {
@@ -140,7 +139,7 @@
 
   function showShelfFromState() {
     if (currentView === "shelf") renderShelf();
-    if (currentView === "foryou") renderRecs();
+    if (currentView === "favorites") renderFavorites();
   }
 
   async function refreshSharedShelf() {
@@ -301,7 +300,7 @@
     });
     stopScanner();
     if (name === "shelf") renderShelf();
-    if (name === "foryou") renderRecs();
+    if (name === "favorites") renderFavorites();
   }
 
   /* —— Shelf —— */
@@ -309,7 +308,6 @@
     const q = shelfFilter.q.trim().toLowerCase();
     return state.books
       .filter((b) => {
-        if (shelfFilter.favorites && !b.favorite) return false;
         if (shelfFilter.language !== "all" && b.language !== shelfFilter.language) return false;
         if (shelfFilter.genre !== "all" && !(b.genres || []).includes(shelfFilter.genre)) return false;
         if (q) {
@@ -328,15 +326,13 @@
     const row = $("#shelf-filters");
     const chips = [
       { key: "all", label: "All" },
-      { key: "fav", label: "Favorites" },
       { key: "vi", label: "Vietnamese" },
       { key: "bilingual", label: "Bilingual" },
       { key: "en", label: "English" }
     ];
     row.innerHTML = chips.map((c) => {
       let active = false;
-      if (c.key === "all") active = !shelfFilter.favorites && shelfFilter.language === "all";
-      if (c.key === "fav") active = shelfFilter.favorites;
+      if (c.key === "all") active = shelfFilter.language === "all";
       if (c.key === "vi") active = shelfFilter.language === "vi";
       if (c.key === "bilingual") active = shelfFilter.language === "bilingual";
       if (c.key === "en") active = shelfFilter.language === "en";
@@ -401,9 +397,9 @@
       btn.innerHTML = heartSvg(book.favorite);
     }
     // Keep the card in place on the shelf (no jump to the top); re-sort on the next render.
-    // Only re-render when the Favorites filter is on, or the tap came from elsewhere.
-    if (currentView === "shelf" && (!btn || shelfFilter.favorites)) renderShelf();
-    if (currentView === "foryou") renderRecs();
+    // Only re-render the shelf when the tap came from elsewhere (e.g. the detail sheet).
+    if (currentView === "shelf" && !btn) renderShelf();
+    if (currentView === "favorites") renderFavorites();
     if ($("#sheet-detail").classList.contains("open")) openDetail(id);
   }
 
@@ -437,279 +433,15 @@
     }
   }
 
-  /* —— Recommendations —— */
-  function ownedTitles() {
-    return new Set(state.books.map((b) => normalizeTitle(b.title)));
-  }
-
-  function genreCounts() {
-    const map = {};
-    GENRES.forEach((g) => (map[g] = 0));
-    state.books.forEach((b) => (b.genres || []).forEach((g) => { map[g] = (map[g] || 0) + 1; }));
-    return map;
-  }
-
-  function scoreCatalog() {
-    const age = childAgeMonths();
-    const owned = ownedTitles();
-    const favs = state.books.filter((b) => b.favorite);
-    const favGenres = new Set(favs.flatMap((b) => b.genres || []));
-    const ownedGenres = new Set(state.books.flatMap((b) => b.genres || []));
-    const favAuthors = new Set(favs.map((b) => normalizeTitle(b.author)).filter(Boolean));
-    const counts = genreCounts();
-    const total = state.books.length;
-    const viOwned = state.books.filter((b) => b.language === "vi" || b.language === "bilingual").length;
-    const viShare = total ? viOwned / total : 0;
-    const hasViFav = favs.some((b) => b.language === "vi" || b.language === "bilingual");
-    const catalog = window.LITTLE_SHELF_CATALOG || [];
-
-    const scored = [];
-    for (const c of catalog) {
-      if (!c.buyUrl || !c.coverUrl) continue;
-      if (owned.has(normalizeTitle(c.title))) continue;
-      const overlap =
-        age + 6 >= (c.ageMinMonths ?? 0) && age - 6 <= (c.ageMaxMonths ?? 999);
-      if (!overlap) continue;
-
-      let score = 0;
-      const reasons = [];
-      const genres = c.genres || [];
-
-      if (genres.some((g) => favGenres.has(g))) {
-        score += 3;
-        const g = genres.find((x) => favGenres.has(x));
-        reasons.push(`Because he loves ${g.toLowerCase()} books`);
-      }
-      if (genres.some((g) => ownedGenres.has(g))) {
-        score += 2;
-        if (!reasons.length) {
-          const g = genres.find((x) => ownedGenres.has(x));
-          reasons.push(`Matches ${g.toLowerCase()} on your shelf`);
-        }
-      }
-
-      const isVi = c.language === "vi" || c.language === "bilingual";
-      if (isVi && (viShare < 0.3 || hasViFav || total === 0)) {
-        score += 2;
-        if (total === 0) reasons.push("A gentle Vietnamese starter");
-        else if (viShare < 0.3) reasons.push("The Vietnamese shelf is light");
-        else reasons.push("Because Vietnamese books are favorites");
-      }
-
-      if (c.author && favAuthors.has(normalizeTitle(c.author))) {
-        score += 1;
-        reasons.push(`Same author as a favorite`);
-      }
-
-      if (genres.some((g) => (counts[g] || 0) < 2)) {
-        score += 1;
-        if (!reasons.some((r) => r.includes("light") || r.includes("Coverage"))) {
-          const g = genres.find((x) => (counts[x] || 0) < 2);
-          if (g) reasons.push(`Fills out ${g.toLowerCase()}`);
-        }
-      }
-
-      reasons.unshift(`Fits ${formatAge(age)}`);
-
-      // Empty shelf: boost youngest Vietnamese nursery + classic board books
-      if (total === 0) {
-        if (isVi && (c.ageMaxMonths ?? 99) <= 36) score += 3;
-        if ((c.ageMaxMonths ?? 99) <= 24) score += 1;
-      }
-
-      scored.push({ ...c, score, reasons: unique(reasons).slice(0, 2) });
-    }
-
-    scored.sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
-    return scored.slice(0, 5);
-  }
-
-  function unique(arr) {
-    return [...new Set(arr)];
-  }
-
-  function bestFor(min, max) {
-    const label = (months) => {
-      if (months <= 0) return "0";
-      const years = months / 12;
-      if (Number.isInteger(years)) return String(years);
-      return String(Math.round(years * 2) / 2);
-    };
-    if (min == null && max == null) return "";
-    const a = label(min ?? 0);
-    if (max == null) return `Best from ${a} years`;
-    return `Best for ${a}–${label(max)} years`;
-  }
-
-  function isVietnameseTitle(book) {
-    return book && book.language === "vi";
-  }
-
-  function bookSearchLink(book) {
-    if (book && book.buyUrl) return book.buyUrl;
-    const q = encodeURIComponent(`${book.title || ""} ${book.author || ""}`.trim());
-    if (isVietnameseTitle(book) || (book && book.store === "fahasa")) {
-      return `https://www.fahasa.com/catalogsearch/result/?q=${q}`;
-    }
-    return `https://www.amazon.com/s?k=${q}`;
-  }
-
-  function bookSearchLabel(book) {
-    if (book && book.store === "fahasa") return "View on Fahasa";
-    if (book && book.store === "amazon") return "View on Amazon";
-    return isVietnameseTitle(book) ? "Find on Fahasa" : "Find on Amazon";
-  }
-
-  let recToken = 0;
-
-  async function coverFromOpenLibrary(book) {
-    try {
-      const u = new URL("https://openlibrary.org/search.json");
-      u.searchParams.set("title", book.title);
-      u.searchParams.set("limit", "8");
-      u.searchParams.set("fields", "title,author_name,cover_i");
-      const r = await fetch(u);
-      if (!r.ok) return "";
-      const data = await r.json();
-      const want = normalizeTitle(book.title);
-      const exact = (data.docs || []).filter((d) => d.cover_i && normalizeTitle(d.title) === want);
-      const authorBit = normalizeTitle(String(book.author || "").split(" and ")[0].split(",")[0]);
-      const preferred = exact.find((d) =>
-        (d.author_name || []).some((a) => {
-          const n = normalizeTitle(a);
-          return authorBit && (n.includes(authorBit) || authorBit.includes(n));
-        })
-      ) || exact[0];
-      return preferred ? `https://covers.openlibrary.org/b/id/${preferred.cover_i}-L.jpg` : "";
-    } catch {
-      return "";
-    }
-  }
-
-  async function coverFromGoogle(book) {
-    try {
-      const q = `intitle:${book.title}`;
-      const r = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(q)}&maxResults=5&printType=books`);
-      if (!r.ok) return "";
-      const data = await r.json();
-      const want = normalizeTitle(book.title);
-      const hit = (data.items || []).find((it) => {
-        const info = it.volumeInfo || {};
-        return info.imageLinks && normalizeTitle(info.title) === want;
-      });
-      const link = hit && hit.volumeInfo && hit.volumeInfo.imageLinks;
-      if (!link) return "";
-      return (link.thumbnail || link.smallThumbnail || "").replace(/^http:/, "https:");
-    } catch {
-      return "";
-    }
-  }
-
-  async function findCover(book) {
-    const key = normalizeTitle(book.title) + "|" + (book.language || "");
-    if (coverCache.has(key)) return coverCache.get(key);
-    const sources = isVietnameseTitle(book)
-      ? [coverFromGoogle, coverFromOpenLibrary]
-      : [coverFromOpenLibrary, coverFromGoogle];
-    let url = "";
-    for (const source of sources) {
-      url = await source(book);
-      if (url) break;
-    }
-    coverCache.set(key, url);
-    return url;
-  }
-
-  function paintCover(img, url) {
-    if (!img || !url) return;
-    img.onerror = () => {
-      img.onerror = null;
-      img.src = "icons/clay-book.png?v=20261004e";
-      img.classList.add("is-clay");
-    };
-    img.classList.remove("is-clay");
-    img.src = url;
-  }
-
-  function renderRecs() {
-    const list = $("#rec-list");
-    const recs = scoreCatalog();
-    const token = ++recToken;
-    if (!recs.length) {
-      list.innerHTML = `<div class="empty"><h2>Nothing new</h2></div>`;
-      list._recs = [];
-      return;
-    }
-    list.innerHTML = recs.map((r, i) => `
-      <article class="rec-card" style="animation-delay:${i * 40}ms">
-        <button type="button" class="rec-open" data-rec="${i}">
-          ${coverHtml(r, "cover", "clay")}
-          <div class="book-meta">
-            <h3>${escapeHtml(r.title)}</h3>
-            <p class="author">${escapeHtml(r.author || "")}</p>
-          </div>
-        </button>
-        <a class="rec-out" href="${bookSearchLink(r)}" target="_blank" rel="noopener noreferrer">${bookSearchLabel(r)}</a>
-      </article>
-    `).join("");
-    list._recs = recs;
-    recs.forEach((r, i) => {
-      if (r.coverUrl) return;
-      findCover(r).then((url) => {
-        if (token !== recToken || !url) return;
-        r.coverUrl = url;
-        const img = list.querySelector(`[data-rec="${i}"] img`);
-        paintCover(img, url);
-      });
-    });
-  }
-
-  function openRecDetail(r) {
-    const genres = (r.genres || []).join(" · ");
-    const age = bestFor(r.ageMinMonths, r.ageMaxMonths);
-    const body = $("#detail-body");
-    body._rec = r;
-    body.innerHTML = `
-      ${coverHtml(r, "detail-cover", "clay")}
-      <h3 class="detail-title">${escapeHtml(r.title)}</h3>
-      <p class="detail-author">${escapeHtml(r.author || "")}</p>
-      ${r.blurb ? `<p class="detail-blurb">${escapeHtml(r.blurb)}</p>` : ""}
-      ${genres ? `<p class="detail-line">${escapeHtml(genres)}</p>` : ""}
-      ${age ? `<p class="detail-line">${escapeHtml(age)}</p>` : ""}
-      <a class="detail-link" href="${bookSearchLink(r)}" target="_blank" rel="noopener noreferrer">${bookSearchLabel(r)}</a>
-      <div class="detail-actions">
-        <button type="button" class="btn btn-primary btn-block" id="rec-add">Add to shelf</button>
-      </div>
-    `;
-    if (!r.coverUrl) {
-      findCover(r).then((url) => {
-        if (body._rec !== r || !url) return;
-        r.coverUrl = url;
-        paintCover(body.querySelector("img"), url);
-      });
-    }
-    openSheet("sheet-detail");
-  }
-
-  function addRecToShelf(r) {
-    state.books.push({
-      id: uid(),
-      title: r.title,
-      author: r.author || "",
-      language: r.language || "en",
-      genres: r.genres || [],
-      ageMinMonths: r.ageMinMonths ?? null,
-      ageMaxMonths: r.ageMaxMonths ?? null,
-      isbn: null,
-      notes: "",
-      favorite: false,
-      coverUrl: r.coverUrl || null,
-      addedAt: new Date().toISOString()
-    });
-    saveBooks();
-    toast("Added to the shelf");
-    closeSheets();
-    renderRecs();
+  /* —— Favorites —— */
+  function renderFavorites() {
+    const list = $("#fav-list");
+    const empty = $("#fav-empty");
+    const favs = state.books
+      .filter((b) => b.favorite)
+      .sort((a, b) => a.title.localeCompare(b.title));
+    empty.hidden = favs.length > 0;
+    list.innerHTML = favs.map((b) => bookCardHtml(b)).join("");
   }
 
   /* —— Detail —— */
@@ -1329,7 +1061,7 @@
     toast("Profile saved");
     closeAbout();
     renderShelf();
-    if (currentView === "foryou") renderRecs();
+    if (currentView === "favorites") renderFavorites();
   }
 
   function exportJson() {
@@ -1357,7 +1089,7 @@
         toast("Library imported");
         closeSheets();
         renderShelf();
-        renderRecs();
+        renderFavorites();
       } catch {
         toast("Could not read that JSON file");
       }
@@ -1425,29 +1157,29 @@
       if (!chip) return;
       const key = chip.dataset.chip;
       if (key === "all") {
-        shelfFilter.favorites = false;
         shelfFilter.language = "all";
-      } else if (key === "fav") {
-        shelfFilter.favorites = !shelfFilter.favorites;
       } else {
         shelfFilter.language = shelfFilter.language === key ? "all" : key;
       }
       renderShelf();
     });
-    $("#shelf-list").addEventListener("click", (e) => {
-      const heart = e.target.closest("[data-heart]");
-      if (heart) {
-        e.stopPropagation();
-        toggleFavorite(heart.dataset.heart, heart);
-        return;
-      }
-      const card = e.target.closest(".book-card");
-      if (card) openDetail(card.dataset.id);
-    });
-    $("#shelf-list").addEventListener("keydown", (e) => {
-      if (e.key !== "Enter" && e.key !== " ") return;
-      const card = e.target.closest(".book-card");
-      if (card) { e.preventDefault(); openDetail(card.dataset.id); }
+    ["#shelf-list", "#fav-list"].forEach((sel) => {
+      $(sel).addEventListener("click", (e) => {
+        const heart = e.target.closest("[data-heart]");
+        if (heart) {
+          e.stopPropagation();
+          toggleFavorite(heart.dataset.heart, heart);
+          return;
+        }
+        const card = e.target.closest(".book-card");
+        if (card) openDetail(card.dataset.id);
+      });
+      $(sel).addEventListener("keydown", (e) => {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        if (e.target.closest("[data-heart]")) return;
+        const card = e.target.closest(".book-card");
+        if (card) { e.preventDefault(); openDetail(card.dataset.id); }
+      });
     });
     // Clear genre filter when choosing All
     const origShelfFilters = $("#shelf-filters");
@@ -1456,20 +1188,7 @@
       if (chip && chip.dataset.chip === "all") shelfFilter.genre = "all";
     });
 
-    $("#rec-list").addEventListener("click", (e) => {
-      const card = e.target.closest("[data-rec]");
-      if (!card) return;
-      const recs = $("#rec-list")._recs || [];
-      const r = recs[Number(card.dataset.rec)];
-      if (r) openRecDetail(r);
-    });
-
     $("#detail-body").addEventListener("click", (e) => {
-      if (e.target.closest("#rec-add")) {
-        const r = $("#detail-body")._rec;
-        if (r) addRecToShelf(r);
-        return;
-      }
       const fav = e.target.closest("[data-detail-fav]");
       if (fav) { toggleFavorite(fav.dataset.detailFav); return; }
       const edit = e.target.closest("[data-detail-edit]");
@@ -1496,7 +1215,7 @@
       closeSheets();
       toast("Removed");
       renderShelf();
-      renderRecs();
+      renderFavorites();
     });
 
     $("#scan-close").addEventListener("click", () => stopScanner());

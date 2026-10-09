@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Alice&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="styles.css?v=20261004h"/>
+  <link rel="stylesheet" href="styles.css?v=20261009c"/>
 </head>
 <body>
   <div id="app">
@@ -52,9 +52,12 @@
         </div>
       </section>
 
-      <!-- For you -->
-      <section class="view" id="view-foryou" data-view="foryou" aria-label="For you" hidden>
-        <div id="rec-list"></div>
+      <!-- Favorites -->
+      <section class="view" id="view-favorites" data-view="favorites" aria-label="Favorites" hidden>
+        <div id="fav-list" class="book-list"></div>
+        <div id="fav-empty" class="empty" hidden>
+          <p>Tap the heart on a book to save it here.</p>
+        </div>
       </section>
     </main>
 
@@ -69,10 +72,10 @@
           <!-- Phosphor plus -->
           <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>
         </button>
-        <button type="button" class="tab" data-view="foryou" aria-label="For you">
+        <button type="button" class="tab" data-view="favorites" aria-label="Favorites">
           <!-- Phosphor heart -->
           <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M240,102c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,228.66,16,172,16,102A62.07,62.07,0,0,1,78,40c20.65,0,38.73,8.88,50,23.89C139.27,48.88,157.35,40,178,40A62.07,62.07,0,0,1,240,102Z"/></svg>
-          <span class="tab-label">For you</span>
+          <span class="tab-label">Favorites</span>
         </button>
       </div>
     </nav>
@@ -209,7 +212,7 @@
         <div class="about-card">
           <h2>Child</h2>
           <div class="profile-age" id="profile-age">—</div>
-          <p>Born in January 2025 — about 1 year and 9 months now. Change the exact day if needed. Age-appropriate picks update from this birthday.</p>
+          <p>Born in January 2025 — about 1 year and 9 months now. Change the exact day if needed.</p>
           <div class="form-group">
             <label for="profile-name">Display name</label>
             <input id="profile-name" type="text" maxlength="40" autocomplete="nickname"/>
@@ -256,7 +259,6 @@
       <p class="scan-status" id="scan-status" hidden></p>
     </div>
 
-  <script src="catalog.js?v=20261009a"></script>
-  <script src="app.js?v=20261009b"></script>
+  <script src="app.js?v=20261009c"></script>
 </body>
 </html>

@@ -95,7 +95,7 @@ background: linear-gradient(180deg, #E7EBE4 0%, #E4EDE3 42%, #D3E4D2 100%);
 
 Manifest paper is `#E4EDE3`.
 
-Little Library's dock does not use the shared active pill. Shelf and For you stay the same width whether selected or not; selection only changes the icon and label color. Those icons are Phosphor (`books`, `plus`, `sparkle`), not hand-drawn paths. Recommendation links go to a Fahasa search for Vietnamese titles (`language` `vi`) and an Amazon.com search otherwise. Covers may still come from Open Library or Google Books, with the clay book when neither has one.
+Little Library's dock does not use the shared active pill. Shelf (left), the big plus (center), and Favorites (right) keep the same width whether selected or not; selection only changes the icon and label color. Those icons are Phosphor (`books`, `plus`, `heart`), not hand-drawn paths. Favorites lists only hearted books from the shelf, in the same book-card style; the per-book heart uses Phosphor `heart` fill/regular. There are no recommendations. A book's detail sheet links to its own store page when it has one.
 
 ## Blurred header
 
