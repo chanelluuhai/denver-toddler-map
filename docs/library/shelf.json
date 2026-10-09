@@ -1348,6 +1348,139 @@
       "addedAt": "2026-10-09T19:37:25Z",
       "checked": false,
       "checkedAt": null
+    },
+    {
+      "id": "ngoi-nha-yeu-thuong-con-yeu-tat-ca",
+      "title": "Ngôi nhà yêu thương – Con yêu tất cả",
+      "author": "Nhiều tác giả (various authors); Cloud Pillow Studio",
+      "language": "vi",
+      "genres": [
+        "Family & Love"
+      ],
+      "ageMinMonths": null,
+      "ageMaxMonths": null,
+      "isbn": null,
+      "notes": "",
+      "favorite": false,
+      "coverUrl": "covers/ngoi-nha-yeu-thuong-con-yeu-tat-ca.jpg",
+      "link": "https://www.fahasa.com/ngoi-nha-yeu-thuong-con-yeu-tat-ca.html",
+      "addedAt": "2026-10-09T19:54:04Z",
+      "checked": true,
+      "checkedAt": "2026-10-09T19:54:04Z"
+    },
+    {
+      "id": "ky-nang-van-dong-tinh-cho-be",
+      "title": "Kỹ năng vận động tinh cho bé",
+      "author": "Patricia Hegarty; Fhiona Galloway",
+      "language": "vi",
+      "genres": [
+        "Activity & Play"
+      ],
+      "ageMinMonths": null,
+      "ageMaxMonths": null,
+      "isbn": null,
+      "notes": "",
+      "favorite": false,
+      "coverUrl": "covers/ky-nang-van-dong-tinh-cho-be.jpg",
+      "link": "https://www.fahasa.com/sach-tuong-tac-ky-nang-van-dong-tinh-cho-be-danh-cho-tre-tu-0-6-tuoi.html",
+      "addedAt": "2026-10-09T19:54:04Z",
+      "checked": true,
+      "checkedAt": "2026-10-09T19:54:04Z"
+    },
+    {
+      "id": "nhung-nguoi-ban-dang-yeu",
+      "title": "Những người bạn đáng yêu",
+      "author": "Heather Brown",
+      "language": "vi",
+      "genres": [
+        "Animals & Nature"
+      ],
+      "ageMinMonths": null,
+      "ageMaxMonths": null,
+      "isbn": "9786040375735",
+      "notes": "",
+      "favorite": false,
+      "coverUrl": "covers/nhung-nguoi-ban-dang-yeu.jpg",
+      "link": "https://www.fahasa.com/u-oa-mo-ra-nhung-nguoi-ban-dang-yeu.html",
+      "addedAt": "2026-10-09T19:54:04Z",
+      "checked": true,
+      "checkedAt": "2026-10-09T19:54:04Z"
+    },
+    {
+      "id": "green-eggs-and-ham",
+      "title": "Green Eggs and Ham",
+      "author": "Dr. Seuss",
+      "language": "en",
+      "genres": [
+        "Stories & Picture Books"
+      ],
+      "ageMinMonths": null,
+      "ageMaxMonths": null,
+      "isbn": "9780394800165",
+      "notes": "",
+      "favorite": false,
+      "coverUrl": "covers/green-eggs-and-ham.jpg",
+      "link": "https://www.amazon.com/dp/0394800168",
+      "addedAt": "2026-10-09T19:54:04Z",
+      "checked": true,
+      "checkedAt": "2026-10-09T19:54:04Z"
+    },
+    {
+      "id": "rua-con-tinh-nghich",
+      "title": "Rùa con tinh nghịch",
+      "author": "Barbara Bacchini",
+      "language": "vi",
+      "genres": [
+        "Animals & Nature"
+      ],
+      "ageMinMonths": null,
+      "ageMaxMonths": null,
+      "isbn": null,
+      "notes": "",
+      "favorite": false,
+      "coverUrl": "covers/rua-con-tinh-nghich.jpg",
+      "link": "https://www.fahasa.com/nhung-nguoi-ban-tot-rua-con-tinh-nghich.html",
+      "addedAt": "2026-10-09T19:54:04Z",
+      "checked": true,
+      "checkedAt": "2026-10-09T19:54:04Z"
+    },
+    {
+      "id": "jamberry",
+      "title": "Jamberry",
+      "author": "Bruce Degen",
+      "language": "en",
+      "genres": [
+        "Songs & Nursery Rhymes"
+      ],
+      "ageMinMonths": null,
+      "ageMaxMonths": null,
+      "isbn": "9780694006519",
+      "notes": "",
+      "favorite": false,
+      "coverUrl": "covers/jamberry.jpg",
+      "link": "https://www.amazon.com/dp/0694006513",
+      "addedAt": "2026-10-09T19:54:04Z",
+      "checked": true,
+      "checkedAt": "2026-10-09T19:54:04Z"
+    },
+    {
+      "id": "co-ong-chu-dao",
+      "title": "Cô ong chu đáo",
+      "author": "Barbara Bacchini",
+      "language": "vi",
+      "genres": [
+        "Animals & Nature"
+      ],
+      "ageMinMonths": null,
+      "ageMaxMonths": null,
+      "isbn": null,
+      "notes": "",
+      "favorite": false,
+      "coverUrl": "covers/co-ong-chu-dao.jpg",
+      "link": "https://www.fahasa.com/nhung-nguoi-ban-tot-co-ong-chu-dao.html",
+      "addedAt": "2026-10-09T19:54:04Z",
+      "checked": true,
+      "checkedAt": "2026-10-09T19:54:04Z"
     }
   ]
 }
