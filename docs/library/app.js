@@ -5,12 +5,22 @@
   const SEED_KEY = "littleShelf.sharedSeeded";
   // Public list. No account and no secret. Every phone reads and writes this same document.
   const SHARED_SHELF_URL = "https://api.npoint.io/251111f67ba434bad0bb";
+  // Same categories as the Categories sheet in the book spreadsheet (data/library/books.csv).
   const GENRES = [
-    "Board book", "Picture book", "Vietnamese", "Bilingual", "Animals",
-    "Bedtime", "Family", "Feelings", "Nature", "Food", "Vehicles",
-    "Adventure", "Friendship", "Nursery rhymes", "Folk tales",
-    "Counting", "Letters", "Play"
+    "Feelings & Social Skills", "Animals & Nature", "Bedtime", "Stories & Picture Books",
+    "Folk & Fairy Tales", "First Words & Concepts", "Songs & Nursery Rhymes",
+    "Philosophy & Big Questions", "Family & Love", "Holidays & Celebrations",
+    "Body & Health", "Activity & Play"
   ];
+
+  // Genres on the shelf that are not in the list above (older books) still get a filter.
+  function allGenres() {
+    const extra = [];
+    state.books.forEach((b) => (b.genres || []).forEach((g) => {
+      if (!GENRES.includes(g) && !extra.includes(g)) extra.push(g);
+    }));
+    return GENRES.concat(extra);
+  }
 
   const DEFAULT_STATE = () => ({
     books: [],
@@ -77,6 +87,7 @@
       notes: b.notes || "",
       favorite: !!b.favorite,
       coverUrl: b.coverUrl || null,
+      link: b.link || null,
       addedAt: b.addedAt || null
     }));
   }
@@ -397,7 +408,7 @@
     const list = $("#genre-sheet-list");
     if (!list) return;
     const items = [{ key: "all", label: "All", count: state.books.length }].concat(
-      GENRES.map((g) => ({
+      allGenres().map((g) => ({
         key: g,
         label: g,
         count: state.books.filter((b) => (b.genres || []).includes(g)).length
@@ -714,6 +725,7 @@
       </div>
       ${b.isbn ? `<p class="detail-line">ISBN ${escapeHtml(b.isbn)}</p>` : ""}
       ${b.notes ? `<p class="detail-blurb">${escapeHtml(b.notes)}</p>` : ""}
+      ${/^https?:\/\//.test(b.link || "") ? `<a class="detail-link" href="${escapeHtml(b.link)}" target="_blank" rel="noopener noreferrer">Open store page</a>` : ""}
       <div class="detail-actions">
         <button type="button" class="btn btn-secondary btn-block" data-detail-fav="${escapeHtml(b.id)}">${b.favorite ? "♥ Favorited" : "♡ Mark favorite"}</button>
         <button type="button" class="btn btn-secondary btn-block" data-detail-edit="${escapeHtml(b.id)}">Edit</button>
@@ -727,7 +739,7 @@
   function fillGenrePicks(selected = []) {
     const box = $("#genre-picks");
     const set = new Set(selected);
-    box.innerHTML = GENRES.map((g) =>
+    box.innerHTML = allGenres().map((g) =>
       `<button type="button" class="genre-pick${set.has(g) ? " on" : ""}" data-genre="${escapeHtml(g)}">${escapeHtml(g)}</button>`
     ).join("");
   }
@@ -813,27 +825,20 @@
     const text = subjects.join(" ").toLowerCase();
     const found = new Set();
     const rules = [
-      [/board/, "Board book"],
-      [/picture/, "Picture book"],
-      [/animal|bear|zoo|cat|dog|bird/, "Animals"],
-      [/bedtime|sleep|goodnight|night/, "Bedtime"],
-      [/family|mother|father|parent|baby/, "Family"],
-      [/feel|emotion|love/, "Feelings"],
-      [/nature|garden|tree|rain|snow|season/, "Nature"],
-      [/food|eat|hungry|fruit|vegetable/, "Food"],
-      [/truck|train|car|vehicle|bus/, "Vehicles"],
-      [/adventure|hunt|journey/, "Adventure"],
-      [/friend/, "Friendship"],
-      [/rhyme|nursery|poem/, "Nursery rhymes"],
-      [/folk|fairy|legend/, "Folk tales"],
-      [/count|number/, "Counting"],
-      [/alphabet|letter|abc/, "Letters"],
-      [/play|peek/, "Play"],
-      [/vietnam/, "Vietnamese"],
-      [/bilingual/, "Bilingual"]
+      [/feel|emotion|kind|manners|social/, "Feelings & Social Skills"],
+      [/animal|bear|zoo|cat|dog|bird|nature|garden|tree|insect/, "Animals & Nature"],
+      [/bedtime|sleep|goodnight/, "Bedtime"],
+      [/folk|fairy|legend|myth/, "Folk & Fairy Tales"],
+      [/first words|alphabet|letter|abc|count|number|color|colour|shape|concept/, "First Words & Concepts"],
+      [/rhyme|nursery|song|music/, "Songs & Nursery Rhymes"],
+      [/philosoph/, "Philosophy & Big Questions"],
+      [/family|mother|father|parent|love/, "Family & Love"],
+      [/holiday|christmas|birthday|new year|halloween|easter/, "Holidays & Celebrations"],
+      [/body|health|potty|toilet/, "Body & Health"],
+      [/activity|play|game|sticker|puzzle/, "Activity & Play"]
     ];
     rules.forEach(([re, g]) => { if (re.test(text)) found.add(g); });
-    if (!found.size) found.add("Picture book");
+    if (!found.size) found.add("Stories & Picture Books");
     return [...found].filter((g) => GENRES.includes(g));
   }
 

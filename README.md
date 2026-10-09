@@ -34,11 +34,27 @@ Little Library is the home shelf (scan, genres, favorites, recommendations). It 
 
 Drive times in the JSON are **rough estimates** from W 64th Ave & Ward Rd, Arvada 80004 — always confirm in Google Maps.
 
+## Update the Little Library shelf
+
+The book list lives in **`data/library/books.csv`** (one row per book). Columns: `id` (stable, don't change it), `title`, `author`, `language` (`en`, `vi`, `bilingual`, `other`), `genres` (categories from the spreadsheet, separate several with `;`), `favorite` (`yes` or blank), `isbn`, `cover` (`covers/<id>.jpg` or a URL), `link` (store page), `notes`, `added_at`.
+
+Phones read and write a shared copy (n:point), so books added or edited in the app live there first.
+
+1. Pull what the phones changed: `python3 scripts/library_import.py --pull`
+2. Edit `data/library/books.csv`, **or** re-import the whole spreadsheet (Books sheet, embedded covers go to `docs/library/covers/`):  
+   `python3 scripts/library_import.py --xlsx path/to/books.xlsx`  
+   Rows are matched by title, so ids and favorites carry over.
+3. Publish: `python3 scripts/library_import.py --push`  
+   Writes `docs/library/shelf.json` and updates the shared copy. Books that exist only on the phones are kept and added to the CSV (use `--replace` to publish the CSV exactly).
+4. Commit & push `main`.
+
 ## Files
 
 | Path | Role |
 |------|------|
 | `data/places.json` | Editable source of truth |
+| `data/library/books.csv` | Little Library book list (source of truth) |
+| `scripts/library_import.py` | Spreadsheet/CSV → `docs/library/shelf.json` + shared store |
 | `scripts/build_map.py` | Embeds JSON into HTML + markdown; syncs `docs/spots/` |
 | `output/spots/` | Local Toddler Spots build |
 | `docs/` | GitHub Pages root: hub, `spots/`, `library/` |
