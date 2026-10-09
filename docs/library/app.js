@@ -1104,9 +1104,11 @@
   let aboutOpen = false;
   let aboutTimer = 0;
   function openAbout() {
-    $("#profile-name").value = state.profile.displayName || "Bé";
-    $("#profile-birthday").value = state.profile.birthday || "2025-01-15";
-    $("#profile-age").textContent = formatAge(childAgeMonths());
+    if ($("#profile-name")) {
+      $("#profile-name").value = state.profile.displayName || "Bé";
+      $("#profile-birthday").value = state.profile.birthday || "2025-01-15";
+      $("#profile-age").textContent = formatAge(childAgeMonths());
+    }
     closeSheets();
     aboutOpen = true;
     clearTimeout(aboutTimer);
@@ -1227,7 +1229,7 @@
     });
     $("#sheet-backdrop").addEventListener("click", closeSheets);
     $$("[data-close-sheet]").forEach((b) => b.addEventListener("click", closeSheets));
-    $("#profile-save").addEventListener("click", saveProfile);
+    if ($("#profile-save")) $("#profile-save").addEventListener("click", saveProfile);
     $("#export-json").addEventListener("click", exportJson);
     $("#import-json").addEventListener("click", () => $("#import-file").click());
     $("#import-file").addEventListener("change", (e) => {

@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Alice&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="styles.css?v=20261009f"/>
+  <link rel="stylesheet" href="styles.css?v=20261009g"/>
 </head>
 <body>
   <div id="app">
@@ -210,22 +210,8 @@
           <button type="button" class="icon-x" id="about-close" aria-label="Close">&times;</button>
         </div>
         <div class="about-card">
-          <h2>Child</h2>
-          <div class="profile-age" id="profile-age">—</div>
-          <p>Born in January 2025 — about 1 year and 9 months now. Change the exact day if needed.</p>
-          <div class="form-group">
-            <label for="profile-name">Display name</label>
-            <input id="profile-name" type="text" maxlength="40" autocomplete="nickname"/>
-          </div>
-          <div class="form-group">
-            <label for="profile-birthday">Birthday</label>
-            <input id="profile-birthday" type="date" autocomplete="bday"/>
-          </div>
-          <button type="button" class="btn btn-primary btn-block" id="profile-save">Save profile</button>
-        </div>
-        <div class="about-card">
           <h2>Library</h2>
-          <p>The shelf is the same list on every phone. Name and birthday stay on this phone. Export is a backup.</p>
+          <p>The shelf is the same list on every phone. Export is a backup.</p>
           <button type="button" class="btn btn-secondary btn-block" id="export-json">Export library JSON</button>
           <button type="button" class="btn btn-secondary btn-block" id="import-json">Import library JSON</button>
           <input type="file" id="import-file" accept="application/json,.json" hidden/>
@@ -259,6 +245,6 @@
       <p class="scan-status" id="scan-status" hidden></p>
     </div>
 
-  <script src="app.js?v=20261009f"></script>
+  <script src="app.js?v=20261009g"></script>
 </body>
 </html>
