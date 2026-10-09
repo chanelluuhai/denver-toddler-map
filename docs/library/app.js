@@ -241,10 +241,11 @@
   }
 
   function heartSvg(on) {
+    // Phosphor heart (fill / regular), same set as the dock
     if (on) {
-      return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20.2s-6.8-4.2-9.2-8.1C1.2 9.2 2.1 5.8 5.2 4.7c1.8-.6 3.7.1 4.8 1.5 1.1-1.4 3-2.1 4.8-1.5 3.1 1.1 4 4.5 2.4 7.4C18.8 16 12 20.2 12 20.2z"/></svg>`;
+      return `<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M240,102c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,228.66,16,172,16,102A62.07,62.07,0,0,1,78,40c20.65,0,38.73,8.88,50,23.89C139.27,48.88,157.35,40,178,40A62.07,62.07,0,0,1,240,102Z"/></svg>`;
     }
-    return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19.5s-6.2-3.9-8.4-7.4C2.1 9.6 2.9 6.6 5.6 5.6c1.6-.6 3.3.1 4.3 1.4 1-1.3 2.7-2 4.3-1.4 2.7 1 3.5 4 2.05 7.4C18.2 15.6 12 19.5 12 19.5z"/></svg>`;
+    return `<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z"/></svg>`;
   }
 
   function toast(msg) {
@@ -399,7 +400,9 @@
       btn.setAttribute("aria-label", book.favorite ? "Unfavorite" : "Favorite");
       btn.innerHTML = heartSvg(book.favorite);
     }
-    if (currentView === "shelf") renderShelf();
+    // Keep the card in place on the shelf (no jump to the top); re-sort on the next render.
+    // Only re-render when the Favorites filter is on, or the tap came from elsewhere.
+    if (currentView === "shelf" && (!btn || shelfFilter.favorites)) renderShelf();
     if (currentView === "foryou") renderRecs();
     if ($("#sheet-detail").classList.contains("open")) openDetail(id);
   }
