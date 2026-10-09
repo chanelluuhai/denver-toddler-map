@@ -521,11 +521,14 @@
       label.textContent = "";
       btn.classList.remove("on");
       btn.setAttribute("aria-pressed", "false");
+      btn.setAttribute("aria-label", "Filter by genre");
     } else {
-      label.hidden = false;
-      label.textContent = shelfFilter.genre;
+      // Icon only when a genre is selected; the tint shows it's on.
+      label.hidden = true;
+      label.textContent = "";
       btn.classList.add("on");
       btn.setAttribute("aria-pressed", "true");
+      btn.setAttribute("aria-label", "Filter by genre: " + shelfFilter.genre);
     }
   }
 
