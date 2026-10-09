@@ -71,13 +71,13 @@ def isbn_from_link(link):
 def read_csv():
     if not CSV_PATH.exists():
         return []
-    with CSV_PATH.open(newline="", encoding="utf-8") as f:
+    with CSV_PATH.open(newline="", encoding="utf-8-sig") as f:
         return [r for r in csv.DictReader(f) if (r.get("title") or "").strip()]
 
 
 def write_csv(rows):
     CSV_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with CSV_PATH.open("w", newline="", encoding="utf-8") as f:
+    with CSV_PATH.open("w", newline="", encoding="utf-8-sig") as f:
         w = csv.DictWriter(f, fieldnames=COLUMNS, extrasaction="ignore")
         w.writeheader()
         for r in rows:
